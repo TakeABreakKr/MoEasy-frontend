@@ -1,1 +1,4 @@
-npm run build
+npm run lint
+echo "lint test success"
+npm run lint-staged
+echo "prettier test success"
