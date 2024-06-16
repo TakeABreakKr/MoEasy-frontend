@@ -1,4 +1,4 @@
-export default function MyLayout({
+export default function MyPageProfileLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
