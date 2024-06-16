@@ -1,0 +1,5 @@
+apis:
+  core@v1:
+    root: ./src/shared/api/test.yml
+    x-openapi-ts:
+      output: ./src/shared/api/test.ts
