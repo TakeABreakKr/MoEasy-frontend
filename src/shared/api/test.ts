@@ -4,41 +4,16 @@
  */
 
 export interface paths {
-  '/users/{id}': {
+  '/meeting/create': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    /** Get user by ID */
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path: {
-          id: number;
-        };
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description User found */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            'application/json': {
-              id?: number;
-              name?: string;
-            };
-          };
-        };
-      };
-    };
+    get?: never;
     put?: never;
-    post?: never;
+    post: operations['MeetingController_createMeeting'];
     delete?: never;
     options?: never;
     head?: never;
@@ -48,7 +23,11 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: never;
+  schemas: {
+    CreateMeetingRequest: {
+      name: string;
+    };
+  };
   responses: never;
   parameters: never;
   requestBodies: never;
@@ -56,4 +35,28 @@ export interface components {
   pathItems: never;
 }
 export type $defs = Record<string, never>;
-export type operations = Record<string, never>;
+export interface operations {
+  MeetingController_createMeeting: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description Values that needs to create meeting entity. */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateMeetingRequest'];
+      };
+    };
+    responses: {
+      /** @description Meeting Entity has been successfully created. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+}
