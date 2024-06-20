@@ -1,0 +1,10 @@
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.input-label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
