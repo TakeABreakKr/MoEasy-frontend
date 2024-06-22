@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "next": "14.2.3",
+    "next-international": "^1.2.4",
     "openapi-fetch": "^0.9.7",
     "react": "^18",
     "react-dom": "^18"
@@ -37,6 +38,7 @@
     "lint-staged": "^15.2.5",
     "openapi-typescript": "^7.0.0-rc.0",
     "prettier": "^3.3.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-plugin-css-modules": "^5.1.0"
   }
 }
