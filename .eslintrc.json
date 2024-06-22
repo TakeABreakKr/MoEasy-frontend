@@ -6,9 +6,7 @@
       "warn",
       {
         "groups": [
-          // Packages `next` related packages come first.
-          ["^next(/.*|$)"],
-          // Packages `react` related packages come second.
+          // Packages `react` related packages come first.
           ["^react", "^@?\\w"],
           // Packages `next` related packages come second.
           ["^next(/.*|$)"],
@@ -30,5 +28,6 @@
     "import/first": "error",
     "import/newline-after-import": "error",
     "import/no-duplicates": "error"
-  }
+  },
+  "ignorePatterns": ["**/shared/api/*.ts"]
 }
