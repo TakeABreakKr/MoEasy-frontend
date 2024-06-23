@@ -1,0 +1,65 @@
+.header {
+  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #a7a7a7;
+  color: white;
+  height: 84.5px;
+}
+
+.header svg {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.header h1 {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  margin: 6px 0 6px 10px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.header .left-hand-side,
+.header .right-hand-side {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+}
+
+.header .link-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  list-style: none;
+  height: 100%;
+}
+.header .link-wrapper li {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.header .link-wrapper li.active {
+  border-bottom: 1px solid white;
+}
+
+.header a:visited,
+.header a:link {
+  color: white;
+  text-decoration: none;
+}
+
+.header .link-wrapper a:hover,
+.header .link-wrapper a:active {
+  font-weight: 700;
+}
+
+.header .welcome {
+  font-size: 14px;
+  margin-right: 10px;
+}
