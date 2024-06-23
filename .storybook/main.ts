@@ -9,6 +9,21 @@ const config: StorybookConfig = {
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
   ],
+  async webpackFinal(config) {
+    if (!config.module?.rules) {
+      return config;
+    }
+    config.module.rules.forEach((rule) => {
+      if (typeof rule === 'object' && rule?.test && /svg/.test(String(rule.test))) {
+        rule.exclude = /\.svg$/i;
+      }
+    });
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
+    return config;
+  },
   framework: {
     name: '@storybook/nextjs',
     options: {},
