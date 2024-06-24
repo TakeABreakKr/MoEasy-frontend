@@ -1,6 +1,6 @@
-import Link from 'next/link';
-
 import { getI18n } from '@/locales/server';
+import { Button } from '@/shared/ui/button/button';
+import Card from '@/shared/ui/card/card';
 
 import styles from './page.module.css';
 
@@ -8,37 +8,31 @@ export default async function Home() {
   const t = await getI18n();
   return (
     <main className={styles.main}>
-      <nav>
-        <h1>
-          {t('title')} {t('mainpage')}
-        </h1>
-        <ul>
-          <li>
-            <Link href="team/create">
-              {t('team')} {t('create')}
-            </Link>
-          </li>
-          <li>
-            <Link href="team">
-              {t('team')} {t('list')}
-            </Link>
-          </li>
-          <li>
-            <Link href="schedule">
-              {t('schedule')} {t('list')}
-            </Link>
-          </li>
-          <li>
-            <Link href="schedule/create">
-              {t('schedule')} {t('create')}
-            </Link>
-          </li>
-          <li>
-            <Link href="/mypage">{t('mypage')}</Link>
-          </li>
-        </ul>
-      </nav>
-      메인페이지입니다.
+      <section>
+        <div className={styles['section__left']}>
+          <h1>{t('desc')}</h1>
+          <p>{t('desc-detail')}</p>
+          <div>
+            <Button size="small">자세히 보기</Button>
+          </div>
+        </div>
+        <div style={{ background: 'gray', minHeight: 300, maxHeight: 300, width: 300 }}></div>
+      </section>
+      <section className={styles['vertical']}>
+        <h1>{t('this-week-pop-team')}</h1>
+        <p>{t('this-week-pop-team-desc')}</p>
+        <div className={styles['card-wrapper']}>
+          {[1, 2, 3, 4, 5].map((_, idx) => (
+            <Card
+              key={idx}
+              idx={idx + 1}
+              title={'title ' + idx}
+              description={`첫째주 한식/ 둘째주 일식/ 셋째주 중식/ 넷째주 양식으로
+로테이션 돌립니다. 식후 디저트 필수임. 첫째주 한식/ 둘째주 일식/ 셋째주 중식/ 넷째주 양식으로 로테이션 돌립니다.`}
+            />
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
