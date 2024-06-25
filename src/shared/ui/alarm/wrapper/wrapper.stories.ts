@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
-import CardAlarm from './alarm';
+import CardAlarm from './wrapper';
 
 const meta = {
-  title: 'Example/Alarm',
+  title: 'Example/Alarm/Wrapper',
   component: CardAlarm,
   tags: ['autodocs'],
   parameters: {},

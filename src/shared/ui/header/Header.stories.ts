@@ -28,8 +28,27 @@ type Story = StoryObj<typeof meta>;
 
 export const LoggedIn: Story = {
   args: {
-    user: {
-      name: '모이지',
-    },
+    itemList: [
+      {
+        idx: 1,
+        title: 'some-name',
+        description: 'Some description',
+      },
+      {
+        idx: 2,
+        title: 'some-name',
+        description: 'Some description',
+      },
+      {
+        idx: 3,
+        title: 'some-name',
+        description: 'Some description',
+      },
+      {
+        idx: 4,
+        title: 'some-name',
+        description: 'Some description',
+      },
+    ],
   },
 };

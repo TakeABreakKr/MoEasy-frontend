@@ -5,8 +5,9 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import AlarmHover, { AlarmProps } from '../alarm/alarm';
 import { Button } from '../button/button';
-import { AlarmIcon, SearchIcon, UserIcon } from '../icon';
+import { SearchIcon, UserIcon } from '../icon';
 
 import headerStyles from './header.module.css';
 
@@ -17,15 +18,16 @@ type User = {
 interface HeaderProps {
   user?: User;
   onCreateAccount?: () => void;
+  itemList?: AlarmProps['itemList'];
 }
 /**
  * 공통 헤더 컴포넌트
  */
-export const Header = ({ onCreateAccount }: HeaderProps) => {
+export const Header = ({ onCreateAccount, itemList = [] }: HeaderProps) => {
   const pathname = usePathname();
   return (
-    <header>
-      <div className={headerStyles['header']}>
+    <header className={headerStyles.header}>
+      <div className={headerStyles['header-wrapper']}>
         <div className={headerStyles['left-hand-side']}>
           <Link href="/">
             <h1>MO-EASY</h1>
@@ -43,11 +45,11 @@ export const Header = ({ onCreateAccount }: HeaderProps) => {
           </ul>
         </div>
         <div className={headerStyles['right-hand-side']}>
-          <AlarmIcon width={24} height={24} />
+          <AlarmHover itemList={itemList}></AlarmHover>
           <UserIcon width={24} height={24} />
           <SearchIcon width={24} height={24} />
-          <Button primary size="small" onClick={onCreateAccount}>
-            내 모임 관리
+          <Button asChild primary size="small" onClick={onCreateAccount}>
+            <Link href={'/mypage'}>내 모임 관리</Link>
           </Button>
         </div>
       </div>

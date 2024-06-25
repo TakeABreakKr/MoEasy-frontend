@@ -1,6 +1,8 @@
 'use client';
 
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, forwardRef } from 'react';
+import { Slot } from '@radix-ui/react-slot';
+import clsx from 'clsx';
 
 import buttonStyles from './button.module.css';
 
@@ -17,25 +19,25 @@ type ButtonProps = {
    * How large should the button be?
    */
   size?: 'small' | 'medium' | 'large';
+  asChild?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**
  * 기본 버튼 컴포넌트
  */
-export const Button = ({ primary = false, size = 'medium', backgroundColor, children, ...props }: ButtonProps) => {
-  const mode = primary ? 'button--primary' : 'button--secondary';
-  return (
-    <button
-      type="button"
-      className={[buttonStyles['button'], buttonStyles[`button--${size}`], buttonStyles[mode]].join(' ')}
-      {...props}
-    >
-      {children}
-      <style jsx>{`
-        button {
-          background-color: ${backgroundColor};
-        }
-      `}</style>
-    </button>
-  );
-};
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ primary = false, size = 'medium', asChild, backgroundColor, ...props }, ref) => {
+    const mode = primary ? 'button--primary' : 'button--secondary';
+    const Comp = asChild ? Slot : 'button';
+    return (
+      <Comp
+        className={clsx(buttonStyles.button, buttonStyles[`button--${size}`], buttonStyles[mode])}
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
+Button.displayName = 'Button';
+
+export { Button };
