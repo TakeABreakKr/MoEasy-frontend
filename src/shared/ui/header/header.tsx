@@ -18,7 +18,9 @@ interface HeaderProps {
   user?: User;
   onCreateAccount?: () => void;
 }
-
+/**
+ * 공통 헤더 컴포넌트
+ */
 export const Header = ({ onCreateAccount }: HeaderProps) => {
   const pathname = usePathname();
   return (

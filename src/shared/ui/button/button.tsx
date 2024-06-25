@@ -20,7 +20,7 @@ type ButtonProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**
- * Primary UI component for user interaction
+ * 기본 버튼 컴포넌트
  */
 export const Button = ({ primary = false, size = 'medium', backgroundColor, children, ...props }: ButtonProps) => {
   const mode = primary ? 'button--primary' : 'button--secondary';

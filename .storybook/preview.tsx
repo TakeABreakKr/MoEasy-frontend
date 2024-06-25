@@ -3,6 +3,8 @@ import type { Preview } from '@storybook/react';
 
 import { Noto_Sans_KR } from 'next/font/google';
 
+import '../src/app/[locale]/global.css';
+
 const notoSansKR = Noto_Sans_KR({ subsets: ['latin'] });
 
 const preview: Preview = {

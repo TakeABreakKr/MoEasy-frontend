@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { getI18n } from '@/locales/server';
 import { Button } from '@/shared/ui/button/button';
 import Card from '@/shared/ui/card/card';
@@ -16,7 +18,9 @@ export default async function Home() {
             <Button size="small">자세히 보기</Button>
           </div>
         </div>
-        <div style={{ background: 'gray', minHeight: 300, maxHeight: 300, width: 300 }}></div>
+        <div style={{ background: 'gray', minHeight: 300, maxHeight: 300, width: 300 }}>
+          <Image src={'https://via.placeholder.com/300/1'} width={300} height={300} alt="sample" />
+        </div>
       </section>
       <section className={styles['vertical']}>
         <h1>{t('this-week-pop-team')}</h1>
