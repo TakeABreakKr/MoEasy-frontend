@@ -1,0 +1,25 @@
+.category {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.category button {
+  padding: 6px 9px;
+  background-color: #999;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.order {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  height: 32px;
+}
+
+.order button:hover {
+  font-weight: 500;
+}
