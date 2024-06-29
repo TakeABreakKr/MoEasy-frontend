@@ -1,9 +1,12 @@
-import { Inter } from 'next/font/google';
-import Link from 'next/link';
-
 import type { Metadata } from 'next';
 
-const inter = Inter({ subsets: ['latin'] });
+import { Noto_Sans_KR } from 'next/font/google';
+
+import { Header } from '@/shared/ui/header/header';
+
+import './global.css';
+
+const notoSansKR = Noto_Sans_KR({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'MoEasy - Discord 연동 모임 관리 서비스',
@@ -18,8 +21,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang={locale}>
-      <body className={inter.className}>
-        <Link href={'/'}>홈으로</Link>
+      <body className={notoSansKR.className}>
+        <Header />
         {children}
       </body>
     </html>

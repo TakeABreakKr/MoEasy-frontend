@@ -1,17 +1,19 @@
 'use client';
 
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-
 import { ChangeEventHandler } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
+import clsx from 'clsx';
 
-import { createQueryString, returnValueOnCondition } from '@/shared/utils';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
-import { CreateTeamFormType, stepKeys, TeamCreateKeyMap } from '../_feature/data';
+import { createQueryString, returnValueOnCondition } from '@/shared/utils/utils';
+
+import { CreateTeamFormType } from '../_feature/data';
 import { teamModifyAction } from '../action';
 
-import formStyle from './create-form.module.css';
+import styles from './create-form.module.css';
 
 type CreateFormProps = {
   action: typeof teamModifyAction;
@@ -19,67 +21,84 @@ type CreateFormProps = {
 };
 
 const CreateForm = ({ action, data = {} }: CreateFormProps) => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [message, formAction] = useFormState(action, { type: 'waiting' });
-  const step = (searchParams.get('step') ?? stepKeys[0].key) as TeamCreateKeyMap | undefined;
-  const currentValue = step ? data[step] ?? searchParams?.get(step) : null;
-  const currentIndex = stepKeys.findIndex((key) => key.key === step);
-  const { required: currentRequired, defaultValue: stepHasDefault } = stepKeys[currentIndex] || {};
-  const nextStep = stepKeys[currentIndex + 1]?.key;
-  const prevStep = stepKeys[currentIndex - 1]?.key;
-  /** 이전 탭으로 이동 */
-  const onPrevStep = prevStep
-    ? () => window.history.pushState(null, '', '?' + createQueryString(searchParams, 'step', prevStep))
-    : () => router.push('/team');
-  /** 다음 탭으로 이동 */
-  const onNextStep = returnValueOnCondition(() => {
-    // 필수 값인데 기본값이 없으며, 현재 값이 존재하지 않는 경우 다음 단계 이동 중지
-    if (!stepHasDefault && currentRequired && !currentValue) {
-      alert('값을 입력해주세요');
-      return;
-    }
-    window.history.pushState(null, '', '?' + createQueryString(searchParams, 'step', nextStep));
-  }, nextStep);
   /** 값 변경시 searchParams을 변경 */
   const onValueChange: (key: string, type: string) => ChangeEventHandler<HTMLInputElement> | undefined = (key, type) =>
     returnValueOnCondition((e) => {
       window.history.replaceState(null, '', '?' + createQueryString(searchParams, key, e.target.value));
     }, type !== 'file');
   return (
-    <form action={formAction}>
-      <label className={formStyle['input-label']}>
-        {step}
-        {stepKeys.map(({ key, type, ...props }) => {
-          const defaultValue = data[key] ?? searchParams.get(key) ?? props.defaultValue ?? '';
-          return (
-            <input
-              key={key}
-              type={type}
-              name={key}
-              hidden={step !== key}
-              disabled={step !== key}
-              defaultValue={defaultValue}
-              onChange={onValueChange(key, type)}
-              {...props}
-            />
-          );
-        })}
-      </label>
-      <button type="button" onClick={onPrevStep}>
-        {prevStep ? `${prevStep}으로 이동...` : '이전으로...'}
-      </button>
-      <button type="button" onClick={onNextStep} hidden={!nextStep}>
-        {nextStep ? `${nextStep}으로 이동...` : '...'}
-      </button>
-      {!nextStep && <FormCreateSubmitButton />}
-      {message.type === 'error' && <span className={formStyle.error}>{message.message}</span>}
-      {message.type === 'success' && (
-        <dialog open className={formStyle['input-label']}>
-          {message.message}
-          <Link href={'/team'}>확인</Link>
-        </dialog>
-      )}
+    <form className={styles['container']} action={formAction}>
+      <div className={styles['header']}>
+        <h1>그룹 생성</h1>
+        <h2>그룹 설정</h2>
+      </div>
+      <div className={styles['form-group']}>
+        <label>모임 이름</label>
+        <div className={styles['input-wrapper']}>
+          <input type="text" placeholder="모임 이름을 입력해주세요" />
+          <span className={styles['char-count']}>0/18</span>
+        </div>
+      </div>
+      <div className={styles['form-group']}>
+        <label>모임 소개</label>
+        <div className={styles['input-wrapper']}>
+          <textarea placeholder="모임 소개를 입력해주세요" rows={3}></textarea>
+          <span className={styles['char-count']}>0/100</span>
+        </div>
+      </div>
+      <div className={styles['form-group']}>
+        <label>썸네일</label>
+        <div className={clsx(styles['input-wrapper'], styles['horizontal'])}>
+          <input type="file" placeholder="업로드 하지 않을 경우 기본이미지로 대체" />
+          <button>찾아보기</button>
+        </div>
+      </div>
+      <div className={styles['form-group']}>
+        <label>모임 인원</label>
+        <div className={clsx(styles['input-wrapper'], styles['horizontal'])}>
+          <input type="number" placeholder="10명" />
+          <button>제한 없음</button>
+        </div>
+      </div>
+      <div className={styles['form-group']}>
+        <label>누구와 함께</label>
+        <div className={clsx(styles['input-wrapper'], styles['horizontal'])}>
+          <input type="text" placeholder="#친구 이름을 입력해주세요" />
+          <button>찾아보기</button>
+        </div>
+        <div className={styles['member-tags']}>
+          <div className={styles['member-tag']}>
+            <Image width={20} height={20} src="https://via.placeholder.com/20" alt="thumbnail" />
+            <span>최성용</span>
+          </div>
+          <div className={styles['member-tag']}>
+            <Image width={20} height={20} src="https://via.placeholder.com/20" alt="thumbnail" />
+            <span>김민중</span>
+          </div>
+          <div className={styles['member-tag']}>
+            <Image width={20} height={20} src="https://via.placeholder.com/20" alt="thumbnail" />
+            <span>신승민</span>
+          </div>
+          <div className={styles['member-tag']}>
+            <Image width={20} height={20} src="https://via.placeholder.com/20" alt="thumbnail" />
+            <span>윤찬결</span>
+          </div>
+          <div className={styles['member-tag']}>
+            <Image width={20} height={20} src="https://via.placeholder.com/20" alt="thumbnail" />
+            <span>모이지</span>
+          </div>
+        </div>
+      </div>
+      <div className={styles['navigation']}>
+        <Link className={styles['nav-button']} href="/team">
+          {'<'}
+        </Link>
+        <button type="button" className={clsx(styles['nav-button'], styles.next)}>
+          {'>'}
+        </button>
+      </div>
     </form>
   );
 };

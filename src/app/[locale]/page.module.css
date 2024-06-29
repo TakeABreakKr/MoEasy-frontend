@@ -1,7 +1,35 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   min-height: 100vh;
+}
+
+.main section {
+  display: flex;
+  width: min(1280px, 100%);
+  flex-wrap: wrap;
+  padding: 4rem 0;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.main section.vertical {
+  flex-direction: column;
+}
+
+.main .card-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  width: 100%;
+  place-items: center;
+  gap: 2rem;
+  margin-top: 5rem;
+}
+
+.main section .section__left {
+  width: calc(100% - 300px - 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }

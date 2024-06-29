@@ -1,0 +1,16 @@
+.grid {
+  display: grid;
+  place-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  width: 100%;
+  gap: 2rem 0;
+}
+
+.grid .grid-item {
+  aspect-ratio: 16/9;
+}
+
+.grid .grid-item > img {
+  object-fit: cover;
+  border-radius: 1rem;
+}

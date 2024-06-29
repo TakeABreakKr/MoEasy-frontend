@@ -1,0 +1,46 @@
+.card {
+  width: 25rem;
+  height: 10rem;
+  position: relative;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  --thumbnail-diameter: 6.25rem;
+}
+
+.card .thumbnail {
+  width: var(--thumbnail-diameter, 6.25rem);
+  height: var(--thumbnail-diameter, 6.25rem);
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.card .content {
+  width: calc(100% - var(--thumbnail-diameter, 6.25rem) - 2rem);
+  height: 100%;
+  margin-left: 2rem;
+  margin-top: 0.25rem;
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.card .content > * {
+  display: block;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card .content > :first-child {
+  white-space: nowrap;
+}
+
+.card .content > p {
+  width: 100%;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+}
