@@ -21,3 +21,8 @@ MoEasy Front-End
 swagger 기반 API 문서화 CLI
 
 - npm generate-type
+
+스토리북
+
+- 실행 npm run storybook
+- [배포 페이지](https://takeabreakkr.github.io/MoEasy-frontend/)
