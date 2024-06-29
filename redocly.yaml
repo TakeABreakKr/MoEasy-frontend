@@ -1,5 +1,0 @@
-apis:
-  core@v1:
-    root: ./src/shared/api/swagger-spec.json
-    x-openapi-ts:
-      output: ./src/shared/api/test.ts
