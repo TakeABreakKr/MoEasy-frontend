@@ -1,0 +1,46 @@
+{
+  "name": "@moeasy/service",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint-fix": "next lint --fix",
+    "generate-type": "npx openapi-typescript",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "**/*.{tsx,ts,jsx,js}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@radix-ui/react-hover-card": "^1.1.1",
+    "clsx": "^2.1.1",
+    "next": "14.2.4",
+    "next-international": "^1.2.4",
+    "openapi-fetch": "^0.9.7",
+    "react": "^18",
+    "react-dom": "^18",
+    "@moeasy/storybook": "workspace:*"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-simple-import-sort": "^12.1.0",
+    "eslint-plugin-unused-imports": "^3.1.0",
+    "lint-staged": "^15.2.5",
+    "openapi-typescript": "^7.0.0-rc.0",
+    "prettier": "^3.3.1",
+    "typescript": "^5",
+    "typescript-plugin-css-modules": "^5.1.0"
+  }
+}
