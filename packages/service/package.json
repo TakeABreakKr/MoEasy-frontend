@@ -17,14 +17,15 @@
     ]
   },
   "dependencies": {
+    "@moeasy/storybook": "workspace:*",
     "@radix-ui/react-hover-card": "^1.1.1",
     "clsx": "^2.1.1",
     "next": "14.2.4",
     "next-international": "^1.2.4",
     "openapi-fetch": "^0.9.7",
+    "overlay-kit": "^1.0.0",
     "react": "^18",
-    "react-dom": "^18",
-    "@moeasy/storybook": "workspace:*"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { getI18n } from '@/locales/server';
 
@@ -16,7 +17,9 @@ export default async function Home() {
           <h1>{t('desc')}</h1>
           <p>{t('desc-detail')}</p>
           <div>
-            <Button size="small">자세히 보기</Button>
+            <Button asChild size="small">
+              <Link href={'/about'}>자세히 보기</Link>
+            </Button>
           </div>
         </div>
         <div style={{ background: 'gray', minHeight: 300, maxHeight: 300, width: 300 }}>

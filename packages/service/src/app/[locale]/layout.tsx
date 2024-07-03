@@ -4,6 +4,8 @@ import { Noto_Sans_KR } from 'next/font/google';
 
 import { Header } from '@moeasy/storybook/header';
 
+import RootProvider from './_provider';
+
 import './global.css';
 
 const notoSansKR = Noto_Sans_KR({ subsets: ['latin'] });
@@ -23,7 +25,7 @@ export default function RootLayout({
     <html lang={locale}>
       <body className={notoSansKR.className}>
         <Header />
-        {children}
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   );

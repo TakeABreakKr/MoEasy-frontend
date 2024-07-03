@@ -3,12 +3,15 @@
 import { ChangeEventHandler } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import clsx from 'clsx';
+import { overlay } from 'overlay-kit';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
 import { createQueryString, returnValueOnCondition } from '@/shared/utils/utils';
+
+import { List } from '@moeasy/storybook/list';
 
 import { CreateTeamFormType } from '../_feature/data';
 import { teamModifyAction } from '../action';
@@ -66,7 +69,13 @@ const CreateForm = ({ action, data = {} }: CreateFormProps) => {
         <label>누구와 함께</label>
         <div className={clsx(styles['input-wrapper'], styles['horizontal'])}>
           <input type="text" placeholder="#친구 이름을 입력해주세요" />
-          <button>찾아보기</button>
+          <button
+            onClick={() => {
+              overlay.open(({ isOpen, close, unmount }) => <List></List>);
+            }}
+          >
+            찾아보기
+          </button>
         </div>
         <div className={styles['member-tags']}>
           <div className={styles['member-tag']}>
