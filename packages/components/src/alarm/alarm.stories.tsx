@@ -7,7 +7,7 @@ const meta = {
   component: AlarmHover,
   tags: ['autodocs'],
   parameters: {
-    layout: 'fullscreen',
+    layout: 'centered',
     nextjs: {
       appDirectory: true,
       navigation: {
