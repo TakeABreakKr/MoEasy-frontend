@@ -1,10 +1,10 @@
 import React, { ComponentProps, HTMLAttributes, isValidElement, useState } from 'react';
 import clsx from 'clsx';
 
-import { Button } from '../button';
-import { contextCreator } from '../utils/useSafeContext';
+import { Button } from '../../button';
+import { contextCreator } from '../../utils/useSafeContext';
 
-import styles from './alert.module.css';
+import styles from './confirm.module.css';
 
 type AlertProps = {
   size?: 'small' | 'medium' | 'large';
@@ -76,4 +76,4 @@ const AlertCloseButton = ({ onClick, ...props }: ComponentProps<typeof Button>) 
   );
 };
 
-export { Alert, AlertCloseButton, AlertContent, AlertMessage, type AlertProps, AlertTitle, AlertTrigger };
+export { Alert, AlertCloseButton, AlertContent, AlertMessage, AlertTitle, AlertTrigger };

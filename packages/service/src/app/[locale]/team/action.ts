@@ -1,5 +1,7 @@
 'use server';
 
+import { redirect } from 'next/navigation';
+
 import { CreateTeamFormType, stepKeys } from './_feature/data';
 
 type TeamCreateActionState =
@@ -13,6 +15,7 @@ type TeamCreateActionState =
     };
 
 export const teamModifyAction = async (
+  selectedIds: string[] = [],
   _: TeamCreateActionState,
   formData: FormData,
 ): Promise<TeamCreateActionState> => {
@@ -31,9 +34,15 @@ export const teamModifyAction = async (
     )
       return { type: 'error', message: `${[step.key]}를 입력하지 않았습니다.` };
   }
+  selectedIds.forEach((id) => formData.append('members', id));
+
   // TODO: fetch 이후 로직
   await new Promise((resolve) => {
     setTimeout(resolve, 1500);
   });
   return { type: 'success', message: '성공적으로 전송했습니다.' };
+};
+
+export const gotoTeamList = async () => {
+  redirect('/team');
 };

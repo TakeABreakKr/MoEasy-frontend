@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEventHandler } from 'react';
+import { KeyboardEventHandler, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import clsx from 'clsx';
 import { overlay } from 'overlay-kit';
@@ -9,28 +9,32 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-import { createQueryString, returnValueOnCondition } from '@/shared/utils/utils';
+import { createQueryString } from '@/shared/utils/utils';
 
+import { SampleAlert } from '@moeasy/storybook/alert';
 import { List } from '@moeasy/storybook/list';
+import { UserProps } from '@moeasy/storybook/list/list';
 
 import { CreateTeamFormType } from '../_feature/data';
-import { teamModifyAction } from '../action';
+import { gotoTeamList, teamModifyAction } from '../action';
 
 import styles from './create-form.module.css';
+
+const tempUsers: UserProps[] = [
+  { id: 1, name: '<NAME>', avatar: 'https://via.placeholder.com/20' },
+  { id: 2, name: '<NAME>', avatar: 'https://via.placeholder.com/20' },
+  { id: 3, name: '<NAME>', avatar: 'https://via.placeholder.com/20' },
+  { id: 4, name: '<NAME>', avatar: 'https://via.placeholder.com/20' },
+];
 
 type CreateFormProps = {
   action: typeof teamModifyAction;
   data?: Partial<Omit<CreateTeamFormType, 'thumbnail'> & { thumbnail: string }>;
 };
-
 const CreateForm = ({ action, data = {} }: CreateFormProps) => {
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const searchParams = useSearchParams();
-  const [message, formAction] = useFormState(action, { type: 'waiting' });
-  /** 값 변경시 searchParams을 변경 */
-  const onValueChange: (key: string, type: string) => ChangeEventHandler<HTMLInputElement> | undefined = (key, type) =>
-    returnValueOnCondition((e) => {
-      window.history.replaceState(null, '', '?' + createQueryString(searchParams, key, e.target.value));
-    }, type !== 'file');
+  const [message, formAction] = useFormState(action.bind(null, selectedIds), { type: 'waiting' });
   return (
     <form className={styles['container']} action={formAction}>
       <div className={styles['header']}>
@@ -40,29 +44,50 @@ const CreateForm = ({ action, data = {} }: CreateFormProps) => {
       <div className={styles['form-group']}>
         <label>모임 이름</label>
         <div className={styles['input-wrapper']}>
-          <input type="text" placeholder="모임 이름을 입력해주세요" />
-          <span className={styles['char-count']}>0/18</span>
+          <input
+            type="text"
+            placeholder="모임 이름을 입력해주세요"
+            name="name"
+            maxLength={18}
+            defaultValue={searchParams.get('name') || ''}
+            onKeyUp={onValueChange('name', searchParams)}
+          />
+          <span className={styles['char-count']}>{searchParams.get('name')?.length || 0}/18</span>
         </div>
       </div>
       <div className={styles['form-group']}>
         <label>모임 소개</label>
         <div className={styles['input-wrapper']}>
-          <textarea placeholder="모임 소개를 입력해주세요" rows={3}></textarea>
-          <span className={styles['char-count']}>0/100</span>
+          <textarea
+            placeholder="모임 소개를 입력해주세요"
+            rows={3}
+            name="explanation"
+            maxLength={100}
+            defaultValue={searchParams.get('explanation') || ''}
+            onKeyUp={onValueChange('explanation', searchParams)}
+          />
+          <span className={styles['char-count']}>{searchParams.get('explanation')?.length || 0}/100</span>
         </div>
       </div>
       <div className={styles['form-group']}>
         <label>썸네일</label>
         <div className={clsx(styles['input-wrapper'], styles['horizontal'])}>
-          <input type="file" placeholder="업로드 하지 않을 경우 기본이미지로 대체" />
-          <button>찾아보기</button>
+          <input type="file" placeholder="업로드 하지 않을 경우 기본이미지로 대체" name="thumbnail" />
+          <button type="button">찾아보기</button>
         </div>
       </div>
       <div className={styles['form-group']}>
         <label>모임 인원</label>
         <div className={clsx(styles['input-wrapper'], styles['horizontal'])}>
-          <input type="number" placeholder="10명" />
-          <button>제한 없음</button>
+          <input
+            type="number"
+            placeholder="10명"
+            name="limit"
+            min={1}
+            defaultValue={searchParams.get('limit') || ''}
+            onKeyUp={onValueChange('limit', searchParams)}
+          />
+          <button type="button">제한 없음</button>
         </div>
       </div>
       <div className={styles['form-group']}>
@@ -70,8 +95,18 @@ const CreateForm = ({ action, data = {} }: CreateFormProps) => {
         <div className={clsx(styles['input-wrapper'], styles['horizontal'])}>
           <input type="text" placeholder="#친구 이름을 입력해주세요" />
           <button
-            onClick={() => {
-              overlay.open(({ isOpen, close, unmount }) => <List></List>);
+            type="button"
+            onClick={async () => {
+              const selectedUsers = await new Promise<UserProps[]>((res) => {
+                return overlay.open(({ isOpen, unmount }) => {
+                  const getUserOnClose = (users: UserProps[]) => {
+                    res(users);
+                    unmount();
+                  };
+                  return <List isOpen={isOpen} close={getUserOnClose} users={tempUsers} />;
+                });
+              });
+              setSelectedIds(selectedUsers.map((item) => String(item.id)));
             }}
           >
             찾아보기
@@ -101,18 +136,29 @@ const CreateForm = ({ action, data = {} }: CreateFormProps) => {
         </div>
       </div>
       <div className={styles['navigation']}>
-        <Link className={styles['nav-button']} href="/team">
+        <Link className={styles['nav-button']} href="/mypage">
           {'<'}
         </Link>
-        <button type="button" className={clsx(styles['nav-button'], styles.next)}>
+        <button type="submit" className={clsx(styles['nav-button'], styles.next)}>
           {'>'}
         </button>
       </div>
+      {message.type === 'success' && (
+        <SampleAlert close={() => gotoTeamList()} message={message.message || ''}></SampleAlert>
+      )}
     </form>
   );
 };
 
 CreateForm.displayName = 'CreateForm';
+
+/** 값 변경시 searchParams을 변경 */
+const onValueChange: (
+  key: string,
+  searchParams: URLSearchParams,
+) => KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined = (key, searchParams) => (e) => {
+  window.history.replaceState(null, '', '?' + createQueryString(searchParams, key, e.currentTarget.value));
+};
 
 function FormCreateSubmitButton() {
   const { pending } = useFormStatus();
