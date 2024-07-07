@@ -20,12 +20,55 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/meeting/update': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MeetingController_updateMeeting'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/meeting/get': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MeetingController_getMeeting'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
     CreateMeetingRequest: {
       name: string;
+      explanation: string;
+      limit: number;
+      members: string[];
+      /** Format: binary */
+      thumbnail: string;
+    };
+    UpdateMeetingRequest: {
+      meeting_id: number;
+      name: string;
+      explanation: string;
+      limit: number;
     };
   };
   responses: never;
@@ -43,14 +86,56 @@ export interface operations {
       path?: never;
       cookie?: never;
     };
-    /** @description Values that needs to create meeting entity. */
     requestBody: {
       content: {
-        'application/json': components['schemas']['CreateMeetingRequest'];
+        'multipart/form-data': components['schemas']['CreateMeetingRequest'];
       };
     };
     responses: {
       /** @description Meeting Entity has been successfully created. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MeetingController_updateMeeting: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description Basic values to modify meetings */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateMeetingRequest'];
+      };
+    };
+    responses: {
+      /** @description Meeting Entity has been successfully modified. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MeetingController_getMeeting: {
+    parameters: {
+      query: {
+        meetingId: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Meeting retrieved successfully */
       200: {
         headers: {
           [name: string]: unknown;

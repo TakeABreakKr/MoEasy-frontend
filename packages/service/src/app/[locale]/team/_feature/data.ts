@@ -1,8 +1,10 @@
 import { InputHTMLAttributes } from 'react';
 
-export const keyArr = ['name', 'explanation', 'limit', 'members', 'thumbnail'] as const;
+import { components } from '@/shared/api/test';
 
-export type TeamCreateKeyMap = (typeof keyArr)[number];
+export type CreateMeetingType = components['schemas']['CreateMeetingRequest'];
+
+export type TeamCreateKeyMap = keyof CreateMeetingType;
 
 export const stepKeys = [
   { key: 'name', type: 'string', label: '모임의 이름은 무엇인가요?', maxLength: 18, required: true },
