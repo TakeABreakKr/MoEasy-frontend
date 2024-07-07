@@ -1,5 +1,5 @@
 .checkbox {
-  background-color: #5f88f3;
+  background-color: #ffd814;
   width: 25px;
   height: 25px;
   border-radius: 50%;
@@ -8,12 +8,6 @@
   justify-content: center;
   color: white;
 }
-.checkbox:hover {
-  background-color: #4665b4;
-}
 .checkbox[data-state='unchecked'] {
   background-color: #d5d5d5;
-}
-.checkbox[data-state='unchecked']:hover {
-  background-color: #9d9d9d;
 }

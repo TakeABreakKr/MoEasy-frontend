@@ -1,7 +1,83 @@
 .input {
-  flex-grow: 1;
-  padding: 8px 12px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  margin-right: 8px;
+  height: 1.5rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #d0d0d0;
+  padding: 2rem 1rem;
+  border-radius: 10px;
+  caret-color: #5f88f3;
+  min-width: 15rem;
+}
+
+.input:hover:not(:disabled) {
+  border-color: #535353;
+}
+
+.input:focus:not(:disabled),
+.input:active:not(:disabled) {
+  border-color: #5f88f3;
+  outline: #5f88f3;
+}
+
+.input::placeholder {
+  color: #bbbbbb;
+}
+
+.input:disabled {
+  background: #f5f5f5;
+}
+
+.input.error {
+  border-color: #ff3e3e;
+}
+.input.error:focus:not(:disabled),
+.input.error:active:not(:disabled) {
+  border-color: #ff3e3e;
+  outline: #ff3e3e;
+}
+
+.wrapper {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+}
+
+.wrapper .span {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.wrapper > input[type='number'] + .span {
+  right: 40px;
+}
+
+.wrapper .x {
+  background-color: #d5d5d5;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  color: #fff;
+}
+
+.wrapper .current-text.empty {
+  color: #bbbbbb;
+}
+.error {
+  color: #ff3e3e;
+}
+
+.wrapper .text-max {
+  color: #bbbbbb;
+}
+
+.label-default {
+  padding: 1rem;
+}
+.error {
+  color: #ff3e3e;
 }
