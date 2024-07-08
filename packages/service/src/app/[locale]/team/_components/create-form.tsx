@@ -3,7 +3,6 @@
 import { KeyboardEventHandler, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import clsx from 'clsx';
-import { overlay } from 'overlay-kit';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,7 +11,7 @@ import { useSearchParams } from 'next/navigation';
 import { createQueryString } from '@/shared/utils/utils';
 
 import { SampleAlert } from '@moeasy/storybook/alert';
-import { List } from '@moeasy/storybook/list';
+import { Input } from '@moeasy/storybook/input';
 import { UserProps } from '@moeasy/storybook/list/list';
 
 import { CreateTeamFormType } from '../_feature/data';
@@ -32,42 +31,36 @@ type CreateFormProps = {
   data?: Partial<Omit<CreateTeamFormType, 'thumbnail'> & { thumbnail: string }>;
 };
 const CreateForm = ({ action, data = {} }: CreateFormProps) => {
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [members, setMembers] = useState<string[]>([]);
   const searchParams = useSearchParams();
-  const [message, formAction] = useFormState(action.bind(null, selectedIds), { type: 'waiting' });
+  const [message, formAction] = useFormState(action.bind(null, members), { type: 'waiting' });
   return (
     <form className={styles['container']} action={formAction}>
       <div className={styles['header']}>
-        <h1>그룹 생성</h1>
+        <h1>모임 생성</h1>
         <h2>그룹 설정</h2>
       </div>
       <div className={styles['form-group']}>
         <label>모임 이름</label>
-        <div className={styles['input-wrapper']}>
-          <input
-            type="text"
-            placeholder="모임 이름을 입력해주세요"
-            name="name"
-            maxLength={18}
-            defaultValue={searchParams.get('name') || ''}
-            onKeyUp={onValueChange('name', searchParams)}
-          />
-          <span className={styles['char-count']}>{searchParams.get('name')?.length || 0}/18</span>
-        </div>
+        <Input
+          type="text"
+          placeholder="모임 이름을 입력해주세요"
+          name="name"
+          maxLength={30}
+          defaultValue={searchParams.get('name') || ''}
+          onKeyUp={onValueChange('name', searchParams)}
+        />
       </div>
       <div className={styles['form-group']}>
         <label>모임 소개</label>
-        <div className={styles['input-wrapper']}>
-          <textarea
-            placeholder="모임 소개를 입력해주세요"
-            rows={3}
-            name="explanation"
-            maxLength={100}
-            defaultValue={searchParams.get('explanation') || ''}
-            onKeyUp={onValueChange('explanation', searchParams)}
-          />
-          <span className={styles['char-count']}>{searchParams.get('explanation')?.length || 0}/100</span>
-        </div>
+        <Input
+          type="text"
+          placeholder="모임 소개를 입력해주세요"
+          name="explanation"
+          maxLength={100}
+          defaultValue={searchParams.get('explanation') || ''}
+          onKeyUp={onValueChange('explanation', searchParams)}
+        />
       </div>
       <div className={styles['form-group']}>
         <label>썸네일</label>
@@ -78,40 +71,23 @@ const CreateForm = ({ action, data = {} }: CreateFormProps) => {
       </div>
       <div className={styles['form-group']}>
         <label>모임 인원</label>
-        <div className={clsx(styles['input-wrapper'], styles['horizontal'])}>
-          <input
-            type="number"
-            placeholder="10명"
-            name="limit"
-            min={1}
-            defaultValue={searchParams.get('limit') || ''}
-            onKeyUp={onValueChange('limit', searchParams)}
-          />
-          <button type="button">제한 없음</button>
-        </div>
+        <Input
+          type="number"
+          placeholder="모임 인원을 입력해주세요"
+          name="limit"
+          max={30}
+          defaultValue={parseInt(searchParams.get('limit') || '0')}
+          onKeyUp={onValueChange('limit', searchParams)}
+        />
       </div>
       <div className={styles['form-group']}>
         <label>누구와 함께</label>
-        <div className={clsx(styles['input-wrapper'], styles['horizontal'])}>
-          <input type="text" placeholder="#친구 이름을 입력해주세요" />
-          <button
-            type="button"
-            onClick={async () => {
-              const selectedUsers = await new Promise<UserProps[]>((res) => {
-                return overlay.open(({ isOpen, unmount }) => {
-                  const getUserOnClose = (users: UserProps[]) => {
-                    res(users);
-                    unmount();
-                  };
-                  return <List isOpen={isOpen} close={getUserOnClose} users={tempUsers} />;
-                });
-              });
-              setSelectedIds(selectedUsers.map((item) => String(item.id)));
-            }}
-          >
-            찾아보기
-          </button>
-        </div>
+        <Input
+          type="text"
+          placeholder="#친구 이름을 입력해주세요"
+          defaultValue={searchParams.get('keyword') || ''}
+          onKeyUp={onValueChange('keyword', searchParams)}
+        />
         <div className={styles['member-tags']}>
           <div className={styles['member-tag']}>
             <Image width={20} height={20} src="https://via.placeholder.com/20" alt="thumbnail" />

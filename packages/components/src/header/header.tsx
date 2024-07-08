@@ -5,9 +5,9 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import AlarmHover, { AlarmProps } from '../alarm/alarm';
+import { AlarmProps } from '../alarm/alarm';
 import { Button } from '../button/button';
-import { SearchIcon, UserIcon } from '../icon';
+import { ChevronDown, LogoIcon, SearchIcon, UserIcon } from '../icon';
 
 import headerStyles from './header.module.css';
 
@@ -30,7 +30,7 @@ export const Header = ({ onCreateAccount, itemList = [] }: HeaderProps) => {
       <div className={headerStyles['header-wrapper']}>
         <div className={headerStyles['left-hand-side']}>
           <Link href="/">
-            <h1>MO-EASY</h1>
+            <LogoIcon />
           </Link>
           <ul className={headerStyles['link-wrapper']}>
             <li className={pathname === '/team' ? headerStyles.active : ''}>
@@ -45,12 +45,12 @@ export const Header = ({ onCreateAccount, itemList = [] }: HeaderProps) => {
           </ul>
         </div>
         <div className={headerStyles['right-hand-side']}>
-          <AlarmHover itemList={itemList}></AlarmHover>
-          <UserIcon width={24} height={24} />
           <SearchIcon width={24} height={24} />
           <Button asChild primary size="small" onClick={onCreateAccount}>
             <Link href={'/mypage'}>내 모임 관리</Link>
           </Button>
+          <UserIcon width={24} height={24} />
+          <ChevronDown width={10} />
         </div>
       </div>
     </header>

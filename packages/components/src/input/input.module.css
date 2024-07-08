@@ -38,8 +38,6 @@
 
 .wrapper {
   position: relative;
-  width: fit-content;
-  height: fit-content;
 }
 
 .wrapper .span {
@@ -50,10 +48,6 @@
   display: flex;
   gap: 10px;
   align-items: center;
-}
-
-.wrapper > input[type='number'] + .span {
-  right: 40px;
 }
 
 .wrapper .x {
@@ -80,4 +74,12 @@
 }
 .error {
   color: #ff3e3e;
+}
+
+@media screen and (min-width: 1025px) {
+  .input[type='number']:hover + .span,
+  .input[type='number']:active + .span,
+  .input[type='number']:focus + .span {
+    right: 40px;
+  }
 }

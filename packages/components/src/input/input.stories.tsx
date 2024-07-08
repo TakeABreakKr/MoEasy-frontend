@@ -1,22 +1,22 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Input, InputMessage } from './input';
+import { Input, InputMessage, InputProps } from './input';
+
+const SampleInputUse = (props: InputProps<string>) => {
+  const [value, setValue] = useState('');
+  const [error, setError] = useState(false);
+  return <Input value={value} onValueChange={setValue} isError={error} dispatchError={setError} {...props} />;
+};
 
 const meta = {
   title: 'Example/Input',
-  component: Input,
+  component: SampleInputUse,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  decorators: [
-    (StoryFn) => {
-      const [value, setValue] = useState('');
-      return <StoryFn value={value} onValueChange={setValue} />;
-    },
-  ],
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof SampleInputUse>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

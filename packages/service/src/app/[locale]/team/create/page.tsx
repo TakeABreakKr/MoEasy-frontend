@@ -1,10 +1,14 @@
 import CreateForm from '../_components/create-form';
 import { teamModifyAction } from '../action';
 
+import mainStyle from '../../page.module.css';
+
 export default async function TeamCreatePage() {
   return (
-    <main>
-      <CreateForm action={teamModifyAction} />
+    <main className={mainStyle.main}>
+      <section>
+        <CreateForm action={teamModifyAction} />
+      </section>
     </main>
   );
 }

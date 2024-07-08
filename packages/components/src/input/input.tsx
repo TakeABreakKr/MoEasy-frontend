@@ -1,24 +1,22 @@
-import { ComponentProps, useEffect, useRef, useState } from 'react';
+import { ComponentProps, useRef, useState } from 'react';
 import clsx from 'clsx';
 
-import { XIcon } from '@/icon';
-import { contextCreator } from '@/utils/useSafeContext';
+import { XIcon } from '../icon';
+import { contextCreator } from '../utils/useSafeContext';
 
 import styles from './input.module.css';
 
-export type InputProps = {
+export type InputProps<T extends string | number> = {
+  value?: T;
+  defaultValue?: T;
+  onValueChange?: (value: T) => void;
   isError?: boolean;
   dispatchError?: (isError: boolean) => void;
-  className?: string;
-  onValueChange?: (value: string | number) => void;
-} & ComponentProps<'input'>;
+} & Omit<ComponentProps<'input'>, 'value' | 'defaultValue'>;
 
 export type InputCtxType = {
   isError?: boolean;
-  dispatchError?: (isError: boolean) => void;
-  className?: string;
-  currentLength?: number;
-} & Omit<ComponentProps<'input'>, 'children'>;
+};
 
 const [InputProvider, useInputContext] = contextCreator<InputCtxType>();
 
@@ -39,7 +37,6 @@ export const validateInput = ({
   pattern?: string;
   value?: string | number | readonly string[];
 }) => {
-  console.log(minLength, maxLength, min, max);
   // length validation
   if (type !== 'number') {
     const textValue = String(value);
@@ -57,7 +54,7 @@ export const validateInput = ({
   return false;
 };
 
-export const Input = ({
+export const Input = <T extends string | number>({
   className,
   onKeyUp,
   maxLength,
@@ -66,39 +63,33 @@ export const Input = ({
   onValueChange,
   children,
   ...props
-}: InputProps) => {
+}: InputProps<T>) => {
   const { value, defaultValue } = props;
-  const initValueState = typeof value === 'number' ? value : value?.length || 0;
-  const initDefaultValue = typeof defaultValue === 'number' ? defaultValue : defaultValue?.length || 0;
+  const initValuelength = typeof value === 'number' ? value : value?.length;
+  const initDefaultValueLength = typeof defaultValue === 'number' ? defaultValue : defaultValue?.length;
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const [currentLength, setLength] = useState(initValueState || initDefaultValue || 0);
-  const [error, setError] = useState(isError);
-  useEffect(() => dispatchError && dispatchError(error)), [error, dispatchError];
+  const [currentLength, setLength] = useState(initValuelength || initDefaultValueLength || 0);
 
   return (
-    <InputProvider value={{ ...props, isError: error, currentLength }}>
+    <InputProvider value={{ isError }}>
       <div className={styles.wrapper}>
         <input
           ref={inputRef}
-          className={clsx(styles.input, error && styles.error, className)}
+          className={clsx(styles.input, isError && styles.error, className)}
           onKeyUp={(e) => {
             if (onKeyUp) onKeyUp(e);
-            const { value } = e.currentTarget;
-            if (onValueChange) onValueChange(value);
-            setLength(value.length);
+            setLength(e.currentTarget.value.length);
             const validationResult = validateInput(e.currentTarget);
-            setError(validationResult);
             dispatchError && dispatchError(validationResult);
           }}
           maxLength={maxLength}
           onChange={(e) => {
             if (props.onChange) props.onChange(e);
-            const { value } = e.currentTarget;
-            if (onValueChange) onValueChange(value);
+            const { value, valueAsNumber } = e.currentTarget;
+            if (onValueChange) onValueChange((isNaN(valueAsNumber) ? value : valueAsNumber) as T);
             setLength(value.length);
             const validationResult = validateInput(e.currentTarget);
-            setError(validationResult);
             dispatchError && dispatchError(validationResult);
           }}
           {...props}
@@ -110,11 +101,11 @@ export const Input = ({
               onClick={() => {
                 if (inputRef?.current) {
                   inputRef.current.value = '';
+                  const { value, valueAsNumber } = inputRef.current;
                   const validationResult = validateInput(inputRef.current);
-                  setError(validationResult);
                   dispatchError && dispatchError(validationResult);
                   setLength(0);
-                  if (onValueChange) onValueChange('');
+                  if (onValueChange) onValueChange((isNaN(valueAsNumber) ? value : valueAsNumber) as T);
                 }
               }}
             >
@@ -124,7 +115,7 @@ export const Input = ({
           {maxLength && (
             <span>
               <span
-                className={clsx(styles['current-text'], error && styles.error, currentLength === 0 && styles.empty)}
+                className={clsx(styles['current-text'], isError && styles.error, currentLength === 0 && styles.empty)}
               >
                 {currentLength <= maxLength ? currentLength : maxLength}
               </span>
