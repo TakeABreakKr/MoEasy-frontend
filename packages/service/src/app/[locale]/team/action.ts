@@ -15,7 +15,6 @@ type TeamCreateActionState =
     };
 
 export const teamModifyAction = async (
-  selectedIds: string[] = [],
   _: TeamCreateActionState,
   formData: FormData,
 ): Promise<TeamCreateActionState> => {
@@ -34,7 +33,7 @@ export const teamModifyAction = async (
     )
       return { type: 'error', message: `${[step.key]}를 입력하지 않았습니다.` };
   }
-  selectedIds.forEach((id) => formData.append('members', id));
+  // selectedIds.forEach((id) => formData.append('members', id));
 
   // TODO: fetch 이후 로직
   await new Promise((resolve) => {

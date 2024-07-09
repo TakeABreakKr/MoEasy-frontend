@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
-import ImageUpload from './file-upload';
+import { ImageUpload } from './file-upload';
 
 const meta = {
   title: 'Example/ImageUpload',

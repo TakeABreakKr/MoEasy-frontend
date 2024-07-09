@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 
 import { AlarmProps } from '../alarm/alarm';
 import { Button } from '../button/button';
-import { ChevronDown, LogoIcon, SearchIcon, UserIcon } from '../icon';
+import { ChevronDown, LogoIconWithText, SearchIcon, UserIcon } from '../icon';
 
 import headerStyles from './header.module.css';
 
@@ -30,7 +30,7 @@ export const Header = ({ onCreateAccount, itemList = [] }: HeaderProps) => {
       <div className={headerStyles['header-wrapper']}>
         <div className={headerStyles['left-hand-side']}>
           <Link href="/">
-            <LogoIcon />
+            <LogoIconWithText />
           </Link>
           <ul className={headerStyles['link-wrapper']}>
             <li className={pathname === '/team' ? headerStyles.active : ''}>
