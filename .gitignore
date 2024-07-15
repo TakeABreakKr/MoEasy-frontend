@@ -9,6 +9,9 @@
 # testing
 /coverage
 
+# ide setting
+/.vscode
+
 # next.js
 /.next/
 /out/
@@ -37,3 +40,5 @@ next-env.d.ts
 
 # husky
 .eslintcache
+
+*storybook.log

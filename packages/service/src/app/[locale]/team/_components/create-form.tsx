@@ -1,0 +1,215 @@
+'use client';
+
+import { useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
+import clsx from 'clsx';
+
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+
+import { createQueryString } from '@/shared/utils/utils';
+
+import { SampleAlert } from '@moeasy/storybook/alert';
+import { ImageUpload } from '@moeasy/storybook/file-upload';
+import { Input } from '@moeasy/storybook/input';
+import { Progress } from '@moeasy/storybook/progress';
+
+import { CreateTeamFormType } from '../_feature/data';
+import { gotoTeamList, teamModifyAction } from '../action';
+
+import styles from './create-form.module.css';
+
+type CreateFormProps = {
+  action: typeof teamModifyAction;
+  data?: Partial<Omit<CreateTeamFormType, 'thumbnail'> & { thumbnail: string }>;
+};
+
+const CreateForm = ({ action, data = {} }: CreateFormProps) => {
+  const searchParams = useSearchParams();
+  const [message, formAction] = useFormState(action, { type: 'waiting' });
+  const currentStep = Number(searchParams.get('step') || '1');
+  return (
+    <form className={styles.container} action={formAction}>
+      <div className={styles.header}>
+        <h1>모임 생성</h1>
+      </div>
+      <div className={styles.body}>
+        <CreateFormAside step={currentStep} />
+        <CreateFormInput step={currentStep} searchParams={searchParams} />
+      </div>
+      {message.type === 'success' && <SampleAlert close={() => gotoTeamList()} message={message.message || ''} />}
+    </form>
+  );
+};
+
+CreateForm.displayName = 'CreateForm';
+
+const createStepArray = ['모임명 / 소개', '썸네일 설정', '카테고리 / 키워드', '인원제한 / 모임원'];
+
+const CreateFormAside = ({ step }: { step: number }) => {
+  return (
+    <aside className={styles.aside}>
+      <ul className={styles.step}>
+        {createStepArray.map((txt, index) => (
+          <li key={index} className={clsx(step === index + 1 && styles.selected)}>
+            <span className={styles.number}>{index + 1}</span>
+            <span className="text-gray-600">{txt}</span>
+          </li>
+        ))}
+      </ul>
+      <Progress value={step} max={createStepArray.length} className={styles.progress} />
+    </aside>
+  );
+};
+
+const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: URLSearchParams }) => {
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
+  const [members, setMembers] = useState<string[]>([]);
+  return (
+    <div className={styles['form-wrapper']}>
+      <div className={clsx(styles['form-group'], step !== 1 && styles.invisible)}>
+        <label>
+          <span className={styles.label}>모임 이름</span>
+          <Input
+            type="text"
+            className={styles.input}
+            placeholder="모임 이름을 입력해주세요"
+            name="name"
+            maxLength={30}
+            defaultValue={searchParams.get('name') || ''}
+            onValueChange={onValueChange('name', searchParams)}
+          />
+        </label>
+        <label>
+          <span className={styles.label}>모임 소개</span>
+          <Input
+            type="text"
+            className={styles.input}
+            placeholder="모임 소개를 입력해주세요"
+            name="explanation"
+            maxLength={100}
+            defaultValue={searchParams.get('explanation') || ''}
+            onValueChange={onValueChange('explanation', searchParams)}
+          />
+        </label>
+      </div>
+      <div className={clsx(styles['form-group'], step !== 2 && styles.invisible)}>
+        <span className={styles.label}>썸네일</span>
+        <ImageUpload selectedFile={thumbnail} onImageUpload={setThumbnail} />
+      </div>
+      <div className={clsx(styles['form-group'], step !== 3 && styles.invisible)}>
+        <label>
+          <span className={styles.label}>
+            키워드 설정
+            <span className={styles.detail}>키워드 5개까지 설정가능</span>
+          </span>
+          <Input
+            type="text"
+            className={styles.input}
+            placeholder="검색창에 #키워드 를 검색하면 나의 모임이 보여요-!"
+            defaultValue={searchParams.get('keyword') || ''}
+            onValueChange={onValueChange('keyword', searchParams)}
+            onKeyUp={(e) => {
+              e.preventDefault();
+              if (e.key === 'Enter') {
+                const keyword = searchParams.get('keyword');
+                if (keyword) {
+                  setMembers((prevMembers) => [...prevMembers, keyword]);
+                  onValueChange('keyword', searchParams)('');
+                  e.currentTarget.value = '';
+                }
+              }
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') e.preventDefault();
+            }}
+          />
+          {members.map((member) => (
+            <li key={member}>{member}</li>
+          ))}
+        </label>
+      </div>
+      <div className={clsx(styles['form-group'], step !== 4 && styles.invisible)}>
+        <label>
+          <span className={styles.label}>모임 인원</span>
+          <Input
+            type="number"
+            className={styles.input}
+            placeholder="모임 인원을 입력해주세요"
+            name="limit"
+            min={1}
+            defaultValue={parseInt(searchParams.get('limit') || '10')}
+            onValueChange={onValueChange('limit', searchParams)}
+          />
+        </label>
+        <label>
+          <span className={styles.label}>누구와 함께</span>
+          <Input
+            type="text"
+            className={styles.input}
+            placeholder="#친구 이름을 입력해주세요"
+            defaultValue={searchParams.get('keyword') || ''}
+            onValueChange={onValueChange('keyword', searchParams)}
+          />
+        </label>
+      </div>
+      <CreateFormButton step={step} searchParams={searchParams} />
+    </div>
+  );
+};
+
+const CreateFormButton = ({ step, searchParams }: { step: number; searchParams: URLSearchParams }) => {
+  const searchParamsObject = Object.fromEntries(searchParams);
+  return (
+    <div className={styles.navigation}>
+      {step === 1 && (
+        <Link className={styles['nav-button']} href="/mypage">
+          이전
+        </Link>
+      )}
+      {step !== 1 && (
+        <Link
+          className={styles['nav-button']}
+          href={{
+            pathname: '/team/create',
+            query: { ...searchParamsObject, step: Number(searchParamsObject.step || '1') - 1 },
+          }}
+        >
+          이전
+        </Link>
+      )}
+      {step !== createStepArray.length && (
+        <Link
+          className={styles['nav-button']}
+          href={{
+            pathname: '/team/create',
+            query: { ...searchParamsObject, step: Number(searchParamsObject.step || '1') + 1 },
+          }}
+        >
+          다음
+        </Link>
+      )}
+      {step === createStepArray.length && <FormCreateSubmitButton />}
+    </div>
+  );
+};
+
+/** 값 변경시 searchParams을 변경 */
+const onValueChange = (key: string, searchParams: URLSearchParams) => (value: string | number) => {
+  window.history.replaceState(
+    null,
+    '',
+    '?' + createQueryString(searchParams, key, typeof value === 'number' ? String(value) : value),
+  );
+};
+
+function FormCreateSubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button type="submit" className={styles['nav-button']} disabled={pending}>
+      {pending ? '모임 생성 중...' : '모임 생성'}
+    </button>
+  );
+}
+
+export default CreateForm;

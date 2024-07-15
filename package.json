@@ -1,34 +1,17 @@
 {
   "name": "moeasy",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "",
   "scripts": {
-    "dev": "next dev -p 4000",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "prepare": "husky",
-    "lint-staged": "lint-staged"
+    "service": "pnpm --filter service",
+    "storybook": "pnpm --filter components storybook",
+    "prepare": "husky"
   },
-  "lint-staged": {
-    "**/*.{tsx,ts,jsx,js}": [
-      "prettier --write"
-    ]
-  },
-  "dependencies": {
-    "next": "14.2.3",
-    "react": "^18",
-    "react-dom": "^18"
-  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.3",
     "husky": "^9.0.11",
-    "lint-staged": "^15.2.5",
-    "prettier": "^3.3.1",
     "typescript": "^5"
   }
 }
