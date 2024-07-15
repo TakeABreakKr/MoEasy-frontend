@@ -1,5 +1,7 @@
 # MoEasy-storybook
 
+[배포 페이지 링크](https://takeabreakkr.github.io/MoEasy-storybook/)
+
 외부로 공유해도 되는 component만을 관리하기 위한 public repository입니다.
 
 - 컴포넌트: react 18.3.1

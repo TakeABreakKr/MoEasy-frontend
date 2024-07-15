@@ -1,8 +1,7 @@
 .header {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 0 20px;
-  background-color: #a7a7a7;
-  color: white;
+  background-color: white;
   position: fixed;
   top: 0;
   left: 0;
@@ -61,7 +60,6 @@
 
 .header a:visited,
 .header a:link {
-  color: white;
   text-decoration: none;
 }
 
