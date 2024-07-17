@@ -1,8 +1,8 @@
 import { InputHTMLAttributes } from 'react';
 
-import { components } from '@/shared/api/test';
+import { components } from '@/shared/api/my-schema';
 
-export type CreateMeetingType = components['schemas']['CreateMeetingRequest'];
+export type CreateMeetingType = components['schemas']['MeetingCreateRequest'];
 
 export type TeamCreateKeyMap = keyof CreateMeetingType;
 
