@@ -1,0 +1,46 @@
+.button {
+  font-family: 'Noto Sans KR', sans-serif;
+  border-radius: 10px;
+  background: lightgray;
+  width: fit-content;
+  padding: 0.5rem;
+  position: relative;
+  padding-right: 3rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: black;
+  color: white;
+  width: 100%;
+  padding: 0.5rem;
+  transition: 1s ease;
+  clip-path: circle(0.8rem at calc(100% - 1.1rem) 50%);
+}
+
+.button:hover .icon {
+  clip-path: circle(150% at calc(100% - 1.1rem));
+}
+
+.button:hover .icon .default_icon {
+  animation-name: rotate;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  25%,
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -6,8 +6,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { AlarmProps } from '../alarm/alarm';
-import { Button } from '../button/button';
 import { ChevronDown, LogoIconWithText, SearchIcon, UserIcon } from '../icon';
+
+import { HeaderButton } from './header-button';
 
 import headerStyles from './header.module.css';
 
@@ -46,9 +47,10 @@ export const Header = ({ onCreateAccount, itemList = [] }: HeaderProps) => {
         </div>
         <div className={headerStyles['right-hand-side']}>
           <SearchIcon width={24} height={24} />
-          <Button asChild primary size="small" onClick={onCreateAccount}>
+          {/* <Button asChild primary size="small" onClick={onCreateAccount}>
             <Link href={'/mypage'}>내 모임 관리</Link>
-          </Button>
+          </Button> */}
+          <HeaderButton>내 정보 보기</HeaderButton>
           <UserIcon width={24} height={24} />
           <ChevronDown width={10} />
         </div>

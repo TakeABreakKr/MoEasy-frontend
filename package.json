@@ -13,5 +13,8 @@
   "devDependencies": {
     "husky": "^9.0.11",
     "typescript": "^5"
+  },
+  "resolutions": {
+    "@typescript-eslint/typescript-estree": "^7.16.1"
   }
 }
