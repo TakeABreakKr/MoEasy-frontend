@@ -14,6 +14,10 @@
   overflow: hidden;
 }
 
+.popup-container.popup-storybook {
+  position: relative;
+}
+
 .popup-container {
   position: fixed;
   top: 0;

@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, forwardRef } from 'react';
+import { ComponentPropsWithoutRef, forwardRef } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import clsx from 'clsx';
 
@@ -6,26 +6,25 @@ import buttonStyles from './button.module.css';
 
 type ButtonProps = {
   /**
-   * Is this the principal call to action on the page?
+   * 버튼의 테사
    */
-  primary?: boolean;
+  variant?: 'dark' | 'light' | 'primary' | 'ghost';
   /**
-   * How large should the button be?
+   * 버튼의 크기
    */
   size?: 'small' | 'medium' | 'large';
   asChild?: boolean;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
+} & ComponentPropsWithoutRef<'button'>;
 
 /**
  * 기본 버튼 컴포넌트
  */
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ primary = false, size = 'medium', asChild, ...props }, ref) => {
-    const mode = primary ? 'button--primary' : 'button--secondary';
+  ({ variant = 'dark', size = 'medium', asChild, className, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp
-        className={clsx(buttonStyles.button, buttonStyles[`button--${size}`], buttonStyles[mode])}
+        className={clsx(buttonStyles.button, buttonStyles[size], buttonStyles[variant], className)}
         ref={ref}
         {...props}
       />

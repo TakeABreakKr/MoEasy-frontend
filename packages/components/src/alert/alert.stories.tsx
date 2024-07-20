@@ -2,17 +2,20 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { Alert, AlertCloseButton, AlertContent, AlertMessage, AlertTitle } from './alert';
 
+import alertStyles from './alert.module.css';
+
 type Props = {
   title?: string | JSX.Element;
   message?: string | JSX.Element;
   open?(): void;
   close?(): void;
+  className?: string;
 };
 
-const SampleAlert = ({ title, message, open, close }: Props) => {
+const SampleAlert = ({ title, message, open, close, className }: Props) => {
   return (
     <Alert isOpen>
-      <AlertContent>
+      <AlertContent className={className}>
         <AlertTitle>{title}</AlertTitle>
         <AlertMessage>{message}</AlertMessage>
 
@@ -35,7 +38,9 @@ const meta = {
       },
     },
   },
-  args: {},
+  args: {
+    className: alertStyles['popup-storybook'],
+  },
 } satisfies Meta<typeof SampleAlert>;
 
 export default meta;

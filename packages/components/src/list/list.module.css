@@ -55,21 +55,15 @@
   width: 100%;
 }
 .userItem .userInfo {
-  background-color: #e2e2e2;
-  color: white;
-  border-radius: 20px;
   flex-grow: 1;
   display: flex;
   align-items: center;
   padding: 0.4rem;
 }
-.userItem.checked .userInfo {
-  background-color: #4a90e2;
-}
 
 .userAvatar {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   overflow: hidden;
   background-color: #f0f0f0;
