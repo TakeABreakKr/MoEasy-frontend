@@ -50,7 +50,7 @@ export const Header = ({ onCreateAccount, itemList = [] }: HeaderProps) => {
           {/* <Button asChild primary size="small" onClick={onCreateAccount}>
             <Link href={'/mypage'}>내 모임 관리</Link>
           </Button> */}
-          <HeaderButton>내 정보 보기</HeaderButton>
+          <HeaderButton>내 모임</HeaderButton>
           <UserIcon width={24} height={24} />
           <ChevronDown width={10} />
         </div>

@@ -4,36 +4,44 @@ import { fn } from '@storybook/test';
 import { Button } from './button';
 
 const meta = {
-  title: 'Example/Button',
+  title: 'Common/Button',
   component: Button,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {},
-  args: { onClick: fn() },
+  argTypes: {
+    disabled: {
+      control: 'boolean',
+      description: '버튼 비활성화 여부',
+    },
+  },
+  args: { onClick: fn(), size: 'medium', rounded: 'medium', children: 'Button' },
 } satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Dark: Story = {
   args: {
     variant: 'dark',
-    children: 'Button',
   },
 };
 
-export const Secondary: Story = {
+export const Light: Story = {
   args: {
-    children: 'Button',
+    variant: 'light',
   },
 };
 
-export const Large: Story = {
+export const Primary: Story = {
   args: {
-    size: 'large',
-    children: 'Button',
+    variant: 'primary',
+  },
+};
+export const Ghost: Story = {
+  args: {
+    variant: 'ghost',
   },
 };
 
@@ -41,5 +49,17 @@ export const Small: Story = {
   args: {
     size: 'small',
     children: 'Button',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: 'large',
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
   },
 };
