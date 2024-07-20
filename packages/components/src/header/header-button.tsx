@@ -1,7 +1,7 @@
 import { ComponentPropsWithRef } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 
-import { PlusIcon } from '@/icon';
+import { PlusIcon } from '../icon';
 
 import styles from './header-button.module.css';
 
