@@ -160,7 +160,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
         </fieldset>
         <label className={styles['label-wrapper']}>
           <span className={styles.label}>누구와 함께</span>
-          <SearchButton>유저 닉네임을 검색해보세요</SearchButton>
+          <SearchButton type="button">유저 닉네임을 검색해보세요</SearchButton>
         </label>
       </div>
       <CreateFormButton step={step} searchParams={searchParams} />

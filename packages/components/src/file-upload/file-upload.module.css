@@ -7,6 +7,23 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  color: #999;
+}
+.image-upload-container:hover {
+  background-color: #cecece;
+  color: #8c8c8c;
+  border-color: #8c8c8c;
+}
+.image-upload-container:hover .plus-icon {
+  background-color: #8c8c8c;
+}
+.image-upload-container:active {
+  background-color: #929292;
+  color: #6f6f6f;
+  border-color: #6f6f6f;
+}
+.image-upload-container:active .plus-icon {
+  background-color: #6f6f6f;
 }
 
 .upload-placeholder {
@@ -33,11 +50,13 @@
   height: 48px;
   border-radius: 50%;
   margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .upload-text {
   margin-top: 10px;
-  color: #999;
 }
 
 .crop-container {

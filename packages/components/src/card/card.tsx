@@ -4,7 +4,8 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 import { Button } from '../button/button';
-import { HeartIcon } from '../icon';
+import { EllipsisIcon } from '../icon';
+import { Separator } from '../separator';
 
 import cardStyle from './card.module.css';
 
@@ -33,22 +34,21 @@ export default function Card({
 }: CardProps) {
   return (
     <div className={clsx(cardStyle.card, className)} {...props}>
-      <div className={cardStyle.thumbnail}>
-        <Image src={`https://via.placeholder.com/120/${idx}`} width={120} height={120} alt={title} />
+      <div className={cardStyle['thumbnail-wrapper']}>
+        <div className={cardStyle.thumbnail}>
+          <Image src={`https://via.placeholder.com/116/${idx}`} width={116} height={116} alt={title} />
+        </div>
       </div>
       <div className={cardStyle.interact}>
-        <button onClick={onLikeClick}>
-          <HeartIcon width={30} height={30} className={cardStyle.like} />
-        </button>
-        <Button size="small">참여하기</Button>
+        <Button size="small" variant="ghost">
+          <EllipsisIcon />
+        </Button>
       </div>
       <div>
         <h2>{title}</h2>
+        <p>{description}</p>
       </div>
-      <div>
-        <span>{count}</span>/<span>{maxCount}</span>명 | {isWaiting ? '대기 (2)' : ''} 개설일 : 2021.07.30
-      </div>
-      <p>{description}</p>
+      <Separator direction="horizontal" color="#d5d5d5" />
     </div>
   );
 }

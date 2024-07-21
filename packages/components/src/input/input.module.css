@@ -77,9 +77,9 @@
 }
 
 @media screen and (min-width: 1025px) {
-  .input[type='number']:hover + .span,
-  .input[type='number']:active + .span,
-  .input[type='number']:focus + .span {
+  .input[type='number']:hover:not(:disabled) + .span,
+  .input[type='number']:active:not(:disabled) + .span,
+  .input[type='number']:focus:not(:disabled) + .span {
     right: 40px;
   }
 }

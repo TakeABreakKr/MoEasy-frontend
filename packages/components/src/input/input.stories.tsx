@@ -10,7 +10,7 @@ const SampleInputUse = (props: InputProps<string>) => {
 };
 
 const meta = {
-  title: 'Example/Input',
+  title: 'Common/Input',
   component: SampleInputUse,
   parameters: {
     layout: 'centered',
