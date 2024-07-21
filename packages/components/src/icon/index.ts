@@ -5,7 +5,7 @@ import HeartIcon from './heart.svg';
 import LogoIconWithText from './logo';
 import LogoIcon from './logo-icon';
 import PlusIcon from './plus';
-import SearchIcon from './search.svg';
+import SearchIcon from './search';
 import UserIcon from './user.svg';
 import XIcon from './x';
 
