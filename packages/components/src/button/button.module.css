@@ -12,6 +12,12 @@
 /** variant: dark  */
 .button.dark {
   color: white;
+  background-color: #3b3b3b;
+}
+.button.dark:hover {
+  background-color: #222222;
+}
+.button.dark:active {
   background-color: #000000;
 }
 /** variant: light  */
@@ -23,6 +29,14 @@
   color: #aaaaaa;
   border-color: #aaaaaa;
   background-color: #e5e5e5;
+}
+.button.light:hover {
+  background-color: #e8e8e8;
+}
+.button.light:active {
+  color: #282828;
+  border-color: #282828;
+  background-color: #b1b1b1;
 }
 /** variant: light  */
 .primary {
@@ -69,11 +83,11 @@
 }
 
 .button:disabled:not(.ghost) {
-  color: #7a7a7a;
-  border-color: #7a7a7a;
-  background-color: #b1b1b1;
+  color: #aaaaaa;
+  border-color: #aaaaaa;
+  background-color: #e5e5e5;
 }
-.primary.button:disabled {
+.button.primary:disabled {
   color: #d0d0d0;
   border-color: #d0d0d0;
   background-color: #f5f5f5;

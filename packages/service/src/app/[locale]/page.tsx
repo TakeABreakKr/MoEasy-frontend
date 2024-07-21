@@ -17,7 +17,7 @@ export default async function Home() {
           <h1>{t('desc')}</h1>
           <p>{t('desc-detail')}</p>
           <div>
-            <Button asChild size="small">
+            <Button asChild size="small" rounded="small">
               <Link href={'/about'}>자세히 보기</Link>
             </Button>
           </div>

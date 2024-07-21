@@ -34,8 +34,8 @@ export const Header = ({ onCreateAccount, itemList = [] }: HeaderProps) => {
             <LogoIconWithText />
           </Link>
           <ul className={headerStyles['link-wrapper']}>
-            <li className={pathname === '/team' ? headerStyles.active : ''}>
-              <Link href={'/team'}>모임 둘러보기</Link>
+            <li className={pathname === '/meeting' ? headerStyles.active : ''}>
+              <Link href={'/meeting'}>모임 둘러보기</Link>
             </li>
             <li className={pathname === '/about' ? headerStyles.active : ''}>
               <Link href={'/about'}>ABOUT</Link>
