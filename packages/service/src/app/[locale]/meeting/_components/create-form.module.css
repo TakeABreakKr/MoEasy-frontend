@@ -84,6 +84,14 @@
   display: none;
 }
 
+.form-group .label-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
 .form-group .label {
   display: flex;
   gap: 1rem;

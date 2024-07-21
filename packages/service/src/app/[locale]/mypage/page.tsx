@@ -62,7 +62,7 @@ export default function MyPageComponent() {
               <Button>공유</Button>
             </div>
             <div className={styles['vertical-wrapper']}>
-              <Link href={'/team/create'} className={styles['action-button']}>
+              <Link href={'/meeting/create'} className={styles['action-button']}>
                 그룹 생성 <span>+</span>
               </Link>
               <button className={styles['action-button']}>

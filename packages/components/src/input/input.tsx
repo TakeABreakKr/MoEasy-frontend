@@ -73,7 +73,7 @@ export const Input = <T extends string | number>({
 
   return (
     <InputProvider value={{ isError }}>
-      <div className={styles.wrapper}>
+      <div className={clsx(styles.wrapper, className)}>
         <input
           ref={inputRef}
           className={clsx(styles.input, isError && styles.error, className)}

@@ -1,5 +1,6 @@
 import { ComponentPropsWithRef } from 'react';
-import { Slot } from '@radix-ui/react-slot';
+
+import Link, { LinkProps } from 'next/link';
 
 import { PlusIcon } from '../icon';
 
@@ -8,18 +9,26 @@ import styles from './header-button.module.css';
 type HeaderButtonProps = {
   children: React.ReactNode;
   icon?: (props: ComponentPropsWithRef<'svg'>) => React.ReactNode;
-  asChild?: boolean;
-};
+} & (({ href: string } & Omit<LinkProps, 'href'>) | ({ href?: never } & ComponentPropsWithRef<'button'>));
 
-export const HeaderButton = ({ children, icon, asChild = false }: HeaderButtonProps) => {
-  const Comp = asChild ? Slot : 'button';
+export const HeaderButton = ({ children, icon, ...props }: HeaderButtonProps) => {
+  if (typeof props.href === 'string')
+    return (
+      <Link className={styles.button} {...props}>
+        <span className="text">{children}</span>
+        <span className={styles.icon}>
+          {children}
+          {icon ? icon({ className: styles.default_icon }) : <PlusIcon className={styles.default_icon} />}
+        </span>
+      </Link>
+    );
   return (
-    <Comp className={styles.button}>
+    <button className={styles.button} {...props}>
       <span className="text">{children}</span>
       <span className={styles.icon}>
         {children}
         {icon ? icon({ className: styles.default_icon }) : <PlusIcon className={styles.default_icon} />}
       </span>
-    </Comp>
+    </button>
   );
 };

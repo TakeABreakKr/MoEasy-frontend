@@ -47,10 +47,7 @@ export const Header = ({ onCreateAccount, itemList = [] }: HeaderProps) => {
         </div>
         <div className={headerStyles['right-hand-side']}>
           <SearchIcon width={24} height={24} />
-          {/* <Button asChild primary size="small" onClick={onCreateAccount}>
-            <Link href={'/mypage'}>내 모임 관리</Link>
-          </Button> */}
-          <HeaderButton>내 모임</HeaderButton>
+          <HeaderButton href="/mypage">내 모임</HeaderButton>
           <UserIcon width={24} height={24} />
           <ChevronDown width={10} />
         </div>

@@ -10,6 +10,7 @@ import { useSearchParams } from 'next/navigation';
 import { createQueryString } from '@/shared/utils/utils';
 
 import { SampleAlert } from '@moeasy/storybook/alert';
+import { Button, SearchButton } from '@moeasy/storybook/button';
 import { ImageUpload } from '@moeasy/storybook/file-upload';
 import { Input } from '@moeasy/storybook/input';
 import { Progress } from '@moeasy/storybook/progress';
@@ -65,6 +66,8 @@ const CreateFormAside = ({ step }: { step: number }) => {
 const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: URLSearchParams }) => {
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [members, setMembers] = useState<string[]>([]);
+  const limitDisabled = searchParams.get('limit') === 'disabled';
+
   return (
     <div className={styles['form-wrapper']}>
       <div className={clsx(styles['form-group'], step !== 1 && styles.invisible)}>
@@ -130,27 +133,34 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
         </label>
       </div>
       <div className={clsx(styles['form-group'], step !== 4 && styles.invisible)}>
-        <label>
+        <fieldset className={styles['label-wrapper']}>
           <span className={styles.label}>모임 인원</span>
-          <Input
-            type="number"
-            className={styles.input}
-            placeholder="모임 인원을 입력해주세요"
-            name="limit"
-            min={1}
-            defaultValue={parseInt(searchParams.get('limit') || '10')}
-            onValueChange={onValueChange('limit', searchParams)}
-          />
-        </label>
-        <label>
+          <div style={{ display: 'flex', gap: 10 }}>
+            <Input
+              type="number"
+              className={styles.input}
+              disabled={searchParams.get('limit') === 'disabled'}
+              placeholder="모임 인원을 입력해주세요"
+              name="limit"
+              min={1}
+              defaultValue={parseInt(limitDisabled ? '10' : searchParams.get('limit') || '10')}
+              onValueChange={onValueChange('limit', searchParams)}
+            />
+            <Button asChild type="button" variant="primary" size="thick" rounded="medium">
+              <Link
+                href={{
+                  pathname: '/meeting/create',
+                  query: { ...Object.fromEntries(searchParams), limit: limitDisabled ? '10' : 'disabled' },
+                }}
+              >
+                제한 없음
+              </Link>
+            </Button>
+          </div>
+        </fieldset>
+        <label className={styles['label-wrapper']}>
           <span className={styles.label}>누구와 함께</span>
-          <Input
-            type="text"
-            className={styles.input}
-            placeholder="#친구 이름을 입력해주세요"
-            defaultValue={searchParams.get('keyword') || ''}
-            onValueChange={onValueChange('keyword', searchParams)}
-          />
+          <SearchButton>유저 닉네임을 검색해보세요</SearchButton>
         </label>
       </div>
       <CreateFormButton step={step} searchParams={searchParams} />
@@ -171,7 +181,7 @@ const CreateFormButton = ({ step, searchParams }: { step: number; searchParams: 
         <Link
           className={styles['nav-button']}
           href={{
-            pathname: '/team/create',
+            pathname: '/meeting/create',
             query: { ...searchParamsObject, step: Number(searchParamsObject.step || '1') - 1 },
           }}
         >
@@ -182,7 +192,7 @@ const CreateFormButton = ({ step, searchParams }: { step: number; searchParams: 
         <Link
           className={styles['nav-button']}
           href={{
-            pathname: '/team/create',
+            pathname: '/meeting/create',
             query: { ...searchParamsObject, step: Number(searchParamsObject.step || '1') + 1 },
           }}
         >
