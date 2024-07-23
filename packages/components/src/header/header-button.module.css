@@ -1,13 +1,15 @@
 .button {
   font-family: 'Noto Sans KR', sans-serif;
   border-radius: 30px;
-  background: lightgray;
+  background: #d6d6d6;
   width: fit-content;
-  padding: 0.5rem 15px;
+  padding: 0.625rem 15px;
   position: relative;
   padding-right: calc(2.5rem + 15px);
   overflow: hidden;
   cursor: pointer;
+  color: black;
+  text-decoration: none;
 }
 
 .icon {
@@ -20,9 +22,9 @@
   background-color: black;
   color: white;
   width: 100%;
-  padding: 0.5rem 15px;
+  padding: 0.625rem 15px;
   transition: 1s ease;
-  clip-path: circle(0.8rem at calc(100% - 1.5rem) 50%);
+  clip-path: circle(1rem at calc(100% - 1.5rem) 50%);
 }
 
 .button:hover .icon {

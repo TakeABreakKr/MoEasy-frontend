@@ -16,7 +16,7 @@ type ButtonProps = {
   /**
    * 버튼 외곽의 굴곡
    */
-  rounded?: 'small' | 'medium' | 'large';
+  rounded?: 'small' | 'medium' | 'large' | 'full';
   asChild?: boolean;
 } & ComponentPropsWithoutRef<'button'>;
 

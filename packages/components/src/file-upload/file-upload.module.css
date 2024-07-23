@@ -8,6 +8,9 @@
   align-items: center;
   cursor: pointer;
   color: #999;
+  transition:
+    background-color 200ms ease-in-out,
+    color 200ms ease-in-out;
 }
 .image-upload-container:hover {
   background-color: #cecece;

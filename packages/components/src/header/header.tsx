@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import clsx from 'clsx';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -46,10 +47,16 @@ export const Header = ({ onCreateAccount, itemList = [] }: HeaderProps) => {
           </ul>
         </div>
         <div className={headerStyles['right-hand-side']}>
-          <SearchIcon width={24} height={24} />
+          <button className={clsx(headerStyles.icon, headerStyles['search-icon'])}>
+            <SearchIcon width={24} height={24} />
+          </button>
           <HeaderButton href="/mypage">내 모임</HeaderButton>
-          <UserIcon width={24} height={24} />
-          <ChevronDown width={10} />
+          <button className={headerStyles.icon}>
+            <span className={clsx(headerStyles.icon, headerStyles['user-icon'])}>
+              <UserIcon width={24} height={24} />
+            </span>
+            <ChevronDown width={10} />
+          </button>
         </div>
       </div>
     </header>
