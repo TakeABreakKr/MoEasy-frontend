@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { AlarmProps } from '../alarm/alarm';
 import { ChevronDown, LogoIconWithText, SearchIcon, UserIcon } from '../icon';
 
 import { HeaderButton } from './header-button';
@@ -20,12 +19,11 @@ type User = {
 interface HeaderProps {
   user?: User;
   onCreateAccount?: () => void;
-  itemList?: AlarmProps['itemList'];
 }
 /**
  * 공통 헤더 컴포넌트
  */
-export const Header = ({ onCreateAccount, itemList = [] }: HeaderProps) => {
+export const Header = ({ onCreateAccount }: HeaderProps) => {
   const pathname = usePathname();
   return (
     <header className={headerStyles.header}>
