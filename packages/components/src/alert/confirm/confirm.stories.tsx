@@ -21,7 +21,7 @@ const sampleButtonWrapperStyle = {
 } as const satisfies CSSProperties;
 
 const flewGrowOne = {
-  flexGrow: 1,
+  flex: 1,
 } as const satisfies CSSProperties;
 
 const SampleAlert = ({ title, message, className }: Props) => {
@@ -31,7 +31,7 @@ const SampleAlert = ({ title, message, className }: Props) => {
       <AlertContent className={className}>
         <div style={sampleCloseButtonStyle}>
           <AlertCloseButton variant="dark" rounded="full" size="small">
-            <XIcon />
+            <XIcon width={15} height={15} />
           </AlertCloseButton>
         </div>
         <AlertTitle>{title}</AlertTitle>

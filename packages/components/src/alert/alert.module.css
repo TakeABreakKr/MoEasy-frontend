@@ -34,8 +34,7 @@
   background-color: white;
   border-radius: 8px;
   padding: 24px;
-  width: 90%;
-  max-width: 630px;
+  min-width: 630px;
   min-height: 230px;
   text-align: center;
 }

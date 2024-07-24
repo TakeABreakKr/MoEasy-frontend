@@ -25,7 +25,7 @@ const SampleAlert = ({ title, message, excludeButton, className }: Props) => {
       <AlertContent className={className}>
         <div style={sampleStyle}>
           <AlertCloseButton variant="dark" rounded="full" size="small">
-            <XIcon />
+            <XIcon width={15} height={15} />
           </AlertCloseButton>
         </div>
         <AlertTitle>{title}</AlertTitle>

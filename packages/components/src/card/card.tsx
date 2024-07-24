@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Button } from '../button/button';
 import { EllipsisIcon } from '../icon';
 import { Separator } from '../separator';
+import { NameTag } from '../tag';
 
 import cardStyle from './card.module.css';
 
@@ -49,6 +50,23 @@ export default function Card({
         <pre className={cardStyle.description}>{description}</pre>
       </div>
       <Separator direction="horizontal" color="#d5d5d5" />
+      <div className={cardStyle['member-wrapper']}>
+        <NameTag userRole="limit">5명</NameTag>
+        <NameTag src={'https://via.placeholder.com/30'} userRole="admin">
+          모임장
+        </NameTag>
+        <NameTag src={'https://via.placeholder.com/30'} userRole="manager">
+          매니저
+        </NameTag>
+        <NameTag src={'https://via.placeholder.com/30'} userRole="manager">
+          매니저
+        </NameTag>
+        <NameTag src={'https://via.placeholder.com/30'}>모임원</NameTag>
+        <NameTag src={'https://via.placeholder.com/30'}>모임원</NameTag>
+        <NameTag src={'https://via.placeholder.com/30'}>모임원</NameTag>
+        <NameTag src={'https://via.placeholder.com/30'}>모임원</NameTag>
+        <NameTag>더 보기</NameTag>
+      </div>
     </div>
   );
 }
