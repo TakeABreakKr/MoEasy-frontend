@@ -2,9 +2,8 @@ import { ComponentPropsWithoutRef } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import clsx from 'clsx';
 
-import { XIcon } from '@/icon';
-
 import { Button } from '../button';
+import { XIcon } from '../icon';
 
 import tagStyle from './tag.module.css';
 
