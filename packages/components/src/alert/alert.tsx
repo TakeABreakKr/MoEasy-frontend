@@ -1,4 +1,5 @@
-import React, { ComponentProps, HTMLAttributes, isValidElement, useState } from 'react';
+import React, { ComponentProps, HTMLAttributes, useReducer } from 'react';
+import { Slot } from '@radix-ui/react-slot';
 import clsx from 'clsx';
 
 import { Button } from '../button';
@@ -17,31 +18,36 @@ type AlertProps = {
 type AlertCtxType = {
   size?: 'small' | 'medium' | 'large';
   isOpen?: boolean;
-  open(): void;
-  close(): void;
+  dispatchOpen: React.Dispatch<'open' | 'close' | 'toggle'>;
 };
 
 const [AlertContextProvider, useSelectContext] = contextCreator<AlertCtxType>();
 
-const Alert = ({ children, isOpen: isOpenProp, ...props }: AlertProps) => {
-  const [isOpen, setIsOpen] = useState(isOpenProp);
-
-  const open = () => setIsOpen(true);
-  const close = () => setIsOpen(false);
-
-  return <AlertContextProvider value={{ isOpen, open, close }}>{children}</AlertContextProvider>;
+const alertReducer = (state: boolean, type: 'open' | 'close' | 'toggle') => {
+  switch (type) {
+    case 'open':
+      return true;
+    case 'close':
+      return false;
+    case 'toggle':
+      return !state;
+  }
 };
-const AlertTrigger = ({ children }: { children: React.ReactNode }) => {
-  const { open } = useSelectContext();
-  if (!isValidElement(children)) return null;
-  return React.cloneElement(children as JSX.Element, {
-    onClick: (e: React.MouseEvent<HTMLElement>) => {
-      open();
-      if (children.props.onClick) {
-        children.props.onClick(e);
-      }
-    },
-  });
+
+const Alert = ({ children, isOpen: isOpenProp, ...props }: AlertProps) => {
+  const [isOpen, dispatchOpen] = useReducer(alertReducer, isOpenProp ?? false);
+
+  return <AlertContextProvider value={{ isOpen, dispatchOpen }}>{children}</AlertContextProvider>;
+};
+const AlertTrigger = ({ asChild, children }: { asChild?: boolean; children: React.ReactNode }) => {
+  const { dispatchOpen } = useSelectContext();
+  if (asChild) return <Slot onClick={() => dispatchOpen('open')}>{children}</Slot>;
+
+  return (
+    <Button variant="dark" size="medium" onClick={() => dispatchOpen('open')}>
+      {children}
+    </Button>
+  );
 };
 
 const AlertContent = ({ children, className, ...props }: HTMLAttributes<HTMLDivElement>) => {
@@ -60,16 +66,17 @@ const AlertTitle = ({ children }: { children: React.ReactNode }) => {
 };
 
 const AlertMessage = ({ children }: { children: React.ReactNode }) => {
-  return <p className={styles.message}>{children}</p>;
+  return <pre className={styles.message}>{children}</pre>;
 };
 
-const AlertCloseButton = ({ onClick, ...props }: ComponentProps<typeof Button>) => {
-  const { close } = useSelectContext();
+const AlertCloseButton = ({ asChild, onClick, ...props }: ComponentProps<typeof Button>) => {
+  const { dispatchOpen } = useSelectContext();
+  const Comp = asChild ? Slot : Button;
   return (
-    <Button
+    <Comp
       onClick={(e) => {
         onClick && onClick(e);
-        close();
+        dispatchOpen('close');
       }}
       {...props}
     />

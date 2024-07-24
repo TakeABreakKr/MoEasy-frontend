@@ -9,15 +9,16 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  args: {
+    idx: 1,
+    title: '제목',
+    description: `사이드 프로젝트: 디스코드 봇 모이지(moeasy)를 완성시키는 것을 목표로 하는 모임입니다. 사이드 프로젝트: 디스코드 봇 모이지(moeasy)를 완성시키는 것을 목표로 하는 모...`,
+  },
 } satisfies Meta<typeof Card>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Sample: Story = {
-  args: {
-    idx: 1,
-    title: '제목',
-    description: `내용`,
-  },
+  args: {},
 };

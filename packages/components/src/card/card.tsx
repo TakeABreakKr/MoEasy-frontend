@@ -40,13 +40,13 @@ export default function Card({
         </div>
       </div>
       <div className={cardStyle.interact}>
-        <Button size="small" variant="ghost">
+        <Button size="small" variant="ghost" rounded="small">
           <EllipsisIcon />
         </Button>
       </div>
       <div>
-        <h2>{title}</h2>
-        <p>{description}</p>
+        <h2 className={cardStyle.title}>{title}</h2>
+        <pre className={cardStyle.description}>{description}</pre>
       </div>
       <Separator direction="horizontal" color="#d5d5d5" />
     </div>

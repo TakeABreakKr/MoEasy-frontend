@@ -56,6 +56,13 @@
   color: inherit;
   background-color: inherit;
 }
+.ghost:hover {
+  background-color: #e3e3e3;
+}
+.ghost:active {
+  background-color: #cfcfcf;
+}
+
 .small {
   font-size: 1rem;
   padding: 0.5rem;

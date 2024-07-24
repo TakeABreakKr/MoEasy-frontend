@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "service": "pnpm --filter service",
-    "storybook": "pnpm --filter components storybook",
+    "storybook": "pnpm --filter storybook storybook",
     "prepare": "husky"
   },
   "keywords": [],

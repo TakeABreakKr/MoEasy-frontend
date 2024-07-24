@@ -1,15 +1,15 @@
 .card {
-  width: 25rem;
+  width: 33.75rem;
   height: 20rem;
   position: relative;
-  padding: 1rem;
+  padding: 2.1875rem;
   background-color: #e2e2e2;
   border-radius: 1rem;
   margin-bottom: 3rem;
   display: flex;
   flex-direction: column;
 }
-.card .thumbnail-wrapper {
+.thumbnail-wrapper {
   width: 130px;
   height: 130px;
   border-radius: 50%;
@@ -21,7 +21,7 @@
   align-items: center;
 }
 
-.card .thumbnail {
+.thumbnail {
   width: 116px;
   height: 116px;
   border: 3px solid #ffffff;
@@ -29,15 +29,26 @@
   overflow: hidden;
   background-color: #d9d9d9;
 }
+.title {
+  font-size: 1.875rem;
+}
+.description {
+  font-size: 1.125rem;
+  font-family: inherit;
+  height: 4.5em;
+  white-space: pre-wrap;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
 
-.card .interact {
+.interact {
   display: flex;
   justify-content: flex-end;
   padding: 0.5rem;
   gap: 0.5rem;
   align-items: center;
-}
-
-.card .like {
-  fill: red;
 }
