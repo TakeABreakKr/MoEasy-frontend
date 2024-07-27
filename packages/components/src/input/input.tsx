@@ -4,7 +4,15 @@ import clsx from 'clsx';
 import { XIcon } from '../icon';
 import { contextCreator } from '../utils/useSafeContext';
 
-import styles from './input.module.css';
+import {
+  ctlTextMax,
+  ctxLabelStyle,
+  errorTextColor,
+  inputCtlWrapper,
+  inputVariants,
+  inputWrapper,
+  resetXIconStyles,
+} from './input.css';
 
 export type InputProps<T extends string | number> = {
   value?: T;
@@ -73,10 +81,10 @@ export const Input = <T extends string | number>({
 
   return (
     <InputProvider value={{ isError }}>
-      <div className={clsx(styles.wrapper, className)}>
+      <div className={clsx(inputWrapper, className)}>
         <input
           ref={inputRef}
-          className={clsx(styles.input, isError && styles.error, className)}
+          className={clsx(inputVariants({ error: isError }), className)}
           onKeyUp={(e) => {
             if (onKeyUp) onKeyUp(e);
             setLength(e.currentTarget.value.length);
@@ -94,10 +102,10 @@ export const Input = <T extends string | number>({
           }}
           {...props}
         />
-        <span className={styles.span}>
+        <span className={inputCtlWrapper}>
           {currentLength !== 0 && (
             <button
-              className={styles.x}
+              className={resetXIconStyles}
               onClick={() => {
                 if (inputRef?.current) {
                   inputRef.current.value = '';
@@ -114,12 +122,10 @@ export const Input = <T extends string | number>({
           )}
           {maxLength && (
             <span>
-              <span
-                className={clsx(styles['current-text'], isError && styles.error, currentLength === 0 && styles.empty)}
-              >
+              <span className={clsx(currentLength === 0 ? ctlTextMax : isError && errorTextColor)}>
                 {currentLength <= maxLength ? currentLength : maxLength}
               </span>
-              <span className={styles['text-max']}>/{maxLength}</span>
+              <span className={ctlTextMax}>/{maxLength}</span>
             </span>
           )}
         </span>
@@ -137,7 +143,7 @@ type InputMessageProps = {
 export const InputMessage = ({ className, children, errorMessage, ...props }: InputMessageProps) => {
   const ctx = useInputContext();
   return (
-    <span className={className ?? clsx(styles['label-default'], ctx.isError && styles.error)} {...props}>
+    <span className={className ?? clsx(ctxLabelStyle, ctx.isError && errorTextColor)} {...props}>
       {ctx.isError ? errorMessage : children}
     </span>
   );

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Checkbox } from '../../checkbox';
 import { UserProps } from '../list';
 
-import styles from '../list.module.css';
+import * as styles from '../list.css';
 
 type ListItemProps = {
   user: UserProps;

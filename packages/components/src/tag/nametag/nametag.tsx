@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 import { Button } from '../../button';
 
-import nameTagStyle from './nametag.module.css';
+import * as nameTagStyle from './nametag.css';
 
 export type NameTagProps = ComponentPropsWithoutRef<typeof Button> & {
   src?: string;
@@ -16,15 +16,7 @@ export type NameTagProps = ComponentPropsWithoutRef<typeof Button> & {
 export const NameTag = ({ asChild, userRole, className, src, children, ...props }: NameTagProps) => {
   const Comp = asChild ? Slot : 'button';
   return (
-    <Comp
-      className={clsx(
-        nameTagStyle.badge,
-        userRole && nameTagStyle[userRole],
-        !!src && nameTagStyle['icon-contain'],
-        className,
-      )}
-      {...props}
-    >
+    <Comp className={clsx(nameTagStyle.badge({ userRole, iconContain: !!src }), className)} {...props}>
       {src && <NameTagIcon src={src} alt={children?.toString() ?? 'user-thumbnail'} />}
       {children}
     </Comp>

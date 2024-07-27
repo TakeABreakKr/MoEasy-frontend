@@ -4,7 +4,7 @@ import Link, { LinkProps } from 'next/link';
 
 import { CrossIcon } from '../icon';
 
-import styles from './header-button.module.css';
+import * as styles from './header-button.css';
 
 type HeaderButtonProps = {
   children: React.ReactNode;
@@ -18,7 +18,7 @@ export const HeaderButton = ({ children, icon, ...props }: HeaderButtonProps) =>
         <span className="text">{children}</span>
         <span className={styles.icon}>
           {children}
-          {icon ? icon({ className: styles.default_icon }) : <CrossIcon className={styles.default_icon} />}
+          {icon ? icon({ className: styles.icon }) : <CrossIcon className={styles.defaultIcon} />}
         </span>
       </Link>
     );
@@ -27,7 +27,7 @@ export const HeaderButton = ({ children, icon, ...props }: HeaderButtonProps) =>
       <span className="text">{children}</span>
       <span className={styles.icon}>
         {children}
-        {icon ? icon({ className: styles.default_icon }) : <CrossIcon className={styles.default_icon} />}
+        {icon ? icon({ className: styles.defaultIcon }) : <CrossIcon className={styles.defaultIcon} />}
       </span>
     </button>
   );

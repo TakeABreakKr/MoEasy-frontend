@@ -3,7 +3,7 @@ import React, { useId, useState } from 'react';
 
 import { PlusIcon } from '../icon';
 
-import styles from './file-upload.module.css';
+import * as styles from './file-upload.css';
 
 interface ImageUploadProps {
   selectedFile?: File | null;
@@ -27,15 +27,15 @@ export const ImageUpload = ({ selectedFile, onImageUpload }: ImageUploadProps) =
   };
 
   return (
-    <div className={styles['image-upload-container']}>
+    <div className={styles.imageUploadContainer}>
       {!selectedFile ? (
-        <label className={styles['upload-placeholder']} htmlFor={id}>
+        <label className={styles.uploadPlaceholder} htmlFor={id}>
           <input type="file" hidden accept="image/*" onChange={handleFileChange} id={id} />
-          <div className={styles['upload-button']}>
-            <span className={styles['plus-icon']}>
+          <div className={styles.uploadButton}>
+            <span className={styles.plusIcon}>
               <PlusIcon width={30} height={30} />
             </span>
-            <div className={styles['upload-text']}>
+            <div className={styles.uploadText}>
               1:1 비율
               <br />
               (500*500 px 권장)
@@ -44,8 +44,8 @@ export const ImageUpload = ({ selectedFile, onImageUpload }: ImageUploadProps) =
         </label>
       ) : null}
       {preview && (
-        <div className={styles['cropped-image-container']}>
-          <img src={preview} alt="Cropped" width={300} height={300} />
+        <div className={styles.croppedImageContainer}>
+          <img className={styles.croppedImageContainerImg} src={preview} alt="Cropped" width={300} height={300} />
         </div>
       )}
     </div>

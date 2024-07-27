@@ -1,9 +1,6 @@
-import AlarmIcon from './alarm.svg';
 import ChevronDown from './chevron-down';
-import ChevronRightIcon from './chevronRight.svg';
 import CrossIcon from './cross';
 import EllipsisIcon from './ellipsis';
-import HeartIcon from './heart.svg';
 import InfoIcon from './info';
 import LogoIconWithText from './logo';
 import LogoIcon from './logo-icon';
@@ -13,12 +10,9 @@ import UserIcon from './user';
 import XIcon from './x';
 
 export {
-  AlarmIcon,
   ChevronDown,
-  ChevronRightIcon,
   CrossIcon,
   EllipsisIcon,
-  HeartIcon,
   InfoIcon,
   LogoIcon,
   LogoIconWithText,

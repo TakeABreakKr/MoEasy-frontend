@@ -1,30 +1,25 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Slot } from '@radix-ui/react-slot';
 import clsx from 'clsx';
 
 import { Button } from '../button';
 import { XIcon } from '../icon';
 
-import tagStyle from './tag.module.css';
+import * as tagStyle from './tag.css';
 
-export type TagProps = Omit<ComponentPropsWithoutRef<typeof Button>, 'size' | 'rounded'> & {
+export type TagProps = Omit<ComponentPropsWithoutRef<typeof Button>, 'size' | 'rounded' | 'asChild'> & {
   variant?: 'dark' | 'light';
   isDelete?: boolean;
 };
 
-export const Tag = ({ asChild, variant = 'light', className, isDelete, children, ...props }: TagProps) => {
-  const Comp = asChild ? Slot : 'button';
+export const Tag = ({ variant = 'light', className, isDelete, children, ...props }: TagProps) => {
   return (
-    <Comp
-      className={clsx(tagStyle.tag, tagStyle[variant], !!isDelete && tagStyle['delete-contain'], className)}
-      {...props}
-    >
+    <button className={clsx(tagStyle.tagVariant({ variant, isDelete }), className)} {...props}>
       {children}
       {isDelete && (
-        <Button variant={variant === 'dark' ? 'light' : 'dark'} className={tagStyle['delete-button']} rounded="full">
+        <Button variant={variant === 'dark' ? 'light' : 'dark'} className={tagStyle.deleteButton} rounded="full">
           <XIcon color="white" width={8} height={8} />
         </Button>
       )}
-    </Comp>
+    </button>
   );
 };

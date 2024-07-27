@@ -8,7 +8,8 @@ import { EllipsisIcon } from '../icon';
 import { Separator } from '../separator';
 import { NameTag } from '../tag';
 
-import cardStyle from './card.module.css';
+import { magic } from '../utils/styles/index.css';
+import * as cardStyle from './card.css';
 
 export type CardProps = {
   idx: number;
@@ -35,13 +36,13 @@ export default function Card({
 }: CardProps) {
   return (
     <div className={clsx(cardStyle.card, className)} {...props}>
-      <div className={cardStyle['thumbnail-wrapper']}>
+      <div className={cardStyle.thumbnailWrapper}>
         <div className={cardStyle.thumbnail}>
           <Image src={`https://via.placeholder.com/116/${idx}`} width={116} height={116} alt={title} />
         </div>
       </div>
       <div className={cardStyle.interact}>
-        <Button size="small" variant="ghost" rounded="small">
+        <Button size="small" variant="ghost" rounded="small" className={magic}>
           <EllipsisIcon />
         </Button>
       </div>
@@ -50,7 +51,7 @@ export default function Card({
         <pre className={cardStyle.description}>{description}</pre>
       </div>
       <Separator direction="horizontal" color="#d5d5d5" />
-      <div className={cardStyle['member-wrapper']}>
+      <div className={cardStyle.memberWrapper}>
         <NameTag userRole="limit">5명</NameTag>
         <NameTag src={'https://via.placeholder.com/30'} userRole="admin">
           모임장

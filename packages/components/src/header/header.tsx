@@ -10,7 +10,7 @@ import { ChevronDown, LogoIconWithText, SearchIcon, UserIcon } from '../icon';
 
 import { HeaderButton } from './header-button';
 
-import headerStyles from './header.module.css';
+import * as headerStyles from './header.css';
 
 type User = {
   name: string;
@@ -27,12 +27,12 @@ export const Header = ({ onCreateAccount }: HeaderProps) => {
   const pathname = usePathname();
   return (
     <header className={headerStyles.header}>
-      <div className={headerStyles['header-wrapper']}>
-        <div className={headerStyles['left-hand-side']}>
+      <div className={headerStyles.headerWrapper}>
+        <div className={headerStyles.leftHandSide}>
           <Link href="/">
             <LogoIconWithText />
           </Link>
-          <ul className={headerStyles['link-wrapper']}>
+          <ul className={headerStyles.linkWrapper}>
             <li className={pathname === '/meeting' ? headerStyles.active : ''}>
               <Link href={'/meeting'}>모임 둘러보기</Link>
             </li>
@@ -44,13 +44,13 @@ export const Header = ({ onCreateAccount }: HeaderProps) => {
             </li>
           </ul>
         </div>
-        <div className={headerStyles['right-hand-side']}>
-          <button className={clsx(headerStyles.icon, headerStyles['search-icon'])}>
+        <div className={headerStyles.rightHandSide}>
+          <button className={clsx(headerStyles.icon, headerStyles.searchIcon)}>
             <SearchIcon width={24} height={24} />
           </button>
           <HeaderButton href="/mypage">내 모임</HeaderButton>
           <button className={headerStyles.icon}>
-            <span className={clsx(headerStyles.icon, headerStyles['user-icon'])}>
+            <span className={clsx(headerStyles.icon, headerStyles.userIcon)}>
               <UserIcon width={24} height={24} />
             </span>
             <ChevronDown width={10} />

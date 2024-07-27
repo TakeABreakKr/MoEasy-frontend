@@ -27,7 +27,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     userRole: {
-      options: ['admin', 'manager', 'limit'],
+      options: ['admin', 'manager', 'limit', 'none'],
       control: 'select',
     },
   },

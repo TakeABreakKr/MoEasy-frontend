@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { Button } from '../button';
 import { contextCreator } from '../utils/useSafeContext';
 
-import styles from './alert.module.css';
+import * as styles from './alert.css';
 
 type AlertProps = {
   size?: 'small' | 'medium' | 'large';
@@ -55,7 +55,7 @@ const AlertContent = ({ children, className, ...props }: HTMLAttributes<HTMLDivE
   if (!isOpen) return null;
 
   return (
-    <div className={clsx(styles['popup-container'], className)} {...props}>
+    <div className={clsx(styles.popupContainer, className)} {...props}>
       <div className={styles.popupContent}>{children}</div>
     </div>
   );

@@ -7,7 +7,7 @@ import { Separator } from '../separator';
 
 import { ListItem } from './item/item';
 
-import styles from './list.module.css';
+import * as styles from './list.css';
 
 export type UserProps = {
   id: number;
