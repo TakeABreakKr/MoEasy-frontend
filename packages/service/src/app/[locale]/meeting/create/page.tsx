@@ -1,4 +1,5 @@
-import CreateForm from '../_components/create-form';
+import CreateForm from '@/widget/meeting/ui/create-form';
+
 import { teamModifyAction } from '../action';
 
 import mainStyle from '../../page.module.css';

@@ -1,8 +1,8 @@
 import { Fragment, Suspense } from 'react';
 
-import { Separator } from '@moeasy/storybook/separator';
+import TeamList from '@/widget/meeting/ui/team-list';
 
-import TeamList from './_components/team-list';
+import { Separator } from '@moeasy/storybook/separator';
 
 import mainStyle from '../page.module.css';
 import pageStyle from './page.module.css';

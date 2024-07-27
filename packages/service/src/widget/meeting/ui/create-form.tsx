@@ -3,26 +3,28 @@
 import { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import clsx from 'clsx';
+import { overlay } from 'overlay-kit';
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
+import { gotoTeamList, teamModifyAction } from '@/app/[locale]/meeting/action';
+import { CreateMeetingType } from '@/entities/meeting/api';
+import { useUnmountOverlay } from '@/shared/utils/useUnmountOverlay';
 import { createQueryString } from '@/shared/utils/utils';
 
 import { SampleAlert } from '@moeasy/storybook/alert';
 import { Button, SearchButton } from '@moeasy/storybook/button';
 import { ImageUpload } from '@moeasy/storybook/file-upload';
 import { Input } from '@moeasy/storybook/input';
+import { List } from '@moeasy/storybook/list';
 import { Progress } from '@moeasy/storybook/progress';
-
-import { CreateTeamFormType } from '../_feature/data';
-import { gotoTeamList, teamModifyAction } from '../action';
 
 import styles from './create-form.module.css';
 
 type CreateFormProps = {
   action: typeof teamModifyAction;
-  data?: Partial<Omit<CreateTeamFormType, 'thumbnail'> & { thumbnail: string }>;
+  data?: Partial<Omit<CreateMeetingType, 'thumbnail'> & { thumbnail: string }>;
 };
 
 const CreateForm = ({ action, data = {} }: CreateFormProps) => {
@@ -67,6 +69,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [members, setMembers] = useState<string[]>([]);
   const limitDisabled = searchParams.get('limit') === 'disabled';
+  const overlayRef = useUnmountOverlay();
 
   return (
     <div className={styles['form-wrapper']}>
@@ -160,7 +163,25 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
         </fieldset>
         <label className={styles['label-wrapper']}>
           <span className={styles.label}>누구와 함께</span>
-          <SearchButton type="button">유저 닉네임을 검색해보세요</SearchButton>
+          <SearchButton
+            type="button"
+            onClick={() => {
+              overlay.open(({ unmount, overlayId }) => {
+                overlayRef.current = overlayId;
+                return (
+                  <List
+                    users={[]}
+                    close={(users) => {
+                      console.log(users);
+                      unmount();
+                    }}
+                  />
+                );
+              });
+            }}
+          >
+            유저 닉네임을 검색해보세요
+          </SearchButton>
         </label>
       </div>
       <CreateFormButton step={step} searchParams={searchParams} />

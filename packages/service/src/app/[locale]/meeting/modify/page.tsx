@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
-import CreateForm from '../_components/create-form';
+import CreateForm from '@/widget/meeting/ui/create-form';
+
 import { teamModifyAction } from '../action';
 
 export default async function TeamModifyPage() {

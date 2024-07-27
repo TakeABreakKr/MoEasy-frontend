@@ -7,7 +7,7 @@
       {
         "groups": [
           // Packages `react` related packages come first.
-          ["^react", "^@?\\w"],
+          ["server-only", "^react", "^@?\\w"],
           // Packages `next` related packages come second.
           ["^next(/.*|$)"],
           // Internal packages.

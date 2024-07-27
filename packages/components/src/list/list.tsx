@@ -1,8 +1,7 @@
 import React, { useReducer } from 'react';
 
-import { Button } from '@/button';
-
 import { Alert, AlertProps } from '../alert/alert';
+import { Button } from '../button';
 import { checkGroupReducer } from '../checkbox';
 import { Separator } from '../separator';
 
@@ -45,7 +44,7 @@ export const List = ({ users = [], isOpen, open, close }: ListProps) => {
           ))}
         </div>
         <div className={styles.footer}>
-          <Button variant="primary" size="large" rounded="medium" onClick={() => close && close([])}>
+          <Button variant="primary" size="large" rounded="medium" onClick={() => close?.([])}>
             확인
           </Button>
         </div>

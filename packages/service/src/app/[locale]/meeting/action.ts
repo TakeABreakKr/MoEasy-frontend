@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 
-import { CreateTeamFormType, stepKeys } from './_feature/data';
+import { CreateMeetingType, stepKeys } from '@/entities/meeting/api';
 
 type TeamCreateActionState =
   | {
@@ -18,7 +18,7 @@ export const teamModifyAction = async (
   _: TeamCreateActionState,
   formData: FormData,
 ): Promise<TeamCreateActionState> => {
-  const form = stepKeys.reduce<Partial<CreateTeamFormType>>(
+  const form = stepKeys.reduce<Partial<CreateMeetingType>>(
     (acc, step) => ({ ...acc, [step.key]: formData.get(step.key) }),
     {},
   );

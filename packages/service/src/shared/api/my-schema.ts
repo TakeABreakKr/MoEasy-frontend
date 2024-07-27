@@ -183,6 +183,35 @@ export interface components {
       /** Format: binary */
       thumbnail: File;
     };
+    MeetingMemberDto: {
+      username: string;
+      /** @enum {string} */
+      authority: 'WAITING' | 'INVITED' | 'MEMBER' | 'MANAGER' | 'OWNER';
+    };
+    MeetingResponse: {
+      name: string;
+      explanation: string;
+      limit: number;
+      members: components['schemas']['MeetingMemberDto'][];
+      thumbnail: string;
+    };
+    MeetingListMeetingDto: {
+      meetingId: string;
+      name: string;
+      explanation: string;
+      /** @enum {string} */
+      authority: 'WAITING' | 'INVITED' | 'MEMBER' | 'MANAGER' | 'OWNER';
+    };
+    MeetingListResponse: {
+      meetingList: components['schemas']['MeetingListMeetingDto'][];
+    };
+    MemberSearchDto: {
+      userId: number;
+      nickname: string;
+    };
+    MemberSearchResponse: {
+      memberList: components['schemas']['MemberSearchDto'][];
+    };
     MemberInviteRequest: {
       newMemberId: number;
       meetingId: string;
@@ -279,7 +308,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['MeetingResponse'];
+        };
       };
     };
   };
@@ -299,7 +330,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['MeetingListResponse'];
+        };
       };
     };
   };
@@ -317,7 +350,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['MeetingListResponse'];
+        };
       };
     };
   };
@@ -335,7 +370,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': components['schemas']['MemberSearchResponse'];
+        };
       };
     };
   };
