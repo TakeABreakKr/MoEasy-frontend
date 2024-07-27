@@ -2,19 +2,8 @@
   "name": "moeasy",
   "version": "1.0.0",
   "description": "",
-  "scripts": {
-    "service": "pnpm --filter service",
-    "storybook": "pnpm --filter storybook storybook",
-    "prepare": "husky"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "husky": "^9.0.11",
-    "typescript": "^5"
-  },
-  "resolutions": {
-    "@typescript-eslint/typescript-estree": "^7.16.1"
-  }
+  "license": "ISC"
 }

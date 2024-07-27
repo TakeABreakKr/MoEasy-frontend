@@ -40,5 +40,5 @@ next-env.d.ts
 
 # husky
 .eslintcache
-
+.husky
 *storybook.log

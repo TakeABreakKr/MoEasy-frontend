@@ -1,1 +1,0 @@
-export { NameTag } from './nametag';

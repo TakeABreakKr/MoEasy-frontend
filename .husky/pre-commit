@@ -1,4 +1,0 @@
-pnpm service lint
-echo "lint test success"
-pnpm service lint-staged
-echo "prettier test success"
