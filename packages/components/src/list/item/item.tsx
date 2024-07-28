@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Checkbox } from '../../checkbox';
 import { UserProps } from '../list';
 
-import styles from '../list.module.css';
+import * as styles from '../list.css';
 
 type ListItemProps = {
   user: UserProps;
@@ -16,12 +16,7 @@ type ListItemProps = {
 
 export const ListItem = ({ user, checked, toggleUserSelection }: ListItemProps) => {
   return (
-    <div
-      role="button"
-      key={user.id}
-      className={clsx(styles.userItem, checked && styles.checked)}
-      onClick={() => toggleUserSelection(user.id)}
-    >
+    <div role="button" key={user.id} className={clsx(styles.userItem)} onClick={() => toggleUserSelection(user.id)}>
       <div className={styles.userInfo}>
         <span className={styles.userAvatar}>
           <Image
@@ -35,7 +30,6 @@ export const ListItem = ({ user, checked, toggleUserSelection }: ListItemProps) 
       </div>
       <Checkbox
         checked={checked}
-        onClick={() => toggleUserSelection(user.id)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             toggleUserSelection(user.id);

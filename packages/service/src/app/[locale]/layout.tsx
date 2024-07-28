@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 import { Noto_Sans_KR } from 'next/font/google';
 
-import { Header } from '@moeasy/storybook/header';
+import { Header } from '@moeasy/storybook/src/header';
 
 import RootProvider from './_provider';
 

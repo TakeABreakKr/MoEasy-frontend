@@ -1,15 +1,16 @@
 'use client';
 
 import React from 'react';
+import clsx from 'clsx';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { AlarmProps } from '../alarm/alarm';
-import { Button } from '../button/button';
 import { ChevronDown, LogoIconWithText, SearchIcon, UserIcon } from '../icon';
 
-import headerStyles from './header.module.css';
+import { HeaderButton } from './header-button';
+
+import * as headerStyles from './header.css';
 
 type User = {
   name: string;
@@ -18,23 +19,22 @@ type User = {
 interface HeaderProps {
   user?: User;
   onCreateAccount?: () => void;
-  itemList?: AlarmProps['itemList'];
 }
 /**
  * 공통 헤더 컴포넌트
  */
-export const Header = ({ onCreateAccount, itemList = [] }: HeaderProps) => {
+export const Header = ({ onCreateAccount }: HeaderProps) => {
   const pathname = usePathname();
   return (
     <header className={headerStyles.header}>
-      <div className={headerStyles['header-wrapper']}>
-        <div className={headerStyles['left-hand-side']}>
+      <div className={headerStyles.headerWrapper}>
+        <div className={headerStyles.leftHandSide}>
           <Link href="/">
             <LogoIconWithText />
           </Link>
-          <ul className={headerStyles['link-wrapper']}>
-            <li className={pathname === '/team' ? headerStyles.active : ''}>
-              <Link href={'/team'}>모임 둘러보기</Link>
+          <ul className={headerStyles.linkWrapper}>
+            <li className={pathname === '/meeting' ? headerStyles.active : ''}>
+              <Link href={'/meeting'}>모임 둘러보기</Link>
             </li>
             <li className={pathname === '/about' ? headerStyles.active : ''}>
               <Link href={'/about'}>ABOUT</Link>
@@ -44,13 +44,17 @@ export const Header = ({ onCreateAccount, itemList = [] }: HeaderProps) => {
             </li>
           </ul>
         </div>
-        <div className={headerStyles['right-hand-side']}>
-          <SearchIcon width={24} height={24} />
-          <Button asChild primary size="small" onClick={onCreateAccount}>
-            <Link href={'/mypage'}>내 모임 관리</Link>
-          </Button>
-          <UserIcon width={24} height={24} />
-          <ChevronDown width={10} />
+        <div className={headerStyles.rightHandSide}>
+          <button className={clsx(headerStyles.icon, headerStyles.searchIcon)}>
+            <SearchIcon width={24} height={24} />
+          </button>
+          <HeaderButton href="/mypage">내 모임</HeaderButton>
+          <button className={headerStyles.icon}>
+            <span className={clsx(headerStyles.icon, headerStyles.userIcon)}>
+              <UserIcon width={24} height={24} />
+            </span>
+            <ChevronDown width={10} />
+          </button>
         </div>
       </div>
     </header>

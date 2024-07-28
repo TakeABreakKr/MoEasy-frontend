@@ -5,9 +5,7 @@ import { List } from './list';
 const meta = {
   title: 'Example/List',
   component: List,
-  parameters: {
-    layout: 'centered',
-  },
+  parameters: {},
   args: {
     users: Array.from({ length: 20 }, (_, idx) => ({
       id: idx,

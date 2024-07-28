@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 import { getI18n } from '@/locales/server';
 
-import { Button } from '@moeasy/storybook/button';
-import { Card } from '@moeasy/storybook/card';
+import { Button } from '@moeasy/storybook/src/button';
+import { Card } from '@moeasy/storybook/src/card';
 
 import styles from './page.module.css';
 
@@ -17,7 +17,7 @@ export default async function Home() {
           <h1>{t('desc')}</h1>
           <p>{t('desc-detail')}</p>
           <div>
-            <Button asChild size="small">
+            <Button asChild size="small" rounded="small">
               <Link href={'/about'}>자세히 보기</Link>
             </Button>
           </div>

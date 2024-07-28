@@ -1,3 +1,4 @@
 import Checkbox from './checkbox';
+import { checkGroupReducer } from './reducer';
 
-export { Checkbox };
+export { Checkbox, checkGroupReducer };

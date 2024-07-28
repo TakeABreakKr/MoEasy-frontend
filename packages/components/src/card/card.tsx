@@ -4,9 +4,12 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 import { Button } from '../button/button';
-import { HeartIcon } from '../icon';
+import { EllipsisIcon } from '../icon';
+import { Separator } from '../separator';
+import { NameTag } from '../tag';
 
-import cardStyle from './card.module.css';
+import { magic } from '../utils/styles/index.css';
+import * as cardStyle from './card.css';
 
 export type CardProps = {
   idx: number;
@@ -33,22 +36,38 @@ export default function Card({
 }: CardProps) {
   return (
     <div className={clsx(cardStyle.card, className)} {...props}>
-      <div className={cardStyle.thumbnail}>
-        <Image src={`https://via.placeholder.com/120/${idx}`} width={120} height={120} alt={title} />
+      <div className={cardStyle.thumbnailWrapper}>
+        <div className={cardStyle.thumbnail}>
+          <Image src={`https://via.placeholder.com/116/${idx}`} width={116} height={116} alt={title} />
+        </div>
       </div>
       <div className={cardStyle.interact}>
-        <button onClick={onLikeClick}>
-          <HeartIcon width={30} height={30} className={cardStyle.like} />
-        </button>
-        <Button size="small">참여하기</Button>
+        <Button size="small" variant="ghost" rounded="small" className={magic}>
+          <EllipsisIcon />
+        </Button>
       </div>
       <div>
-        <h2>{title}</h2>
+        <h2 className={cardStyle.title}>{title}</h2>
+        <pre className={cardStyle.description}>{description}</pre>
       </div>
-      <div>
-        <span>{count}</span>/<span>{maxCount}</span>명 | {isWaiting ? '대기 (2)' : ''} 개설일 : 2021.07.30
+      <Separator direction="horizontal" color="#d5d5d5" />
+      <div className={cardStyle.memberWrapper}>
+        <NameTag userRole="limit">5명</NameTag>
+        <NameTag src={'https://via.placeholder.com/30'} userRole="admin">
+          모임장
+        </NameTag>
+        <NameTag src={'https://via.placeholder.com/30'} userRole="manager">
+          매니저
+        </NameTag>
+        <NameTag src={'https://via.placeholder.com/30'} userRole="manager">
+          매니저
+        </NameTag>
+        <NameTag src={'https://via.placeholder.com/30'}>모임원</NameTag>
+        <NameTag src={'https://via.placeholder.com/30'}>모임원</NameTag>
+        <NameTag src={'https://via.placeholder.com/30'}>모임원</NameTag>
+        <NameTag src={'https://via.placeholder.com/30'}>모임원</NameTag>
+        <NameTag>더 보기</NameTag>
       </div>
-      <p>{description}</p>
     </div>
   );
 }

@@ -6,10 +6,8 @@
       "warn",
       {
         "groups": [
-          // Packages `react` related packages come first.
-          ["^react", "^@?\\w"],
-          // Packages `next` related packages come second.
-          ["^next(/.*|$)"],
+          // Packages `react, next` related packages come first.
+          ["server-only", "^react", "^next", "^@?\\w"],
           // Internal packages.
           ["^(@|components)(/.*|$)"],
 

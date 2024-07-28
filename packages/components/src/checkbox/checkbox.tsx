@@ -1,11 +1,18 @@
 import { Checkbox as CheckboxPrimitive, CheckboxProps } from '@radix-ui/react-checkbox';
 
-import styles from './checkbox.module.css';
+import CheckIcon from '../icon/check-icon';
 
-export default function Checkbox(props: CheckboxProps) {
+import { checkboxVariants, checkIcon } from './checkbox.css';
+
+export type CustomCheckProps = CheckboxProps & {
+  /** 둥근지 여부 */
+  rounded?: boolean;
+};
+
+export default function Checkbox({ rounded = true, ...props }: CustomCheckProps) {
   return (
-    <CheckboxPrimitive className={styles.checkbox} {...props}>
-      ✓
+    <CheckboxPrimitive className={checkboxVariants({ rounded })} {...props}>
+      <CheckIcon className={checkIcon} />
     </CheckboxPrimitive>
   );
 }

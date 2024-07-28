@@ -1,33 +1,51 @@
+import { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Alert, AlertCloseButton, AlertContent, AlertMessage, AlertTitle } from './alert';
+import { XIcon } from '../icon';
+
+import { Alert, AlertCloseButton, AlertContent, AlertMessage, AlertTitle, AlertTrigger } from './alert';
 
 type Props = {
   title?: string | JSX.Element;
   message?: string | JSX.Element;
-  open?(): void;
-  close?(): void;
+  /** 메세지 아래 버튼 제거 */
+  excludeButton?: boolean;
+  className?: string;
 };
 
-const SampleAlert = ({ title, message, open, close }: Props) => {
+const sampleStyle = {
+  display: 'flex',
+  justifyContent: 'flex-end',
+} as const satisfies CSSProperties;
+
+const SampleAlert = ({ title, message, excludeButton, className }: Props) => {
   return (
     <Alert isOpen>
-      <AlertContent>
+      <AlertTrigger>팝업 열기</AlertTrigger>
+      <AlertContent className={className}>
+        <div style={sampleStyle}>
+          <AlertCloseButton variant="dark" rounded="full" size="small">
+            <XIcon width={15} height={15} />
+          </AlertCloseButton>
+        </div>
         <AlertTitle>{title}</AlertTitle>
         <AlertMessage>{message}</AlertMessage>
-
-        <AlertCloseButton>확인</AlertCloseButton>
+        {!excludeButton && (
+          <AlertCloseButton variant="dark" size="large" rounded="medium">
+            확인
+          </AlertCloseButton>
+        )}
       </AlertContent>
     </Alert>
   );
 };
 
 const meta = {
-  title: 'Example/Alert',
+  title: 'Common/Alert',
   component: SampleAlert,
   tags: ['autodocs'],
   parameters: {
-    layout: 'layout',
+    layout: 'padded',
     nextjs: {
       appDirectory: true,
       navigation: {
@@ -35,19 +53,19 @@ const meta = {
       },
     },
   },
-  args: {},
+  args: {
+    title: '모임 이름을 수정해주세요',
+    message: '모임 이름은 최대 30글자 까지 입력 가능합니다.',
+  },
 } satisfies Meta<typeof SampleAlert>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Sample: Story = {
-  args: {
-    title: 'hi',
-    message: 'where the north wind meets the sea',
-  },
-};
+export const Sample: Story = {};
 
-export const None: Story = {
-  args: {},
+export const ExcludeButton: Story = {
+  args: {
+    excludeButton: true,
+  },
 };

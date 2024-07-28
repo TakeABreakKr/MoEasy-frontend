@@ -4,7 +4,7 @@ import { fn } from '@storybook/test';
 import { ImageUpload } from './file-upload';
 
 const meta = {
-  title: 'Example/ImageUpload',
+  title: 'Common/ImageUpload',
   component: ImageUpload,
   parameters: {
     layout: 'centered',
