@@ -2,7 +2,7 @@ import { Fragment, Suspense } from 'react';
 
 import TeamList from '@/widget/meeting/ui/team-list';
 
-import { Separator } from '@moeasy/storybook/separator';
+import { Separator } from '@moeasy/storybook/src/separator';
 
 import mainStyle from '../page.module.css';
 import pageStyle from './page.module.css';
@@ -23,7 +23,7 @@ export default function TeamPage() {
           {['인기순', '진행수순', '마감 임박순', '최신 등록순', '낮은 가격순', '높은 가격순'].map((item, index) => (
             <Fragment key={index}>
               <button>{item}</button>
-              {index === 5 ? null : <Separator />}
+              {index === 5 ? null : <Separator direction="vertical" />}
             </Fragment>
           ))}
         </div>

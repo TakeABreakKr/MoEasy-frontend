@@ -15,8 +15,7 @@
     "plugins": [{ "name": "next" }, { "name": "typescript-plugin-css-modules" }],
     "paths": {
       "@/*": ["./src/*"],
-      "@/locales/*": ["./locales/*"],
-      "@moeasy/storybook/*": ["../components/src/*"]
+      "@/locales/*": ["./locales/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

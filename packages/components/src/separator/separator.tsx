@@ -1,6 +1,4 @@
-import { CSSProperties } from 'react';
-
-import { separatorVariants, separatorColor } from './separator.css';
+import { separatorVariants } from './separator.css';
 
 export default function Separator({
   direction = 'vertical',
@@ -9,5 +7,5 @@ export default function Separator({
   direction?: 'vertical' | 'horizontal';
   color?: string;
 }) {
-  return <span className={separatorVariants({ direction })} style={{ [separatorColor]: color } as CSSProperties} />;
+  return <span className={separatorVariants({ direction })} />;
 }

@@ -1,12 +1,15 @@
-import { createVar } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
+import { createVar } from '@vanilla-extract/css';
 
 export const separatorColor = createVar();
 
 export const separatorVariants = recipe({
   base: {
-    [separatorColor]: 'black',
-    backgroundColor: separatorColor,
+    backgroundColor: `${separatorColor}`,
+    vars: {
+      [separatorColor]: 'black',
+    },
   },
   variants: {
     direction: {

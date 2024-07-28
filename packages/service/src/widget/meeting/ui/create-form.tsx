@@ -13,12 +13,12 @@ import { CreateMeetingType } from '@/entities/meeting/api';
 import { useUnmountOverlay } from '@/shared/utils/useUnmountOverlay';
 import { createQueryString } from '@/shared/utils/utils';
 
-import { SampleAlert } from '@moeasy/storybook/alert';
-import { Button, SearchButton } from '@moeasy/storybook/button';
-import { ImageUpload } from '@moeasy/storybook/file-upload';
-import { Input } from '@moeasy/storybook/input';
-import { List } from '@moeasy/storybook/list';
-import { Progress } from '@moeasy/storybook/progress';
+import { SampleAlert } from '@moeasy/storybook/src/alert';
+import { Button, SearchButton } from '@moeasy/storybook/src/button';
+import { ImageUpload } from '@moeasy/storybook/src/file-upload';
+import { Input } from '@moeasy/storybook/src/input';
+import { List } from '@moeasy/storybook/src/list';
+import { Progress } from '@moeasy/storybook/src/progress';
 
 import styles from './create-form.module.css';
 

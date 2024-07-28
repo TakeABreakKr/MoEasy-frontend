@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 import { getI18n } from '@/locales/server';
 
-import { Button } from '@moeasy/storybook/button';
-import { Card } from '@moeasy/storybook/card';
+import { Button } from '@moeasy/storybook/src/button';
+import { Card } from '@moeasy/storybook/src/card';
 
 import styles from './page.module.css';
 
