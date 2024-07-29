@@ -1,7 +1,7 @@
 // header.css.ts
 import { style, globalStyle } from '@vanilla-extract/css';
-import { rem } from '../utils/css';
-import { headerHeight } from '../utils/styles/global.css';
+import { rem } from '../../utils/css';
+import { headerHeight } from '../../utils/styles/global.css';
 
 export const header = style({
   borderBottom: `1px solid rgba(0, 0, 0, 0.1)`,

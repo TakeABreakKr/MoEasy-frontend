@@ -1,5 +1,5 @@
 import { style, globalStyle, keyframes } from '@vanilla-extract/css';
-import { rem } from '../utils/css';
+import { rem } from '../../utils/css';
 
 // Keyframes for rotation animation
 const rotate = keyframes({

@@ -1,5 +1,5 @@
 import { recipe } from '@vanilla-extract/recipes';
-import { rem } from '../utils/css';
+import { rem } from '../../utils/css';
 import { style } from '@vanilla-extract/css';
 
 export const checkboxVariants = recipe({

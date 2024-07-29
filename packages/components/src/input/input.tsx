@@ -2,7 +2,7 @@ import { ComponentProps, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { XIcon } from '../icon';
-import { contextCreator } from '../utils/useSafeContext';
+import { contextCreator } from '../../utils/useSafeContext';
 
 import {
   ctlTextMax,

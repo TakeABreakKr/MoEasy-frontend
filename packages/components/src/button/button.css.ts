@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { rem } from '../utils/css';
+import { rem } from '../../utils/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const buttonVariants = recipe({

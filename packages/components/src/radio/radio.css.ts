@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { rem } from '../utils/css';
+import { rem } from '../../utils/css';
 
 export const radioStyle = style({
   backgroundColor: 'white',

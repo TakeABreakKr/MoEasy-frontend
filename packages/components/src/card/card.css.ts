@@ -1,6 +1,6 @@
 // styles.css.ts
 import { style, globalStyle } from '@vanilla-extract/css';
-import { rem } from '../utils/css';
+import { rem } from '../../utils/css';
 
 export const card = style({
   width: rem(540), // 33.75rem

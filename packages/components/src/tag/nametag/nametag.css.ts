@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { rem } from '../../utils/css';
+import { rem } from '../../../utils/css';
 
 export const badge = recipe({
   base: {

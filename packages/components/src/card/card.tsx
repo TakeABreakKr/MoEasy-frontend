@@ -8,7 +8,7 @@ import { EllipsisIcon } from '../icon';
 import { Separator } from '../separator';
 import { NameTag } from '../tag';
 
-import { magic } from '../utils/styles/index.css';
+import { magic } from '../../utils/styles/index.css';
 import * as cardStyle from './card.css';
 
 export type CardProps = {

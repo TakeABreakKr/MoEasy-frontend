@@ -1,4 +1,4 @@
-import { rem } from '../utils/css';
+import { rem } from '../../utils/css';
 
 import { style } from '@vanilla-extract/css';
 
