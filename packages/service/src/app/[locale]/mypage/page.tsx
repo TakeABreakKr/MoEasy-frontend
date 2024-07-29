@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Button } from '@moeasy/storybook/src/button';
+import { Button } from '@moeasy/storybook/ui/button';
 
 import mainStyle from '../page.module.css';
 import styles from './page.module.css';

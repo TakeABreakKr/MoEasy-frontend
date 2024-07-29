@@ -1,7 +1,6 @@
-import clsx from 'clsx';
-
 import Image from 'next/image';
 import Link from 'next/link';
+import clsx from 'clsx';
 
 import mainStyles from '../page.module.css';
 import styles from './page.module.css';

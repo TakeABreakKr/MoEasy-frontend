@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-
 import Image from 'next/image';
 
 import { useIntersectionObserver } from '@/shared/utils/useIntersectionObserver';
