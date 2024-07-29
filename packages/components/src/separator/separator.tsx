@@ -1,4 +1,6 @@
-import { separatorVariants } from './separator.css';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+
+import { separatorColor, separatorVariants } from './separator.css';
 
 export default function Separator({
   direction = 'vertical',
@@ -7,5 +9,12 @@ export default function Separator({
   direction?: 'vertical' | 'horizontal';
   color?: string;
 }) {
-  return <span className={separatorVariants({ direction })} />;
+  return (
+    <span
+      style={assignInlineVars({
+        [separatorColor]: color,
+      })}
+      className={separatorVariants({ direction })}
+    />
+  );
 }
