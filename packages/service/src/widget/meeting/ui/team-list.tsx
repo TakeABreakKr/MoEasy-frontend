@@ -1,12 +1,11 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-
 import Image from 'next/image';
 
 import { useIntersectionObserver } from '@/shared/utils/useIntersectionObserver';
 
-import teamStyle from './team-list.module.css';
+import * as teamStyle from './team-list.css';
 
 type TeamType = {
   name: string;
@@ -27,10 +26,16 @@ export default function TeamList() {
 
   return (
     <section>
-      <div className={teamStyle.grid}>
+      <div className={teamStyle.teamgrid}>
         {teamlist.map((team) => (
-          <div key={team.name} className={teamStyle['grid-item']}>
-            <Image width={300} height={300} src="https://via.placeholder.com/300" alt="People sitting at a table" />
+          <div key={team.name} className={teamStyle.teamgridItem}>
+            <Image
+              className={teamStyle.teamItemImage}
+              width={300}
+              height={300}
+              src="https://via.placeholder.com/300"
+              alt="People sitting at a table"
+            />
             <span>{team.name}</span>
           </div>
         ))}
