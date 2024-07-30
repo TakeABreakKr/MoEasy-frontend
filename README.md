@@ -7,11 +7,10 @@ MoEasy Front-End
 # tech stack
 
 - 서비스: next 14
-  - 스타일: 미정 (tailwind vs pigment css)
+  - 스타일: [vanilla extract](https://vanilla-extract.style/)
   - 테스트: 미정 (rtl vs playwright) with vitest
   - 배포: aws ec2
 - 컴포넌트: react 18.3.1
-  - 스타일: css module
   - 테스트: storybook
   - 빌드 및 배포: github pages
 
