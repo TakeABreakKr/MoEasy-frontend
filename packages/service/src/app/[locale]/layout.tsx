@@ -5,7 +5,7 @@ import { Header } from '@moeasy/storybook/ui/header';
 
 import RootProvider from './_provider';
 
-import './global.css';
+import '@moeasy/storybook/utils/styles/global.css';
 
 const notoSansKR = Noto_Sans_KR({ subsets: ['latin'] });
 

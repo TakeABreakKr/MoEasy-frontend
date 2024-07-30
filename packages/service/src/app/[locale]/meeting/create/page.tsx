@@ -2,7 +2,7 @@ import CreateForm from '@/widget/meeting/ui/create-form';
 
 import { teamModifyAction } from '../action';
 
-import mainStyle from '../../page.module.css';
+import * as mainStyle from '../../main.css';
 
 export default async function TeamCreatePage() {
   return (

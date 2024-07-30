@@ -1,21 +1,23 @@
-import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
 import { rem } from '../../utils/css';
+import { style } from '@vanilla-extract/css';
 
 export const inputWrapper = style({
   position: 'relative',
+  flex: 1,
 });
 
 export const inputVariants = recipe({
   base: {
-    height: rem(24),
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: '#d0d0d0',
-    padding: `${rem(32)} ${rem(16)}`,
+    padding: `${rem(25)} ${rem(30)}`,
     borderRadius: 10,
     caretColor: '#5f88f3',
     minWidth: '15rem',
+    fontSize: rem(24),
     ':disabled': {
       backgroundColor: '#f5f5f5',
     },
@@ -66,14 +68,14 @@ export const inputCtlWrapper = style({
   '@media': {
     'screen and (min-width: 1025px)': {
       selectors: {
-        [`${inputBase}[type='number']:hover:not(:disabled) &`]: {
-          right: rem(40),
+        [`${inputBase}[type='number']:hover:not(:disabled) + &`]: {
+          right: rem(60),
         },
-        [`${inputBase}[type='number']:active:not(:disabled) &`]: {
-          right: rem(40),
+        [`${inputBase}[type='number']:active:not(:disabled) + &`]: {
+          right: rem(60),
         },
-        [`${inputBase}[type='number']:focus:not(:disabled) &`]: {
-          right: rem(40),
+        [`${inputBase}[type='number']:focus:not(:disabled) + &`]: {
+          right: rem(60),
         },
       },
     },

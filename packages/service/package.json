@@ -20,6 +20,8 @@
   "dependencies": {
     "@moeasy/storybook": "workspace:^",
     "@radix-ui/react-hover-card": "^1.1.1",
+    "@vanilla-extract/css": "^1.15.3",
+    "@vanilla-extract/dynamic": "^2.1.1",
     "clsx": "^2.1.1",
     "next": "14.2.4",
     "next-international": "^1.2.4",
@@ -29,7 +31,6 @@
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@svgr/webpack": "^8.1.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -44,7 +45,6 @@
     "openapi-typescript": "^7.0.0-rc.0",
     "prettier": "^3.3.1",
     "tsx": "^4.16.2",
-    "typescript": "^5",
-    "typescript-plugin-css-modules": "^5.1.0"
+    "typescript": "^5"
   }
 }

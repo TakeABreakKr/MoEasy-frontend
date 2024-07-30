@@ -1,3 +1,5 @@
+'use client';
+
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 
 import { separatorColor, separatorVariants } from './separator.css';

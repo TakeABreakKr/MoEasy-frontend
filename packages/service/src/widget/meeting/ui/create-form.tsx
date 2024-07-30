@@ -19,7 +19,7 @@ import { Input } from '@moeasy/storybook/ui/input';
 import { List } from '@moeasy/storybook/ui/list';
 import { Progress } from '@moeasy/storybook/ui/progress';
 
-import styles from './create-form.module.css';
+import * as styles from './create-form.css';
 
 type CreateFormProps = {
   action: typeof teamModifyAction;
@@ -33,7 +33,7 @@ const CreateForm = ({ action, data = {} }: CreateFormProps) => {
   return (
     <form className={styles.container} action={formAction}>
       <div className={styles.header}>
-        <h1>모임 생성</h1>
+        <h1 className={styles.headerH1}>모임 생성</h1>
       </div>
       <div className={styles.body}>
         <CreateFormAside step={currentStep} />
@@ -51,11 +51,11 @@ const createStepArray = ['모임명 / 소개', '썸네일 설정', '카테고리
 const CreateFormAside = ({ step }: { step: number }) => {
   return (
     <aside className={styles.aside}>
-      <ul className={styles.step}>
+      <ul className={styles.asideStep}>
         {createStepArray.map((txt, index) => (
-          <li key={index} className={clsx(step === index + 1 && styles.selected)}>
-            <span className={styles.number}>{index + 1}</span>
-            <span className="text-gray-600">{txt}</span>
+          <li key={index} className={clsx(styles.stepLi, step === index + 1 && styles.stepLiSelected)}>
+            <span className={clsx(styles.stepNumber, step === index + 1 && styles.numberSelected)}>{index + 1}</span>
+            <span>{txt}</span>
           </li>
         ))}
       </ul>
@@ -71,8 +71,8 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
   const overlayRef = useUnmountOverlay();
 
   return (
-    <div className={styles['form-wrapper']}>
-      <div className={clsx(styles['form-group'], step !== 1 && styles.invisible)}>
+    <div className={styles.formWrapper}>
+      <div className={clsx(styles.formGroup, step !== 1 && styles.formGroupInvisible)}>
         <label>
           <span className={styles.label}>모임 이름</span>
           <Input
@@ -98,11 +98,11 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
           />
         </label>
       </div>
-      <div className={clsx(styles['form-group'], step !== 2 && styles.invisible)}>
+      <div className={clsx(styles.formGroup, step !== 2 && styles.formGroupInvisible)}>
         <span className={styles.label}>썸네일</span>
         <ImageUpload selectedFile={thumbnail} onImageUpload={setThumbnail} />
       </div>
-      <div className={clsx(styles['form-group'], step !== 3 && styles.invisible)}>
+      <div className={clsx(styles.formGroup, step !== 3 && styles.formGroupInvisible)}>
         <label>
           <span className={styles.label}>
             키워드 설정
@@ -134,13 +134,14 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
           ))}
         </label>
       </div>
-      <div className={clsx(styles['form-group'], step !== 4 && styles.invisible)}>
-        <fieldset className={styles['label-wrapper']}>
+      <div className={clsx(styles.formGroup, step !== 4 && styles.formGroupInvisible)}>
+        <fieldset className={styles.labelWrapper}>
           <span className={styles.label}>모임 인원</span>
           <div style={{ display: 'flex', gap: 10 }}>
             <Input
               type="number"
               className={styles.input}
+              style={{ flex: '1' }}
               disabled={searchParams.get('limit') === 'disabled'}
               placeholder="모임 인원을 입력해주세요"
               name="limit"
@@ -160,7 +161,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
             </Button>
           </div>
         </fieldset>
-        <label className={styles['label-wrapper']}>
+        <label className={styles.labelWrapper}>
           <span className={styles.label}>누구와 함께</span>
           <SearchButton
             type="button"
@@ -193,13 +194,13 @@ const CreateFormButton = ({ step, searchParams }: { step: number; searchParams: 
   return (
     <div className={styles.navigation}>
       {step === 1 && (
-        <Link className={styles['nav-button']} href="/mypage">
+        <Link className={styles.navButton} href="/mypage">
           이전
         </Link>
       )}
       {step !== 1 && (
         <Link
-          className={styles['nav-button']}
+          className={styles.navButton}
           href={{
             pathname: '/meeting/create',
             query: { ...searchParamsObject, step: Number(searchParamsObject.step || '1') - 1 },
@@ -210,7 +211,7 @@ const CreateFormButton = ({ step, searchParams }: { step: number; searchParams: 
       )}
       {step !== createStepArray.length && (
         <Link
-          className={styles['nav-button']}
+          className={styles.navButton}
           href={{
             pathname: '/meeting/create',
             query: { ...searchParamsObject, step: Number(searchParamsObject.step || '1') + 1 },
@@ -236,7 +237,7 @@ const onValueChange = (key: string, searchParams: URLSearchParams) => (value: st
 function FormCreateSubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <button type="submit" className={styles['nav-button']} disabled={pending}>
+    <button type="submit" className={styles.navButton} disabled={pending}>
       {pending ? '모임 생성 중...' : '모임 생성'}
     </button>
   );

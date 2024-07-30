@@ -1,6 +1,7 @@
-import { style } from '@vanilla-extract/css';
-import { rem } from '../../utils/css';
 import { recipe } from '@vanilla-extract/recipes';
+
+import { rem } from '../../utils/css';
+import { style } from '@vanilla-extract/css';
 
 export const buttonVariants = recipe({
   base: {
@@ -84,6 +85,7 @@ export const buttonVariants = recipe({
         padding: `${rem(15)} ${rem(60)}`,
       },
       thick: {
+        width: rem(120),
         fontSize: rem(22),
         padding: `${rem(20)} ${rem(10)}`,
       },

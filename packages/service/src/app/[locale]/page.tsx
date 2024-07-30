@@ -6,14 +6,14 @@ import { getI18n } from '@/locales/server';
 import { Button } from '@moeasy/storybook/ui/button';
 import { Card } from '@moeasy/storybook/ui/card';
 
-import styles from './page.module.css';
+import * as styles from './main.css';
 
 export default async function Home() {
   const t = await getI18n();
   return (
     <main className={styles.main}>
       <section>
-        <div className={styles['section__left']}>
+        <div className={styles.sectionLeft}>
           <h1>{t('desc')}</h1>
           <p>{t('desc-detail')}</p>
           <div>
@@ -26,10 +26,10 @@ export default async function Home() {
           <Image src={'https://via.placeholder.com/300/1'} width={300} height={300} alt="sample" />
         </div>
       </section>
-      <section className={styles['vertical']}>
+      <section className={styles.vertical}>
         <h1>{t('this-week-pop-team')}</h1>
         <p>{t('this-week-pop-team-desc')}</p>
-        <div className={styles['card-wrapper']}>
+        <div className={styles.cardWrapper}>
           {[1, 2, 3, 4, 5].map((_, idx) => (
             <Card
               key={idx}
