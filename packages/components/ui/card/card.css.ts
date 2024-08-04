@@ -1,9 +1,10 @@
 // styles.css.ts
-import { style, globalStyle } from '@vanilla-extract/css';
 import { rem } from '../../utils/css';
+import { style } from '@vanilla-extract/css';
 
 export const card = style({
-  width: rem(540), // 33.75rem
+  width: '100%',
+  maxWidth: rem(900),
   position: 'relative',
   padding: rem(35), // 2.1875rem
   backgroundColor: '#f0f0f0',
