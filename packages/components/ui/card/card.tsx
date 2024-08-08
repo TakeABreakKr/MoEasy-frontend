@@ -38,10 +38,13 @@ export default function Card({
       <CardThumbnail src={`https://via.placeholder.com/116/${idx}`} alt={title} />
       <CardTrigger>
         <CardTriggerItem align="center">수정</CardTriggerItem>
+        <Separator direction="horizontal" color="#cfcfcf" />
         <CardTriggerItem align="center">초대하기</CardTriggerItem>
+        <Separator direction="horizontal" color="#cfcfcf" />
         <CardTriggerItem align="center" notice>
           탈퇴하기
         </CardTriggerItem>
+        <Separator direction="horizontal" color="#cfcfcf" />
         <CardTriggerItem align="center" notice>
           삭제
         </CardTriggerItem>
