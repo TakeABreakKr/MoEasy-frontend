@@ -12,7 +12,7 @@ export default function Separator({
   color?: string;
 }) {
   return (
-    <span
+    <div
       style={assignInlineVars({
         [separatorColor]: color,
       })}
