@@ -16,6 +16,7 @@ export const header = style({
 export const headerH1 = style({
   fontSize: rem(24),
   fontWeight: 'bold',
+  margin: 0,
 });
 
 export const body = style({
@@ -33,13 +34,9 @@ export const formWrapper = style({
 
 export const aside = style({
   width: rem(320),
-  padding: rem(20),
-  marginRight: rem(20),
   borderRadius: rem(20),
-  backgroundColor: '#f6f6f6',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'space-between',
 });
 
 export const asideStep = style({
@@ -48,6 +45,7 @@ export const asideStep = style({
   flexDirection: 'column',
   alignItems: 'flex-start',
   gap: rem(16),
+  padding: 0,
 });
 
 export const stepLi = style({
@@ -105,7 +103,7 @@ export const label = style({
   display: 'flex',
   gap: '1rem',
   alignItems: 'center',
-  marginBottom: rem(5),
+  marginBottom: rem(15),
   fontWeight: 'bold',
   fontSize: rem(28),
 });

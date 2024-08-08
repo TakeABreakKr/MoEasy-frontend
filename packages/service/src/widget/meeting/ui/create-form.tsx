@@ -17,7 +17,7 @@ import { Button, SearchButton } from '@moeasy/storybook/ui/button';
 import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
 import { Input } from '@moeasy/storybook/ui/input';
 import { List } from '@moeasy/storybook/ui/list';
-import { Progress } from '@moeasy/storybook/ui/progress';
+import { Textarea } from '@moeasy/storybook/ui/textarea';
 
 import * as styles from './create-form.css';
 
@@ -32,9 +32,6 @@ const CreateForm = ({ action, data = {} }: CreateFormProps) => {
   const currentStep = Number(searchParams.get('step') || '1');
   return (
     <form className={styles.container} action={formAction}>
-      <div className={styles.header}>
-        <h1 className={styles.headerH1}>모임 생성</h1>
-      </div>
       <div className={styles.body}>
         <CreateFormAside step={currentStep} />
         <CreateFormInput step={currentStep} searchParams={searchParams} />
@@ -50,17 +47,19 @@ const createStepArray = ['모임명 / 소개', '썸네일 설정', '카테고리
 
 const CreateFormAside = ({ step }: { step: number }) => {
   return (
-    <aside className={styles.aside}>
-      <ul className={styles.asideStep}>
-        {createStepArray.map((txt, index) => (
-          <li key={index} className={clsx(styles.stepLi, step === index + 1 && styles.stepLiSelected)}>
-            <span className={clsx(styles.stepNumber, step === index + 1 && styles.numberSelected)}>{index + 1}</span>
-            <span>{txt}</span>
-          </li>
-        ))}
-      </ul>
-      <Progress value={step} max={createStepArray.length} className={styles.progress} />
-    </aside>
+    <>
+      <aside className={styles.aside}>
+        <h1 className={styles.headerH1}>모임 생성</h1>
+        <ul className={styles.asideStep}>
+          {createStepArray.map((txt, index) => (
+            <li key={index} className={clsx(styles.stepLi, step === index + 1 && styles.stepLiSelected)}>
+              <span className={clsx(styles.stepNumber, step === index + 1 && styles.numberSelected)}>{index + 1}</span>
+              <span>{txt}</span>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </>
   );
 };
 
@@ -87,11 +86,11 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
         </label>
         <label>
           <span className={styles.label}>모임 소개</span>
-          <Input
-            type="text"
+          <Textarea
             className={styles.input}
             placeholder="모임 소개를 입력해주세요"
             name="explanation"
+            minLength={10}
             maxLength={100}
             defaultValue={searchParams.get('explanation') || ''}
             onValueChange={onValueChange('explanation', searchParams)}
