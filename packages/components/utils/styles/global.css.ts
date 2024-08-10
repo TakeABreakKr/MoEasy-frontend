@@ -1,6 +1,6 @@
 // styles/global.css.ts
-import { createVar, globalStyle } from '@vanilla-extract/css';
 import { rem } from '../css';
+import { createVar, globalStyle } from '@vanilla-extract/css';
 
 export const headerHeight = createVar();
 
@@ -46,7 +46,7 @@ globalStyle('body', {
 
 // 제목 요소와 상호작용하는 요소에 대해 line-height를 더 짧게 설정합니다.
 globalStyle('h1, h2, h3, h4, button, input, label', {
-  lineHeight: '1.1',
+  // lineHeight: '1.1',
 });
 
 // 제목에 대한 text-wrap을 balance로 설정합니다.
@@ -69,11 +69,6 @@ globalStyle('img, picture', {
 // input 및 button 항목들이 글꼴을 상속하도록 합니다.
 globalStyle('input, button, textarea, select', {
   font: 'inherit',
-});
-
-// 행 속성이 없는 textarea가 너무 작지 않도록 합니다.
-globalStyle('textarea:not([rows])', {
-  minHeight: '10em',
 });
 
 // 고정된 모든 항목에는 여분의 스크롤 여백이 있어야 합니다.

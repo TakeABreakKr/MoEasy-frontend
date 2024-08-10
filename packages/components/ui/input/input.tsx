@@ -1,8 +1,8 @@
 import { ComponentProps, useRef, useState } from 'react';
 import clsx from 'clsx';
 
-import { XIcon } from '../icon';
 import { contextCreator } from '../../utils/useSafeContext';
+import { XIcon } from '../icon';
 
 import {
   ctlTextMax,
@@ -111,9 +111,9 @@ export const Input = <T extends string | number>({
                   inputRef.current.value = '';
                   const { value, valueAsNumber } = inputRef.current;
                   const validationResult = validateInput(inputRef.current);
-                  dispatchError && dispatchError(validationResult);
+                  dispatchError?.(validationResult);
                   setLength(0);
-                  if (onValueChange) onValueChange((isNaN(valueAsNumber) ? value : valueAsNumber) as T);
+                  onValueChange?.((isNaN(valueAsNumber) ? value : valueAsNumber) as T);
                 }
               }}
             >

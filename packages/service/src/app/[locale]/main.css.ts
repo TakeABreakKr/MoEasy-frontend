@@ -24,7 +24,7 @@ export const vertical = style({
 
 export const cardWrapper = style({
   display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(25rem, 1fr))',
+  gridTemplateColumns: `repeat(auto-fit, minmax(${rem(450)}, 1fr))`,
   width: '100%',
   placeItems: 'center',
   gap: rem(32),
