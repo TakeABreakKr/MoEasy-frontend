@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { AlertTitle } from '../alert/alert';
 
-import { List, ListItemType } from './list';
+import { List, ListItemType } from '.';
 
 import { popupContainer } from './list.css';
 

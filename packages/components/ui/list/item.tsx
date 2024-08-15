@@ -3,11 +3,12 @@ import clsx from 'clsx';
 
 import Image from 'next/image';
 
-import { delay } from '../../../utils/lib/delay';
-import { Checkbox } from '../../checkbox';
-import { ListItemType } from '../list';
+import { delay } from '../../utils/lib/delay';
+import { Checkbox } from '../checkbox';
 
-import * as styles from '../list.css';
+import { ListItemType } from '.';
+
+import * as styles from './list.css';
 
 type ListItemProps = {
   item: ListItemType;
@@ -30,11 +31,11 @@ export const ListItem = ({ item, checked, toggleItemSelection }: ListItemProps) 
     <div
       role="button"
       key={item.id}
-      className={clsx(styles.userItem, fadeOut && styles.userItemFadeOut)}
+      className={clsx(styles.itemBase, fadeOut && styles.itemFadeOut)}
       onClick={() => onSelected(item.id)}
     >
-      <div className={styles.userInfo}>
-        <span className={styles.userAvatar}>
+      <div className={styles.itemInfo}>
+        <span className={styles.itemAvatar}>
           <Image
             src={item.avatar || `https://via.placeholder.com/30/${item.id}`}
             width={30}
@@ -42,7 +43,7 @@ export const ListItem = ({ item, checked, toggleItemSelection }: ListItemProps) 
             alt={item.name || 'avatar'}
           />
         </span>
-        <span className={styles.userName}>{item.name}</span>
+        <span className={styles.itemName}>{item.name}</span>
       </div>
       <Checkbox
         checked={fadeOut || checked}

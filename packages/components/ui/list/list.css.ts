@@ -38,15 +38,17 @@ export const delBtnWrapper = style({
   overflow: 'hidden',
   gap: rem(4),
   padding: rem(16),
+  scrollbarGutter: 'stable',
 });
 
-export const userList = style({
+export const itemList = style({
   flexGrow: 1,
   overflowY: 'auto',
   width: '100%',
+  padding: `0 ${rem(8)}`,
 });
 
-export const userItem = style({
+export const itemBase = style({
   display: 'flex',
   alignItems: 'center',
   padding: '6px',
@@ -58,18 +60,18 @@ export const userItem = style({
   opacity: 1,
 });
 
-export const userItemFadeOut = style({
+export const itemFadeOut = style({
   opacity: 0,
 });
 
-export const userInfo = style({
+export const itemInfo = style({
   flexGrow: 1,
   display: 'flex',
   alignItems: 'center',
   padding: '0.4rem',
 });
 
-export const userAvatar = style({
+export const itemAvatar = style({
   width: 30,
   height: 30,
   borderRadius: '50%',
@@ -81,7 +83,7 @@ export const userAvatar = style({
   marginRight: rem(12),
 });
 
-export const userName = style({
+export const itemName = style({
   flexGrow: 1,
 });
 
