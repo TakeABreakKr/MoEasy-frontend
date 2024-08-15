@@ -1,7 +1,8 @@
 // styles.css.ts
-import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
 import { rem } from '../../utils/css';
+import { style } from '@vanilla-extract/css';
 
 export const popupContainer = style({
   position: 'fixed',
@@ -63,7 +64,7 @@ export const popupContent = style({
 export const title = style({
   fontSize: rem(32),
   fontWeight: 'bold',
-  marginBottom: '16px',
+  marginBottom: rem(16),
 });
 
 export const message = style({

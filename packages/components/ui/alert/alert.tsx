@@ -2,8 +2,8 @@ import React, { ComponentProps, HTMLAttributes, useReducer } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import clsx from 'clsx';
 
-import { Button } from '../button';
 import { contextCreator } from '../../utils/useSafeContext';
+import { Button } from '../button';
 
 import * as styles from './alert.css';
 

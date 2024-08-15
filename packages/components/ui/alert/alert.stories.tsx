@@ -45,7 +45,7 @@ const meta = {
   component: SampleAlert,
   tags: ['autodocs'],
   parameters: {
-    layout: 'padded',
+    layout: 'fullscreen',
     nextjs: {
       appDirectory: true,
       navigation: {
