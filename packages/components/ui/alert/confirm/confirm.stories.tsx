@@ -4,20 +4,19 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { XIcon } from '../../icon';
 import { Alert, AlertCloseButton, AlertContent, AlertMessage, AlertTitle, AlertTrigger } from '../alert';
 
+import { rem } from '../../../utils/css';
+import { closeWrapper } from '../alert.css';
+
 type Props = {
   title?: string | JSX.Element;
   message?: string | JSX.Element;
   className?: string;
 };
 
-const sampleCloseButtonStyle = {
-  display: 'flex',
-  justifyContent: 'flex-end',
-} as const satisfies CSSProperties;
-
 const sampleButtonWrapperStyle = {
   display: 'flex',
-  gap: '.9375rem',
+  gap: rem(15),
+  width: '100%',
 } as const satisfies CSSProperties;
 
 const flewGrowOne = {
@@ -28,8 +27,8 @@ const SampleAlert = ({ title, message, className }: Props) => {
   return (
     <Alert isOpen>
       <AlertTrigger>팝업 열기</AlertTrigger>
-      <AlertContent className={className}>
-        <div style={sampleCloseButtonStyle}>
+      <AlertContent className={className} size="alert">
+        <div className={closeWrapper}>
           <AlertCloseButton variant="dark" rounded="full" size="small">
             <XIcon width={15} height={15} />
           </AlertCloseButton>
@@ -52,7 +51,6 @@ const SampleAlert = ({ title, message, className }: Props) => {
 const meta = {
   title: 'Common/Alert/Confirm',
   component: SampleAlert,
-  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
     nextjs: {
@@ -72,7 +70,3 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Sample: Story = {};
-
-export const None: Story = {
-  args: {},
-};

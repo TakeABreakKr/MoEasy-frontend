@@ -65,6 +65,9 @@ export const inputCtlWrapper = style({
   right: rem(20),
   transform: 'translateY(-50%)',
   gap: rem(10),
+  ':disabled': {
+    display: 'none',
+  },
   '@media': {
     'screen and (min-width: 1025px)': {
       selectors: {

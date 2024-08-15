@@ -21,6 +21,7 @@ interface AutoResizeTextareaProps extends ComponentPropsWithoutRef<'textarea'> {
 
 const resizeTextarea = (ref: HTMLTextAreaElement | null, minHeight = 40, maxHeight = 400) => {
   if (ref) {
+    ref.rows = 1;
     ref.style.height = 'auto';
     const scrollHeight = ref.scrollHeight;
     ref.style.height = `${Math.max(minHeight, Math.min(scrollHeight, maxHeight))}px`;
@@ -68,7 +69,6 @@ export const Textarea = ({
       <textarea
         ref={textareaRef}
         onChange={handleChange}
-        rows={1}
         className={clsx(textareaStyles, inputStyles.inputVariants(), className)}
         style={{ minHeight, maxHeight }}
         maxLength={maxLength}

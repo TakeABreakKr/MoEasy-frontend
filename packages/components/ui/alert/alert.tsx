@@ -1,5 +1,7 @@
-import React, { ComponentProps, HTMLAttributes, useReducer } from 'react';
+import React, { ComponentProps, ComponentPropsWithoutRef, useReducer } from 'react';
+import { createPortal } from 'react-dom';
 import { Slot } from '@radix-ui/react-slot';
+import { RecipeVariants } from '@vanilla-extract/recipes';
 import clsx from 'clsx';
 
 import { contextCreator } from '../../utils/useSafeContext';
@@ -12,7 +14,7 @@ type AlertProps = {
   isOpen?: boolean;
   open?(): void;
   close?(): void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 type AlertCtxType = {
@@ -44,20 +46,23 @@ const AlertTrigger = ({ asChild, children }: { asChild?: boolean; children: Reac
   if (asChild) return <Slot onClick={() => dispatchOpen('open')}>{children}</Slot>;
 
   return (
-    <Button variant="dark" size="medium" onClick={() => dispatchOpen('open')}>
+    <Button variant="dark" size="medium" type="button" onClick={() => dispatchOpen('open')}>
       {children}
     </Button>
   );
 };
 
-const AlertContent = ({ children, className, ...props }: HTMLAttributes<HTMLDivElement>) => {
+type AlertContentProps = ComponentPropsWithoutRef<'div'> & RecipeVariants<typeof styles.popup>;
+
+const AlertContent = ({ size, children, className, ...props }: AlertContentProps) => {
   const { isOpen } = useSelectContext();
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div className={clsx(styles.popupContainer, className)} {...props}>
-      <div className={styles.popupContent}>{children}</div>
-    </div>
+      <div className={styles.popup({ size })}>{children}</div>
+    </div>,
+    document.body,
   );
 };
 
@@ -74,8 +79,8 @@ const AlertCloseButton = ({ asChild, onClick, ...props }: ComponentProps<typeof 
   const Comp = asChild ? Slot : Button;
   return (
     <Comp
-      onClick={(e) => {
-        onClick && onClick(e);
+      onClick={async (e) => {
+        await onClick?.(e);
         dispatchOpen('close');
       }}
       {...props}

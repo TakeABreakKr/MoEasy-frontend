@@ -1,9 +1,10 @@
-import { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { XIcon } from '../icon';
 
 import { Alert, AlertCloseButton, AlertContent, AlertMessage, AlertTitle, AlertTrigger } from './alert';
+
+import { closeWrapper } from './alert.css';
 
 type Props = {
   title?: string | JSX.Element;
@@ -13,17 +14,12 @@ type Props = {
   className?: string;
 };
 
-const sampleStyle = {
-  display: 'flex',
-  justifyContent: 'flex-end',
-} as const satisfies CSSProperties;
-
 const SampleAlert = ({ title, message, excludeButton, className }: Props) => {
   return (
     <Alert isOpen>
       <AlertTrigger>팝업 열기</AlertTrigger>
-      <AlertContent className={className}>
-        <div style={sampleStyle}>
+      <AlertContent className={className} size="alert">
+        <div className={closeWrapper}>
           <AlertCloseButton variant="dark" rounded="full" size="small">
             <XIcon width={15} height={15} />
           </AlertCloseButton>
