@@ -15,6 +15,7 @@ const SearchButton = forwardRef<HTMLButtonElement, SearchButtonProps>(({ classNa
     <button
       className={clsx(styles.inputVariants(), styles.inputWrapper, searchButtonStyle, className)}
       ref={ref}
+      type="button"
       {...props}
     >
       {children}

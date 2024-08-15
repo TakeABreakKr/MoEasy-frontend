@@ -4,7 +4,7 @@ import { expect, userEvent, within } from '@storybook/test';
 
 import { AlertTitle } from '../alert/alert';
 
-import { List, ListItemType } from '.';
+import { List, ListFooter, ListItemType } from '.';
 
 import { popupContainer } from './list.css';
 
@@ -23,7 +23,9 @@ function LISTSAMPLE({ list = [], dispatchKeyword, ...props }: ComponentPropsWith
         dispatchKeyword={(keyword) => {
           setList(list.filter((item) => item.name?.toLocaleLowerCase().includes(keyword.toLocaleLowerCase())));
         }}
-      />
+      >
+        <ListFooter close={console.log}></ListFooter>
+      </List>
     </div>
   );
 }
