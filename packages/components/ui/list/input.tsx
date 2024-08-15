@@ -22,6 +22,7 @@ export function ListKeywordInput({ dispatchKeyword }: { dispatchKeyword?: (keywo
         }}
       />
       <Button
+        data-testid="dispatch-keyword"
         variant="primary"
         size="medium"
         rounded="medium"

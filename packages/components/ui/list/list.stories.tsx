@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef, useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, within } from '@storybook/test';
 
 import { AlertTitle } from '../alert/alert';
 
@@ -46,4 +47,27 @@ type Story = StoryObj<typeof meta>;
 
 export const Sample: Story = {
   args: {},
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const keywordButton = canvas.getByTestId(/dispatch-keyword/);
+
+    await step('친구 이름을 찾을 수 없는 키워드 입력 시 빈 리스트 출력', async () => {
+      const keywordInput = canvas.getByRole('textbox');
+      await userEvent.type(keywordInput, 'b', { delay: 300 });
+
+      const keywordButton = canvas.getByTestId(/dispatch-keyword/);
+      await userEvent.click(keywordButton, { delay: 500 });
+      const contentAfterKeywordFirstChange = canvas.getByTestId(/list-content/);
+      expect(contentAfterKeywordFirstChange.children.length).toBe(0);
+    });
+
+    await step('친구 이름을 찾을 수 있는 키워드 입력 시 키워드가 포함된 리스트 출력', async () => {
+      const keywordInput = canvas.getByRole('textbox');
+      await userEvent.type(keywordInput, '{backspace}');
+      await userEvent.type(keywordInput, 'a');
+      await userEvent.click(keywordButton, { delay: 200 });
+      const contentAfterKeywordSecondChange = canvas.getByTestId(/list-content/);
+      expect(contentAfterKeywordSecondChange.children.length).toBe(20);
+    });
+  },
 };

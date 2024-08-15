@@ -14,7 +14,7 @@ type ListContentProps = Pick<ListProps, 'list' | 'selected'> & {
 
 export function ListContent({ list = [], selected = [], dispatch }: ListContentProps) {
   return (
-    <div className={clsx(itemList, scrollStyle)}>
+    <div className={clsx(itemList, scrollStyle)} data-testid="list-content">
       {list.map((item) => (
         <ListItem
           key={item.id}
