@@ -1,38 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 
 import Image from 'next/image';
 
+import { delay } from '../../../utils/lib/delay';
 import { Checkbox } from '../../checkbox';
-import { UserProps } from '../list';
+import { ListItemType } from '../list';
 
 import * as styles from '../list.css';
 
 type ListItemProps = {
-  user: UserProps;
+  item: ListItemType;
   checked?: boolean;
-  toggleUserSelection: (id: number) => void;
+  toggleItemSelection: (id: string) => void;
 };
 
-export const ListItem = ({ user, checked, toggleUserSelection }: ListItemProps) => {
+export const ListItem = ({ item, checked, toggleItemSelection }: ListItemProps) => {
+  const [fadeOut, setFadeOut] = useState(false);
+  const onSelected = async (id: string) => {
+    setFadeOut(true);
+    await delay();
+    toggleItemSelection(id);
+    setFadeOut(false);
+  };
+
+  if (checked) return null;
+
   return (
-    <div role="button" key={user.id} className={clsx(styles.userItem)} onClick={() => toggleUserSelection(user.id)}>
+    <div
+      role="button"
+      key={item.id}
+      className={clsx(styles.userItem, fadeOut && styles.userItemFadeOut)}
+      onClick={() => onSelected(item.id)}
+    >
       <div className={styles.userInfo}>
         <span className={styles.userAvatar}>
           <Image
-            src={user.avatar || `https://via.placeholder.com/30/${user.id}`}
+            src={item.avatar || `https://via.placeholder.com/30/${item.id}`}
             width={30}
             height={30}
-            alt={user.name || 'avatar'}
+            alt={item.name || 'avatar'}
           />
         </span>
-        <span className={styles.userName}>{user.name}</span>
+        <span className={styles.userName}>{item.name}</span>
       </div>
       <Checkbox
-        checked={checked}
+        checked={fadeOut || checked}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            toggleUserSelection(user.id);
+            onSelected(item.id);
           }
         }}
       />
