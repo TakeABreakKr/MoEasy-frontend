@@ -30,7 +30,7 @@ export const ImageUpload = ({ selectedFile, onImageUpload }: ImageUploadProps) =
     <div className={styles.imageUploadContainer}>
       {!selectedFile ? (
         <label className={styles.uploadPlaceholder} htmlFor={id}>
-          <input type="file" hidden accept="image/*" onChange={handleFileChange} id={id} />
+          <input type="file" hidden accept="image/*" onChange={handleFileChange} id={id} data-testid="file-upload" />
           <div className={styles.uploadButton}>
             <span className={styles.plusIcon}>
               <PlusIcon width={30} height={30} />

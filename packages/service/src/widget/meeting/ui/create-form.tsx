@@ -6,12 +6,18 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
-import { gotoTeamList, teamModifyAction } from '@/app/[locale]/meeting/action';
+import { teamModifyAction } from '@/app/[locale]/meeting/action';
 import { CreateMeetingType } from '@/entities/meeting/api';
 import { createQueryString } from '@/shared/utils/utils';
 
-import { SampleAlert } from '@moeasy/storybook/ui/alert';
-import { Alert, AlertCloseButton, AlertContent, AlertTitle, AlertTrigger } from '@moeasy/storybook/ui/alert/alert';
+import {
+  Alert,
+  AlertCloseButton,
+  AlertContent,
+  AlertMessage,
+  AlertTitle,
+  AlertTrigger,
+} from '@moeasy/storybook/ui/alert/alert';
 import { closeWrapper } from '@moeasy/storybook/ui/alert/alert.css';
 import { Button, SearchButton } from '@moeasy/storybook/ui/button';
 import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
@@ -38,7 +44,21 @@ const CreateForm = ({ action, data = {} }: CreateFormProps) => {
         <CreateFormAside step={currentStep} />
         <CreateFormInput step={currentStep} searchParams={searchParams} />
       </div>
-      {message.type === 'success' && <SampleAlert close={() => gotoTeamList()} message={message.message || ''} />}
+      {message.type === 'success' && (
+        <Alert isOpen>
+          <AlertContent size="alert">
+            <div className={closeWrapper}>
+              <AlertCloseButton variant="dark" rounded="full" size="small" type="button">
+                <XIcon width={15} height={15} />
+              </AlertCloseButton>
+            </div>
+            <AlertMessage>{message.message}</AlertMessage>
+            <Button size="large" rounded="medium" asChild>
+              <Link href="/meeting">확인</Link>
+            </Button>
+          </AlertContent>
+        </Alert>
+      )}
     </form>
   );
 };
