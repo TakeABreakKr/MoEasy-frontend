@@ -16,6 +16,7 @@ export const calendarHeaderWrapper = style({
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: rem(0, 65),
+  fontSize: rem(20),
   width: `100%`,
 });
 
@@ -29,8 +30,10 @@ export const calendarContent = style({
 
 export const calendarContentItem = recipe({
   base: {
-    width: '100%',
+    width: rem(40),
+    height: rem(40),
     textAlign: 'center',
+    fontSize: rem(15),
   },
   variants: {
     weekday: {
@@ -39,6 +42,13 @@ export const calendarContentItem = recipe({
       },
       saturday: {
         color: '#257CFF',
+      },
+    },
+    current: {
+      true: {
+        background: '#282828',
+        color: 'white',
+        borderRadius: rem(5),
       },
     },
     not: {
@@ -58,4 +68,5 @@ export const footer = style({
 
 export const footerButton = style({
   flex: 1,
+  fontSize: rem(20),
 });
