@@ -1,6 +1,7 @@
-import { keyframes, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
 import { rem } from '../../utils/css';
+import { keyframes, style } from '@vanilla-extract/css';
 
 const dropdownBorderColor = '#e1e1e1';
 
@@ -53,7 +54,6 @@ export const dropdownMenuItem = recipe({
     userSelect: 'none',
     alignItems: 'center',
     borderRadius: rem(4),
-    padding: rem(8, 10),
     fontSize: rem(15),
     outline: 'none',
     transition: 'all 0.2s',
@@ -84,6 +84,11 @@ export const dropdownMenuItem = recipe({
       },
       right: {
         justifyContent: 'flex-end',
+      },
+    },
+    padding: {
+      true: {
+        padding: rem(8, 10),
       },
     },
   },

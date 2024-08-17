@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './dropdown-menu';
-import { useState } from 'react';
 
 const DropDownExample = ({ list }: { list?: string[] }) => {
   return (
