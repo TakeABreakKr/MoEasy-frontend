@@ -29,7 +29,7 @@ export type SelectedListDispatch = React.Dispatch<CheckBoxActionType<ListItemTyp
 
 const [ListProvider, useListContext] = contextCreator<Pick<ListProps, 'selected'>>();
 
-export const List = ({ list = [], selected: prevSelected = [], close, dispatchKeyword, children }: ListProps) => {
+export const List = ({ list = [], selected: prevSelected = [], dispatchKeyword, children }: ListProps) => {
   const [selected, dispatch] = useReducer(checkGroupReducer<ListItemType>, prevSelected);
   return (
     <ListProvider value={{ selected }}>
