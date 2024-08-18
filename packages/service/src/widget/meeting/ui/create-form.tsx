@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -197,24 +197,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
         </fieldset>
         <label className={styles.labelWrapper}>
           <span className={styles.label}>누구와 함께</span>
-          <Alert>
-            <AlertTrigger asChild>
-              <SearchButton>유저 닉네임을 검색해보세요.</SearchButton>
-            </AlertTrigger>
-            <AlertContent size="medium">
-              <div className={closeWrapper}>
-                <AlertCloseButton variant="dark" rounded="full" size="small" type="button">
-                  <XIcon width={15} height={15} />
-                </AlertCloseButton>
-              </div>
-              <AlertTitle>모임원 모집</AlertTitle>
-              <List list={[{ id: '2', name: 'aa' }]} selected={members}>
-                <ListFooter asChild close={setMembers}>
-                  <AlertCloseButton>확인</AlertCloseButton>
-                </ListFooter>
-              </List>
-            </AlertContent>
-          </Alert>
+          <FriendListPopup selected={members} dispatch={setMembers} />
           <div>
             {members.map((member) => (
               <Tag
@@ -232,6 +215,35 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
     </div>
   );
 };
+
+function FriendListPopup({
+  selected,
+  dispatch,
+}: {
+  selected: ListItemType[];
+  dispatch: Dispatch<SetStateAction<ListItemType[]>>;
+}) {
+  return (
+    <Alert>
+      <AlertTrigger asChild>
+        <SearchButton>유저 닉네임을 검색해보세요.</SearchButton>
+      </AlertTrigger>
+      <AlertContent size="medium">
+        <div className={closeWrapper}>
+          <AlertCloseButton variant="dark" rounded="full" size="small" type="button">
+            <XIcon width={15} height={15} />
+          </AlertCloseButton>
+        </div>
+        <AlertTitle>모임원 모집</AlertTitle>
+        <List list={[{ id: '2', name: 'aa' }]} selected={selected}>
+          <ListFooter asChild close={dispatch}>
+            <AlertCloseButton>확인</AlertCloseButton>
+          </ListFooter>
+        </List>
+      </AlertContent>
+    </Alert>
+  );
+}
 
 const CreateFormButton = ({ step, searchParams }: { step: number; searchParams: URLSearchParams }) => {
   const searchParamsObject = Object.fromEntries(searchParams);
