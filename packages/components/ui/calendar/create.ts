@@ -1,3 +1,5 @@
+import { DateInput } from '../../type/date';
+
 export type CalendarDateType = {
   year: number;
   month: number;
@@ -43,3 +45,8 @@ export function generateCalendarForMonth(date: Date, row = 6): CalendarDateType[
     };
   });
 }
+
+export const dateParser = (input: DateInput) => {
+  if (input instanceof Date) return input;
+  return new Date(input);
+};
