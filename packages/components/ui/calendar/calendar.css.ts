@@ -3,6 +3,15 @@ import { recipe } from '@vanilla-extract/recipes';
 import { rem } from '../../utils/css';
 import { style } from '@vanilla-extract/css';
 
+export const calendarTrigger = style({
+  display: 'flex',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  gap: rem(10),
+  width: rem(400),
+  fontSize: rem(20),
+});
+
 export const calendarWrapper = style({
   display: 'flex',
   flexDirection: 'column',
@@ -57,6 +66,12 @@ export const calendarContentItem = recipe({
       },
     },
   },
+});
+
+export const calendarTimeWrapper = style({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
 });
 
 export const footer = style({

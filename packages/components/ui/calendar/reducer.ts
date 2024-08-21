@@ -74,7 +74,7 @@ export type CalendarDateAction =
       payload: TimeState;
     }
   | {
-      type: 'INNER_UPDATE';
+      type: 'INNER_UPDATE' | 'INNER_RESET';
     };
 
 export const calendarDateReducer = (
@@ -98,7 +98,13 @@ export const calendarDateReducer = (
     case 'INNER_UPDATE': {
       return {
         initDate: currentDate,
-        currentDate: currentDate,
+        currentDate,
+      };
+    }
+    case 'INNER_RESET': {
+      return {
+        initDate,
+        currentDate: initDate,
       };
     }
   }

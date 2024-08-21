@@ -50,3 +50,15 @@ export const dateParser = (input: DateInput) => {
   if (input instanceof Date) return input;
   return new Date(input);
 };
+
+const paddingZeroTwo = (value: string | number) =>
+  (typeof value === 'number' ? value.toString() : value).padStart(2, '0');
+
+export const createDateValue = (date: Date | string | number, hasTime?: boolean) => {
+  const parsedDate = dateParser(date);
+  const dateString = `${parsedDate.getFullYear()}-${paddingZeroTwo(parsedDate.getMonth() + 1)}-${paddingZeroTwo(
+    parsedDate.getDate(),
+  )}`;
+  if (!hasTime) return dateString;
+  return `${dateString} ${paddingZeroTwo(parsedDate.getHours())}:${paddingZeroTwo(parsedDate.getMinutes())}`;
+};
