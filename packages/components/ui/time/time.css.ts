@@ -1,8 +1,10 @@
+import { rem } from '../../utils/css';
 import { style } from '@vanilla-extract/css';
 
 export const timeInputContainer = style({
   display: 'flex',
   alignItems: 'center',
+  gap: rem(10),
 });
 
 export const inputGroup = style({
@@ -10,6 +12,7 @@ export const inputGroup = style({
   flexDirection: 'column',
   alignItems: 'center',
   margin: '0 0.5rem',
+  gap: rem(10),
 });
 
 export const button = style({
@@ -23,11 +26,13 @@ export const button = style({
 });
 
 export const input = style({
-  width: '4rem',
+  width: rem(40),
+  height: rem(40),
   textAlign: 'center',
-  fontSize: '1.5rem',
+  fontSize: rem(16),
   fontWeight: 'bold',
-  border: 'none',
+  borderRadius: rem(5),
+  border: '1px solid #EDEDED',
   ':focus': {
     outline: 'none',
   },

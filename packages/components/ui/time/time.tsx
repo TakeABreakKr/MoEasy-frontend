@@ -1,25 +1,34 @@
-import { useReducer, useRef } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 
+import { DateInput } from '../../type/date';
+import { Button } from '../button';
 import { ChevronDown } from '../icon';
 
-import { timeInitializer, timeReducer } from './reducer';
+import { timeInitializer, timeReducer, TimeState } from './reducer';
 
 import * as styles from './time.css';
 
 type TimeProps = {
+  value?: DateInput;
+  dispatchTime?: (time: TimeState) => void;
   delay?: number;
 };
 
-export function Time({ delay = 100 }: TimeProps) {
-  const [state, dispatch] = useReducer(timeReducer, null, timeInitializer);
+export function Time({ value, dispatchTime, delay = 100 }: TimeProps) {
+  const [state, dispatch] = useReducer(timeReducer, value, timeInitializer);
   const timer = useRef<NodeJS.Timeout>();
 
   const clearTimeout = () => clearInterval(timer.current);
 
+  useEffect(() => {
+    dispatchTime?.(state);
+  }, [state, dispatchTime]);
+
   return (
     <div className={styles.timeInputContainer}>
       <div className={styles.inputGroup}>
-        <button
+        <Button
+          variant="ghost"
           onClick={() => dispatch({ type: 'ADD_HOUR' })}
           onPointerDown={() => {
             timer.current = setInterval(() => dispatch({ type: 'ADD_HOUR' }), delay);
@@ -30,7 +39,7 @@ export function Time({ delay = 100 }: TimeProps) {
           aria-label="Increase hours"
         >
           <ChevronDown width={24} transform="rotate(180)" />
-        </button>
+        </Button>
         <input
           type="number"
           value={state.hour}
@@ -38,7 +47,8 @@ export function Time({ delay = 100 }: TimeProps) {
           className={styles.input}
           aria-label="Hours"
         />
-        <button
+        <Button
+          variant="ghost"
           onClick={() => dispatch({ type: 'MINUS_HOUR' })}
           onPointerDown={() => {
             timer.current = setInterval(() => dispatch({ type: 'MINUS_HOUR' }), delay);
@@ -49,11 +59,12 @@ export function Time({ delay = 100 }: TimeProps) {
           aria-label="Decrease hours"
         >
           <ChevronDown width={24} />
-        </button>
+        </Button>
       </div>
       <span>:</span>
       <div className={styles.inputGroup}>
-        <button
+        <Button
+          variant="ghost"
           onClick={() => dispatch({ type: 'ADD_MINUTE' })}
           onPointerDown={() => {
             timer.current = setInterval(() => dispatch({ type: 'ADD_MINUTE' }), delay);
@@ -64,7 +75,7 @@ export function Time({ delay = 100 }: TimeProps) {
           aria-label="Increase minutes"
         >
           <ChevronDown width={24} transform="rotate(180)" />
-        </button>
+        </Button>
         <input
           type="number"
           value={state.minute}
@@ -80,7 +91,8 @@ export function Time({ delay = 100 }: TimeProps) {
           className={styles.input}
           aria-label="Minutes"
         />
-        <button
+        <Button
+          variant="ghost"
           onClick={() => dispatch({ type: 'MINUS_MINUTE' })}
           onPointerDown={() => {
             timer.current = setInterval(() => dispatch({ type: 'MINUS_MINUTE' }), delay);
@@ -91,7 +103,7 @@ export function Time({ delay = 100 }: TimeProps) {
           aria-label="Decrease minutes"
         >
           <ChevronDown width={24} />
-        </button>
+        </Button>
       </div>
     </div>
   );
