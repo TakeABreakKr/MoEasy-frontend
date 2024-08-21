@@ -6,7 +6,7 @@ const meta = {
   title: 'Common/Calendar',
   component: Calendar,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
   },
   tags: ['autodocs'],
   args: {},
@@ -17,4 +17,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Sample: Story = {
   args: {},
+};
+
+export const HasTime: Story = {
+  args: {
+    hasTime: true,
+  },
 };

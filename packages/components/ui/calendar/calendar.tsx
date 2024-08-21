@@ -1,5 +1,6 @@
-import { useReducer, useState } from 'react';
+import { useCallback, useReducer } from 'react';
 
+import { DateInput, DateUnit } from '../../type/date';
 import { Button } from '../button';
 import {
   DropdownMenu,
@@ -8,21 +9,17 @@ import {
   DropdownMenuTrigger,
 } from '../dropdown-menu/dropdown-menu';
 import { ChevronDown } from '../icon';
+import { Separator } from '../separator';
+import { TimeState } from '../time/reducer';
+import { Time } from '../time/time';
 
-import { calendarInitializer, calendarReducer } from './reducer';
+import { dateParser } from './create';
+import { calendarDateInitializer, calendarDateReducer, calendarInitializer, calendarReducer } from './reducer';
 
 import { inputVariants } from '../input/input.css';
 import * as styles from './calendar.css';
 
-type DateUnit = 'year' | 'month' | 'day';
-type DateInput = string | Date | number;
-
 const calendarHeader = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-
-const parseDate = (input: DateInput) => {
-  if (input instanceof Date) return input;
-  return new Date(input);
-};
 
 const truncateDate = (date: Date, unit: DateUnit): Date => {
   const year = date.getFullYear();
@@ -34,8 +31,8 @@ const truncateDate = (date: Date, unit: DateUnit): Date => {
  * 두 날짜를 비교하며 앞 날짜가 크면 1, 같으면 0, 작으면 -1를 반환
  */
 const compareDate = (dateA: DateInput, dateB?: DateInput, unit: 'year' | 'month' | 'day' = 'day') => {
-  const parsedA = parseDate(dateA);
-  const parsedB = dateB ? parseDate(dateB) : new Date();
+  const parsedA = dateParser(dateA);
+  const parsedB = dateB ? dateParser(dateB) : new Date();
 
   const truncatedA = truncateDate(parsedA, unit);
   const truncatedB = truncateDate(parsedB, unit);
@@ -55,18 +52,15 @@ const disableWhenOutOfRange = (date: DateInput, min?: DateInput, max?: DateInput
   return false;
 };
 
-type CalendarProps = {
-  date?: DateInput;
-  onSelect?: (date?: DateInput) => void;
-  min?: DateInput;
-  max?: DateInput;
-};
-
-const createDateValue = (date: Date) =>
-  `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date
+const createDateValue = (date: Date | string | number, hasTime?: boolean) => {
+  const parsedDate = dateParser(date);
+  const dateString = `${parsedDate.getFullYear()}-${(parsedDate.getMonth() + 1).toString().padStart(2, '0')}-${parsedDate
     .getDate()
     .toString()
     .padStart(2, '0')}`;
+  if (!hasTime) return dateString;
+  return `${dateString} ${parsedDate.getHours()}:${parsedDate.getMinutes()}`;
+};
 
 const monthFormat = new Intl.DateTimeFormat('en-US', { month: 'long' });
 const monthParser = (monthNumber: number): string => {
@@ -81,15 +75,27 @@ const monthParser = (monthNumber: number): string => {
   return monthFormat.format(date);
 };
 
-export default function Calendar({ date, onSelect, min, max }: CalendarProps) {
+type CalendarProps = {
+  date?: DateInput;
+  onSelect?: (date?: DateInput) => void;
+  min?: DateInput;
+  max?: DateInput;
+  hasTime?: boolean;
+};
+
+export default function Calendar({ date, onSelect, min, max, hasTime }: CalendarProps) {
   const [state, dispatch] = useReducer(calendarReducer, date, calendarInitializer);
-  const [currentDate, setDate] = useState<Date>(() => (date ? new Date(date) : new Date()));
-  const showDate = createDateValue(currentDate);
+  const [innerDate, innerDispatch] = useReducer(calendarDateReducer, date, calendarDateInitializer);
+  const setDate = (payload: Date, inner = true) => innerDispatch({ type: 'DATE', inner, payload });
+  const setTime = useCallback((payload: TimeState, inner = true) => {
+    innerDispatch({ type: 'TIME', inner, payload });
+  }, []);
+  const innerUpdate = () => innerDispatch({ type: 'INNER_UPDATE' });
+  /** if controlled, parse props.date. or parse state.date */
+  const showDate = date ? createDateValue(date, hasTime) : createDateValue(innerDate.initDate, hasTime);
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <input type="date" className={inputVariants.classNames.base} value={showDate} readOnly />
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger className={inputVariants.classNames.base}>{showDate}</DropdownMenuTrigger>
       <DropdownMenuContent>
         <div className={styles.calendarWrapper}>
           <div className={styles.calendarHeaderWrapper}>
@@ -117,7 +123,7 @@ export default function Calendar({ date, onSelect, min, max }: CalendarProps) {
                 <button
                   className={styles.calendarContentItem({
                     not: item.month !== state.month,
-                    current: compareDate(currentDate, item.origin, 'day') === 0,
+                    current: compareDate(innerDate.currentDate, item.origin, 'day') === 0,
                   })}
                   disabled={item.month !== state.month || disableWhenOutOfRange(item.origin, min, max)}
                   onClick={() => {
@@ -129,8 +135,23 @@ export default function Calendar({ date, onSelect, min, max }: CalendarProps) {
               </li>
             ))}
           </ul>
+          {hasTime && (
+            <>
+              <Separator direction="horizontal" color="#D0D0D0" />
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <Time value={innerDate.initDate} dispatchTime={setTime} />
+              </div>
+            </>
+          )}
           <div className={styles.footer}>
-            <DropdownMenuItem onSelect={() => onSelect?.(currentDate)} asChild align="center">
+            <DropdownMenuItem
+              onSelect={() => {
+                onSelect?.(innerDate.currentDate);
+                innerUpdate();
+              }}
+              asChild
+              align="center"
+            >
               <Button size="large" className={styles.footerButton}>
                 확인
               </Button>
