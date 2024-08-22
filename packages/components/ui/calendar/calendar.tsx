@@ -74,6 +74,12 @@ export type CalendarProps = {
   hasTime?: boolean;
 };
 
+const calcInputValue = (date: Date) => {
+  let offset = date.getTimezoneOffset() * 60000; //ms단위라 60000곱해줌
+  let dateOffset = new Date(date.getTime() - offset);
+  return dateOffset;
+};
+
 export default function Calendar({ date, onSelect, min, max, hasTime }: CalendarProps) {
   // only control calendar by initial date prop
   const [state, dispatch] = useReducer(calendarReducer, date, calendarInitializer);
@@ -85,6 +91,8 @@ export default function Calendar({ date, onSelect, min, max, hasTime }: Calendar
   }, []);
   /** if controlled, parse props.date. or parse state.date */
   const showDate = date ? createDateValue(date, hasTime) : createDateValue(innerDate.initDate, hasTime);
+  /** to achieve value on form submit */
+  const formInputValue = calcInputValue(innerDate.initDate).toISOString().slice(0, -5);
 
   return (
     <DropdownMenu>
@@ -92,6 +100,7 @@ export default function Calendar({ date, onSelect, min, max, hasTime }: Calendar
         <CalendarIcon color="#282828" />
         {showDate}
       </DropdownMenuTrigger>
+      <input type="datetime-local" value={formInputValue} readOnly hidden />
       <DropdownMenuContent>
         <div className={styles.calendarWrapper}>
           <div className={styles.calendarHeaderWrapper}>
