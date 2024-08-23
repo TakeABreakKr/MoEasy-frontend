@@ -9,16 +9,29 @@ import { timeInitializer, timeReducer, TimeState } from './reducer';
 import * as styles from './time.css';
 
 type TimeProps = {
-  value?: DateInput;
+  value?: DateInput | TimeState;
   dispatchTime?: (time: TimeState) => void;
   delay?: number;
+  min?: TimeState;
+  max?: TimeState;
 };
 
-export function Time({ value, dispatchTime, delay = 100 }: TimeProps) {
-  const [state, dispatch] = useReducer(timeReducer, value, timeInitializer);
+export function Time({ value, dispatchTime, delay = 100, min, max }: TimeProps) {
+  const [state, dispatch] = useReducer(timeReducer, { value, min, max }, timeInitializer);
   const timer = useRef<NodeJS.Timeout>();
-
   const clearTimeout = () => clearInterval(timer.current);
+  const addHour = () => dispatch({ type: 'ADD_HOUR', min, max });
+  const minusHour = () => dispatch({ type: 'MINUS_HOUR', min, max });
+  const addMinute = () => dispatch({ type: 'ADD_MINUTE', min, max });
+  const minusMinute = () => dispatch({ type: 'MINUS_MINUTE', min, max });
+  const setTime = ({ hour = state.hour, minute = state.minute }) => {
+    dispatch({
+      type: 'SET',
+      payload: { hour, minute },
+      min,
+      max,
+    });
+  };
 
   useEffect(() => {
     dispatchTime?.(state);
@@ -29,9 +42,9 @@ export function Time({ value, dispatchTime, delay = 100 }: TimeProps) {
       <div className={styles.inputGroup}>
         <Button
           variant="ghost"
-          onClick={() => dispatch({ type: 'ADD_HOUR' })}
+          onClick={addHour}
           onPointerDown={() => {
-            timer.current = setInterval(() => dispatch({ type: 'ADD_HOUR' }), delay);
+            timer.current = setInterval(addHour, delay);
           }}
           onPointerUp={clearTimeout}
           onPointerLeave={clearTimeout}
@@ -43,15 +56,15 @@ export function Time({ value, dispatchTime, delay = 100 }: TimeProps) {
         <input
           type="number"
           value={state.hour}
-          onChange={(e) => dispatch({ type: 'SET', payload: { hour: e.target.valueAsNumber, minute: state.minute } })}
+          onChange={(e) => setTime({ hour: e.target.valueAsNumber })}
           className={styles.input}
           aria-label="Hours"
         />
         <Button
           variant="ghost"
-          onClick={() => dispatch({ type: 'MINUS_HOUR' })}
+          onClick={minusHour}
           onPointerDown={() => {
-            timer.current = setInterval(() => dispatch({ type: 'MINUS_HOUR' }), delay);
+            timer.current = setInterval(minusHour, delay);
           }}
           onPointerUp={clearTimeout}
           onPointerLeave={clearTimeout}
@@ -65,9 +78,9 @@ export function Time({ value, dispatchTime, delay = 100 }: TimeProps) {
       <div className={styles.inputGroup}>
         <Button
           variant="ghost"
-          onClick={() => dispatch({ type: 'ADD_MINUTE' })}
+          onClick={addMinute}
           onPointerDown={() => {
-            timer.current = setInterval(() => dispatch({ type: 'ADD_MINUTE' }), delay);
+            timer.current = setInterval(addMinute, delay);
           }}
           className={styles.button}
           onPointerUp={clearTimeout}
@@ -79,23 +92,15 @@ export function Time({ value, dispatchTime, delay = 100 }: TimeProps) {
         <input
           type="number"
           value={state.minute}
-          onChange={(e) =>
-            dispatch({
-              type: 'SET',
-              payload: {
-                hour: state.hour,
-                minute: e.target.valueAsNumber,
-              },
-            })
-          }
+          onChange={(e) => setTime({ minute: e.target.valueAsNumber })}
           className={styles.input}
           aria-label="Minutes"
         />
         <Button
           variant="ghost"
-          onClick={() => dispatch({ type: 'MINUS_MINUTE' })}
+          onClick={minusMinute}
           onPointerDown={() => {
-            timer.current = setInterval(() => dispatch({ type: 'MINUS_MINUTE' }), delay);
+            timer.current = setInterval(minusMinute, delay);
           }}
           className={styles.button}
           onPointerUp={clearTimeout}

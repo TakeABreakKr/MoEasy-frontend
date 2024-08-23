@@ -18,3 +18,19 @@ type Story = StoryObj<typeof meta>;
 export const Sample: Story = {
   args: {},
 };
+export const MinTime: Story = {
+  args: {
+    min: {
+      hour: 12,
+      minute: 30,
+    },
+  },
+};
+export const MaxTime: Story = {
+  args: {
+    max: {
+      hour: 18,
+      minute: 30,
+    },
+  },
+};
