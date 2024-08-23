@@ -11,7 +11,7 @@ import {
 } from '../dropdown-menu/dropdown-menu';
 import { CalendarIcon, ChevronDown } from '../icon';
 import { Separator } from '../separator';
-import { TimeState } from '../time/reducer';
+import { TimeState, valueToTimeState } from '../time/reducer';
 import { Time } from '../time/time';
 
 import { createDateValue, dateParser } from './create';
@@ -93,6 +93,12 @@ export default function Calendar({ date, onSelect, min, max, hasTime }: Calendar
   const showDate = date ? createDateValue(date, hasTime) : createDateValue(innerDate.initDate, hasTime);
   /** to achieve value on form submit */
   const formInputValue = calcInputValue(innerDate.initDate).toISOString().slice(0, -5);
+  /** restrict time change when current date lower than min date */
+  const restrictMinTimeState =
+    min && compareDate(innerDate.currentDate, min, 'day') === 0 ? valueToTimeState(min) : undefined;
+  /** restrict time change when current date larger than max date */
+  const restrictMaxTimeState =
+    max && compareDate(innerDate.currentDate, max, 'day') === 0 ? valueToTimeState(max) : undefined;
 
   return (
     <DropdownMenu>
@@ -142,7 +148,12 @@ export default function Calendar({ date, onSelect, min, max, hasTime }: Calendar
             <>
               <Separator direction="horizontal" color="#D0D0D0" />
               <div className={styles.calendarTimeWrapper}>
-                <Time value={innerDate.initDate} dispatchTime={setTime} />
+                <Time
+                  value={innerDate.initDate}
+                  dispatchTime={setTime}
+                  min={restrictMinTimeState}
+                  max={restrictMaxTimeState}
+                />
               </div>
             </>
           )}

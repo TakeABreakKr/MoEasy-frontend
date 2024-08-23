@@ -1,3 +1,5 @@
+import { DateInput } from '../../type/date';
+
 export type TimeState = {
   hour: number;
   minute: number;
@@ -82,31 +84,34 @@ export const timeReducer = (state: TimeState, action: TimeAction): TimeState => 
   return newState;
 };
 
+export const valueToTimeState = (value?: DateInput | TimeState | null) => {
+  if (value instanceof Date || typeof value === 'string' || typeof value === 'number') {
+    const tempDate = value instanceof Date ? value : new Date(value);
+    return {
+      hour: tempDate.getHours(),
+      minute: tempDate.getMinutes(),
+    };
+  } else if (value && typeof value === 'object') {
+    return value;
+  } else {
+    const tempDate = new Date();
+    return {
+      hour: tempDate.getHours(),
+      minute: tempDate.getMinutes(),
+    };
+  }
+};
+
 export const timeInitializer = ({
   value,
   min,
   max,
 }: {
-  value?: string | number | Date | null | TimeState;
+  value?: DateInput | TimeState | null;
   min?: TimeState;
   max?: TimeState;
 }): TimeState => {
-  let currentDate: TimeState;
-  if (value instanceof Date || typeof value === 'string' || typeof value === 'number') {
-    const tempDate = value instanceof Date ? value : new Date(value);
-    currentDate = {
-      hour: tempDate.getHours(),
-      minute: tempDate.getMinutes(),
-    };
-  } else if (value && typeof value === 'object') {
-    currentDate = value;
-  } else {
-    const tempDate = new Date();
-    currentDate = {
-      hour: tempDate.getHours(),
-      minute: tempDate.getMinutes(),
-    };
-  }
+  const currentDate = valueToTimeState(value);
   if (min && compareTime(currentDate, min) === -1) return min;
   if (max && compareTime(currentDate, max) === 1) return max;
   return currentDate;
