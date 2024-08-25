@@ -14,9 +14,10 @@ type TimeProps = {
   delay?: number;
   min?: TimeState;
   max?: TimeState;
+  disabled?: boolean;
 };
 
-export function Time({ value, dispatchTime, delay = 100, min, max }: TimeProps) {
+export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: TimeProps) {
   const [state, dispatch] = useReducer(timeReducer, { value, min, max }, timeInitializer);
   const timer = useRef<NodeJS.Timeout>();
   const clearTimeout = () => clearInterval(timer.current);
@@ -32,6 +33,12 @@ export function Time({ value, dispatchTime, delay = 100, min, max }: TimeProps) 
       max,
     });
   };
+  const setTimer = (cb: () => void) => {
+    if (!disabled)
+      return () => {
+        timer.current = setInterval(cb, delay);
+      };
+  };
 
   useEffect(() => {
     dispatchTime?.(state);
@@ -45,35 +52,34 @@ export function Time({ value, dispatchTime, delay = 100, min, max }: TimeProps) 
           size="small"
           rounded="small"
           onClick={addHour}
-          onPointerDown={() => {
-            timer.current = setInterval(addHour, delay);
-          }}
+          onPointerDown={setTimer(addHour)}
           onPointerUp={clearTimeout}
           onPointerLeave={clearTimeout}
           className={styles.button}
           aria-label="Increase hours"
+          disabled={disabled}
         >
           <ChevronDown width={24} transform="rotate(180)" />
         </Button>
         <input
           type="number"
-          value={state.hour}
+          value={state.hour.toString().padStart(2, '0')}
           onChange={(e) => setTime({ hour: e.target.valueAsNumber })}
           className={styles.input}
           aria-label="Hours"
+          disabled={disabled}
         />
         <Button
           variant="ghost"
           size="small"
           rounded="small"
           onClick={minusHour}
-          onPointerDown={() => {
-            timer.current = setInterval(minusHour, delay);
-          }}
+          onPointerDown={setTimer(minusHour)}
           onPointerUp={clearTimeout}
           onPointerLeave={clearTimeout}
           className={styles.button}
           aria-label="Decrease hours"
+          disabled={disabled}
         >
           <ChevronDown width={24} />
         </Button>
@@ -85,35 +91,34 @@ export function Time({ value, dispatchTime, delay = 100, min, max }: TimeProps) 
           size="small"
           rounded="small"
           onClick={addMinute}
-          onPointerDown={() => {
-            timer.current = setInterval(addMinute, delay);
-          }}
+          onPointerDown={setTimer(addMinute)}
           className={styles.button}
           onPointerUp={clearTimeout}
           onPointerLeave={clearTimeout}
           aria-label="Increase minutes"
+          disabled={disabled}
         >
           <ChevronDown width={24} transform="rotate(180)" />
         </Button>
         <input
           type="number"
-          value={state.minute}
+          value={state.minute.toString().padStart(2, '0')}
           onChange={(e) => setTime({ minute: e.target.valueAsNumber })}
           className={styles.input}
           aria-label="Minutes"
+          disabled={disabled}
         />
         <Button
           variant="ghost"
           size="small"
           rounded="small"
           onClick={minusMinute}
-          onPointerDown={() => {
-            timer.current = setInterval(minusMinute, delay);
-          }}
+          onPointerDown={setTimer(minusMinute)}
           className={styles.button}
           onPointerUp={clearTimeout}
           onPointerLeave={clearTimeout}
           aria-label="Decrease minutes"
+          disabled={disabled}
         >
           <ChevronDown width={24} />
         </Button>

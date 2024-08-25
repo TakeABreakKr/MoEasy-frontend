@@ -34,3 +34,8 @@ export const MaxTime: Story = {
     },
   },
 };
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+};

@@ -24,3 +24,9 @@ export const HasTime: Story = {
     hasTime: true,
   },
 };
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+};

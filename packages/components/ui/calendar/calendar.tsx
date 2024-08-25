@@ -72,15 +72,16 @@ export type CalendarProps = {
   min?: DateInput;
   max?: DateInput;
   hasTime?: boolean;
+  disabled?: boolean;
 };
 
 const calcInputValue = (date: Date) => {
-  let offset = date.getTimezoneOffset() * 60000; //ms단위라 60000곱해줌
-  let dateOffset = new Date(date.getTime() - offset);
+  const offset = date.getTimezoneOffset() * 60_000; // multifly 60 * 1000(ms)
+  const dateOffset = new Date(date.getTime() - offset);
   return dateOffset;
 };
 
-export default function Calendar({ date, onSelect, min, max, hasTime }: CalendarProps) {
+export default function Calendar({ date, onSelect, min, max, hasTime, disabled }: CalendarProps) {
   // only control calendar by initial date prop
   const [state, dispatch] = useReducer(calendarReducer, date, calendarInitializer);
   // contains initial date and inner controlled date
@@ -102,7 +103,7 @@ export default function Calendar({ date, onSelect, min, max, hasTime }: Calendar
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className={clsx(inputVariants.classNames.base, styles.calendarTrigger)}>
+      <DropdownMenuTrigger className={clsx(inputVariants.classNames.base, styles.calendarTrigger)} disabled={disabled}>
         <CalendarIcon color="#282828" />
         {showDate}
       </DropdownMenuTrigger>
