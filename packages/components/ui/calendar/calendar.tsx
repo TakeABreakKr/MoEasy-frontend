@@ -45,10 +45,10 @@ const compareDate = (dateA: DateInput, dateB?: DateInput, unit: 'year' | 'month'
 };
 
 const disableWhenOutOfRange = (date: DateInput, min?: DateInput, max?: DateInput) => {
-  // if date not bigger than min return true
-  if (min && compareDate(date, min, 'day') !== 1) return true;
-  // if date not smaller than max return true
-  if (max && compareDate(date, max, 'day') !== -1) return true;
+  // if date is smaller than min return true
+  if (min && compareDate(date, min, 'day') === -1) return true;
+  // if date is bigger than max return true
+  if (max && compareDate(date, max, 'day') === 1) return true;
   // if not out of range return false
   return false;
 };

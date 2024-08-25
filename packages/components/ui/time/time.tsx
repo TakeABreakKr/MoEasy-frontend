@@ -42,6 +42,8 @@ export function Time({ value, dispatchTime, delay = 100, min, max }: TimeProps) 
       <div className={styles.inputGroup}>
         <Button
           variant="ghost"
+          size="small"
+          rounded="small"
           onClick={addHour}
           onPointerDown={() => {
             timer.current = setInterval(addHour, delay);
@@ -62,6 +64,8 @@ export function Time({ value, dispatchTime, delay = 100, min, max }: TimeProps) 
         />
         <Button
           variant="ghost"
+          size="small"
+          rounded="small"
           onClick={minusHour}
           onPointerDown={() => {
             timer.current = setInterval(minusHour, delay);
@@ -78,6 +82,8 @@ export function Time({ value, dispatchTime, delay = 100, min, max }: TimeProps) 
       <div className={styles.inputGroup}>
         <Button
           variant="ghost"
+          size="small"
+          rounded="small"
           onClick={addMinute}
           onPointerDown={() => {
             timer.current = setInterval(addMinute, delay);
@@ -98,6 +104,8 @@ export function Time({ value, dispatchTime, delay = 100, min, max }: TimeProps) 
         />
         <Button
           variant="ghost"
+          size="small"
+          rounded="small"
           onClick={minusMinute}
           onPointerDown={() => {
             timer.current = setInterval(minusMinute, delay);
