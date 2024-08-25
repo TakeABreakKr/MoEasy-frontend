@@ -1,9 +1,9 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-import { useIntersectionObserver } from '@/shared/utils/useIntersectionObserver';
+import { useIntersectionObserver } from '@moeasy/storybook/utils/use-intersection-observer';
 
 import * as teamStyle from './team-list.css';
 
@@ -14,15 +14,10 @@ const initialTeams = Array.from({ length: 20 }, (_, idx) => ({ name: `Team ${idx
 
 export default function TeamList() {
   const [teamlist, setTeamlist] = useState<TeamType[]>(initialTeams);
-  const callback: IntersectionObserverCallback = useCallback((entries) => {
-    for (const entry of entries) {
-      if (entry.isIntersecting) {
-        setTeamlist((prevState) => [...prevState, ...initialTeams]);
-      }
-    }
-  }, []);
-
-  const ref = useIntersectionObserver(callback);
+  const [ref, inView] = useIntersectionObserver();
+  useEffect(() => {
+    if (inView) setTeamlist((prevState) => [...prevState, ...initialTeams]);
+  }, [inView]);
 
   return (
     <section>

@@ -1,16 +1,18 @@
-import { useReducer } from 'react';
+import { PropsWithChildren, useReducer } from 'react';
 import { Slot } from '@radix-ui/react-slot';
+import clsx from 'clsx';
 
 import { contextCreator } from '../../utils/useSafeContext';
 import { AlertProps } from '../alert/alert';
 import { Button } from '../button';
 import { CheckBoxActionType, checkGroupReducer } from '../checkbox';
 
-import { ListContent } from './content';
 import { ListDeleteControl } from './delete-control';
 import { ListKeywordInput } from './input';
+import { ListItem } from './item';
 
-import { footer } from './list.css';
+import { scrollStyle } from '../scroll/scroll.css';
+import { footer, itemList } from './list.css';
 
 export type ListItemType = {
   id: string;
@@ -27,19 +29,44 @@ export type ListProps = {
 
 export type SelectedListDispatch = React.Dispatch<CheckBoxActionType<ListItemType>>;
 
-const [ListProvider, useListContext] = contextCreator<Pick<ListProps, 'selected'>>();
+const [ListProvider, useListContext] = contextCreator<
+  Pick<ListProps, 'selected' | 'list'> & { dispatch: SelectedListDispatch }
+>();
 
 export const List = ({ list = [], selected: prevSelected = [], dispatchKeyword, children }: ListProps) => {
   const [selected, dispatch] = useReducer(checkGroupReducer<ListItemType>, prevSelected);
   return (
-    <ListProvider value={{ selected }}>
+    <ListProvider value={{ selected, list, dispatch }}>
       <ListKeywordInput dispatchKeyword={dispatchKeyword} />
       <ListDeleteControl selected={selected} dispatch={dispatch} />
-      <ListContent list={list} selected={selected} dispatch={dispatch} />
       {children}
     </ListProvider>
   );
 };
+
+type ListContentProps = PropsWithChildren<{
+  className?: string;
+}>;
+
+export function ListContent({ children, className }: ListContentProps) {
+  const ctx = useListContext();
+
+  return (
+    <div className={clsx(itemList, scrollStyle, className)} data-testid="list-content">
+      {ctx.list?.map((item) => (
+        <ListItem
+          key={item.id}
+          item={item}
+          checked={ctx.selected?.findIndex((_item) => _item.id == item.id) !== -1}
+          toggleItemSelection={() =>
+            ctx.dispatch({ type: 'ADD', payload: item, predicate: ({ id }) => item.id === id })
+          }
+        />
+      ))}
+      {children}
+    </div>
+  );
+}
 
 type ListFooterProps = Pick<ListProps, 'close' | 'selected'> & { asChild?: boolean; children?: React.ReactNode };
 

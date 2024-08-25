@@ -2,17 +2,20 @@ import { ComponentPropsWithoutRef, useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
 
+import { useIntersectionObserver } from '../../utils/use-intersection-observer';
 import { AlertTitle } from '../alert/alert';
 
-import { List, ListFooter, ListItemType } from '.';
+import { List, ListContent, ListFooter, ListItemType } from '.';
 
 import { popupContainer } from './list.css';
 
 function LISTSAMPLE({ list = [], dispatchKeyword, ...props }: ComponentPropsWithoutRef<typeof List>) {
-  const [userList, setList] = useState<ListItemType[]>([]);
+  const [userList, setList] = useState<ListItemType[]>(list);
+  const [ref, inView] = useIntersectionObserver();
+
   useEffect(() => {
-    setList(list);
-  }, [list]);
+    if (inView) setList((prev) => [...prev, ...list]);
+  }, [inView, list]);
 
   return (
     <div className={popupContainer}>
@@ -24,6 +27,9 @@ function LISTSAMPLE({ list = [], dispatchKeyword, ...props }: ComponentPropsWith
           setList(list.filter((item) => item.name?.toLocaleLowerCase().includes(keyword.toLocaleLowerCase())));
         }}
       >
+        <ListContent>
+          {userList.length !== 0 && <span ref={ref} style={{ width: 10, height: 10, display: 'block' }} />}
+        </ListContent>
         <ListFooter close={console.log}></ListFooter>
       </List>
     </div>
@@ -69,7 +75,7 @@ export const Sample: Story = {
       await userEvent.type(keywordInput, 'a');
       await userEvent.click(keywordButton, { delay: 200 });
       const contentAfterKeywordSecondChange = canvas.getByTestId(/list-content/);
-      expect(contentAfterKeywordSecondChange.children.length).toBe(20);
+      expect(contentAfterKeywordSecondChange.children.length).toBe(21);
     });
   },
 };
