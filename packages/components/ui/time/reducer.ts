@@ -70,8 +70,8 @@ export const timeReducer = (state: TimeState, action: TimeAction): TimeState => 
     }
     case 'SET': {
       const { hour, minute } = action.payload;
-      const parsedHour = hour > 23 || hour < 0 ? 0 : hour;
-      const parsedMinute = minute > 59 || minute < 0 ? 0 : minute;
+      const parsedHour = hour > 23 ? 0 : hour < 0 ? 23 : hour;
+      const parsedMinute = minute > 59 ? 0 : minute < 0 ? 59 : minute;
       newState = {
         hour: parsedHour,
         minute: parsedMinute,
