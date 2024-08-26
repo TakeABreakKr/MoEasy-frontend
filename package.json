@@ -15,6 +15,6 @@
     "typescript": "^5"
   },
   "resolutions": {
-    "@typescript-eslint/typescript-estree": "^8.0.0"
+    "@typescript-eslint/typescript-estree": "^8.2.0"
   }
 }
