@@ -1,6 +1,8 @@
 // DropdownMenu.tsx
 import React from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import { RecipeVariants } from '@vanilla-extract/recipes';
+
 import {
   dropdownMenuContent,
   dropdownMenuItem,
@@ -36,13 +38,9 @@ DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
 const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
-    inset?: boolean;
-    notice?: boolean;
-    align?: 'left' | 'right' | 'center';
-  }
->(({ className, inset, notice, align = 'left', ...props }, ref) => (
-  <DropdownMenuPrimitive.Item ref={ref} className={dropdownMenuItem({ inset, notice, align })} {...props} />
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & RecipeVariants<typeof dropdownMenuItem>
+>(({ className, inset, notice, align = 'left', padding, ...props }, ref) => (
+  <DropdownMenuPrimitive.Item ref={ref} className={dropdownMenuItem({ inset, notice, align, padding })} {...props} />
 ));
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 
@@ -71,15 +69,15 @@ DropdownMenuShortcut.displayName = 'DropdownMenuShortcut';
 
 export {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuGroup,
-  DropdownMenuPortal,
   DropdownMenuSub,
   DropdownMenuSubContent,
-  DropdownMenuRadioGroup,
+  DropdownMenuTrigger,
 };

@@ -37,15 +37,19 @@ export default function Card({
     <CardWrapper data-meeting-index={idx} {...props}>
       <CardThumbnail src={`https://via.placeholder.com/116/${idx}`} alt={title} />
       <CardTrigger>
-        <CardTriggerItem align="center">수정</CardTriggerItem>
+        <CardTriggerItem padding align="center">
+          수정
+        </CardTriggerItem>
         <Separator direction="horizontal" color="#cfcfcf" />
-        <CardTriggerItem align="center">초대하기</CardTriggerItem>
+        <CardTriggerItem padding align="center">
+          초대하기
+        </CardTriggerItem>
         <Separator direction="horizontal" color="#cfcfcf" />
-        <CardTriggerItem align="center" notice>
+        <CardTriggerItem padding align="center" notice>
           탈퇴하기
         </CardTriggerItem>
         <Separator direction="horizontal" color="#cfcfcf" />
-        <CardTriggerItem align="center" notice>
+        <CardTriggerItem padding align="center" notice>
           삭제
         </CardTriggerItem>
       </CardTrigger>
