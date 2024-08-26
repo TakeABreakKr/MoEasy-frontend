@@ -1,7 +1,8 @@
 // styles.css.ts
-import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
 import { rem } from '../../utils/css';
+import { style } from '@vanilla-extract/css';
 
 export const popupContainer = style({
   position: 'fixed',
@@ -13,6 +14,7 @@ export const popupContainer = style({
   justifyContent: 'center',
   alignItems: 'center',
   backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  zIndex: 2,
 });
 
 export const positionForStorybook = style({
@@ -35,6 +37,7 @@ export const popup = recipe({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    alignItems: 'center',
     overflow: 'hidden',
   },
   variants: {
@@ -47,29 +50,30 @@ export const popup = recipe({
         width: rem(420),
         height: rem(600),
       },
+      alert: {
+        width: rem(630),
+      },
     },
   },
 });
 
-export const popupContent = style({
-  backgroundColor: 'white',
-  borderRadius: rem(8),
-  padding: rem(24),
-  minWidth: rem(630),
-  minHeight: rem(230),
-  textAlign: 'center',
+export const closeWrapper = style({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  width: '100%',
 });
 
 export const title = style({
   fontSize: rem(32),
   fontWeight: 'bold',
-  marginBottom: '16px',
+  marginBottom: rem(16),
 });
 
 export const message = style({
   fontFamily: 'inherit',
   fontSize: rem(20),
   fontWeight: 'normal',
+  textAlign: 'center',
   lineHeight: '1.5',
   marginBottom: rem(24),
 });

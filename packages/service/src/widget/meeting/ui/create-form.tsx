@@ -1,22 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
-import { overlay } from 'overlay-kit';
 
-import { gotoTeamList, teamModifyAction } from '@/app/[locale]/meeting/action';
+import { teamModifyAction } from '@/app/[locale]/meeting/action';
 import { CreateMeetingType } from '@/entities/meeting/api';
-import { useUnmountOverlay } from '@/shared/utils/useUnmountOverlay';
 import { createQueryString } from '@/shared/utils/utils';
 
-import { SampleAlert } from '@moeasy/storybook/ui/alert';
+import {
+  Alert,
+  AlertCloseButton,
+  AlertContent,
+  AlertMessage,
+  AlertTitle,
+  AlertTrigger,
+} from '@moeasy/storybook/ui/alert/alert';
+import { closeWrapper } from '@moeasy/storybook/ui/alert/alert.css';
 import { Button, SearchButton } from '@moeasy/storybook/ui/button';
 import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
+import { XIcon } from '@moeasy/storybook/ui/icon';
 import { Input } from '@moeasy/storybook/ui/input';
-import { List } from '@moeasy/storybook/ui/list';
+import { List, ListFooter, ListItemType } from '@moeasy/storybook/ui/list';
+import { Tag } from '@moeasy/storybook/ui/tag';
 import { Textarea } from '@moeasy/storybook/ui/textarea';
 
 import * as styles from './create-form.css';
@@ -36,7 +44,21 @@ const CreateForm = ({ action, data = {} }: CreateFormProps) => {
         <CreateFormAside step={currentStep} />
         <CreateFormInput step={currentStep} searchParams={searchParams} />
       </div>
-      {message.type === 'success' && <SampleAlert close={() => gotoTeamList()} message={message.message || ''} />}
+      {message.type === 'success' && (
+        <Alert isOpen>
+          <AlertContent size="alert">
+            <div className={closeWrapper}>
+              <AlertCloseButton variant="dark" rounded="full" size="small" type="button">
+                <XIcon width={15} height={15} />
+              </AlertCloseButton>
+            </div>
+            <AlertMessage>{message.message}</AlertMessage>
+            <Button size="large" rounded="medium" asChild>
+              <Link href="/meeting">확인</Link>
+            </Button>
+          </AlertContent>
+        </Alert>
+      )}
     </form>
   );
 };
@@ -65,9 +87,9 @@ const CreateFormAside = ({ step }: { step: number }) => {
 
 const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: URLSearchParams }) => {
   const [thumbnail, setThumbnail] = useState<File | null>(null);
-  const [members, setMembers] = useState<string[]>([]);
+  const [keywords, setKeywords] = useState<string[]>([]);
+  const [members, setMembers] = useState<ListItemType[]>([]);
   const limitDisabled = searchParams.get('limit') === 'disabled';
-  const overlayRef = useUnmountOverlay();
 
   return (
     <div className={styles.formWrapper}>
@@ -118,7 +140,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
               if (e.key === 'Enter') {
                 const keyword = searchParams.get('keyword');
                 if (keyword) {
-                  setMembers((prevMembers) => [...prevMembers, keyword]);
+                  setKeywords((prev) => [...prev, keyword]);
                   onValueChange('keyword', searchParams)('');
                   e.currentTarget.value = '';
                 }
@@ -128,8 +150,10 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
               if (e.key === 'Enter') e.preventDefault();
             }}
           />
-          {members.map((member) => (
-            <li key={member}>{member}</li>
+          {keywords.map((keyword) => (
+            <Tag isDelete key={keyword} onClick={() => setKeywords((prev) => prev.filter((item) => item !== keyword))}>
+              {keyword}
+            </Tag>
           ))}
         </label>
       </div>
@@ -137,17 +161,28 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
         <fieldset className={styles.labelWrapper}>
           <span className={styles.label}>모임 인원</span>
           <div style={{ display: 'flex', gap: 10 }}>
-            <Input
-              type="number"
-              className={styles.input}
-              style={{ flex: '1' }}
-              disabled={searchParams.get('limit') === 'disabled'}
-              placeholder="모임 인원을 입력해주세요"
-              name="limit"
-              min={1}
-              defaultValue={parseInt(limitDisabled ? '10' : searchParams.get('limit') || '10')}
-              onValueChange={onValueChange('limit', searchParams)}
-            />
+            {limitDisabled ? (
+              <Input
+                className={styles.input}
+                style={{ flex: '1' }}
+                disabled={limitDisabled}
+                placeholder="∞"
+                name="limit"
+                readOnly
+                value="∞"
+              />
+            ) : (
+              <Input
+                type="number"
+                className={styles.input}
+                style={{ flex: '1' }}
+                placeholder="모임 인원을 입력해주세요"
+                name="limit"
+                min={1}
+                value={parseInt(limitDisabled ? '10' : searchParams.get('limit') || '10')}
+                onValueChange={onValueChange('limit', searchParams)}
+              />
+            )}
             <Button asChild type="button" variant="primary" size="thick" rounded="medium">
               <Link
                 href={{
@@ -162,31 +197,53 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
         </fieldset>
         <label className={styles.labelWrapper}>
           <span className={styles.label}>누구와 함께</span>
-          <SearchButton
-            type="button"
-            onClick={() => {
-              overlay.open(({ unmount, overlayId }) => {
-                overlayRef.current = overlayId;
-                return (
-                  <List
-                    users={[]}
-                    close={(users) => {
-                      console.log(users);
-                      unmount();
-                    }}
-                  />
-                );
-              });
-            }}
-          >
-            유저 닉네임을 검색해보세요
-          </SearchButton>
+          <FriendListPopup selected={members} dispatch={setMembers} />
+          <div>
+            {members.map((member) => (
+              <Tag
+                isDelete
+                key={member.id}
+                onClick={() => setMembers((prev) => prev.filter((item) => item.id !== member.id))}
+              >
+                {member.name}
+              </Tag>
+            ))}
+          </div>
         </label>
       </div>
       <CreateFormButton step={step} searchParams={searchParams} />
     </div>
   );
 };
+
+function FriendListPopup({
+  selected,
+  dispatch,
+}: {
+  selected: ListItemType[];
+  dispatch: Dispatch<SetStateAction<ListItemType[]>>;
+}) {
+  return (
+    <Alert>
+      <AlertTrigger asChild>
+        <SearchButton>유저 닉네임을 검색해보세요.</SearchButton>
+      </AlertTrigger>
+      <AlertContent size="medium">
+        <div className={closeWrapper}>
+          <AlertCloseButton variant="dark" rounded="full" size="small" type="button">
+            <XIcon width={15} height={15} />
+          </AlertCloseButton>
+        </div>
+        <AlertTitle>모임원 모집</AlertTitle>
+        <List list={[{ id: '2', name: 'aa' }]} selected={selected}>
+          <ListFooter asChild close={dispatch}>
+            <AlertCloseButton>확인</AlertCloseButton>
+          </ListFooter>
+        </List>
+      </AlertContent>
+    </Alert>
+  );
+}
 
 const CreateFormButton = ({ step, searchParams }: { step: number; searchParams: URLSearchParams }) => {
   const searchParamsObject = Object.fromEntries(searchParams);

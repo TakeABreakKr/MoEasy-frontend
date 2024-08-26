@@ -16,8 +16,15 @@ export const Tag = ({ variant = 'light', className, isDelete, children, ...props
     <button className={clsx(tagStyle.tagVariant({ variant, isDelete }), className)} {...props}>
       {children}
       {isDelete && (
-        <Button variant={variant === 'dark' ? 'light' : 'dark'} className={tagStyle.deleteButton} rounded="full">
-          <XIcon color="white" width={8} height={8} />
+        <Button
+          asChild
+          variant={variant === 'dark' ? 'light' : 'dark'}
+          className={tagStyle.deleteButton}
+          rounded="full"
+        >
+          <span>
+            <XIcon color="white" width={8} height={8} />
+          </span>
         </Button>
       )}
     </button>

@@ -14,6 +14,7 @@ export const buttonVariants = recipe({
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
+    textDecoration: 'none',
   },
   variants: {
     variant: {
@@ -62,6 +63,7 @@ export const buttonVariants = recipe({
       },
       ghost: {
         color: 'inherit',
+        textDecoration: 'initial',
         backgroundColor: 'inherit',
         ':hover': {
           backgroundColor: '#e3e3e3',
