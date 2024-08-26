@@ -37,7 +37,7 @@ function LISTSAMPLE({ list = [], dispatchKeyword, ...props }: ComponentPropsWith
 }
 
 const meta = {
-  title: 'Example/List',
+  title: 'Common/List',
   component: LISTSAMPLE,
   parameters: {},
   args: {
