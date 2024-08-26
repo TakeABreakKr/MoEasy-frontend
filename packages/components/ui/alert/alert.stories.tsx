@@ -16,7 +16,7 @@ type Props = {
 
 const SampleAlert = ({ title, message, excludeButton, className }: Props) => {
   return (
-    <Alert isOpen>
+    <Alert>
       <AlertTrigger>팝업 열기</AlertTrigger>
       <AlertContent className={className} size="alert">
         <div className={closeWrapper}>
