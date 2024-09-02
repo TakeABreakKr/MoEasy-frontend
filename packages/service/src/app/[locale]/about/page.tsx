@@ -1,16 +1,15 @@
-import clsx from 'clsx';
-
 import Image from 'next/image';
 import Link from 'next/link';
+import clsx from 'clsx';
 
-import mainStyles from '../page.module.css';
-import styles from './page.module.css';
+import { main } from '../main.css';
+import * as styles from './page.css';
 
 export default function AboutPage() {
   return (
-    <main className={mainStyles.main}>
+    <main className={main}>
       <section className={styles.section}>
-        <div className={styles['big-image']}>
+        <div className={styles.bigImage}>
           <Image width={1200} height={300} src="https://via.placeholder.com/1200x300" alt="모이지에 오신걸 환영해요" />
         </div>
         <h2>
@@ -26,7 +25,7 @@ export default function AboutPage() {
           모이지 전문위토 공간에 모여 즐겁고 유익하게 대화하며 취향을 나눠요.
         </p>
 
-        <div className={styles['host-guest']}>
+        <div className={styles.hostGuest}>
           <div className={styles.role}>
             <Image width={100} height={100} src="https://via.placeholder.com/100" alt="모이지에 오신걸 환영해요" />
             <h3>호스트</h3>
@@ -76,7 +75,7 @@ export default function AboutPage() {
           <br />
           아이디어와 관점을 만나 수 있는 공간이 되도록 계속 노력할게요
         </p>
-        <div className={styles['big-image']}>
+        <div className={styles.bigImage}>
           <Image width={1200} height={300} src="https://via.placeholder.com/1200x300" alt="Community illustration" />
         </div>
       </section>
@@ -84,7 +83,7 @@ export default function AboutPage() {
       <section className={styles.section}>
         <h2>성장하는 남의집</h2>
         <div className={styles.stats}>
-          <div className={styles['stat-item']}>
+          <div className={styles.statItem}>
             <h3>
               취향하며 진행된
               <br />
@@ -92,7 +91,7 @@ export default function AboutPage() {
             </h3>
             <p>5,630개</p>
           </div>
-          <div className={styles['stat-item']}>
+          <div className={styles.statItem}>
             <h3>
               남의집에서 모임을
               <br />
@@ -100,7 +99,7 @@ export default function AboutPage() {
             </h3>
             <p>1,689명</p>
           </div>
-          <div className={styles['stat-item']}>
+          <div className={styles.statItem}>
             <h3>
               남의집 모임에
               <br />
@@ -114,7 +113,7 @@ export default function AboutPage() {
       <section className={styles.section}>
         <h2>언론에서 만난 남의집</h2>
         <div className={styles.news}>
-          <div className={styles['news-item']}>
+          <div className={styles.newsItem}>
             <Image width={400} height={200} src="https://via.placeholder.com/400x200" alt="Community illustration" />
             <h3>
               {"주말에만 '모이지' 문 여는"}
@@ -123,7 +122,7 @@ export default function AboutPage() {
             </h3>
             <p>Published on 경향비즈니스</p>
           </div>
-          <div className={styles['news-item']}>
+          <div className={styles.newsItem}>
             <Image width={400} height={200} src="https://via.placeholder.com/400x200" alt="Community illustration" />
             <h3>
               {"'틈새남'대화가 필요할 때"}
@@ -132,7 +131,7 @@ export default function AboutPage() {
             </h3>
             <p>Published on Digital Healthcare Platform</p>
           </div>
-          <div className={styles['news-item']}>
+          <div className={styles.newsItem}>
             <Image width={400} height={200} src="https://via.placeholder.com/400x200" alt="Community illustration" />
             <h3>
               {"취향기반 서비스 '모이지'"}
@@ -146,7 +145,7 @@ export default function AboutPage() {
 
       <section className={clsx(styles.section, styles.cta)}>
         <h2>취향 나누러 가볼까요?</h2>
-        <Link href="#" className={styles['cta-button']}>
+        <Link href="#" className={styles.ctaButton}>
           모이지 들어가기
         </Link>
       </section>

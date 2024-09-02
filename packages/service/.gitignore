@@ -37,3 +37,7 @@ next-env.d.ts
 
 # swagger
 /src/shared/api/*.json
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
