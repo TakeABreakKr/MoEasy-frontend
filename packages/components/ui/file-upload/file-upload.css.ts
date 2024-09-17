@@ -1,5 +1,4 @@
 import { rem } from '../../utils/css';
-
 import { style } from '@vanilla-extract/css';
 
 export const imageUploadContainer = style({
