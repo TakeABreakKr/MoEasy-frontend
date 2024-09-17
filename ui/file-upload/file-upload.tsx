@@ -1,53 +1,80 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useId, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 
 import { PlusIcon } from '../icon';
 
 import * as styles from './file-upload.css';
 
 interface ImageUploadProps {
+  name?: string;
   selectedFile?: File | null;
   onImageUpload: (file: File) => void;
 }
 
-export const ImageUpload = ({ selectedFile, onImageUpload }: ImageUploadProps) => {
+export const ImageUpload = ({ name = 'thumbnail', selectedFile, onImageUpload }: ImageUploadProps) => {
   const id = useId();
   const [preview, setPreview] = useState<string | null>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       onImageUpload(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      // uncontrolled state인 경우에도 thumbnail 업데이트를 진행한다.
+      if (!selectedFile) {
+        const newThumbnail = await imgFileToDataURL(file);
+        setPreview(newThumbnail);
+      }
     }
   };
 
+  useEffect(() => {
+    if (selectedFile) {
+      (async () => {
+        const newThumbnail = await imgFileToDataURL(selectedFile);
+        setPreview(newThumbnail);
+      })();
+    }
+  }, [selectedFile]);
+
   return (
     <div className={styles.imageUploadContainer}>
-      {!selectedFile ? (
-        <label className={styles.uploadPlaceholder} htmlFor={id}>
-          <input type="file" hidden accept="image/*" onChange={handleFileChange} id={id} data-testid="file-upload" />
+      <label className={styles.uploadPlaceholder} htmlFor={id}>
+        <input
+          type="file"
+          hidden
+          accept="image/*"
+          name={name}
+          onChange={handleFileChange}
+          id={id}
+          data-testid="file-upload"
+        />
+        {preview ? (
+          <div className={styles.croppedImageContainer}>
+            <img className={styles.croppedImageContainerImg} src={preview} alt="Cropped" width={300} height={300} />
+          </div>
+        ) : (
           <div className={styles.uploadButton}>
-            <span className={styles.plusIcon}>
+            <div className={styles.plusIcon}>
               <PlusIcon width={30} height={30} />
-            </span>
+            </div>
             <div className={styles.uploadText}>
               1:1 비율
               <br />
               (500*500 px 권장)
             </div>
           </div>
-        </label>
-      ) : null}
-      {preview && (
-        <div className={styles.croppedImageContainer}>
-          <img className={styles.croppedImageContainerImg} src={preview} alt="Cropped" width={300} height={300} />
-        </div>
-      )}
+        )}
+      </label>
     </div>
   );
 };
+
+function imgFileToDataURL(file: File) {
+  const reader = new FileReader();
+  return new Promise<string>((res) => {
+    reader.onloadend = () => {
+      res(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  });
+}
