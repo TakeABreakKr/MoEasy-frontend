@@ -34,7 +34,7 @@ const [ListProvider, useListContext] = contextCreator<
   Pick<ListProps, 'selected' | 'list' | 'limit'> & { dispatch: SelectedListDispatch }
 >();
 
-export const List = ({ list = [], limit = 10, selected: prevSelected = [], dispatchKeyword, children }: ListProps) => {
+export const List = ({ list = [], limit, selected: prevSelected = [], dispatchKeyword, children }: ListProps) => {
   const [selected, dispatch] = useReducer(checkGroupReducer<ListItemType>, prevSelected);
   return (
     <ListProvider value={{ selected, list, dispatch, limit }}>
@@ -51,7 +51,7 @@ type ListContentProps = PropsWithChildren<{
 
 export function ListContent({ children, className }: ListContentProps) {
   const ctx = useListContext();
-  const { selected = [], limit = 10, dispatch } = ctx;
+  const { selected = [], limit, dispatch } = ctx;
   const selectDisabled = Boolean(limit && selected.length >= limit);
 
   return (
