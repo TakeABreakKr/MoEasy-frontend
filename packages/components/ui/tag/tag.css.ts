@@ -1,6 +1,7 @@
-import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
 import { rem } from '../../utils/css';
+import { style } from '@vanilla-extract/css';
 
 export const tagVariant = recipe({
   base: {
@@ -14,6 +15,7 @@ export const tagVariant = recipe({
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: 'transparent',
+    textWrap: 'nowrap',
   },
   variants: {
     variant: {
@@ -25,6 +27,9 @@ export const tagVariant = recipe({
       light: {
         backgroundColor: 'white',
         borderColor: '#cccccc',
+      },
+      error: {
+        backgroundColor: '#FCEDED',
       },
     },
     isDelete: {

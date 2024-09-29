@@ -90,6 +90,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
   const [keywords, setKeywords] = useState<string[]>([]);
   const [members, setMembers] = useState<ListItemType[]>([]);
   const limitDisabled = searchParams.get('limit') === 'disabled';
+  const memberLimit = parseInt(limitDisabled ? '10' : searchParams.get('limit') || '10');
 
   return (
     <div className={styles.formWrapper}>
@@ -189,7 +190,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
                 placeholder="모임 인원을 입력해주세요"
                 name="limit"
                 min={1}
-                value={parseInt(limitDisabled ? '10' : searchParams.get('limit') || '10')}
+                value={memberLimit}
                 onValueChange={onValueChange('limit', searchParams)}
               />
             )}
@@ -207,7 +208,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
         </fieldset>
         <label className={styles.labelWrapper}>
           <span className={styles.label}>누구와 함께</span>
-          <FriendListPopup selected={members} dispatch={setMembers} />
+          <FriendListPopup selected={members} dispatch={setMembers} limit={memberLimit} />
           <div>
             {members.map((member) => (
               <Tag
@@ -231,9 +232,11 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
 function FriendListPopup({
   selected,
   dispatch,
+  limit = 10,
 }: {
   selected: ListItemType[];
   dispatch: Dispatch<SetStateAction<ListItemType[]>>;
+  limit?: number;
 }) {
   return (
     <Alert>
@@ -247,7 +250,14 @@ function FriendListPopup({
           </AlertCloseButton>
         </div>
         <AlertTitle>모임원 모집</AlertTitle>
-        <List list={[{ id: '2', name: 'aa' }]} selected={selected}>
+        <List
+          list={[
+            { id: '2', name: 'aa' },
+            { id: '3', name: 'javme' },
+          ]}
+          selected={selected}
+          limit={limit}
+        >
           <ListContent></ListContent>
           <ListFooter asChild close={dispatch}>
             <AlertCloseButton>확인</AlertCloseButton>
