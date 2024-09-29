@@ -77,7 +77,7 @@ test.describe('모임 생성하는 플로우', () => {
       await page.click('button:has-text("유저 닉네임을 검색해보세요.")');
 
       // 팝업에서 유저 한 명 클릭 후 확인
-      await page.getByRole('checkbox').click();
+      await page.getByRole('checkbox').first().click();
       await delay(1000);
       await page.getByRole('button', { name: `확인` }).click();
 
@@ -95,15 +95,16 @@ test.describe('모임 생성하는 플로우', () => {
     });
   });
 
-  test('모임 생성 실패 케이스', async ({ page }) => {
-    // 필수 입력 필드 누락 시 에러 메시지 확인
-    await page.click('a:has-text("다음")');
-    await expect(page.locator('text=모임 이름을 입력해주세요')).toBeVisible();
-
-    // 유효하지 않은 인원 수 입력 시 에러 메시지 확인
-    await page.fill('input[name="memberLimit"]', '-1');
-    await expect(page.locator('text=유효한 인원 수를 입력해주세요')).toBeVisible();
-
-    // 기타 실패 케이스 추가...
+  test('모임 생성 제한', async ({ page }) => {
+    await test.step('키워드 10명 제한', async () => {
+      await page.goto('/meeting/create?step=3');
+      // 키워드 입력 폼
+      for await (const keyword of Array.from({ length: 10 }, (_, idx) => `키워드${idx}`)) {
+        await page.fill('input[name="keyword"]', keyword);
+        await page.press('input[name="keyword"]', 'Enter');
+      }
+      await expect(page.getByTestId('keyword-item')).toHaveCount(10);
+      await expect(page.getByText(/키워드는 최대 10개까지 등록 가능합니다./)).toBeVisible();
+    });
   });
 });

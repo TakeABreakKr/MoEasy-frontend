@@ -34,6 +34,7 @@ export const ListItem = ({ item, disabled, checked, toggleItemSelection }: ListI
       key={item.id}
       className={clsx(styles.itemBase, fadeOut && styles.itemFadeOut)}
       onClick={() => !disabled && onSelected(item.id)}
+      data-testid="list-item"
     >
       <div className={styles.itemInfo}>
         <span className={styles.itemAvatar}>

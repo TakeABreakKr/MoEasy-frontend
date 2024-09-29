@@ -148,11 +148,10 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
                 if (keyword) {
                   setKeywords((prev) => {
                     if (prev.includes(keyword)) return prev;
-
-                    onValueChange('keyword', searchParams)('');
-                    e.currentTarget.value = '';
                     return [...prev, keyword];
                   });
+                  onValueChange('keyword', searchParams)('');
+                  e.currentTarget.value = '';
                 }
               }
             }}
