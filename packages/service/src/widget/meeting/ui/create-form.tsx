@@ -23,7 +23,7 @@ import { Button, SearchButton } from '@moeasy/storybook/ui/button';
 import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
 import { XIcon } from '@moeasy/storybook/ui/icon';
 import { Input } from '@moeasy/storybook/ui/input';
-import { List, ListFooter, ListItemType } from '@moeasy/storybook/ui/list';
+import { List, ListContent, ListFooter, ListItemType } from '@moeasy/storybook/ui/list';
 import { Tag } from '@moeasy/storybook/ui/tag';
 import { Textarea } from '@moeasy/storybook/ui/textarea';
 
@@ -133,6 +133,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
             type="text"
             className={styles.input}
             placeholder="검색창에 #키워드 를 검색하면 나의 모임이 보여요-!"
+            name="keyword"
             defaultValue={searchParams.get('keyword') || ''}
             onValueChange={onValueChange('keyword', searchParams)}
             onKeyUp={(e) => {
@@ -150,12 +151,21 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
               if (e.key === 'Enter') e.preventDefault();
             }}
           />
+        </label>
+        <div style={{ display: 'flex' }}>
           {keywords.map((keyword) => (
-            <Tag isDelete key={keyword} onClick={() => setKeywords((prev) => prev.filter((item) => item !== keyword))}>
+            <Tag
+              isDelete
+              key={keyword}
+              value={keyword}
+              data-testid="keyword-item"
+              onClick={() => setKeywords((prev) => prev.filter((item) => item !== keyword))}
+            >
+              <input readOnly hidden value={keyword} name="keywords" />
               {keyword}
             </Tag>
           ))}
-        </label>
+        </div>
       </div>
       <div className={clsx(styles.formGroup, step !== 4 && styles.formGroupInvisible)}>
         <fieldset className={styles.labelWrapper}>
@@ -203,8 +213,10 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
               <Tag
                 isDelete
                 key={member.id}
+                data-testid="member-item"
                 onClick={() => setMembers((prev) => prev.filter((item) => item.id !== member.id))}
               >
+                <input readOnly hidden value={member.id} name="members" />
                 {member.name}
               </Tag>
             ))}
@@ -236,6 +248,7 @@ function FriendListPopup({
         </div>
         <AlertTitle>모임원 모집</AlertTitle>
         <List list={[{ id: '2', name: 'aa' }]} selected={selected}>
+          <ListContent></ListContent>
           <ListFooter asChild close={dispatch}>
             <AlertCloseButton>확인</AlertCloseButton>
           </ListFooter>
