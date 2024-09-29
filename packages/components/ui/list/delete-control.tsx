@@ -13,12 +13,13 @@ type ListDeleteControlProps = Pick<ListProps, 'selected' | 'limit'> & {
   commentDisabled?: React.ReactNode;
 };
 
-export function ListDeleteControl({ selected = [], limit = 10, dispatch }: ListDeleteControlProps) {
+export function ListDeleteControl({ selected = [], limit, dispatch }: ListDeleteControlProps) {
   const { callbacks } = useMouseSnapSlide();
   return (
     <div className={styles.delBtnWrapper} {...callbacks} onWheel={horizontalScrollHandler}>
       <NameTag userRole="limit">
-        {selected.length}/{limit} 명
+        {selected.length}
+        {typeof limit === 'number' ? `/${limit} 명` : `명`}
       </NameTag>
       {selected.length === limit && (
         <Label variant="error" className={tagVariant({ variant: 'error' })}>

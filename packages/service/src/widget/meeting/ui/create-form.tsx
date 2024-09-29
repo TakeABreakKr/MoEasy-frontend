@@ -23,6 +23,7 @@ import { Button, SearchButton } from '@moeasy/storybook/ui/button';
 import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
 import { XIcon } from '@moeasy/storybook/ui/icon';
 import { Input } from '@moeasy/storybook/ui/input';
+import { Label } from '@moeasy/storybook/ui/label/label';
 import { List, ListContent, ListFooter, ListItemType } from '@moeasy/storybook/ui/list';
 import { Tag } from '@moeasy/storybook/ui/tag';
 import { Textarea } from '@moeasy/storybook/ui/textarea';
@@ -89,6 +90,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [keywords, setKeywords] = useState<string[]>([]);
   const [members, setMembers] = useState<ListItemType[]>([]);
+  const keywordAddDisabled = keywords.length >= 10;
   const limitDisabled = searchParams.get('limit') === 'disabled';
   const memberLimit = parseInt(limitDisabled ? '10' : searchParams.get('limit') || '10');
 
@@ -128,7 +130,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
         <label>
           <span className={styles.label}>
             키워드 설정
-            <span className={styles.detail}>키워드 5개까지 설정가능</span>
+            {keywordAddDisabled && <Label variant="error">키워드는 최대 10개까지 등록 가능합니다.</Label>}
           </span>
           <Input
             type="text"
@@ -137,14 +139,20 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
             name="keyword"
             defaultValue={searchParams.get('keyword') || ''}
             onValueChange={onValueChange('keyword', searchParams)}
+            disabled={keywordAddDisabled}
+            isError={keywords.length >= 10}
             onKeyUp={(e) => {
               e.preventDefault();
               if (e.key === 'Enter') {
-                const keyword = searchParams.get('keyword');
+                const keyword = e.currentTarget.value;
                 if (keyword) {
-                  setKeywords((prev) => [...prev, keyword]);
-                  onValueChange('keyword', searchParams)('');
-                  e.currentTarget.value = '';
+                  setKeywords((prev) => {
+                    if (prev.includes(keyword)) return prev;
+
+                    onValueChange('keyword', searchParams)('');
+                    e.currentTarget.value = '';
+                    return [...prev, keyword];
+                  });
                 }
               }
             }}
@@ -206,9 +214,9 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
             </Button>
           </div>
         </fieldset>
-        <label className={styles.labelWrapper}>
+        <fieldset className={styles.labelWrapper}>
           <span className={styles.label}>누구와 함께</span>
-          <FriendListPopup selected={members} dispatch={setMembers} limit={memberLimit} />
+          <FriendListPopup selected={members} dispatch={setMembers} limit={limitDisabled ? undefined : memberLimit} />
           <div>
             {members.map((member) => (
               <Tag
@@ -222,7 +230,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
               </Tag>
             ))}
           </div>
-        </label>
+        </fieldset>
       </div>
       <CreateFormButton step={step} searchParams={searchParams} />
     </div>
@@ -232,7 +240,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
 function FriendListPopup({
   selected,
   dispatch,
-  limit = 10,
+  limit,
 }: {
   selected: ListItemType[];
   dispatch: Dispatch<SetStateAction<ListItemType[]>>;
