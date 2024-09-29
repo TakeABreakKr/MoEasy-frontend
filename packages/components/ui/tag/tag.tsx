@@ -18,6 +18,7 @@ export const Tag = ({ variant = 'light', className, isDelete, children, ...props
       {isDelete && (
         <Button
           asChild
+          type="button"
           variant={variant === 'dark' ? 'light' : 'dark'}
           className={tagStyle.deleteButton}
           rounded="full"

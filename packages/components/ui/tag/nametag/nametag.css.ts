@@ -1,6 +1,7 @@
-import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
 import { rem } from '../../../utils/css';
+import { style } from '@vanilla-extract/css';
 
 export const badge = recipe({
   base: {
@@ -11,6 +12,7 @@ export const badge = recipe({
     gap: rem(7),
     padding: rem(4, 12),
     height: rem(37),
+    textWrap: 'nowrap',
     ':hover': {
       backgroundColor: '#c6c6c6',
     },

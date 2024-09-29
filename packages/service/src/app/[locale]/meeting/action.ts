@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 
-import { CreateMeetingType, stepKeys } from '@/entities/meeting/api';
+import { fileParser, numberParser, stringParser } from '@/shared/utils/utils';
 
 type TeamCreateActionState =
   | {
@@ -18,22 +18,16 @@ export const teamModifyAction = async (
   _: TeamCreateActionState,
   formData: FormData,
 ): Promise<TeamCreateActionState> => {
-  const form = stepKeys.reduce<Partial<CreateMeetingType>>(
-    (acc, step) => ({ ...acc, [step.key]: formData.get(step.key) }),
-    {},
-  );
+  const parsedForm = {
+    name: stringParser(formData.get('name'), { required: true }),
+    explanation: stringParser(formData.get('explanation')),
+    thumbnail: fileParser(formData.get('thumbnail')),
+    keywords: formData.getAll('keywords').map((keyword) => stringParser(keyword)),
+    limit: numberParser(formData.get('limit'), { toBe: true }),
+    members: formData.getAll('members').map((member) => stringParser(member)),
+  };
 
-  for (const step of stepKeys) {
-    const currentValue = form[step.key];
-    // 필수값을 입력하지 않았을때만 검증을 진행
-    if (
-      step.required &&
-      ((typeof currentValue === 'string' && currentValue === '') ||
-        (currentValue instanceof File && currentValue.size === 0))
-    )
-      return { type: 'error', message: `${[step.key]}를 입력하지 않았습니다.` };
-  }
-  // selectedIds.forEach((id) => formData.append('members', id));
+  // console.log(parsedForm);
 
   // TODO: fetch 이후 로직
   await new Promise((resolve) => {

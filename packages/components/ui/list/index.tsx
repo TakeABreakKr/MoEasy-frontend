@@ -25,20 +25,21 @@ export type ListProps = {
   selected?: ListItemType[];
   close?: (list: ListItemType[]) => void;
   dispatchKeyword?: (keyword: string) => void;
+  limit?: number;
 } & Omit<AlertProps, 'close'>;
 
 export type SelectedListDispatch = React.Dispatch<CheckBoxActionType<ListItemType>>;
 
 const [ListProvider, useListContext] = contextCreator<
-  Pick<ListProps, 'selected' | 'list'> & { dispatch: SelectedListDispatch }
+  Pick<ListProps, 'selected' | 'list' | 'limit'> & { dispatch: SelectedListDispatch }
 >();
 
-export const List = ({ list = [], selected: prevSelected = [], dispatchKeyword, children }: ListProps) => {
+export const List = ({ list = [], limit, selected: prevSelected = [], dispatchKeyword, children }: ListProps) => {
   const [selected, dispatch] = useReducer(checkGroupReducer<ListItemType>, prevSelected);
   return (
-    <ListProvider value={{ selected, list, dispatch }}>
+    <ListProvider value={{ selected, list, dispatch, limit }}>
       <ListKeywordInput dispatchKeyword={dispatchKeyword} />
-      <ListDeleteControl selected={selected} dispatch={dispatch} />
+      <ListDeleteControl selected={selected} dispatch={dispatch} limit={limit} />
       {children}
     </ListProvider>
   );
@@ -50,6 +51,8 @@ type ListContentProps = PropsWithChildren<{
 
 export function ListContent({ children, className }: ListContentProps) {
   const ctx = useListContext();
+  const { selected = [], limit, dispatch } = ctx;
+  const selectDisabled = Boolean(limit && selected.length >= limit);
 
   return (
     <div className={clsx(itemList, scrollStyle, className)} data-testid="list-content">
@@ -58,9 +61,10 @@ export function ListContent({ children, className }: ListContentProps) {
           key={item.id}
           item={item}
           checked={ctx.selected?.findIndex((_item) => _item.id == item.id) !== -1}
-          toggleItemSelection={() =>
-            ctx.dispatch({ type: 'ADD', payload: item, predicate: ({ id }) => item.id === id })
-          }
+          disabled={selectDisabled}
+          toggleItemSelection={() => {
+            dispatch({ type: 'ADD', payload: item, predicate: ({ id }) => item.id === id });
+          }}
         />
       ))}
       {children}

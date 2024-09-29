@@ -23,7 +23,8 @@ import { Button, SearchButton } from '@moeasy/storybook/ui/button';
 import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
 import { XIcon } from '@moeasy/storybook/ui/icon';
 import { Input } from '@moeasy/storybook/ui/input';
-import { List, ListFooter, ListItemType } from '@moeasy/storybook/ui/list';
+import { Label } from '@moeasy/storybook/ui/label/label';
+import { List, ListContent, ListFooter, ListItemType } from '@moeasy/storybook/ui/list';
 import { Tag } from '@moeasy/storybook/ui/tag';
 import { Textarea } from '@moeasy/storybook/ui/textarea';
 
@@ -89,7 +90,9 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [keywords, setKeywords] = useState<string[]>([]);
   const [members, setMembers] = useState<ListItemType[]>([]);
+  const keywordAddDisabled = keywords.length >= 10;
   const limitDisabled = searchParams.get('limit') === 'disabled';
+  const memberLimit = parseInt(limitDisabled ? '10' : searchParams.get('limit') || '10');
 
   return (
     <div className={styles.formWrapper}>
@@ -127,20 +130,26 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
         <label>
           <span className={styles.label}>
             키워드 설정
-            <span className={styles.detail}>키워드 5개까지 설정가능</span>
+            {keywordAddDisabled && <Label variant="error">키워드는 최대 10개까지 등록 가능합니다.</Label>}
           </span>
           <Input
             type="text"
             className={styles.input}
             placeholder="검색창에 #키워드 를 검색하면 나의 모임이 보여요-!"
+            name="keyword"
             defaultValue={searchParams.get('keyword') || ''}
             onValueChange={onValueChange('keyword', searchParams)}
+            disabled={keywordAddDisabled}
+            isError={keywords.length >= 10}
             onKeyUp={(e) => {
               e.preventDefault();
               if (e.key === 'Enter') {
-                const keyword = searchParams.get('keyword');
+                const keyword = e.currentTarget.value;
                 if (keyword) {
-                  setKeywords((prev) => [...prev, keyword]);
+                  setKeywords((prev) => {
+                    if (prev.includes(keyword)) return prev;
+                    return [...prev, keyword];
+                  });
                   onValueChange('keyword', searchParams)('');
                   e.currentTarget.value = '';
                 }
@@ -150,12 +159,21 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
               if (e.key === 'Enter') e.preventDefault();
             }}
           />
+        </label>
+        <div style={{ display: 'flex' }}>
           {keywords.map((keyword) => (
-            <Tag isDelete key={keyword} onClick={() => setKeywords((prev) => prev.filter((item) => item !== keyword))}>
+            <Tag
+              isDelete
+              key={keyword}
+              value={keyword}
+              data-testid="keyword-item"
+              onClick={() => setKeywords((prev) => prev.filter((item) => item !== keyword))}
+            >
+              <input readOnly hidden value={keyword} name="keywords" />
               {keyword}
             </Tag>
           ))}
-        </label>
+        </div>
       </div>
       <div className={clsx(styles.formGroup, step !== 4 && styles.formGroupInvisible)}>
         <fieldset className={styles.labelWrapper}>
@@ -179,7 +197,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
                 placeholder="모임 인원을 입력해주세요"
                 name="limit"
                 min={1}
-                value={parseInt(limitDisabled ? '10' : searchParams.get('limit') || '10')}
+                value={memberLimit}
                 onValueChange={onValueChange('limit', searchParams)}
               />
             )}
@@ -195,21 +213,23 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
             </Button>
           </div>
         </fieldset>
-        <label className={styles.labelWrapper}>
+        <fieldset className={styles.labelWrapper}>
           <span className={styles.label}>누구와 함께</span>
-          <FriendListPopup selected={members} dispatch={setMembers} />
+          <FriendListPopup selected={members} dispatch={setMembers} limit={limitDisabled ? undefined : memberLimit} />
           <div>
             {members.map((member) => (
               <Tag
                 isDelete
                 key={member.id}
+                data-testid="member-item"
                 onClick={() => setMembers((prev) => prev.filter((item) => item.id !== member.id))}
               >
+                <input readOnly hidden value={member.id} name="members" />
                 {member.name}
               </Tag>
             ))}
           </div>
-        </label>
+        </fieldset>
       </div>
       <CreateFormButton step={step} searchParams={searchParams} />
     </div>
@@ -219,9 +239,11 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
 function FriendListPopup({
   selected,
   dispatch,
+  limit,
 }: {
   selected: ListItemType[];
   dispatch: Dispatch<SetStateAction<ListItemType[]>>;
+  limit?: number;
 }) {
   return (
     <Alert>
@@ -235,7 +257,15 @@ function FriendListPopup({
           </AlertCloseButton>
         </div>
         <AlertTitle>모임원 모집</AlertTitle>
-        <List list={[{ id: '2', name: 'aa' }]} selected={selected}>
+        <List
+          list={[
+            { id: '2', name: 'aa' },
+            { id: '3', name: 'javme' },
+          ]}
+          selected={selected}
+          limit={limit}
+        >
+          <ListContent></ListContent>
           <ListFooter asChild close={dispatch}>
             <AlertCloseButton>확인</AlertCloseButton>
           </ListFooter>
