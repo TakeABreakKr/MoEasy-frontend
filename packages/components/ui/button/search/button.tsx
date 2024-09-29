@@ -13,7 +13,7 @@ type SearchButtonProps = ComponentPropsWithoutRef<'button'>;
 const SearchButton = forwardRef<HTMLButtonElement, SearchButtonProps>(({ className, children, ...props }, ref) => {
   return (
     <button
-      className={clsx(styles.inputVariants(), styles.inputWrapper, searchButtonStyle, className)}
+      className={clsx(styles.inputVariants.classNames.base, styles.inputWrapper, searchButtonStyle, className)}
       ref={ref}
       type="button"
       {...props}
