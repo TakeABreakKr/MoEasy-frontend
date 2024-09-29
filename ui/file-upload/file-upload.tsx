@@ -38,16 +38,8 @@ export const ImageUpload = ({ name = 'thumbnail', selectedFile, onImageUpload }:
 
   return (
     <div className={styles.imageUploadContainer}>
-      <label className={styles.uploadPlaceholder} htmlFor={id}>
-        <input
-          type="file"
-          hidden
-          accept="image/*"
-          name={name}
-          onChange={handleFileChange}
-          id={id}
-          data-testid="file-upload"
-        />
+      <label className={styles.uploadPlaceholder} htmlFor={id} data-testid="file-upload">
+        <input type="file" hidden accept="image/*" name={name} onChange={handleFileChange} id={id} />
         {preview ? (
           <div className={styles.croppedImageContainer}>
             <img className={styles.croppedImageContainerImg} src={preview} alt="Cropped" width={300} height={300} />
