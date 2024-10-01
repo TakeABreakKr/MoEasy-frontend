@@ -1,4 +1,4 @@
-import { ComponentProps, useRef, useState } from 'react';
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { contextCreator } from '../../utils/useSafeContext';
@@ -66,18 +66,53 @@ export const Input = <T extends string | number>({
   className,
   onKeyUp,
   maxLength,
+  minLength,
   isError = false,
   dispatchError,
   onValueChange,
+  value: valueProps,
+  defaultValue,
   children,
   ...props
 }: InputProps<T>) => {
-  const { value, defaultValue } = props;
-  const initValuelength = typeof value === 'number' ? value : value?.length;
-  const initDefaultValueLength = typeof defaultValue === 'number' ? defaultValue : defaultValue?.length;
-
   const inputRef = useRef<HTMLInputElement>(null);
-  const [currentLength, setLength] = useState(initValuelength || initDefaultValueLength || 0);
+  const [innerValue, setInnerValue] = useState<string | number>(defaultValue ?? '');
+  const usedValue = valueProps ?? innerValue;
+  const currentLength = typeof usedValue === 'string' ? usedValue.length : usedValue;
+
+  useEffect(() => {
+    if (valueProps !== undefined) {
+      setInnerValue(valueProps);
+    }
+  }, [valueProps]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, valueAsNumber } = e.target;
+    const newValue = props.type === 'number' && !isNaN(valueAsNumber) ? valueAsNumber : value;
+
+    if (valueProps === undefined) {
+      setInnerValue(newValue);
+    }
+
+    onValueChange?.(newValue as T);
+    props.onChange?.(e);
+
+    validateAndDispatchError(e.target);
+  };
+
+  const validateAndDispatchError = (target: HTMLInputElement) => {
+    const validationResult = validateInput(target);
+    dispatchError?.(validationResult);
+  };
+
+  const handleClear = () => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+      setInnerValue('');
+      onValueChange?.('' as T);
+      validateAndDispatchError(inputRef.current);
+    }
+  };
 
   return (
     <InputProvider value={{ isError }}>
@@ -86,37 +121,19 @@ export const Input = <T extends string | number>({
           ref={inputRef}
           className={clsx(inputVariants({ error: isError }), className)}
           onKeyUp={(e) => {
-            if (onKeyUp) onKeyUp(e);
-            setLength(e.currentTarget.value.length);
-            const validationResult = validateInput(e.currentTarget);
-            dispatchError && dispatchError(validationResult);
+            onKeyUp?.(e);
+            if (!e.currentTarget.value) setInnerValue('');
+            validateAndDispatchError(e.currentTarget);
           }}
           maxLength={maxLength}
-          onChange={(e) => {
-            if (props.onChange) props.onChange(e);
-            const { value, valueAsNumber } = e.currentTarget;
-            if (onValueChange) onValueChange((isNaN(valueAsNumber) ? value : valueAsNumber) as T);
-            setLength(value.length);
-            const validationResult = validateInput(e.currentTarget);
-            dispatchError && dispatchError(validationResult);
-          }}
+          minLength={minLength}
+          onChange={handleChange}
+          value={usedValue}
           {...props}
         />
         <span className={inputCtlWrapper}>
           {currentLength !== 0 && (
-            <button
-              className={resetXIconStyles}
-              onClick={() => {
-                if (inputRef?.current) {
-                  inputRef.current.value = '';
-                  const { value, valueAsNumber } = inputRef.current;
-                  const validationResult = validateInput(inputRef.current);
-                  dispatchError?.(validationResult);
-                  setLength(0);
-                  onValueChange?.((isNaN(valueAsNumber) ? value : valueAsNumber) as T);
-                }
-              }}
-            >
+            <button className={resetXIconStyles} onClick={handleClear}>
               <XIcon color="#fff" />
             </button>
           )}

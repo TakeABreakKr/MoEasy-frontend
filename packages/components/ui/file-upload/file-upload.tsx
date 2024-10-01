@@ -42,12 +42,12 @@ export const ImageUpload = ({ name = 'thumbnail', selectedFile, onImageUpload }:
         <input type="file" hidden accept="image/*" name={name} onChange={handleFileChange} id={id} />
         {preview ? (
           <div className={styles.croppedImageContainer}>
-            <img className={styles.croppedImageContainerImg} src={preview} alt="Cropped" width={300} height={300} />
+            <img className={styles.croppedImageContainerImg} src={preview} alt="Cropped" width={200} height={200} />
           </div>
         ) : (
           <div className={styles.uploadButton}>
             <div className={styles.plusIcon}>
-              <PlusIcon width={30} height={30} />
+              <PlusIcon width={16} height={16} />
             </div>
             <div className={styles.uploadText}>
               1:1 비율

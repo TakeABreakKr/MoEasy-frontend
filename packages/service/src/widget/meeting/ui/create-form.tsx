@@ -151,8 +151,8 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
                     return [...prev, keyword];
                   });
                   onValueChange('keyword', searchParams)('');
-                  e.currentTarget.value = '';
                 }
+                e.currentTarget.value = '';
               }
             }}
             onKeyDown={(e) => {
@@ -160,7 +160,7 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
             }}
           />
         </label>
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {keywords.map((keyword) => (
             <Tag
               isDelete

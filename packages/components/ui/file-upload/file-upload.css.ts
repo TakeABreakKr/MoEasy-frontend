@@ -1,16 +1,17 @@
 import { rem } from '../../utils/css';
+import { globalVars } from '../../utils/styles/global.css';
 import { style } from '@vanilla-extract/css';
 
 export const imageUploadContainer = style({
-  width: rem(300),
-  height: rem(300),
-  border: '2px dashed #ccc',
+  width: rem(200),
+  height: rem(200),
+  border: `2px dashed ${globalVars.color.neutral[20]}`,
   borderRadius: rem(8),
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   cursor: 'pointer',
-  color: '#999',
+  color: globalVars.color.neutral[20],
   transition: 'background-color 200ms ease-in-out, color 200ms ease-in-out',
   ':hover': {
     backgroundColor: '#cecece',
@@ -19,8 +20,8 @@ export const imageUploadContainer = style({
   },
   ':active': {
     backgroundColor: '#929292',
-    color: '#6f6f6f',
-    borderColor: '#6f6f6f',
+    color: globalVars.color.neutral[50],
+    borderColor: globalVars.color.neutral[50],
   },
 });
 
@@ -41,11 +42,11 @@ export const uploadButton = style({
 });
 
 export const plusIcon = style({
-  fontSize: rem(48),
-  color: '#fff',
+  fontSize: rem(20),
+  color: globalVars.color.neutral.white,
   backgroundColor: '#ccc',
-  width: rem(48),
-  height: rem(48),
+  width: rem(20),
+  height: rem(20),
   borderRadius: '50%',
   margin: 'auto',
   display: 'flex',
