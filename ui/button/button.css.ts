@@ -113,16 +113,16 @@ export const buttonVariants = recipe({
     },
     size: {
       small: {
-        fontSize: rem(10),
         padding: rem(5),
+        ...globalVars.text.button.small,
       },
       medium: {
-        fontSize: rem(11),
         padding: `${rem(8)} ${rem(5)}`,
+        ...globalVars.text.button.medium,
       },
       large: {
-        fontSize: rem(16),
         padding: `${rem(15)} ${rem(60)}`,
+        ...globalVars.text.button.large,
       },
       thick: {
         width: rem(120),

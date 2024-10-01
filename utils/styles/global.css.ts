@@ -65,8 +65,140 @@ const colorVariables = {
   },
 } as const;
 
+const typography = {
+  display: {
+    small: {
+      fontSize: rem(36),
+      lineHeight: rem(44),
+      fontWeight: '700',
+    },
+    medium: {
+      fontSize: rem(44),
+      lineHeight: rem(52),
+      fontWeight: '700',
+    },
+    large: {
+      fontSize: rem(57),
+      lineHeight: rem(64),
+      fontWeight: '700',
+    },
+  },
+  headline: {
+    small: {
+      fontSize: rem(24),
+      lineHeight: rem(32),
+      fontWeight: '700',
+    },
+    medium: {
+      fontSize: rem(28),
+      lineHeight: rem(36),
+      fontWeight: '700',
+    },
+    large: {
+      fontSize: rem(32),
+      lineHeight: rem(40),
+      fontWeight: '700',
+    },
+  },
+  title: {
+    small: {
+      fontSize: rem(14),
+      lineHeight: rem(20),
+      fontWeight: '700',
+    },
+    medium: {
+      fontSize: rem(16),
+      lineHeight: rem(24),
+      fontWeight: '700',
+    },
+    large: {
+      fontSize: rem(22),
+      lineHeight: rem(28),
+      fontWeight: '700',
+    },
+  },
+  label: {
+    small: {
+      semibold: {
+        fontSize: rem(11),
+        lineHeight: rem(16),
+        fontWeight: '600',
+      },
+      regular: {
+        fontSize: rem(11),
+        lineHeight: rem(16),
+        fontWeight: '400',
+      },
+    },
+    medium: {
+      semibold: {
+        fontSize: rem(12),
+        lineHeight: rem(16),
+        fontWeight: '600',
+      },
+      regular: {
+        fontSize: rem(12),
+        lineHeight: rem(18),
+        fontWeight: '400',
+      },
+    },
+    large: {
+      semibold: {
+        fontSize: rem(16),
+        lineHeight: rem(24),
+        fontWeight: '600',
+      },
+      regular: {
+        fontSize: rem(16),
+        lineHeight: rem(24),
+        fontWeight: '400',
+      },
+    },
+  },
+  body: {
+    tiny: {
+      fontSize: rem(9),
+      lineHeight: rem(12),
+      fontWeight: '400',
+    },
+    small: {
+      fontSize: rem(12),
+      lineHeight: rem(18),
+      fontWeight: '400',
+    },
+    medium: {
+      fontSize: rem(14),
+      lineHeight: rem(20),
+      fontWeight: '400',
+    },
+    large: {
+      fontSize: rem(16),
+      lineHeight: rem(24),
+      fontWeight: '400',
+    },
+  },
+  button: {
+    small: {
+      fontSize: rem(14),
+      lineHeight: rem(16),
+      fontWeight: '600',
+    },
+    medium: {
+      fontSize: rem(16),
+      lineHeight: rem(24),
+      fontWeight: '700',
+    },
+    large: {
+      fontSize: rem(18),
+      lineHeight: rem(24),
+      fontWeight: '700',
+    },
+  },
+} as const;
+
 export const globalVars = createGlobalTheme(':root', {
   color: colorVariables,
+  text: typography,
   gradient: {
     neutralWhite: 'linear-gradient(270deg, hsl(0, 0%, 100%) 0%, hsla(0, 0%, 100%, 0) 100%)',
     yellowBlue: 'linear-gradient(180deg, hsl(213, 100%, 74%) 0%, hsl(47, 100%, 61%) 100%)',
@@ -92,7 +224,7 @@ globalStyle('html', {
   WebkitTextSizeAdjust: 'none',
   textSizeAdjust: 'none',
   vars: {
-    [headerHeight]: rem(116),
+    [headerHeight]: rem(60),
   },
 });
 
