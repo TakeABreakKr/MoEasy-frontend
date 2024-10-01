@@ -1,4 +1,5 @@
 import { rem } from '@moeasy/storybook/utils/css';
+import { headerHeight } from '@moeasy/storybook/utils/styles/global.css';
 
 import { globalStyle, style } from '@vanilla-extract/css';
 
@@ -6,7 +7,7 @@ export const main = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  minHeight: '100vh',
+  minHeight: `calc(100vh - ${headerHeight})`,
 });
 
 globalStyle(`${main} > section`, {

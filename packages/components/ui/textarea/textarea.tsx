@@ -69,7 +69,7 @@ export const Textarea = ({
       <textarea
         ref={textareaRef}
         onChange={handleChange}
-        className={clsx(textareaStyles, inputStyles.inputVariants(), className)}
+        className={clsx(textareaStyles, inputStyles.inputVariants.classNames.base, className)}
         style={{ minHeight, maxHeight }}
         maxLength={maxLength}
         {...props}

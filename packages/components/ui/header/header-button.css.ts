@@ -1,5 +1,6 @@
-import { style, globalStyle, keyframes } from '@vanilla-extract/css';
 import { rem } from '../../utils/css';
+import { globalVars } from '../../utils/styles/global.css';
+import { keyframes, style } from '@vanilla-extract/css';
 
 // Keyframes for rotation animation
 const rotate = keyframes({
@@ -15,16 +16,17 @@ const rotate = keyframes({
 });
 
 export const button = style({
-  borderRadius: rem(30), // 30px
-  background: '#d6d6d6',
+  borderRadius: rem(30),
+  background: globalVars.color.neutral[20],
   width: 'fit-content',
-  padding: `${rem(10)} ${rem(15)}`, // 0.625rem (10px), 15px
+  padding: rem(9, 15),
   position: 'relative',
   paddingRight: `calc(${rem(40)} + ${rem(15)})`, // 2.5rem (40px) + 15px
   overflow: 'hidden',
   cursor: 'pointer',
   color: 'black',
   textDecoration: 'none',
+  ...globalVars.text.label.small.regular,
 });
 
 export const icon = style({
@@ -37,9 +39,10 @@ export const icon = style({
   backgroundColor: 'black',
   color: 'white',
   width: '100%',
-  padding: `${rem(10)} ${rem(15)}`, // 0.625rem (10px), 15px
+  height: '100%',
+  padding: rem(15),
   transition: '1s ease',
-  clipPath: `circle(${rem(16)} at calc(100% - ${rem(24)}) 50%)`, // 1rem (16px), 1.5rem (24px)
+  clipPath: `circle(${rem(12)} at calc(100% - ${rem(24)}) 50%)`, // 1rem (16px), 1.5rem (24px)
   selectors: {
     [`${button}:hover &`]: {
       clipPath: `circle(150% at calc(100% - ${rem(24)}))`,

@@ -201,7 +201,13 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
                 onValueChange={onValueChange('limit', searchParams)}
               />
             )}
-            <Button asChild type="button" variant="primary" size="thick" rounded="medium">
+            <Button
+              asChild
+              type="button"
+              variant={limitDisabled ? 'primary' : 'secondary'}
+              size="small"
+              rounded="medium"
+            >
               <Link
                 href={{
                   pathname: '/meeting/create',
@@ -256,7 +262,7 @@ function FriendListPopup({
             <XIcon width={15} height={15} />
           </AlertCloseButton>
         </div>
-        <AlertTitle>모임원 모집</AlertTitle>
+        <AlertTitle>모임원 추가</AlertTitle>
         <List
           list={[
             { id: '2', name: 'aa' },

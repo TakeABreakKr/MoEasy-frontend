@@ -5,6 +5,7 @@ import { XIcon } from '../icon';
 import { Alert, AlertCloseButton, AlertContent, AlertMessage, AlertTitle, AlertTrigger } from './alert';
 
 import { closeWrapper } from './alert.css';
+import { ComponentProps } from 'react';
 
 type Props = {
   title?: string | JSX.Element;
@@ -12,13 +13,14 @@ type Props = {
   /** 메세지 아래 버튼 제거 */
   excludeButton?: boolean;
   className?: string;
+  size?: ComponentProps<typeof AlertContent>['size'];
 };
 
-const SampleAlert = ({ title, message, excludeButton, className }: Props) => {
+const SampleAlert = ({ title, message, excludeButton, className, size = 'alert' }: Props) => {
   return (
     <Alert>
       <AlertTrigger>팝업 열기</AlertTrigger>
-      <AlertContent className={className} size="alert">
+      <AlertContent className={className} size={size}>
         <div className={closeWrapper}>
           <AlertCloseButton variant="dark" rounded="full" size="small">
             <XIcon width={15} height={15} />
@@ -63,5 +65,6 @@ export const Sample: Story = {};
 export const ExcludeButton: Story = {
   args: {
     excludeButton: true,
+    size: 'alert',
   },
 };

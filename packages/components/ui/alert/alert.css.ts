@@ -3,6 +3,7 @@ import { recipe } from '@vanilla-extract/recipes';
 
 import { rem } from '../../utils/css';
 import { style } from '@vanilla-extract/css';
+import { globalVars } from '../../utils/styles/global.css';
 
 export const popupContainer = style({
   position: 'fixed',
@@ -30,7 +31,7 @@ export const popup = recipe({
     left: '50%',
     transform: 'translate(-50%, -50%)',
     zIndex: 10,
-    backgroundColor: 'white',
+    backgroundColor: globalVars.color.neutral.white,
     padding: '1rem',
     borderRadius: rem(8),
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
@@ -51,7 +52,7 @@ export const popup = recipe({
         height: rem(600),
       },
       alert: {
-        width: rem(630),
+        width: rem(360),
       },
     },
   },
@@ -64,16 +65,14 @@ export const closeWrapper = style({
 });
 
 export const title = style({
-  fontSize: rem(32),
-  fontWeight: 'bold',
   marginBottom: rem(16),
+  color: globalVars.color.neutral[95],
+  ...globalVars.text.title.large,
 });
 
 export const message = style({
   fontFamily: 'inherit',
-  fontSize: rem(20),
-  fontWeight: 'normal',
   textAlign: 'center',
-  lineHeight: '1.5',
-  marginBottom: rem(24),
+  color: globalVars.color.neutral[95],
+  ...globalVars.text.body.small,
 });

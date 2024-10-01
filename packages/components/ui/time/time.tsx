@@ -48,7 +48,7 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
     <div className={styles.timeInputContainer}>
       <div className={styles.inputGroup}>
         <Button
-          variant="ghost"
+          variant="text"
           size="small"
           rounded="small"
           onClick={addHour}
@@ -70,7 +70,7 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
           disabled={disabled}
         />
         <Button
-          variant="ghost"
+          variant="text"
           size="small"
           rounded="small"
           onClick={minusHour}
@@ -87,7 +87,7 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
       <span>:</span>
       <div className={styles.inputGroup}>
         <Button
-          variant="ghost"
+          variant="text"
           size="small"
           rounded="small"
           onClick={addMinute}
@@ -109,7 +109,7 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
           disabled={disabled}
         />
         <Button
-          variant="ghost"
+          variant="text"
           size="small"
           rounded="small"
           onClick={minusMinute}

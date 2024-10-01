@@ -12,7 +12,7 @@ export type CustomCheckProps = CheckboxProps & {
 export default function Checkbox({ rounded = true, ...props }: CustomCheckProps) {
   return (
     <CheckboxPrimitive className={checkboxVariants({ rounded })} {...props}>
-      <CheckIcon className={checkIcon} />
+      <CheckIcon className={checkIcon} height={8} />
     </CheckboxPrimitive>
   );
 }

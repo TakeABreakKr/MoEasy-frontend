@@ -1,4 +1,5 @@
 import { rem } from '@moeasy/storybook/utils/css';
+import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 import { style } from '@vanilla-extract/css';
 
@@ -14,16 +15,18 @@ export const header = style({
 });
 
 export const headerH1 = style({
-  fontSize: rem(24),
-  fontWeight: 'bold',
   margin: 0,
+  ...globalVars.text.headline.medium,
 });
 
 export const body = style({
   display: 'flex',
+  justifyContent: 'center',
+  gap: rem(78),
 });
 
 export const formWrapper = style({
+  maxWidth: rem(400),
   flexGrow: 1,
   padding: '0 30px',
   minHeight: '50vh',
@@ -33,10 +36,10 @@ export const formWrapper = style({
 });
 
 export const aside = style({
-  width: rem(320),
-  borderRadius: rem(20),
+  width: rem(128),
   display: 'flex',
   flexDirection: 'column',
+  gap: rem(35),
 });
 
 export const asideStep = style({
@@ -46,37 +49,36 @@ export const asideStep = style({
   alignItems: 'flex-start',
   gap: rem(16),
   padding: 0,
+  marginBlock: 0,
 });
 
 export const stepLi = style({
   display: 'flex',
   alignItems: 'center',
   gap: rem(16),
+  ...globalVars.text.label.medium.regular,
 });
 
 export const stepLiSelected = style({
-  fontWeight: 600,
-});
-
-export const progress = style({
-  inlineSize: '100%',
+  ...globalVars.text.label.medium.semibold,
 });
 
 export const stepNumber = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: rem(24),
-  height: rem(24),
+  width: rem(16),
+  height: rem(16),
   borderRadius: '50%',
-  backgroundColor: '#e0e0e0',
+  backgroundColor: globalVars.color.neutral[20],
   textAlign: 'center',
-  lineHeight: rem(18),
+  color: globalVars.color.neutral.white,
+  ...globalVars.text.label.small.semibold,
 });
 
 export const numberSelected = style({
-  backgroundColor: 'black',
-  color: 'white',
+  backgroundColor: globalVars.color.neutral.black,
+  color: globalVars.color.neutral.white,
 });
 
 export const formGroup = style({
@@ -101,17 +103,10 @@ export const labelWrapper = style({
 
 export const label = style({
   display: 'flex',
-  gap: '1rem',
+  gap: rem(8),
   alignItems: 'center',
-  marginBottom: rem(15),
-  fontWeight: 'bold',
-  fontSize: rem(28),
-});
-
-export const detail = style({
-  fontSize: rem(12),
-  color: '#bbbbbb',
-  fontWeight: 'normal',
+  marginBottom: rem(8),
+  ...globalVars.text.title.small,
 });
 
 export const input = style({
@@ -124,20 +119,31 @@ export const inputWrapper = style({
 });
 
 export const navigation = style({
+  width: '100%',
+  height: rem(60),
+  position: 'fixed',
   display: 'flex',
   justifyContent: 'flex-end',
   marginTop: rem(20),
   gap: rem(20),
+  left: 0,
+  bottom: 0,
 });
 
 export const navButton = style({
-  borderRadius: '10px',
-  backgroundColor: '#fff',
+  borderRadius: 10,
+  backgroundColor: globalVars.color.neutral.white,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   cursor: 'pointer',
   textDecoration: 'none',
-  padding: '0.875rem 1.75rem',
-  border: '1px solid #353535',
+  width: rem(60),
+  height: rem(36),
+  border: `1px solid ${globalVars.color.neutral[80]}`,
+  ...globalVars.text.label.small.semibold,
+  ':disabled': {
+    border: `1px solid ${globalVars.color.neutral[20]}`,
+    color: globalVars.color.neutral[20],
+  },
 });

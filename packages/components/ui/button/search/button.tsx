@@ -20,7 +20,7 @@ const SearchButton = forwardRef<HTMLButtonElement, SearchButtonProps>(({ classNa
     >
       {children}
       <span className={styles.inputCtlWrapper}>
-        <SearchIcon width={24} height={24} />
+        <SearchIcon width={24} height={24} color="#19191a" />
       </span>
     </button>
   );
