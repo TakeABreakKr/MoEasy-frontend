@@ -1,7 +1,7 @@
 // header.css.ts
-import { style, globalStyle } from '@vanilla-extract/css';
 import { rem } from '../../utils/css';
-import { headerHeight } from '../../utils/styles/global.css';
+import { globalVars, headerHeight } from '../../utils/styles/global.css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 export const header = style({
   borderBottom: `1px solid rgba(0, 0, 0, 0.1)`,
@@ -25,20 +25,6 @@ export const headerWrapper = style({
   height: headerHeight,
 });
 
-globalStyle(`${header} svg`, {
-  display: 'inline-block',
-  verticalAlign: 'top',
-});
-
-globalStyle(`${header} h1`, {
-  fontWeight: 700,
-  fontSize: rem(20), // 20px
-  lineHeight: 1,
-  margin: `${rem(6)} 0 ${rem(6)} ${rem(10)}`, // 6px, 10px
-  display: 'inline-block',
-  verticalAlign: 'top',
-});
-
 const commonSideStyles = {
   display: 'flex',
   alignItems: 'center',
@@ -49,14 +35,16 @@ const commonSideStyles = {
 
 export const leftHandSide = style(commonSideStyles);
 
-export const rightHandSide = style(commonSideStyles);
+export const rightHandSide = style({ ...commonSideStyles, gap: rem(5) });
 
 export const linkWrapper = style({
   display: 'flex',
   alignItems: 'center',
-  gap: rem(52), // 3.25rem
+  gap: rem(30),
   listStyle: 'none',
   height: '100%',
+  color: globalVars.color.neutral.black,
+  ...globalVars.text.label.small.regular,
 });
 
 globalStyle(`${linkWrapper} li`, {
@@ -78,10 +66,6 @@ globalStyle(`${header} a:visited, ${header} a:link`, {
   textDecoration: 'none',
 });
 
-globalStyle(`${linkWrapper} a:hover, ${linkWrapper} a:active`, {
-  fontWeight: 700,
-});
-
 export const welcome = style({
   fontSize: rem(14), // 14px
   marginRight: rem(10), // 10px
@@ -97,8 +81,8 @@ export const icon = style({
 });
 
 export const searchIcon = style({
-  width: rem(44), // 44px
-  height: rem(44), // 44px
+  width: rem(34), // 34px
+  height: rem(34), // 34px
   backgroundColor: '#d9d9d9',
   ':hover': {
     backgroundColor: 'black',
@@ -107,8 +91,8 @@ export const searchIcon = style({
 });
 
 export const userIcon = style({
-  width: rem(56), // 56px
-  height: rem(56), // 56px
+  width: rem(34), // 34px
+  height: rem(34), // 34px
   backgroundColor: '#d9d9d9',
   color: 'white',
   ':hover': {

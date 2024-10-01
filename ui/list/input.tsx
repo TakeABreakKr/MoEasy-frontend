@@ -12,7 +12,7 @@ export function ListKeywordInput({ dispatchKeyword }: { dispatchKeyword?: (keywo
       <Input
         type="text"
         placeholder="닉네임, 유저코드 검색"
-        style={{ width: '100%' }}
+        className={styles.searchInput}
         value={keyword}
         onValueChange={setKeyword}
         onKeyUp={(e) => {
@@ -23,8 +23,8 @@ export function ListKeywordInput({ dispatchKeyword }: { dispatchKeyword?: (keywo
       />
       <Button
         data-testid="dispatch-keyword"
-        variant="primary"
-        size="medium"
+        variant="secondary"
+        size="small"
         rounded="medium"
         onClick={() => {
           dispatchKeyword?.(keyword);

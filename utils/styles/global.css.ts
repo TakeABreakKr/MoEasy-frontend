@@ -240,7 +240,7 @@ globalStyle('ul[role="list"], ol[role="list"]', {
 
 // 핵심 body의 기본값을 설정합니다.
 globalStyle('body', {
-  minHeight: '100vh',
+  // minHeight: '100vh',
   lineHeight: '1.5',
   margin: 0,
 });

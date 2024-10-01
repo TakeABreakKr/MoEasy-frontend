@@ -46,12 +46,12 @@ export const Header = ({ onCreateAccount }: HeaderProps) => {
         </div>
         <div className={headerStyles.rightHandSide}>
           <button className={clsx(headerStyles.icon, headerStyles.searchIcon)}>
-            <SearchIcon width={24} height={24} />
+            <SearchIcon width={16} height={16} />
           </button>
           <HeaderButton href="/mypage">내 모임</HeaderButton>
           <button className={headerStyles.icon}>
             <span className={clsx(headerStyles.icon, headerStyles.userIcon)}>
-              <UserIcon width={24} height={24} />
+              <UserIcon width={16} height={16} />
             </span>
             <ChevronDown width={10} />
           </button>

@@ -67,6 +67,7 @@ export const inputCtlWrapper = style({
   right: rem(10),
   transform: 'translateY(-50%)',
   gap: rem(10),
+  ...globalVars.text.body.tiny,
   ':disabled': {
     display: 'none',
   },

@@ -7,7 +7,6 @@ import { style } from '@vanilla-extract/css';
 export const buttonVariants = recipe({
   base: {
     cursor: 'pointer',
-    lineHeight: 1,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: 'transparent',
@@ -15,6 +14,7 @@ export const buttonVariants = recipe({
     justifyContent: 'center',
     alignItems: 'center',
     textDecoration: 'none',
+    ...globalVars.text.label.small.semibold,
   },
   variants: {
     variant: {
@@ -117,11 +117,11 @@ export const buttonVariants = recipe({
         ...globalVars.text.button.small,
       },
       medium: {
-        padding: `${rem(8)} ${rem(5)}`,
+        padding: rem(8, 40),
         ...globalVars.text.button.medium,
       },
       large: {
-        padding: `${rem(15)} ${rem(60)}`,
+        padding: rem(10, 60),
         ...globalVars.text.button.large,
       },
       thick: {
@@ -151,5 +151,5 @@ export const searchButtonStyle = style({
   justifyContent: 'flex-start',
   display: 'inline-flex',
   alignItems: 'center',
-  color: '#bbbbbb',
+  color: globalVars.color.neutral[20],
 });

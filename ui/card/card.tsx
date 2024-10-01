@@ -35,7 +35,7 @@ export default function Card({
 }: CardProps) {
   return (
     <CardWrapper data-meeting-index={idx} {...props}>
-      <CardThumbnail src={`https://via.placeholder.com/116/${idx}`} alt={title} />
+      <CardThumbnail src={`https://via.placeholder.com/72/${idx}`} alt={title} />
       <CardTrigger>
         <CardTriggerItem padding align="center">
           수정
@@ -57,7 +57,6 @@ export default function Card({
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </div>
-      <Separator direction="horizontal" color="#d5d5d5" />
       <CardMembers members={members} />
     </CardWrapper>
   );
