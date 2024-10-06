@@ -113,21 +113,17 @@ export const buttonVariants = recipe({
     },
     size: {
       small: {
-        padding: rem(5),
-        ...globalVars.text.button.small,
+        padding: rem(8, 20),
       },
       medium: {
         padding: rem(8, 40),
-        ...globalVars.text.button.medium,
       },
       large: {
         padding: rem(10, 60),
-        ...globalVars.text.button.large,
       },
       thick: {
-        width: rem(120),
-        fontSize: rem(16),
-        padding: `${rem(20)} ${rem(10)}`,
+        width: rem(60),
+        padding: rem(20, 10),
       },
     },
     rounded: {

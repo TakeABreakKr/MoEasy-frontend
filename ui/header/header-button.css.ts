@@ -17,7 +17,7 @@ const rotate = keyframes({
 
 export const button = style({
   borderRadius: rem(30),
-  background: globalVars.color.neutral[20],
+  background: globalVars.color.neutral[5],
   width: 'fit-content',
   padding: rem(9, 15),
   position: 'relative',
@@ -36,8 +36,8 @@ export const icon = style({
   display: 'flex',
   alignItems: 'center',
   gap: rem(24), // 1.5rem (24px)
-  backgroundColor: 'black',
-  color: 'white',
+  backgroundColor: globalVars.color.neutral[95],
+  color: globalVars.color.neutral.white,
   width: '100%',
   height: '100%',
   padding: rem(15),

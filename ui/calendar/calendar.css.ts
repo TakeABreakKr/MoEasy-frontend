@@ -33,7 +33,7 @@ export const calendarContent = style({
   gridTemplateColumns: 'repeat(7, 1fr)',
   listStyle: 'none',
   paddingInlineStart: 'unset',
-  padding: rem(0, 8),
+  padding: rem(0, 8, 25),
   marginBlock: 0,
 });
 
@@ -47,22 +47,22 @@ export const calendarContentItem = recipe({
   variants: {
     weekday: {
       holiday: {
-        color: '#FF3E3E',
+        color: globalVars.color.red[50],
       },
       saturday: {
-        color: '#257CFF',
+        color: globalVars.color.blue[50],
       },
     },
     current: {
       true: {
-        background: '#282828',
-        color: 'white',
-        borderRadius: rem(5),
+        background: globalVars.color.neutral[80],
+        color: globalVars.color.neutral.white,
+        borderRadius: rem(3),
       },
     },
     not: {
       true: {
-        color: '#D0D0D0',
+        color: globalVars.color.neutral[5],
       },
     },
   },
@@ -78,9 +78,13 @@ export const footer = style({
   display: 'flex',
   width: '100%',
   gap: rem(10),
-  padding: rem(30, 8, 10),
+  padding: rem(0, 8, 10),
 });
 
 export const footerButton = style({
   flex: 1,
+});
+
+export const line = style({
+  color: globalVars.color.neutral[5],
 });

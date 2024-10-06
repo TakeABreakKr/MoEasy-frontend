@@ -57,7 +57,6 @@ export const dropdownMenuItem = recipe({
     borderRadius: rem(4),
     outline: 'none',
     transition: 'all 0.2s',
-    color: globalVars.color.neutral[95],
     ...globalVars.text.label.small.regular,
     ':focus': {
       background: '#cfcfcf',

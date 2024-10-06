@@ -5,23 +5,22 @@ import { style } from '@vanilla-extract/css';
 export const imageUploadContainer = style({
   width: rem(200),
   height: rem(200),
-  border: `2px dashed ${globalVars.color.neutral[20]}`,
+  border: `2px solid ${globalVars.color.neutral[20]}`,
   borderRadius: rem(8),
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   cursor: 'pointer',
   color: globalVars.color.neutral[20],
-  transition: 'background-color 200ms ease-in-out, color 200ms ease-in-out',
+  ...globalVars.text.label.medium.regular,
+  transition: 'background-color 200ms ease-in-out, color 200ms ease-in-out, border-color 200ms ease-in-out',
   ':hover': {
-    backgroundColor: '#cecece',
-    color: '#8c8c8c',
-    borderColor: '#8c8c8c',
+    color: globalVars.color.neutral[40],
+    borderColor: globalVars.color.neutral[40],
   },
   ':active': {
-    backgroundColor: '#929292',
-    color: globalVars.color.neutral[50],
-    borderColor: globalVars.color.neutral[50],
+    color: globalVars.color.neutral[60],
+    borderColor: globalVars.color.neutral[60],
   },
 });
 
@@ -44,7 +43,7 @@ export const uploadButton = style({
 export const plusIcon = style({
   fontSize: rem(20),
   color: globalVars.color.neutral.white,
-  backgroundColor: '#ccc',
+  backgroundColor: globalVars.color.neutral[20],
   width: rem(20),
   height: rem(20),
   borderRadius: '50%',
@@ -55,10 +54,10 @@ export const plusIcon = style({
   transition: 'background-color 200ms ease-in-out, color 200ms ease-in-out',
   selectors: {
     [`${imageUploadContainer}:hover &`]: {
-      backgroundColor: '#8c8c8c',
+      backgroundColor: globalVars.color.neutral[40],
     },
     [`${imageUploadContainer}:active &`]: {
-      backgroundColor: '#6f6f6f',
+      backgroundColor: globalVars.color.neutral[60],
     },
   },
 });

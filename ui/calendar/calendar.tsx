@@ -112,11 +112,13 @@ export default function Calendar({ date, onSelect, min, max, hasTime, disabled }
         <div className={styles.calendarWrapper}>
           <div className={styles.calendarHeaderWrapper}>
             <Button variant="text" size="small" rounded="small" onClick={() => dispatch({ type: 'MINUS' })}>
-              <ChevronDown transform="rotate(90)" height={10} />
+              <ChevronDown transform="rotate(90)" height={7} />
             </Button>
-            {monthParser(state.month)} {state.year}
+            <span>
+              {monthParser(state.month)} {state.year}
+            </span>
             <Button variant="text" size="small" rounded="small" onClick={() => dispatch({ type: 'ADD' })}>
-              <ChevronDown transform="rotate(270)" height={10} />
+              <ChevronDown transform="rotate(270)" height={7} />
             </Button>
           </div>
           <ul className={styles.calendarContent}>
@@ -145,9 +147,9 @@ export default function Calendar({ date, onSelect, min, max, hasTime, disabled }
               </li>
             ))}
           </ul>
+          {hasTime && <Separator direction="horizontal" className={styles.line} />}
           {hasTime && (
             <>
-              <Separator direction="horizontal" color="#D0D0D0" />
               <div className={styles.calendarTimeWrapper}>
                 <Time
                   value={innerDate.initDate}

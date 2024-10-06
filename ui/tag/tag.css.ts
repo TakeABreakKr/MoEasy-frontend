@@ -11,7 +11,7 @@ export const tagVariant = recipe({
     borderRadius: rem(30),
     backgroundColor: globalVars.color.neutral.white,
     gap: rem(5),
-    padding: `${rem(2)} ${rem(7)}`,
+    padding: rem(2, 7),
     height: rem(20),
     borderWidth: 1,
     borderStyle: 'solid',
