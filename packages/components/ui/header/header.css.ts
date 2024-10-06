@@ -56,7 +56,7 @@ globalStyle(`${linkWrapper} li`, {
 export const active = style({
   selectors: {
     [`${linkWrapper} &`]: {
-      borderBottom: '1px solid white',
+      borderBottom: `1px solid ${globalVars.color.neutral.white}`,
       borderTop: '1px solid transparent',
     },
   },
@@ -83,20 +83,27 @@ export const icon = style({
 export const searchIcon = style({
   width: rem(34), // 34px
   height: rem(34), // 34px
-  backgroundColor: '#d9d9d9',
+  color: globalVars.color.neutral[95],
+  backgroundColor: globalVars.color.neutral[5],
   ':hover': {
-    backgroundColor: 'black',
-    color: 'white',
+    backgroundColor: globalVars.color.neutral[20],
+  },
+  ':active': {
+    backgroundColor: globalVars.color.neutral[40],
   },
 });
 
 export const userIcon = style({
   width: rem(34), // 34px
   height: rem(34), // 34px
-  backgroundColor: '#d9d9d9',
-  color: 'white',
+  backgroundColor: globalVars.color.neutral[5],
+  color: globalVars.color.neutral.white,
   ':hover': {
-    backgroundColor: '#969696',
-    color: '#c1c1c1',
+    backgroundColor: globalVars.color.neutral[20],
+    color: globalVars.color.neutral[3],
+  },
+  ':active': {
+    backgroundColor: globalVars.color.neutral[40],
+    color: globalVars.color.neutral[10],
   },
 });

@@ -47,7 +47,7 @@ export const ImageUpload = ({ name = 'thumbnail', selectedFile, onImageUpload }:
         ) : (
           <div className={styles.uploadButton}>
             <div className={styles.plusIcon}>
-              <PlusIcon width={16} height={16} />
+              <PlusIcon width={10} height={10} />
             </div>
             <div className={styles.uploadText}>
               1:1 비율
