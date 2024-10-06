@@ -48,7 +48,7 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
     <div className={styles.timeInputContainer}>
       <div className={styles.inputGroup}>
         <Button
-          variant="ghost"
+          variant="text"
           size="small"
           rounded="small"
           onClick={addHour}
@@ -59,7 +59,7 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
           aria-label="Increase hours"
           disabled={disabled}
         >
-          <ChevronDown width={24} transform="rotate(180)" />
+          <ChevronDown width={7} transform="rotate(180)" />
         </Button>
         <input
           type="number"
@@ -70,7 +70,7 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
           disabled={disabled}
         />
         <Button
-          variant="ghost"
+          variant="text"
           size="small"
           rounded="small"
           onClick={minusHour}
@@ -81,13 +81,13 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
           aria-label="Decrease hours"
           disabled={disabled}
         >
-          <ChevronDown width={24} />
+          <ChevronDown width={7} />
         </Button>
       </div>
       <span>:</span>
       <div className={styles.inputGroup}>
         <Button
-          variant="ghost"
+          variant="text"
           size="small"
           rounded="small"
           onClick={addMinute}
@@ -98,7 +98,7 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
           aria-label="Increase minutes"
           disabled={disabled}
         >
-          <ChevronDown width={24} transform="rotate(180)" />
+          <ChevronDown width={7} transform="rotate(180)" />
         </Button>
         <input
           type="number"
@@ -109,7 +109,7 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
           disabled={disabled}
         />
         <Button
-          variant="ghost"
+          variant="text"
           size="small"
           rounded="small"
           onClick={minusMinute}
@@ -120,7 +120,7 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
           aria-label="Decrease minutes"
           disabled={disabled}
         >
-          <ChevronDown width={24} />
+          <ChevronDown width={7} />
         </Button>
       </div>
     </div>

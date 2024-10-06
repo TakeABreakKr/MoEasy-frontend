@@ -12,7 +12,7 @@ import { ListKeywordInput } from './input';
 import { ListItem } from './item';
 
 import { scrollStyle } from '../scroll/scroll.css';
-import { footer, itemList } from './list.css';
+import { footer, itemList, ctlWrapper } from './list.css';
 
 export type ListItemType = {
   id: string;
@@ -38,8 +38,10 @@ export const List = ({ list = [], limit, selected: prevSelected = [], dispatchKe
   const [selected, dispatch] = useReducer(checkGroupReducer<ListItemType>, prevSelected);
   return (
     <ListProvider value={{ selected, list, dispatch, limit }}>
-      <ListKeywordInput dispatchKeyword={dispatchKeyword} />
-      <ListDeleteControl selected={selected} dispatch={dispatch} limit={limit} />
+      <div className={ctlWrapper}>
+        <ListKeywordInput dispatchKeyword={dispatchKeyword} />
+        <ListDeleteControl selected={selected} dispatch={dispatch} limit={limit} />
+      </div>
       {children}
     </ListProvider>
   );

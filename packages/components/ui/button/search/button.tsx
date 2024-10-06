@@ -13,14 +13,14 @@ type SearchButtonProps = ComponentPropsWithoutRef<'button'>;
 const SearchButton = forwardRef<HTMLButtonElement, SearchButtonProps>(({ className, children, ...props }, ref) => {
   return (
     <button
-      className={clsx(styles.inputVariants(), styles.inputWrapper, searchButtonStyle, className)}
+      className={clsx(styles.inputVariants.classNames.base, styles.inputWrapper, searchButtonStyle, className)}
       ref={ref}
       type="button"
       {...props}
     >
       {children}
       <span className={styles.inputCtlWrapper}>
-        <SearchIcon width={24} height={24} />
+        <SearchIcon width={24} height={24} color="#19191a" />
       </span>
     </button>
   );

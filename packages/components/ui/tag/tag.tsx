@@ -24,7 +24,7 @@ export const Tag = ({ variant = 'light', className, isDelete, children, ...props
           rounded="full"
         >
           <span>
-            <XIcon color="white" width={8} height={8} />
+            <XIcon width={8} height={8} />
           </span>
         </Button>
       )}

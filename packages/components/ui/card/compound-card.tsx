@@ -3,7 +3,6 @@ import clsx from 'clsx';
 
 import Image from 'next/image';
 
-import { Button } from '../button/button';
 import { EllipsisIcon } from '../icon';
 import { NameTag } from '../tag';
 
@@ -25,7 +24,7 @@ function CardThumbnail({ src, alt = 'Thumbnail' }: { src?: string; alt: string }
   return (
     <div className={cardStyle.thumbnailWrapper}>
       <div className={cardStyle.thumbnail}>
-        <Image src={src ?? `https://via.placeholder.com/116/${1}`} width={116} height={116} alt={alt} />
+        <Image src={src ?? `https://via.placeholder.com/72/${1}`} width={72} height={72} alt={alt} />
       </div>
     </div>
   );
@@ -39,9 +38,9 @@ function CardTrigger({ children }: { children?: React.ReactNode }) {
     <div className={cardStyle.interact}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="small" variant="ghost" rounded="small" className={magic}>
-            <EllipsisIcon />
-          </Button>
+          <button className={clsx(magic, cardStyle.triggerButton)}>
+            <EllipsisIcon height={4} />
+          </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">{children}</DropdownMenuContent>
       </DropdownMenu>
