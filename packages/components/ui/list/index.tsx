@@ -12,7 +12,7 @@ import { ListKeywordInput } from './input';
 import { ListItem } from './item';
 
 import { scrollStyle } from '../scroll/scroll.css';
-import { footer, itemList, ctlWrapper } from './list.css';
+import { ctlWrapper, footer, itemList } from './list.css';
 
 export type ListItemType = {
   id: string;
