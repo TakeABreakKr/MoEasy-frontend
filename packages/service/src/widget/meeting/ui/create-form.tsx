@@ -6,9 +6,10 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
-import { teamModifyAction } from '@/app/[locale]/meeting/action';
+import { CommonFormAction } from '@/entities';
 import { CreateMeetingType } from '@/entities/meeting/api';
-import { createQueryString } from '@/shared/utils/utils';
+import * as styles from '@/shared/style/create-form/index.css';
+import { onSearchValueChange } from '@/shared/utils/search-param';
 
 import {
   Alert,
@@ -31,10 +32,8 @@ import { List, ListContent, ListFooter, ListItemType } from '@moeasy/storybook/u
 import { Tag } from '@moeasy/storybook/ui/tag';
 import { Textarea } from '@moeasy/storybook/ui/textarea';
 
-import * as styles from './create-form.css';
-
 type CreateFormProps = {
-  action: typeof teamModifyAction;
+  action: CommonFormAction;
   data?: Partial<Omit<CreateMeetingType, 'thumbnail'> & { thumbnail: string }>;
 };
 const createStepArray = ['모임명 / 소개', '썸네일 설정', '카테고리 / 키워드', '인원제한 / 모임원'];
@@ -78,7 +77,7 @@ function CreateForm({ action, data = {} }: CreateFormProps) {
   );
 }
 
-const CreateFormInput = ({ currentStep, searchParams }: { currentStep: number; searchParams: URLSearchParams }) => {
+function CreateFormInput({ currentStep, searchParams }: { currentStep: number; searchParams: URLSearchParams }) {
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [keywords, setKeywords] = useState<string[]>([]);
   const [members, setMembers] = useState<ListItemType[]>([]);
@@ -101,7 +100,7 @@ const CreateFormInput = ({ currentStep, searchParams }: { currentStep: number; s
             name="name"
             maxLength={30}
             defaultValue={searchParams.get('name') || ''}
-            onValueChange={onValueChange('name', searchParams)}
+            onValueChange={onSearchValueChange('name', searchParams)}
           />
         </label>
         <label className={formStyles.label}>
@@ -113,7 +112,7 @@ const CreateFormInput = ({ currentStep, searchParams }: { currentStep: number; s
             minLength={10}
             maxLength={100}
             defaultValue={searchParams.get('explanation') || ''}
-            onValueChange={onValueChange('explanation', searchParams)}
+            onValueChange={onSearchValueChange('explanation', searchParams)}
           />
         </label>
       </div>
@@ -135,7 +134,7 @@ const CreateFormInput = ({ currentStep, searchParams }: { currentStep: number; s
             placeholder="검색창에 #키워드 를 검색하면 나의 모임이 보여요-!"
             name="keyword"
             defaultValue={searchParams.get('keyword') || ''}
-            onValueChange={onValueChange('keyword', searchParams)}
+            onValueChange={onSearchValueChange('keyword', searchParams)}
             disabled={keywordAddDisabled}
             isError={keywords.length >= 10}
             onKeyUp={(e) => {
@@ -147,7 +146,7 @@ const CreateFormInput = ({ currentStep, searchParams }: { currentStep: number; s
                     if (prev.includes(keyword)) return prev;
                     return [...prev, keyword];
                   });
-                  onValueChange('keyword', searchParams)('');
+                  onSearchValueChange('keyword', searchParams)('');
                 }
                 e.currentTarget.value = '';
               }
@@ -196,7 +195,7 @@ const CreateFormInput = ({ currentStep, searchParams }: { currentStep: number; s
                 name="limit"
                 min={1}
                 value={memberLimit}
-                onValueChange={onValueChange('limit', searchParams)}
+                onValueChange={onSearchValueChange('limit', searchParams)}
               />
             )}
             <Button
@@ -240,7 +239,7 @@ const CreateFormInput = ({ currentStep, searchParams }: { currentStep: number; s
       </div>
     </div>
   );
-};
+}
 
 function FriendListPopup({
   selected,
@@ -275,14 +274,5 @@ function FriendListPopup({
     </Alert>
   );
 }
-
-/** 값 변경시 searchParams을 변경 */
-const onValueChange = (key: string, searchParams: URLSearchParams) => (value: string | number) => {
-  window.history.replaceState(
-    null,
-    '',
-    '?' + createQueryString(searchParams, key, typeof value === 'number' ? String(value) : value),
-  );
-};
 
 export default CreateForm;
