@@ -29,8 +29,8 @@ const SampleAlert = ({ title, message, className }: Props) => {
       <AlertTrigger>팝업 열기</AlertTrigger>
       <AlertContent className={className} size="alert">
         <div className={closeWrapper}>
-          <AlertCloseButton variant="dark" rounded="full" size="small">
-            <XIcon width={15} height={15} />
+          <AlertCloseButton variant="dark" rounded="full" size="icon">
+            <XIcon width={10} height={10} />
           </AlertCloseButton>
         </div>
         <AlertTitle>{title}</AlertTitle>

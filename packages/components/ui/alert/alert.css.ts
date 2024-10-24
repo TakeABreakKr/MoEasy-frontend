@@ -2,8 +2,8 @@
 import { recipe } from '@vanilla-extract/recipes';
 
 import { rem } from '../../utils/css';
-import { style } from '@vanilla-extract/css';
 import { globalVars } from '../../utils/styles/global.css';
+import { style } from '@vanilla-extract/css';
 
 export const popupContainer = style({
   position: 'fixed',
