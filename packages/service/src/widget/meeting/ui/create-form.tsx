@@ -55,6 +55,7 @@ function CreateForm({ action, data = {} }: CreateFormProps) {
           searchParams={searchParams}
           finishMessage="모임 생성"
           messageOnPending="모임 생성 중.."
+          pathname="/meeting/create"
         />
       </form>
       <FormCreateUnderLine />
