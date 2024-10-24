@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { XIcon } from '../icon';
@@ -5,7 +6,6 @@ import { XIcon } from '../icon';
 import { Alert, AlertCloseButton, AlertContent, AlertMessage, AlertTitle, AlertTrigger } from './alert';
 
 import { closeWrapper } from './alert.css';
-import { ComponentProps } from 'react';
 
 type Props = {
   title?: string | JSX.Element;
@@ -22,7 +22,7 @@ const SampleAlert = ({ title, message, excludeButton, className, size = 'alert' 
       <AlertTrigger>팝업 열기</AlertTrigger>
       <AlertContent className={className} size={size}>
         <div className={closeWrapper}>
-          <AlertCloseButton variant="dark" rounded="full" size="small">
+          <AlertCloseButton variant="dark" rounded="full" size="icon">
             <XIcon width={15} height={15} />
           </AlertCloseButton>
         </div>
