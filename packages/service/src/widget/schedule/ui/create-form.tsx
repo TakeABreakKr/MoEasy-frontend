@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
 import { CommonFormAction } from '@/entities';
+import { useScopedI18n } from '@/locales/clients';
 import * as styles from '@/shared/style/create-form/index.css';
 import { onSearchValueChange } from '@/shared/utils/search-param';
 
@@ -73,6 +74,7 @@ function ScheduleCreateFormInput({
   currentStep: number;
   searchParams: URLSearchParams;
 }) {
+  const t = useScopedI18n('schedule-create.remainder');
   const [state, dispatch] = useReducer(scheduleCreateReducer, {}, scheduleCreateInitializer);
   const [timeState, dispatchTime] = useReducer(scheduleTimeReducer, {}, scheduleTimeInitializer);
   const activeCurrentStepClassName = (step: number) =>
@@ -159,7 +161,7 @@ function ScheduleCreateFormInput({
                   onClick={() => dispatch({ key: 'reminder', payload: time })}
                 >
                   <input readOnly hidden value={time} name="reminder" />
-                  {time}
+                  {t(time)}
                 </Tag>
               ))}
             </div>
@@ -173,6 +175,8 @@ function ScheduleCreateFormInput({
             <span className={formStyles.label}>공지사항</span>
             <Toggle
               inverse
+              name="onlineYn"
+              value="Y"
               checked={state.onlineYn}
               onToggleChange={(checked) => dispatch({ key: 'onlineYn', payload: !!checked })}
             />
@@ -196,6 +200,7 @@ function ScheduleCreateFormInput({
                 {state.detailAddress}
               </SearchButton>
               <Input
+                name="detailAddress"
                 value={state.detailAddress}
                 placeholder="상세주소를 입력해주세요."
                 style={{ width: '100%' }}

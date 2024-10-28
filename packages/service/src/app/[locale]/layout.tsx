@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang={locale}>
       <body className={clsx(pretendard.className, pretendard.variable)}>
         <Header />
-        <RootProvider>{children}</RootProvider>
+        <RootProvider locale={locale}>{children}</RootProvider>
       </body>
     </html>
   );

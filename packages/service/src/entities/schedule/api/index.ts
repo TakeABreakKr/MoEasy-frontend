@@ -12,16 +12,18 @@ export type ScheduleCreateKeyMap = keyof CreateScheduleType;
 export const scheduleModifyAction: CommonFormAction = async (_, formData) => {
   'use server';
   const parsedForm: Partial<CreateScheduleType> = {
-    meeting_id: stringParser(formData.get('meeting_id')),
+    meeting_id: 'G_NOT_IMPLEMENTED',
     name: stringParser(formData.get('name'), { required: true }),
     explanation: stringParser(formData.get('explanation')),
     startDate: stringParser(formData.get('startDate')),
-    endDate: stringParser(formData.get('startDate')),
+    endDate: stringParser(formData.get('endDate')),
     announcement: stringParser(formData.get('announcement')),
-    detailAddress: stringParser(formData.get('detailAddress')),
-    onlineYn: Boolean(formData.get('onlineYn')),
-    reminder: [],
+    detailAddress: stringParser(formData.get('detailAddress'), { toBe: true }),
+    onlineYn: formData.get('onlineYn') === 'Y',
+    reminder: formData.getAll('reminder').map((item) => stringParser(item)),
   };
+
+  console.log(parsedForm);
 
   // TODO: fetch 이후 로직
   await new Promise((resolve) => {

@@ -22,7 +22,7 @@ export function Toggle({ checked, defaultChecked = false, onToggleChange, invers
       className={styles.toggleWrapper({ active: inverse ? !toggleState : toggleState })}
       onClick={() => setToggle(!toggleState)}
     >
-      <input checked={toggleState} readOnly {...props} hidden />
+      <input type="checkbox" checked={toggleState} readOnly {...props} hidden />
       <div className={styles.toggleButton} />
     </button>
   );

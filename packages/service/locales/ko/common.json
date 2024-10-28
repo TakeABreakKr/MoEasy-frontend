@@ -9,5 +9,22 @@
   "list": "리스트",
   "create": "생성",
   "schedule": "일정",
-  "mypage": "마이페이지"
+  "mypage": "마이페이지",
+  "schedule-create": {
+    "remainder": {
+      "ON_TIME": "일정 시작",
+      "TEN_M": "10분 전",
+      "THIRTY_M": "30분 전",
+      "ONE_H": "1시간 전",
+      "TWO_H": "2시간 전",
+      "THREE_H": "3시간 전",
+      "FOUR_H": "4시간 전",
+      "SIX_H": "6시간 전",
+      "TWELVE_H": "12시간 전",
+      "ONE_D": "1일 전",
+      "TWO_D": "2일 전",
+      "THREE_D": "3일 전",
+      "SEVEN_D": "7일 전"
+    }
+  }
 }

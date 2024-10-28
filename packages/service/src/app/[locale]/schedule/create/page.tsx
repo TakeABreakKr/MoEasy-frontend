@@ -13,7 +13,6 @@ export default async function ScheduleCreatePage() {
       />
       <section>
         <ScheduleCreateForm action={scheduleModifyAction} />
-        {/* <PostInput /> */}
       </section>
     </main>
   );
