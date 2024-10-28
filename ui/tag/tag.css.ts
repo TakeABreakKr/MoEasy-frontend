@@ -22,8 +22,8 @@ export const tagVariant = recipe({
   variants: {
     variant: {
       dark: {
-        backgroundColor: globalVars.color.neutral[50],
-        borderColor: globalVars.color.neutral[50],
+        backgroundColor: globalVars.color.neutral[80],
+        borderColor: globalVars.color.neutral[80],
         color: 'white',
       },
       light: {

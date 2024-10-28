@@ -73,6 +73,7 @@ export type CalendarProps = {
   max?: DateInput;
   hasTime?: boolean;
   disabled?: boolean;
+  name?: string;
 };
 
 const calcInputValue = (date: Date) => {
@@ -81,7 +82,7 @@ const calcInputValue = (date: Date) => {
   return dateOffset;
 };
 
-export default function Calendar({ date, onSelect, min, max, hasTime, disabled }: CalendarProps) {
+export default function Calendar({ date, onSelect, min, max, hasTime, disabled, name }: CalendarProps) {
   // only control calendar by initial date prop
   const [state, dispatch] = useReducer(calendarReducer, date, calendarInitializer);
   // contains initial date and inner controlled date
@@ -107,7 +108,7 @@ export default function Calendar({ date, onSelect, min, max, hasTime, disabled }
         <CalendarIcon color="#282828" height={14} />
         {showDate}
       </DropdownMenuTrigger>
-      <input type="datetime-local" value={formInputValue} readOnly hidden />
+      <input type="datetime-local" name={name} value={formInputValue} readOnly hidden />
       <DropdownMenuContent>
         <div className={styles.calendarWrapper}>
           <div className={styles.calendarHeaderWrapper}>
