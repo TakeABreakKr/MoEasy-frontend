@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { components } from '@/shared/api/my-schema';
 import { stringParser } from '@/shared/utils/utils';
 
@@ -8,6 +10,7 @@ export type CreateScheduleType = Omit<components['schemas']['ScheduleCreateReque
 export type ScheduleCreateKeyMap = keyof CreateScheduleType;
 
 export const scheduleModifyAction: CommonFormAction = async (_, formData) => {
+  'use server';
   const parsedForm: Partial<CreateScheduleType> = {
     meeting_id: stringParser(formData.get('meeting_id')),
     name: stringParser(formData.get('name'), { required: true }),

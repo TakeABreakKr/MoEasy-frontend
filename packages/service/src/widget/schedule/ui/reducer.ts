@@ -1,11 +1,18 @@
 import { CreateScheduleType } from '@/entities/schedule/api';
 
+//#region schedule request
+
+type CreateScheduleTypeDateMutated = Omit<CreateScheduleType, 'startDate' | 'endDate'> & {
+  startDate: Date;
+  endDate: Date;
+};
+
 type BaseScheduleReducerAction = {
-  [K in Exclude<keyof CreateScheduleType, 'reminder'>]: {
+  [K in Exclude<keyof CreateScheduleTypeDateMutated, 'reminder'>]: {
     key: K;
-    payload: CreateScheduleType[K];
+    payload: CreateScheduleTypeDateMutated[K];
   };
-}[Exclude<keyof CreateScheduleType, 'reminder'>];
+}[Exclude<keyof CreateScheduleTypeDateMutated, 'reminder'>];
 
 type ReminderAction = {
   key: 'reminder';
@@ -14,7 +21,7 @@ type ReminderAction = {
 
 type ScheduleReducerAction = BaseScheduleReducerAction | ReminderAction;
 
-export const scheduleCreateReducer = (state: CreateScheduleType, action: ScheduleReducerAction) => {
+export const scheduleCreateReducer = (state: CreateScheduleTypeDateMutated, action: ScheduleReducerAction) => {
   switch (action.key) {
     case 'reminder': {
       const isExist = state.reminder.some((time) => time === action.payload);
@@ -34,15 +41,42 @@ export const scheduleCreateReducer = (state: CreateScheduleType, action: Schedul
   }
 };
 
-export const scheduleCreateInitializer = (value: Partial<CreateScheduleType> = {}): CreateScheduleType => ({
+export const scheduleCreateInitializer = ({
+  startDate,
+  endDate,
+  ...value
+}: Partial<CreateScheduleType> = {}): CreateScheduleTypeDateMutated => ({
   meeting_id: '',
   name: '',
   explanation: '',
-  startDate: '',
-  endDate: '',
+  startDate: startDate ? new Date(startDate) : new Date(),
+  endDate: endDate ? new Date(endDate) : new Date(),
   reminder: [],
   announcement: '',
   detailAddress: '',
-  onlineYn: false,
+  onlineYn: true,
   ...value,
 });
+
+//#endregion
+
+//#region client state
+
+type ScheduleTimeState = { controlTime: boolean; controlEndDate: boolean };
+
+export const scheduleTimeReducer = (state: ScheduleTimeState, action: keyof ScheduleTimeState) => {
+  return {
+    ...state,
+    [action]: !state[action],
+  };
+};
+
+export const scheduleTimeInitializer = (value: Partial<ScheduleTimeState> = {}): ScheduleTimeState => {
+  return {
+    controlTime: false,
+    controlEndDate: false,
+    ...value,
+  };
+};
+
+//#endregion

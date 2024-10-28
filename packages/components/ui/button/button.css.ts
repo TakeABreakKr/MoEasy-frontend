@@ -147,5 +147,9 @@ export const searchButtonStyle = style({
   justifyContent: 'flex-start',
   display: 'inline-flex',
   alignItems: 'center',
+  minHeight: rem(40),
+});
+
+export const searchButtonPlaceHolder = style({
   color: globalVars.color.neutral[20],
 });

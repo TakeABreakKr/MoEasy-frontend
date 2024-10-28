@@ -74,14 +74,14 @@ export default function MyPageComponent() {
               <Button>공유</Button>
             </div>
             <div className={styles.verticalWrapper}>
-              <Link href={'/meeting/create'} className={styles.actionButton}>
+              <Link href="/meeting/create" className={styles.actionButton}>
                 그룹 생성
                 <span className={styles.actionButtonSpan}>+</span>
               </Link>
-              <button className={styles.actionButton}>
+              <Link href="/schedule/create" className={styles.actionButton}>
                 일정 생성
                 <span className={styles.actionButtonSpan}>+</span>
-              </button>
+              </Link>
             </div>
             <div className={styles.header}>
               <h2>내가 속한 그룹, 친구, 지난 일정을 한눈에 👀</h2>
