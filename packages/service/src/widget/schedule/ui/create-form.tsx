@@ -1,6 +1,6 @@
 'use client';
 
-import { useReducer } from 'react';
+import { Dispatch, SetStateAction, useReducer } from 'react';
 import { useFormState } from 'react-dom';
 import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
@@ -11,6 +11,7 @@ import * as styles from '@/shared/style/create-form/index.css';
 import { onSearchValueChange } from '@/shared/utils/search-param';
 
 import { CommonAlert } from '@moeasy/storybook/ui/alert';
+import { Alert, AlertCloseButton, AlertContent, AlertTitle, AlertTrigger } from '@moeasy/storybook/ui/alert/alert';
 import { SearchButton } from '@moeasy/storybook/ui/button';
 import Calendar from '@moeasy/storybook/ui/calendar/calendar';
 import { Checkbox } from '@moeasy/storybook/ui/checkbox';
@@ -18,6 +19,7 @@ import { CreateStepButton, FormCreateUnderLine } from '@moeasy/storybook/ui/crea
 import { CreateStepList } from '@moeasy/storybook/ui/create/step-list';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 import { Input } from '@moeasy/storybook/ui/input';
+import { List, ListContent, ListFooter, ListItemType } from '@moeasy/storybook/ui/list';
 import { Tag } from '@moeasy/storybook/ui/tag';
 import { Textarea } from '@moeasy/storybook/ui/textarea';
 import { Toggle } from '@moeasy/storybook/ui/toggle';
@@ -134,11 +136,18 @@ function ScheduleCreateFormInput({
             </div>
           </fieldset>
           <div style={{ display: 'flex', gap: 4 }}>
-            <Calendar name="startDate" hasTime={timeState.controlTime} date={state.startDate} />
+            <Calendar
+              name="startDate"
+              hasTime={timeState.controlTime}
+              date={state.startDate}
+              onSelect={(startDate) => dispatch({ key: 'startDate', payload: startDate })}
+            />
             <Calendar
               name="endDate"
               hasTime={timeState.controlTime}
               disabled={!timeState.controlEndDate}
+              date={state.endDate}
+              onSelect={(endDate) => dispatch({ key: 'endDate', payload: endDate })}
               min={state.startDate}
             />
           </div>
@@ -221,9 +230,43 @@ function ScheduleCreateFormInput({
       <div className={activeCurrentStepClassName(5)}>
         <fieldset className={formStyles.labelWrapper}>
           <span className={formStyles.label}>참여 모임원 선택</span>
-          <SearchButton placeholder="모임원을 선택해주세요" />
+          <ParticipateListPopup selected={[]} dispatch={() => {}} />
         </fieldset>
       </div>
     </div>
+  );
+}
+
+function ParticipateListPopup({
+  selected,
+  dispatch,
+  limit,
+}: {
+  selected: ListItemType[];
+  dispatch: Dispatch<SetStateAction<ListItemType[]>>;
+  limit?: number;
+}) {
+  return (
+    <Alert>
+      <AlertTrigger asChild>
+        <SearchButton placeholder="모임원을 선택해주세요" />
+      </AlertTrigger>
+      <AlertContent size="medium">
+        <AlertTitle>모임원 추가</AlertTitle>
+        <List
+          list={[
+            { id: '2', name: 'aa' },
+            { id: '3', name: 'javme' },
+          ]}
+          selected={selected}
+          limit={limit}
+        >
+          <ListContent></ListContent>
+          <ListFooter asChild close={dispatch}>
+            <AlertCloseButton>확인</AlertCloseButton>
+          </ListFooter>
+        </List>
+      </AlertContent>
+    </Alert>
   );
 }

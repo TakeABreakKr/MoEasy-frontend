@@ -26,7 +26,9 @@ export function CommonAlert({ title, message, open, close, closeVisible }: Props
         {title && <AlertTitle>{title}</AlertTitle>}
         {message && <AlertMessage>{message}</AlertMessage>}
 
-        <AlertCloseButton onClick={close}>확인</AlertCloseButton>
+        <AlertCloseButton size="medium" onClick={close}>
+          확인
+        </AlertCloseButton>
       </AlertContent>
     </Alert>
   );
