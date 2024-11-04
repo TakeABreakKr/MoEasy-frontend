@@ -1,4 +1,68 @@
 export interface paths {
+  '/': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['AppController_healthCheck'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/auth/login': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['AuthController_login'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/auth/callback': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['AuthController_callback'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/auth/refresh': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['AuthController_refreshAccessToken'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/meeting/create': {
     parameters: {
       query?: never;
@@ -47,6 +111,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/meeting/delete': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MeetingController_deleteMeeting'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/meeting/get': {
     parameters: {
       query?: never;
@@ -70,9 +150,9 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    get: operations['MeetingController_getMeetingList'];
+    get?: never;
     put?: never;
-    post?: never;
+    post: operations['MeetingController_getMeetingList'];
     delete?: never;
     options?: never;
     head?: never;
@@ -111,6 +191,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/member/get': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MemberController_getMember'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/member/withdraw': {
     parameters: {
       query?: never;
@@ -118,16 +214,16 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    get?: never;
+    get: operations['MemberController_withdraw'];
     put?: never;
-    post: operations['MemberController_withdraw'];
+    post?: never;
     delete?: never;
     options?: never;
     head?: never;
     patch?: never;
     trace?: never;
   };
-  '/member/invite': {
+  '/member/authority/modify': {
     parameters: {
       query?: never;
       header?: never;
@@ -136,21 +232,149 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    post: operations['MemberController_invite'];
+    post: operations['MemberController_modify'];
     delete?: never;
     options?: never;
     head?: never;
     patch?: never;
     trace?: never;
   };
-  '/member/invite/accept': {
+  '/member/delete': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get: operations['MemberController_accept'];
+    get?: never;
+    put?: never;
+    post: operations['MemberController_delete'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/member/apply': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MemberController_apply'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/member/waiting/get': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MemberController_getWaiting'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/member/waiting/manage': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MemberController_manageMember'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/notification': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['NotificationController_getNotifications'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/notification/check': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['NotificationController_checkNotification'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/schedule/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ScheduleController_createSchedule'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/schedule/update': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ScheduleController_updateSchedule'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/schedule/get/list': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ScheduleController_getScheduleList'];
     put?: never;
     post?: never;
     delete?: never;
@@ -163,6 +387,7 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
+    Function: Record<string, never>;
     MeetingCreateRequest: {
       name: string;
       explanation: string;
@@ -186,7 +411,7 @@ export interface components {
     MeetingMemberDto: {
       username: string;
       /** @enum {string} */
-      authority: 'WAITING' | 'INVITED' | 'MEMBER' | 'MANAGER' | 'OWNER';
+      authority: 'WAITING' | 'MEMBER' | 'MANAGER' | 'OWNER';
     };
     MeetingResponse: {
       name: string;
@@ -200,7 +425,7 @@ export interface components {
       name: string;
       explanation: string;
       /** @enum {string} */
-      authority: 'WAITING' | 'INVITED' | 'MEMBER' | 'MANAGER' | 'OWNER';
+      authority: 'WAITING' | 'MEMBER' | 'MANAGER' | 'OWNER';
     };
     MeetingListResponse: {
       meetingList: components['schemas']['MeetingListMeetingDto'][];
@@ -212,9 +437,116 @@ export interface components {
     MemberSearchResponse: {
       memberList: components['schemas']['MemberSearchDto'][];
     };
-    MemberInviteRequest: {
-      newMemberId: number;
+    MemberResponse: {
+      username: string;
+      explanation: string;
+      authority: string;
+    };
+    MemberAuthorityModifyRequest: {
+      usersId: number;
       meetingId: string;
+      manager: boolean;
+    };
+    MemberDeleteRequest: {
+      deletedMemberId: number;
+      meetingId: string;
+    };
+    MemberApplyRequest: {
+      meetingId: string;
+      applicationMessage: string;
+    };
+    MemberManageRequest: {
+      meetingId: string;
+      memberId: number;
+      isAccepted: boolean;
+    };
+    NotificationResponse: {
+      notificationList: string[];
+    };
+    NotificationCheckRequest: {
+      notificationIdList: string[];
+    };
+    AddressDto: {
+      zonecode: string;
+      address: string;
+      addressEnglish: string;
+      addressType: string;
+      userSelectedType: string;
+      noSelected: string;
+      userLanguageType: string;
+      roadAddress: string;
+      roadAddressEnglish: string;
+      jibunAddress: string;
+      jibunAddressEnglish: string;
+      autoRoadAddress: string;
+      autoRoadAddressEnglish: string;
+      autoJibunAddress: string;
+      autoJibunAddressEnglish: string;
+      buildingCode: string;
+      buildingName: string;
+      apartment: string;
+      sido: string;
+      sidoEnglish: string;
+      sigungu: string;
+      sigunguEnglish: string;
+      sigunguCode: string;
+      roadnameCode: string;
+      bcode: string;
+      roadname: string;
+      roadnameEnglish: string;
+      bname: string;
+      bnameEnglish: string;
+      bname1: string;
+      bname1English: string;
+      bname2: string;
+      bname2English: string;
+      hname: string;
+      query: string;
+    };
+    ScheduleCreateRequest: {
+      meeting_id: string;
+      name: string;
+      explanation: string;
+      /** Format: date-time */
+      startDate: string;
+      /** Format: date-time */
+      endDate: string;
+      reminder: string[];
+      announcement: string;
+      onlineYn: boolean;
+      address: components['schemas']['AddressDto'];
+      detailAddress: string;
+    };
+    ScheduleUpdateRequest: {
+      meeting_id: string;
+      name: string;
+      explanation: string;
+      /** Format: date-time */
+      startDate: string;
+      /** Format: date-time */
+      endDate: string;
+      reminder: string[];
+      announcement: string;
+      onlineYn: boolean;
+      address: components['schemas']['AddressDto'];
+      detailAddress: string;
+      schedule_id: number;
+    };
+    ScheduleListDto: {
+      meetingId: string;
+      name: string;
+      explanation: string;
+      onlineYn: boolean;
+      /** Format: date-time */
+      startDate: string;
+      /** Format: date-time */
+      endDate: string;
+      address: components['schemas']['AddressDto'];
+      announcement: string;
+      detailAddress: string;
+    };
+    ScheduleListResponse: {
+      scheduleList: components['schemas']['ScheduleListDto'][];
     };
   };
   responses: never;
@@ -225,6 +557,82 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+  AppController_healthCheck: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  AuthController_login: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  AuthController_callback: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['Function'];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  AuthController_refreshAccessToken: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': string;
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
   MeetingController_createMeeting: {
     parameters: {
       query?: never;
@@ -232,6 +640,7 @@ export interface operations {
       path?: never;
       cookie?: never;
     };
+    /** @description data required to create a new meeting */
     requestBody: {
       content: {
         'multipart/form-data': components['schemas']['MeetingCreateRequest'];
@@ -268,6 +677,13 @@ export interface operations {
         };
         content?: never;
       };
+      /** @description 해당 모임을 찾을 수 없습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
     };
   };
   MeetingController_updateMeetingThumbnail: {
@@ -277,6 +693,7 @@ export interface operations {
       path?: never;
       cookie?: never;
     };
+    /** @description data required to update thumbnail */
     requestBody: {
       content: {
         'multipart/form-data': components['schemas']['MeetingThumbnailUpdateRequest'];
@@ -285,6 +702,33 @@ export interface operations {
     responses: {
       /** @description Meeting Entity has been successfully modified. */
       200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MeetingController_deleteMeeting: {
+    parameters: {
+      query: {
+        meetingId: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Meeting Entity has been successfully deleted. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 해당 모임을 찾을 수 없습니다. */
+      400: {
         headers: {
           [name: string]: unknown;
         };
@@ -312,20 +756,38 @@ export interface operations {
           'application/json': components['schemas']['MeetingResponse'];
         };
       };
+      /** @description 해당 모임을 찾을 수 없습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
     };
   };
   MeetingController_getMeetingList: {
     parameters: {
-      query: {
-        authorities: string[];
-      };
+      query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    requestBody?: never;
+    /** @description Filter meetings by authority and sort by options. */
+    requestBody: {
+      content: {
+        'application/json': {
+          /** @description List of authority types to filter meetings. */
+          authorities?: ('WAITING' | 'MEMBER' | 'MANAGER' | 'OWNER')[];
+          /**
+           * @description Option to sort meetingList (LATEST for latest registered, NAME for alphabetical).
+           * @enum {string}
+           */
+          options?: 'LATEST' | 'NAME';
+        };
+      };
+    };
     responses: {
-      /** @description Meeting list retrieved successfully */
+      /** @description Meeting list retrieved successfully. */
       200: {
         headers: {
           [name: string]: unknown;
@@ -358,7 +820,9 @@ export interface operations {
   };
   MemberController_search: {
     parameters: {
-      query?: never;
+      query: {
+        keyword: string;
+      };
       header?: never;
       path?: never;
       cookie?: never;
@@ -376,55 +840,39 @@ export interface operations {
       };
     };
   };
-  MemberController_withdraw: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': string;
-      };
-    };
-    responses: {
-      /** @description withdraw succeed */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  MemberController_invite: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** @description necessary info for invite to meeting */
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['MemberInviteRequest'];
-      };
-    };
-    responses: {
-      /** @description invite url created */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  MemberController_accept: {
+  MemberController_getMember: {
     parameters: {
       query: {
-        usersId: number;
+        meetingId: string;
+        userId: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Member retrieved successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['MemberResponse'];
+        };
+      };
+      /** @description 해당 멤버를 찾을 수 없습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MemberController_withdraw: {
+    parameters: {
+      query: {
         meetingId: string;
       };
       header?: never;
@@ -433,8 +881,318 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description invite accepted successfully */
+      /** @description withdraw succeed */
       200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MemberController_modify: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description data for modifying member authority */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MemberAuthorityModifyRequest'];
+      };
+    };
+    responses: {
+      /** @description authority modified succeed */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MemberController_delete: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description info for deleting a member */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MemberDeleteRequest'];
+      };
+    };
+    responses: {
+      /** @description member deleted successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MemberController_apply: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description data required for applying to become a meeting member. */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MemberApplyRequest'];
+      };
+    };
+    responses: {
+      /** @description The application has been successfully submitted and is awaiting approval. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 해당 모임을 찾을 수 없습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MemberController_getWaiting: {
+    parameters: {
+      query: {
+        meetingId: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description waiting list retrieved successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MemberController_manageMember: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description data required for member approval or denial */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MemberManageRequest'];
+      };
+    };
+    responses: {
+      /** @description member approved successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  NotificationController_getNotifications: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description notification list */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['NotificationResponse'];
+        };
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 모임 구성원만 초대 요청을 할 수 있습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  NotificationController_checkNotification: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['NotificationCheckRequest'];
+      };
+    };
+    responses: {
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 모임 구성원만 초대 요청을 할 수 있습니다. */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  ScheduleController_createSchedule: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description info for creating a new schedule. */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ScheduleCreateRequest'];
+      };
+    };
+    responses: {
+      /** @description Schedule Entity has been created. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  ScheduleController_updateSchedule: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description data to modify schedule. */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ScheduleUpdateRequest'];
+      };
+    };
+    responses: {
+      /** @description Schedule has been updated. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 해당 일정을 찾을 수 없습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  ScheduleController_getScheduleList: {
+    parameters: {
+      query: {
+        meetingId: string;
+        /** @description schedule status: in_progress, upcoming, completed. */
+        status: string[];
+        /** @description Option to sort scheduleList (LATEST for latest registered, NAME for alphabetical). */
+        options: 'LATEST' | 'NAME';
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Schedule list retrieved */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ScheduleListResponse'];
+        };
+      };
+      /** @description 해당 일정을 찾을 수 없습니다. */
+      400: {
         headers: {
           [name: string]: unknown;
         };

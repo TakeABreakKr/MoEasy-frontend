@@ -121,9 +121,9 @@ export const buttonVariants = recipe({
       large: {
         padding: rem(10, 60),
       },
-      thick: {
-        width: rem(60),
-        padding: rem(20, 10),
+      icon: {
+        width: rem(20),
+        height: rem(20),
       },
     },
     rounded: {
@@ -147,5 +147,9 @@ export const searchButtonStyle = style({
   justifyContent: 'flex-start',
   display: 'inline-flex',
   alignItems: 'center',
+  minHeight: rem(40),
+});
+
+export const searchButtonPlaceHolder = style({
   color: globalVars.color.neutral[20],
 });

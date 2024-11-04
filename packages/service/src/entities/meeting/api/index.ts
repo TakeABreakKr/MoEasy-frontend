@@ -1,8 +1,12 @@
 import 'server-only';
 import { InputHTMLAttributes } from 'react';
+import { redirect } from 'next/navigation';
 
 import client from '@/shared/api/baseApi';
 import { components } from '@/shared/api/my-schema';
+import { fileParser, numberParser, stringParser } from '@/shared/utils/utils';
+
+import { CommonFormAction } from '../..';
 
 export type CreateMeetingType = components['schemas']['MeetingCreateRequest'];
 
@@ -47,3 +51,23 @@ export const createMeeting = (body: CreateMeetingType) =>
     },
     next: { revalidate: 0 },
   });
+
+export const meetingModifyAction: CommonFormAction = async (_, formData) => {
+  const parsedForm = {
+    name: stringParser(formData.get('name'), { required: true }),
+    explanation: stringParser(formData.get('explanation')),
+    thumbnail: fileParser(formData.get('thumbnail')),
+    keywords: formData.getAll('keywords').map((keyword) => stringParser(keyword)),
+    limit: numberParser(formData.get('limit'), { toBe: true }),
+    members: formData.getAll('members').map((member) => stringParser(member)),
+  };
+  // TODO: fetch 이후 로직
+  await new Promise((resolve) => {
+    setTimeout(resolve, 1500);
+  });
+  return { type: 'success', message: '성공적으로 전송했습니다.' };
+};
+
+export const gotoTeamList = async () => {
+  redirect('/team');
+};

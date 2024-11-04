@@ -12,6 +12,7 @@ type CreateStepButtonProps = {
   finishMessage?: string;
   /** form 전송 중 표시되는 글자 */
   messageOnPending?: string;
+  pathname: string;
 };
 
 export function CreateStepButton({
@@ -20,6 +21,7 @@ export function CreateStepButton({
   searchParams,
   finishMessage,
   messageOnPending = 'loading...',
+  pathname,
 }: CreateStepButtonProps) {
   const searchParamsObject = Object.fromEntries(searchParams);
   return (
@@ -33,7 +35,7 @@ export function CreateStepButton({
         <Link
           className={styles.navButton}
           href={{
-            pathname: '/meeting/create',
+            pathname,
             query: { ...searchParamsObject, step: Number(searchParamsObject.step || '1') - 1 },
           }}
         >
@@ -44,7 +46,7 @@ export function CreateStepButton({
         <Link
           className={styles.navButton}
           href={{
-            pathname: '/meeting/create',
+            pathname,
             query: { ...searchParamsObject, step: Number(searchParamsObject.step || '1') + 1 },
           }}
         >
