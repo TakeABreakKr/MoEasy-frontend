@@ -1,20 +1,25 @@
 import { useState } from 'react';
 
+import { noop } from '../utils/lib/noop';
+
+import { useCallbackRef } from './use-callback-ref';
+
 export const useControlledState = <T,>({
-  props,
-  defaultProps,
-  onChange,
-}: {
-  props?: T;
-  defaultProps?: T;
-  onChange?: (value?: T) => void;
-}): readonly [T, (value: T) => void] => {
-  if (typeof props === 'undefined' && typeof defaultProps === 'undefined') {
-    throw new Error("At least one of 'props' or 'defaultProps' should be provided!");
+  prop,
+  defaultProp,
+  onChange = noop,
+}: { prop?: T; defaultProp?: T; onChange?: (value: T) => void } = {}): [T, (value: T) => void] => {
+  const _change = useCallbackRef(onChange);
+  const [state, setState] = useState(defaultProp);
+  const isControlled = typeof prop !== 'undefined';
+
+  if (isControlled) {
+    return [prop, _change];
   }
-  const [innerState, setInnerState] = useState(defaultProps);
 
-  if (typeof props !== 'undefined' && typeof onChange === 'function') return [props, onChange];
+  if (typeof state === 'undefined') {
+    throw new Error('At least Prop or defaultProp should be provided');
+  }
 
-  return [innerState as T, setInnerState];
+  return [state, setState];
 };
