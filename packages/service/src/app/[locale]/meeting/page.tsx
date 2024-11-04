@@ -1,8 +1,9 @@
-import { Fragment, Suspense } from 'react';
+import { Suspense } from 'react';
 
+import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import TeamList from '@/widget/meeting/ui/team-list';
 
-import { Separator } from '@moeasy/storybook/ui/separator';
+import { Checkbox } from '@moeasy/storybook/ui/checkbox';
 
 import * as mainStyle from '../main.css';
 import * as pageStyle from './meeting.css';
@@ -11,21 +12,33 @@ export default function TeamPage() {
   return (
     <main className={mainStyle.main}>
       <section className={mainStyle.vertical}>
-        <h1>남의집 둘러보기</h1>
+        <h1>모임 관리</h1>
 
-        <div className={pageStyle.category}>
-          <button className={pageStyle.categoryButton}>카테고리 ▼</button>
-          <button className={pageStyle.categoryButton}>날짜 ▼</button>
-          <button className={pageStyle.categoryButton}>시간 ▼</button>
-          <button className={pageStyle.categoryButton}>✔️ 마감된 남의집 보기</button>
-        </div>
-        <div className={pageStyle.order}>
-          {['인기순', '진행수순', '마감 임박순', '최신 등록순', '낮은 가격순', '높은 가격순'].map((item, index) => (
-            <Fragment key={index}>
-              <button className={pageStyle.orderButton}>{item}</button>
-              {index === 5 ? null : <Separator direction="vertical" />}
-            </Fragment>
-          ))}
+        <div className={pageStyle.meetingFilter}>
+          <div className={sprinkles({ display: 'flex', gap: 'medium' })}>
+            <label className={sprinkles({ display: 'flex', gap: 'xsmall' })}>
+              <Checkbox />
+              최신등록순
+            </label>
+            <label className={sprinkles({ display: 'flex', gap: 'xsmall' })}>
+              <Checkbox />
+              이름순
+            </label>
+          </div>
+          <div className={sprinkles({ display: 'flex', gap: 'medium' })}>
+            <label className={sprinkles({ display: 'flex', gap: 'xsmall' })}>
+              <Checkbox rounded={false} />
+              모임장
+            </label>
+            <label className={sprinkles({ display: 'flex', gap: 'xsmall' })}>
+              <Checkbox rounded={false} />
+              매니저
+            </label>
+            <label className={sprinkles({ display: 'flex', gap: 'xsmall' })}>
+              <Checkbox rounded={false} />
+              모임원
+            </label>
+          </div>
         </div>
       </section>
       <Suspense fallback={<div className="flex items-center justify-center h-screen w-full">로딩중...</div>}>

@@ -21,6 +21,7 @@ globalStyle(`${main} > section`, {
 
 export const vertical = style({
   flexDirection: 'column',
+  maxWidth: rem(664),
 });
 
 export const cardWrapper = style({

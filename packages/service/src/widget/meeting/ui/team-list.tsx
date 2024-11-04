@@ -1,16 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
+
+import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
 import { useIntersectionObserver } from '@moeasy/storybook/utils/use-intersection-observer';
+
+import { Card } from '../../card/ui';
 
 import * as teamStyle from './team-list.css';
 
 type TeamType = {
+  index: number;
   name: string;
 };
-const initialTeams = Array.from({ length: 20 }, (_, idx) => ({ name: `Team ${idx + 1}` }));
+const initialTeams = Array.from({ length: 20 }, (_, index) => ({ index, name: `Team ${index + 1}` }));
 
 export default function TeamList() {
   const [teamlist, setTeamlist] = useState<TeamType[]>(initialTeams);
@@ -20,19 +24,10 @@ export default function TeamList() {
   }, [inView]);
 
   return (
-    <section>
+    <section className={sprinkles({ justifyContent: 'center' })}>
       <div className={teamStyle.teamgrid}>
         {teamlist.map((team) => (
-          <div key={team.name} className={teamStyle.teamgridItem}>
-            <Image
-              className={teamStyle.teamItemImage}
-              width={300}
-              height={300}
-              src="https://via.placeholder.com/300"
-              alt="People sitting at a table"
-            />
-            <span>{team.name}</span>
-          </div>
+          <Card key={team.name} title={team.name} idx={team.index} />
         ))}
       </div>
       <span ref={ref}></span>
