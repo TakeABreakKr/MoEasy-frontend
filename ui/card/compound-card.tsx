@@ -3,18 +3,18 @@ import clsx from 'clsx';
 
 import Image from 'next/image';
 
-import { EllipsisIcon } from '../icon';
-import { NameTag } from '../tag';
-
-import { magic } from '../../utils/styles/index.css';
-import * as cardStyle from './card.css';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../dropdown-menu/dropdown-menu';
+import { EllipsisIcon } from '../icon';
+import { NameTag } from '../tag';
 import { NameTagProps } from '../tag/nametag/nametag';
+
+import { magic } from '../../utils/styles/index.css';
+import * as cardStyle from './card.css';
 
 function CardWrapper({ className, ...props }: ComponentPropsWithoutRef<'div'>) {
   return <div className={clsx(cardStyle.card, className)} {...props} />;
@@ -78,11 +78,11 @@ function CardMembers({ members }: { members: CardMember[] }) {
 }
 
 export {
-  CardWrapper,
-  CardThumbnail,
-  CardTitle,
   CardDescription,
   CardMembers,
+  CardThumbnail,
+  CardTitle,
   CardTrigger,
   DropdownMenuItem as CardTriggerItem,
+  CardWrapper,
 };
