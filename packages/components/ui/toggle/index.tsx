@@ -1,4 +1,5 @@
-import { ComponentPropsWithoutRef, useId, useState } from 'react';
+import { ComponentPropsWithoutRef } from 'react';
+
 import { useControlledState } from '../../hooks/use-controlled-state';
 
 import * as styles from './toggle.css';
@@ -11,8 +12,8 @@ type ToggleProps = ComponentPropsWithoutRef<'input'> & {
 
 export function Toggle({ checked, defaultChecked = false, onToggleChange, inverse, ...props }: ToggleProps) {
   const [toggleState, setToggle] = useControlledState({
-    props: checked,
-    defaultProps: defaultChecked,
+    prop: checked,
+    defaultProp: defaultChecked,
     onChange: onToggleChange,
   });
 
