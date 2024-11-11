@@ -27,7 +27,14 @@ export default function TeamList() {
     <section className={sprinkles({ justifyContent: 'center' })}>
       <div className={teamStyle.teamgrid}>
         {teamlist.map((team) => (
-          <Card key={team.name} title={team.name} idx={team.index} />
+          <Card
+            key={team.name}
+            name={team.name}
+            idx={team.index}
+            authority="MEMBER"
+            meetingId={String(team.index)}
+            explanation="exp"
+          />
         ))}
       </div>
       <span ref={ref}></span>
