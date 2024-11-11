@@ -14,7 +14,7 @@ export const popupOverlay = style({
   zIndex: 60,
 });
 
-export const inviteContainer = style({
+export const popupContainer = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',
@@ -25,9 +25,10 @@ export const inviteContainer = style({
   padding: rem(0, 10, 20),
   gap: rem(10),
   width: rem(360),
+  userSelect: 'none',
 });
 
-export const inviteHeader = style({
+export const popupHeader = style({
   alignSelf: 'stretch',
   display: 'flex',
   justifyContent: 'flex-end',
@@ -36,14 +37,14 @@ export const inviteHeader = style({
   position: 'relative',
 });
 
-export const inviteTitle = style({
+export const popupTitle = style({
   color: globalVars.color.neutral[95],
   textAlign: 'center',
   ...globalVars.text.title.large,
   position: 'relative',
 });
 
-export const inviteDesc = style({
+export const popupDesc = style({
   color: globalVars.color.neutral[95],
   textAlign: 'center',
   ...globalVars.text.body.small,
@@ -51,7 +52,7 @@ export const inviteDesc = style({
   alignSelf: 'stretch',
 });
 
-export const inviteCodeInput = style({
+export const popupCodeInput = style({
   backgroundColor: globalVars.color.neutral[5],
   padding: rem(10, 12),
   borderColor: globalVars.color.neutral[20],

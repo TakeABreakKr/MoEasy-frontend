@@ -42,7 +42,9 @@ function CardTrigger({ children }: { children?: React.ReactNode }) {
             <EllipsisIcon height={4} />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">{children}</DropdownMenuContent>
+        <DropdownMenuContent align="end" isPortal={false}>
+          {children}
+        </DropdownMenuContent>
       </DropdownMenu>
     </div>
   );
