@@ -119,7 +119,7 @@ export const buttonVariants = recipe({
         padding: rem(8, 40),
       },
       large: {
-        padding: rem(10, 60),
+        padding: rem(10, 40),
       },
       icon: {
         width: rem(20),
