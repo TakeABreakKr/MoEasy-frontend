@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
+import { delay } from '@moeasy/storybook/utils/lib/delay';
 import { useIntersectionObserver } from '@moeasy/storybook/utils/use-intersection-observer';
 
 import { Card } from '../../card/ui';
@@ -14,13 +15,25 @@ type TeamType = {
   index: number;
   name: string;
 };
-const initialTeams = Array.from({ length: 20 }, (_, index) => ({ index, name: `Team ${index + 1}` }));
+const initialTeams = (lastIndex = 0) =>
+  Array.from({ length: 20 }, (_, index) => ({ index: lastIndex + index, name: `Team ${lastIndex + index + 1}` }));
 
 export default function TeamList() {
   const [teamlist, setTeamlist] = useState<TeamType[]>(initialTeams);
+  const [loading, setLoading] = useState(false);
   const [ref, inView] = useIntersectionObserver();
+
   useEffect(() => {
-    if (inView) setTeamlist((prevState) => [...prevState, ...initialTeams]);
+    if (inView) {
+      setLoading(true);
+
+      setTeamlist((prevState) => {
+        const lastIndex = prevState.reduce((acc, meeting) => (meeting.index > acc ? meeting.index : acc), 0);
+        return [...prevState, ...initialTeams(lastIndex)];
+      });
+
+      delay(100).then(() => setLoading(false));
+    }
   }, [inView]);
 
   return (
@@ -36,8 +49,8 @@ export default function TeamList() {
             explanation="exp"
           />
         ))}
+        {!loading && <span ref={ref} />}
       </div>
-      <span ref={ref}></span>
     </section>
   );
 }

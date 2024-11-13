@@ -46,6 +46,7 @@ export function Card({
   maxCount = 10,
   members = [],
   authority = 'OWNER',
+  meetingId,
   ...props
 }: CardProps) {
   return (
