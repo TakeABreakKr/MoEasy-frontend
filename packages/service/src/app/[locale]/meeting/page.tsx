@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
-import TeamList from '@/widget/meeting/ui/team-list';
+import MeetingList from '@/widget/meeting/ui/team-list';
 
 import { Checkbox } from '@moeasy/storybook/ui/checkbox';
 
@@ -42,7 +42,7 @@ export default function TeamPage() {
         </div>
       </section>
       <Suspense fallback={<div className="flex items-center justify-center h-screen w-full">로딩중...</div>}>
-        <TeamList />
+        <MeetingList />
       </Suspense>
     </main>
   );

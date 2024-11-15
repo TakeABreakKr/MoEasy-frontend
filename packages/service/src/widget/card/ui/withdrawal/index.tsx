@@ -41,7 +41,7 @@ export function MeetingWithdrawal({ authority }: { authority?: MeetingAuthority 
     setStep(1);
   };
   return (
-    <ModalContent className={styles.popupContainer}>
+    <ModalContent className={styles.popupContainer} contentDraggable>
       <div className={styles.popupHeader}>
         <Button asChild variant="dark" rounded="full" size="icon" type="button">
           <ModalClose>
@@ -65,8 +65,8 @@ export function MeetingWithdrawal({ authority }: { authority?: MeetingAuthority 
       </div>
       {step === 0 && (
         <div className={modalStyles.footer}>
-          <Button variant="dark" size="large" rounded="medium" className={sprinkles({ flex: 1 })}>
-            돌아가기
+          <Button asChild variant="dark" size="large" rounded="medium" className={sprinkles({ flex: 1 })}>
+            <ModalClose>돌아가기</ModalClose>
           </Button>
           <Button variant="light" size="large" rounded="medium" className={sprinkles({ flex: 1 })} onClick={withdrawal}>
             탈퇴하기

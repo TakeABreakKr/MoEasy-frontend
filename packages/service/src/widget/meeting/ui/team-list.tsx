@@ -7,19 +7,20 @@ import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { delay } from '@moeasy/storybook/utils/lib/delay';
 import { useIntersectionObserver } from '@moeasy/storybook/utils/use-intersection-observer';
 
-import { Card } from '../../card/ui';
+import { Card, MeetingType } from '../../card/ui';
 
 import * as teamStyle from './team-list.css';
 
-type TeamType = {
-  index: number;
-  name: string;
-};
-const initialTeams = (lastIndex = 0) =>
-  Array.from({ length: 20 }, (_, index) => ({ index: lastIndex + index, name: `Team ${lastIndex + index + 1}` }));
+const initializeMeetingList = (lastIndex = 0): MeetingType[] =>
+  Array.from({ length: 20 }, (_, index) => ({
+    meetingId: `G-${lastIndex + index}`,
+    name: `Team ${lastIndex + index + 1}`,
+    explanation: `explanation ${index}`,
+    authority: 'MANAGER',
+  }));
 
-export default function TeamList() {
-  const [teamlist, setTeamlist] = useState<TeamType[]>(initialTeams);
+export default function MeetingList() {
+  const [teamlist, setTeamlist] = useState<MeetingType[]>(initializeMeetingList);
   const [loading, setLoading] = useState(false);
   const [ref, inView] = useIntersectionObserver();
 
@@ -28,8 +29,8 @@ export default function TeamList() {
       setLoading(true);
 
       setTeamlist((prevState) => {
-        const lastIndex = prevState.reduce((acc, meeting) => (meeting.index > acc ? meeting.index : acc), 0);
-        return [...prevState, ...initialTeams(lastIndex)];
+        const lastIndex = prevState.length;
+        return [...prevState, ...initializeMeetingList(lastIndex)];
       });
 
       delay(100).then(() => setLoading(false));
@@ -40,14 +41,7 @@ export default function TeamList() {
     <section className={sprinkles({ justifyContent: 'center' })}>
       <div className={teamStyle.teamgrid}>
         {teamlist.map((team) => (
-          <Card
-            key={team.name}
-            name={team.name}
-            idx={team.index}
-            authority="MEMBER"
-            meetingId={String(team.index)}
-            explanation="exp"
-          />
+          <Card key={team.name} team={team} />
         ))}
         {!loading && <span ref={ref} />}
       </div>

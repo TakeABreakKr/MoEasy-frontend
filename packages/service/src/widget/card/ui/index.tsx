@@ -5,15 +5,17 @@ import { components } from '@/shared/api/my-schema';
 
 import {
   CardDescription,
+  CardHeader,
   CardMember,
   CardMembers,
+  CardTagsWrapper,
   CardThumbnail,
   CardTitle,
   CardTrigger,
   CardTriggerItem,
   CardWrapper,
 } from '@moeasy/storybook/ui/card/compound-card';
-import { Modal, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
+import { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
 import { Separator } from '@moeasy/storybook/ui/separator';
 
 import { MeetingDeleteModal } from './delete';
@@ -21,6 +23,12 @@ import { MeetingInviteModal } from './invite';
 import { MeetingWithdrawal } from './withdrawal';
 
 import * as styles from './card.css';
+import { BookMarkIcon, XIcon } from '@moeasy/storybook/ui/icon';
+import { Button } from '@moeasy/storybook/ui/button';
+import { sprinkles } from '@/shared/style/sprinkles/index.css';
+import { NameTag } from '@moeasy/storybook/ui/tag';
+import { copyText } from '@/shared/utils/copy-text';
+import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 export type MeetingType = components['schemas']['MeetingListMeetingDto'];
 export type MeetingAuthority = MeetingType['authority'];
@@ -30,35 +38,98 @@ export const isManagerAutorized = (autority?: MeetingAuthority) =>
   !!autority && (['MANAGER', 'OWNER'] as Array<MeetingAuthority>).includes(autority);
 
 export type CardProps = {
-  idx: number | string;
-  count?: number;
-  maxCount?: number;
+  limit?: number;
   members?: CardMember[];
-} & MeetingType &
-  HTMLAttributes<HTMLDivElement>;
+  team: MeetingType;
+} & HTMLAttributes<HTMLDivElement>;
 
-export function Card({
-  idx,
-  name = 'title',
-  className,
-  explanation = '',
-  count = 0,
-  maxCount = 10,
-  members = [],
-  authority = 'OWNER',
-  meetingId,
-  ...props
-}: CardProps) {
+/**
+ * 팝업이 아닌 메인 화면에서 볼 수 있는 일반 모임 카드
+ */
+export function Card({ className, limit = 5, members = [], team, ...props }: CardProps) {
+  const { meetingId, name, authority = 'MANAGER', explanation } = team;
   return (
-    <CardWrapper data-meeting-index={idx} {...props}>
-      <CardThumbnail src={`https://via.placeholder.com/72/${idx}`} alt={name} />
-      <TriggerRenderByAuthority authority={authority} />
+    <CardWrapper data-meeting-index={meetingId} {...props}>
+      <CardThumbnail src={`https://via.placeholder.com/72/${meetingId}`} alt={name} />
+      <CardHeader>
+        <TriggerRenderByAuthority authority={authority} />
+      </CardHeader>
       <div>
         <CardTitle>{name}</CardTitle>
         <CardDescription>{explanation}</CardDescription>
       </div>
-      <CardMembers members={members} />
+      <CardTagsWrapper>
+        <CardMembers limit={limit} members={members} popupContent={<PopupCard meeting={team} />} />
+      </CardTagsWrapper>
     </CardWrapper>
+  );
+}
+
+/**
+ * 팝업으로 표시되는 모임 카드
+ */
+function PopupCard({ meeting }: { meeting: MeetingType }) {
+  const { meetingId, name, authority = 'MANAGER', explanation } = meeting;
+  const [bookmark, setBookmark] = useState(false);
+  return (
+    <ModalOverlay className={styles.popupOverlay}>
+      <CardWrapper asChild>
+        <ModalContent>
+          <CardThumbnail src={`https://via.placeholder.com/72/${meetingId}`} alt={name} />
+          <CardHeader>
+            <TriggerRenderByAuthority authority={authority} />
+            <Button variant="dark" size="icon" rounded="full" asChild>
+              <ModalClose>
+                <XIcon />
+              </ModalClose>
+            </Button>
+          </CardHeader>
+          <div
+            className={sprinkles({
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            })}
+          >
+            <CardTitle>{name}</CardTitle>
+            <div
+              className={sprinkles({
+                display: 'flex',
+                alignItems: 'center',
+                gap: 'small',
+              })}
+            >
+              <button
+                className={sprinkles({
+                  display: 'flex',
+                  alignItems: 'center',
+                })}
+                onClick={() => setBookmark((prev) => !prev)}
+              >
+                <BookMarkIcon color={bookmark ? 'yellow' : globalVars.color.neutral[20]} />
+              </button>
+              <Button size="small" rounded="small" asChild>
+                <Link href="/schedule/create">일정 생성</Link>
+              </Button>
+            </div>
+          </div>
+          <CardDescription>{explanation}</CardDescription>
+          <CardTagsWrapper>
+            <NameTag userRole="limit">키워드</NameTag>
+            <NameTag>사이드 프로젝트</NameTag>
+            <NameTag>포트폴리오</NameTag>
+          </CardTagsWrapper>
+          <CardTagsWrapper>
+            <CardMembers members={[]} />
+          </CardTagsWrapper>
+          <CardTagsWrapper>
+            <NameTag userRole="limit">모임코드</NameTag>
+            <div>{meetingId}</div>
+            <NameTag onClick={() => copyText({ text: meetingId })}>복사</NameTag>
+          </CardTagsWrapper>
+        </ModalContent>
+      </CardWrapper>
+    </ModalOverlay>
   );
 }
 
