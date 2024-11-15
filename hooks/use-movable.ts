@@ -23,7 +23,11 @@ import { safeRequestAnimationFrame } from '../utils/lib/safe-raf';
  *  }
  * ```
  */
-export const useMovablePopup = (activate = true) => {
+export const useMovablePopup = (
+  activate = true,
+  strategy: 'absolute' | 'fixed' = 'absolute',
+  preventDisable?: boolean,
+) => {
   const [isDragging, setDragging] = useState(false);
   const dragOff = useRef({ x: 0, y: 0 });
   const ref = useRef<HTMLDivElement>(null);
@@ -33,6 +37,7 @@ export const useMovablePopup = (activate = true) => {
     e.preventDefault();
     e.stopPropagation();
     setDragging(true);
+    ref.current.style.position = strategy;
     const rect = ref.current.getBoundingClientRect();
     dragOff.current.x = e.clientX - rect.left;
     dragOff.current.y = e.clientY - rect.top;
@@ -43,8 +48,10 @@ export const useMovablePopup = (activate = true) => {
       const onMouseMove = (e: MouseEvent) => {
         safeRequestAnimationFrame(() => {
           if (ref.current) {
-            e.preventDefault();
-            e.stopPropagation();
+            if (preventDisable) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
             const { x, y } = dragOff.current;
             ref.current.style.left = `${e.clientX - x}px`;
             ref.current.style.top = `${e.clientY - y}px`;
