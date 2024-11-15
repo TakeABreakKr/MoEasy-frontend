@@ -2,12 +2,14 @@ import { HTMLAttributes, useState } from 'react';
 import Link from 'next/link';
 
 import { components } from '@/shared/api/my-schema';
+import { sprinkles } from '@/shared/style/sprinkles/index.css';
+import { copyText } from '@/shared/utils/copy-text';
 
+import { Button } from '@moeasy/storybook/ui/button';
 import {
   CardDescription,
   CardHeader,
   CardMember,
-  CardMembers,
   CardTagsWrapper,
   CardThumbnail,
   CardTitle,
@@ -16,19 +18,16 @@ import {
   CardWrapper,
 } from '@moeasy/storybook/ui/card/compound-card';
 import { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
+import { BookMarkIcon, XIcon } from '@moeasy/storybook/ui/icon';
 import { Separator } from '@moeasy/storybook/ui/separator';
+import { NameTag } from '@moeasy/storybook/ui/tag';
+import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 import { MeetingDeleteModal } from './delete';
 import { MeetingInviteModal } from './invite';
 import { MeetingWithdrawal } from './withdrawal';
 
 import * as styles from './card.css';
-import { BookMarkIcon, XIcon } from '@moeasy/storybook/ui/icon';
-import { Button } from '@moeasy/storybook/ui/button';
-import { sprinkles } from '@/shared/style/sprinkles/index.css';
-import { NameTag } from '@moeasy/storybook/ui/tag';
-import { copyText } from '@/shared/utils/copy-text';
-import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 export type MeetingType = components['schemas']['MeetingListMeetingDto'];
 export type MeetingAuthority = MeetingType['authority'];
@@ -59,7 +58,7 @@ export function Card({ className, limit = 5, members = [], team, ...props }: Car
         <CardDescription>{explanation}</CardDescription>
       </div>
       <CardTagsWrapper>
-        <CardMembers limit={limit} members={members} popupContent={<PopupCard meeting={team} />} />
+        <CardMembers limit={limit} members={members} meeting={team} />
       </CardTagsWrapper>
     </CardWrapper>
   );
@@ -120,7 +119,7 @@ function PopupCard({ meeting }: { meeting: MeetingType }) {
             <NameTag>포트폴리오</NameTag>
           </CardTagsWrapper>
           <CardTagsWrapper>
-            <CardMembers members={[]} />
+            <CardMembers members={[{ name: 'JAMES' }]} />
           </CardTagsWrapper>
           <CardTagsWrapper>
             <NameTag userRole="limit">모임코드</NameTag>
@@ -176,5 +175,81 @@ function TriggerRenderByAuthority({ authority }: { authority?: MeetingAuthority 
         </ModalOverlay>
       </ModalPortal>
     </Modal>
+  );
+}
+
+export function CardMembers({
+  limit = 5,
+  members,
+  meeting,
+}: {
+  limit?: number;
+  members: CardMember[];
+  meeting?: MeetingType;
+}) {
+  return (
+    <>
+      <NameTag userRole="limit">{limit}명</NameTag>
+      {members?.map((member, index) => (
+        <Modal key={member.name}>
+          <ModalTrigger asChild>
+            <NameTag
+              key={`${index}-${name}`}
+              name={member.name}
+              userRole={member.userRole}
+              src={member.avatar || `https://via.placeholder.com/30/${index + 1}`}
+            >
+              {member.name}
+            </NameTag>
+          </ModalTrigger>
+          <ModalPortal>
+            <UserCard member={member} />
+          </ModalPortal>
+        </Modal>
+      )) ?? null}
+
+      {meeting && (
+        <Modal>
+          <ModalTrigger asChild>
+            <NameTag>더 보기</NameTag>
+          </ModalTrigger>
+          <ModalPortal>
+            <PopupCard meeting={meeting} />
+          </ModalPortal>
+        </Modal>
+      )}
+    </>
+  );
+}
+
+export function UserCard({ member }: { member: CardMember }) {
+  const { name, userRole } = member;
+  const parsedRole: MeetingAuthority = userRole === 'admin' ? 'MANAGER' : 'MEMBER';
+  const explanation = '자기소개 자기소개';
+  const userCode = `G-${name}`;
+  return (
+    <ModalOverlay className={styles.popupOverlay}>
+      <CardWrapper asChild>
+        <ModalContent>
+          <CardThumbnail src={`https://via.placeholder.com/72/${userCode}`} alt={name || 'thumbnail'} />
+          <CardHeader>
+            <TriggerRenderByAuthority authority={parsedRole} />
+            <Button variant="dark" size="icon" rounded="full" asChild>
+              <ModalClose>
+                <XIcon />
+              </ModalClose>
+            </Button>
+          </CardHeader>
+          <CardTitle>{name}</CardTitle>
+          <CardDescription>{explanation}</CardDescription>
+          <button className={styles.userFollow}>팔로우</button>
+          <CardTagsWrapper>
+            <NameTag userRole="limit">친구코드</NameTag>
+            <div>{userCode}</div>
+            <NameTag onClick={() => copyText({ text: userCode })}>복사</NameTag>
+          </CardTagsWrapper>
+        </ModalContent>
+      </CardWrapper>
+    </ModalOverlay>
   );
 }

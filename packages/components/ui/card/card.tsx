@@ -5,7 +5,6 @@ import { Separator } from '../separator';
 import {
   CardDescription,
   CardMember,
-  CardMembers,
   CardThumbnail,
   CardTitle,
   CardTrigger,
@@ -57,7 +56,7 @@ export default function Card({
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </div>
-      <CardMembers members={members} />
+      {/* <CardMembers members={members} /> */}
     </CardWrapper>
   );
 }

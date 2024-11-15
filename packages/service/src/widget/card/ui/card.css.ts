@@ -80,3 +80,12 @@ export const inviteCopy = style({
   fontSize: rem(9),
   fontWeight: '400',
 });
+
+export const userFollow = style({
+  display: 'flex',
+  justifyContent: 'center',
+  borderRadius: 4,
+  alignSelf: 'stretch',
+  backgroundColor: globalVars.color.neutral[10],
+  padding: rem(8),
+});
