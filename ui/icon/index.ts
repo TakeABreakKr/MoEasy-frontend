@@ -9,6 +9,7 @@ import PlusIcon from './plus';
 import SearchIcon from './search';
 import UserIcon from './user';
 import XIcon from './x';
+import BookMarkIcon from './bookmark';
 
 export {
   CalendarIcon,
@@ -22,4 +23,5 @@ export {
   SearchIcon,
   UserIcon,
   XIcon,
+  BookMarkIcon,
 };

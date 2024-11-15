@@ -60,11 +60,12 @@ export const description = style({
   lineClamp: 3,
 });
 
-export const memberWrapper = style({
+export const tagWrapper = style({
   display: 'flex',
   gap: `${rem(8)} ${rem(4)}`, // 0.5rem 0.25rem
   flexWrap: 'wrap',
   paddingBottom: rem(15),
+  alignItems: 'center',
 });
 
 export const interact = style({
