@@ -41,7 +41,7 @@ export default function MeetingList() {
     <section className={sprinkles({ justifyContent: 'center' })}>
       <div className={teamStyle.teamgrid}>
         {teamlist.map((team) => (
-          <Card key={team.name} team={team} />
+          <Card key={team.name} team={team} members={[{ name: 'JAMES' }]} />
         ))}
         {!loading && <span ref={ref} />}
       </div>
