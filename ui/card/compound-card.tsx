@@ -1,4 +1,5 @@
 import React, { ComponentPropsWithoutRef, forwardRef } from 'react';
+import { Slot } from '@radix-ui/react-slot';
 import clsx from 'clsx';
 
 import Image from 'next/image';
@@ -10,13 +11,10 @@ import {
   DropdownMenuTrigger,
 } from '../dropdown-menu/dropdown-menu';
 import { EllipsisIcon } from '../icon';
-import { NameTag } from '../tag';
 import { NameTagProps } from '../tag/nametag/nametag';
 
 import { magic } from '../../utils/styles/index.css';
 import * as cardStyle from './card.css';
-import { Modal, ModalPortal, ModalTrigger } from '../dialog';
-import { Slot } from '@radix-ui/react-slot';
 
 type CardWrapperProps = ComponentPropsWithoutRef<'div'> & { asChild?: boolean };
 
@@ -85,48 +83,13 @@ CardTagsWrapper.displayName = 'CardTagsWrapper';
 
 export type CardMember = { name?: string; avatar?: string; userRole?: NameTagProps['userRole'] };
 
-function CardMembers({
-  limit = 5,
-  members,
-  popupContent,
-}: {
-  limit?: number;
-  members: CardMember[];
-  popupContent?: React.ReactNode;
-}) {
-  return (
-    <>
-      <NameTag userRole="limit">{limit}명</NameTag>
-      {members?.map(({ name = 'Member', avatar, userRole }, index) => (
-        <NameTag
-          key={`${index}-${name}`}
-          name={name}
-          userRole={userRole}
-          src={avatar || `https://via.placeholder.com/30/${index + 1}`}
-        >
-          {name}
-        </NameTag>
-      )) ?? null}
-      {popupContent && (
-        <Modal>
-          <ModalTrigger asChild>
-            <NameTag>더 보기</NameTag>
-          </ModalTrigger>
-          <ModalPortal>{popupContent}</ModalPortal>
-        </Modal>
-      )}
-    </>
-  );
-}
-
 export {
   CardDescription,
   CardHeader,
-  CardMembers,
+  CardTagsWrapper,
   CardThumbnail,
   CardTitle,
   CardTrigger,
-  CardTagsWrapper,
   DropdownMenuItem as CardTriggerItem,
   CardWrapper,
 };
