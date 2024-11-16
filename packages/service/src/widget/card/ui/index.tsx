@@ -18,7 +18,7 @@ import {
   CardWrapper,
 } from '@moeasy/storybook/ui/card/compound-card';
 import { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
-import { BookMarkIcon, XIcon } from '@moeasy/storybook/ui/icon';
+import { BookMarkIcon, ChevronDown, XIcon } from '@moeasy/storybook/ui/icon';
 import { Separator } from '@moeasy/storybook/ui/separator';
 import { NameTag } from '@moeasy/storybook/ui/tag';
 import { Toggle } from '@moeasy/storybook/ui/toggle';
@@ -318,7 +318,17 @@ export function UserCard({
             <Toggle />
           </span>
         )}
-        <button onClick={() => setCardPopupState({ popupType: 'MEETING' })}>&lt;&lt; 뒤로가기</button>
+        <button
+          className={sprinkles({
+            display: 'flex',
+            gap: 'xsmall',
+            alignItems: 'center',
+          })}
+          onClick={() => setCardPopupState({ popupType: 'MEETING' })}
+        >
+          <ChevronDown height={6} transform="rotate(90)" />
+          뒤로가기
+        </button>
       </CardTagsWrapper>
     </>
   );

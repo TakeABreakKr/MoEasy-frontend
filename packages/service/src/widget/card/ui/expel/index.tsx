@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
@@ -44,11 +44,18 @@ export function MeetingExpel({ memberName, setCardPopupState }: MeetingExpelProp
     setStep(1);
   };
 
+  useEffect(() => {
+    if (!step) return;
+    return () => {
+      setCardPopupState({ popupType: 'MEETING' });
+    };
+  }, [step, setCardPopupState]);
+
   return (
     <ModalContent className={styles.popupContainer} contentDraggable>
       <div className={styles.popupHeader}>
         <Button asChild variant="dark" rounded="full" size="icon" type="button">
-          <ModalClose onClick={() => step === 1 && setCardPopupState({ popupType: 'MEETING' })}>
+          <ModalClose>
             <XIcon />
           </ModalClose>
         </Button>
