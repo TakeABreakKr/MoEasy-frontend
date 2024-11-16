@@ -7,7 +7,9 @@ import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { delay } from '@moeasy/storybook/utils/lib/delay';
 import { useIntersectionObserver } from '@moeasy/storybook/utils/use-intersection-observer';
 
-import { Card, MeetingType } from '../../card/ui';
+import { MeetingType } from '../types';
+
+import { MeetingCard } from './card';
 
 import * as teamStyle from './team-list.css';
 
@@ -41,7 +43,7 @@ export default function MeetingList() {
     <section className={sprinkles({ justifyContent: 'center' })}>
       <div className={teamStyle.teamgrid}>
         {teamlist.map((team) => (
-          <Card key={team.name} team={team} members={[{ name: 'JAMES' }]} />
+          <MeetingCard key={team.name} team={team} members={[{ name: 'JAMES' }]} />
         ))}
         {!loading && <span ref={ref} />}
       </div>

@@ -47,7 +47,7 @@ export type CardProps = {
 /**
  * 팝업이 아닌 메인 화면에서 볼 수 있는 일반 모임 카드
  */
-export function Card({ className, limit = 5, members = [], team, ...props }: CardProps) {
+export function MeetingCard({ className, limit = 5, members = [], team, ...props }: CardProps) {
   const { meetingId, name, authority = 'MANAGER', explanation } = team;
   return (
     <CardWrapper data-meeting-index={meetingId} {...props}>
@@ -112,7 +112,10 @@ function MeetingCardDropDown({ authority }: { authority?: MeetingAuthority }) {
   );
 }
 
-export type MeetingCardPopupState = { popupType: 'MEETING' } | { popupType: 'MEMBER'; member: CardMember } | null;
+export type MeetingCardPopupState =
+  | { popupType: 'MEETING'; fromOutside?: boolean }
+  | { popupType: 'MEMBER'; fromOutside?: boolean; member: CardMember }
+  | null;
 
 export function CardMembers({
   limit = 5,
@@ -137,7 +140,7 @@ export function CardMembers({
             name={member.name}
             userRole={member.userRole}
             src={member.avatar || `https://via.placeholder.com/30/${index + 1}`}
-            onClick={() => setCardPopupState({ popupType: 'MEMBER', member: member })}
+            onClick={() => setCardPopupState({ popupType: 'MEMBER', member, fromOutside: true })}
           >
             {member.name}
           </NameTag>
@@ -154,7 +157,12 @@ export function CardMembers({
           <CardWrapper asChild>
             <ModalContent>
               {cardPopupState?.popupType === 'MEMBER' && (
-                <UserCard member={cardPopupState.member} setCardPopupState={setCardPopupState} authority={authority} />
+                <UserCard
+                  member={cardPopupState.member}
+                  setCardPopupState={setCardPopupState}
+                  authority={authority}
+                  fromOutside={cardPopupState.fromOutside}
+                />
               )}
               {meeting && cardPopupState?.popupType === 'MEETING' && (
                 <PopupCard meeting={meeting} setCardPopupState={setCardPopupState} />
@@ -270,13 +278,16 @@ export function UserCard({
   member,
   setCardPopupState,
   authority,
+  fromOutside,
 }: {
   member: CardMember;
   setCardPopupState: Dispatch<SetStateAction<MeetingCardPopupState>>;
   authority?: MeetingAuthority;
+  /** 내부가 아닌 외부에서 유저 정보로 진입 시 뒤로가기 버튼 제거 */
+  fromOutside?: boolean;
 }) {
   const { name, userRole } = member;
-  const parsedRole: MeetingAuthority = userRole === 'admin' ? 'MANAGER' : 'MEMBER';
+  // const parsedRole: MeetingAuthority = userRole === 'admin' ? 'MANAGER' : 'MEMBER';
   const explanation = '자기소개 자기소개';
   const userCode = `G-${name}`;
   const isManager = isManagerAutorized(authority);
@@ -318,17 +329,19 @@ export function UserCard({
             <Toggle />
           </span>
         )}
-        <button
-          className={sprinkles({
-            display: 'flex',
-            gap: 'xsmall',
-            alignItems: 'center',
-          })}
-          onClick={() => setCardPopupState({ popupType: 'MEETING' })}
-        >
-          <ChevronDown height={6} transform="rotate(90)" />
-          뒤로가기
-        </button>
+        {!fromOutside && (
+          <button
+            className={sprinkles({
+              display: 'flex',
+              gap: 'xsmall',
+              alignItems: 'center',
+            })}
+            onClick={() => setCardPopupState({ popupType: 'MEETING' })}
+          >
+            <ChevronDown height={6} transform="rotate(90)" />
+            뒤로가기
+          </button>
+        )}
       </CardTagsWrapper>
     </>
   );
