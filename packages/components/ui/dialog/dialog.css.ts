@@ -26,12 +26,10 @@ export const content = recipe({
     transform: 'translate(-50%, -50%)',
     zIndex: 10,
     backgroundColor: globalVars.color.neutral.white,
-    padding: '1rem',
     borderRadius: rem(8),
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
     alignItems: 'center',
     overflow: 'hidden',
   },
@@ -42,7 +40,7 @@ export const content = recipe({
         height: rem(480),
       },
       medium: {
-        width: rem(420),
+        width: rem(480),
         height: rem(600),
       },
       alert: {

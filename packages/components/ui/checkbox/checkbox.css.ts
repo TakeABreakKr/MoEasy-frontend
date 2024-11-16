@@ -16,7 +16,7 @@ export const checkboxVariants = recipe({
     color: globalVars.color.neutral.white,
     selectors: {
       [`&[data-state='unchecked']`]: {
-        backgroundColor: globalVars.color.neutral[5],
+        backgroundColor: globalVars.color.neutral[10],
       },
       [`&[data-state='unchecked']:hover`]: {
         backgroundColor: globalVars.color.neutral[20],

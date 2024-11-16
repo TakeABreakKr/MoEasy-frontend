@@ -12,7 +12,7 @@ export const main = style({
 
 globalStyle(`${main} > section`, {
   display: 'flex',
-  width: 'min(1280px, 100%)',
+  width: 'min(664px, 100%)',
   flexWrap: 'wrap',
   padding: '4rem 0',
   margin: '0 auto',
