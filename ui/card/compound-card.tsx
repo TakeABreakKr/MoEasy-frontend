@@ -11,29 +11,49 @@ import {
   DropdownMenuTrigger,
 } from '../dropdown-menu/dropdown-menu';
 import { EllipsisIcon } from '../icon';
-import { NameTagProps } from '../tag/nametag/nametag';
 
 import { magic } from '../../utils/styles/index.css';
 import * as cardStyle from './card.css';
 
-type CardWrapperProps = ComponentPropsWithoutRef<'div'> & { asChild?: boolean };
+type CardWrapperProps = ComponentPropsWithoutRef<'div'> & {
+  asChild?: boolean;
+  /** 마우스 호버시 배경색 변경 여부 */
+  hoverEffect?: boolean;
+};
 
 const CardWrapper = forwardRef<HTMLDivElement, CardWrapperProps>(function (
-  { className, asChild, ...props },
+  { className, asChild, hoverEffect, ...props },
   forwardedRef,
 ) {
   const Comp = asChild ? Slot : 'div';
-  return <Comp ref={forwardedRef} className={clsx(cardStyle.card, className)} {...props} />;
+  return (
+    <Comp
+      ref={forwardedRef}
+      className={clsx(cardStyle.card, hoverEffect && cardStyle.cardHover, className)}
+      {...props}
+    />
+  );
 });
 CardWrapper.displayName = 'CardWrapper';
 
-function CardThumbnail({ src, alt = 'Thumbnail' }: { src?: string; alt: string }) {
+function CardThumbnail({
+  src,
+  alt = 'Thumbnail',
+  as = 'div',
+  onThumbnailClick,
+}: {
+  src?: string;
+  alt: string;
+  as?: 'div' | 'button';
+  onThumbnailClick?: () => void;
+}) {
+  const Tag = as;
   return (
-    <div className={cardStyle.thumbnailWrapper}>
+    <Tag className={cardStyle.thumbnailWrapper} onClick={onThumbnailClick}>
       <div className={cardStyle.thumbnail}>
         <Image src={src ?? `https://via.placeholder.com/72/${1}`} width={72} height={72} alt={alt} />
       </div>
-    </div>
+    </Tag>
   );
 }
 
@@ -80,8 +100,6 @@ const CardTagsWrapper = forwardRef<HTMLDivElement, CardWrapperProps>(function (
   return <Comp ref={forwardedRef} className={clsx(cardStyle.tagWrapper, className)} {...props} />;
 });
 CardTagsWrapper.displayName = 'CardTagsWrapper';
-
-export type CardMember = { name?: string; avatar?: string; userRole?: NameTagProps['userRole'] };
 
 export {
   CardDescription,
