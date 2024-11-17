@@ -25,10 +25,10 @@ import { CardMember, MeetingAuthority, MeetingCardPopupState, MeetingType } from
 
 import { MeetingDeleteModal } from './delete';
 import { MeetingInviteModal } from './invite';
+import { UserCard } from './user';
 import { MeetingWithdrawal } from './withdrawal';
 
 import * as styles from './card.css';
-import { UserCard } from './user';
 
 /** 매니저/관리자 권한인지 여부 */
 export const isManagerAutorized = (authority?: MeetingAuthority) =>
