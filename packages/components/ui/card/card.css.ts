@@ -15,6 +15,9 @@ export const card = style({
   gap: rem(15),
   ...globalVars.text.label.medium.regular,
   transition: 'background-color 200ms ease-in-out',
+});
+
+export const cardHover = style({
   ':hover': {
     backgroundColor: globalVars.color.yellow[40],
   },

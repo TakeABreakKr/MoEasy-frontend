@@ -89,3 +89,23 @@ export const userFollow = style({
   backgroundColor: globalVars.color.neutral[10],
   padding: rem(8),
 });
+
+export const userHistoryWrapper = style({
+  borderBottomStyle: 'solid',
+  borderColor: globalVars.color.neutral[5],
+  borderBottomWidth: rem(1),
+  padding: rem(10, 0),
+  display: 'flex',
+  position: 'relative',
+  justifyContent: 'space-between',
+});
+
+export const userhistory = style({
+  color: globalVars.color.neutral[95],
+  ...globalVars.text.label.medium.regular,
+});
+
+export const userhistoryDate = style({
+  color: globalVars.color.neutral[20],
+  ...globalVars.text.body.tiny,
+});

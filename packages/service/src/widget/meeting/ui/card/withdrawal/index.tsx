@@ -8,7 +8,7 @@ import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { XIcon } from '@moeasy/storybook/ui/icon';
 import { delay } from '@moeasy/storybook/utils/lib/delay';
 
-import { MeetingAuthority } from '..';
+import { MeetingAuthority } from '../../../types';
 
 import * as styles from '../card.css';
 

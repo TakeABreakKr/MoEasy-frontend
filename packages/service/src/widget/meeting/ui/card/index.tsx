@@ -1,7 +1,6 @@
 import { Dispatch, HTMLAttributes, SetStateAction, useState } from 'react';
 import Link from 'next/link';
 
-import { components } from '@/shared/api/my-schema';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { copyText } from '@/shared/utils/copy-text';
 
@@ -9,7 +8,6 @@ import { Button } from '@moeasy/storybook/ui/button';
 import {
   CardDescription,
   CardHeader,
-  CardMember,
   CardTagsWrapper,
   CardThumbnail,
   CardTitle,
@@ -18,21 +16,19 @@ import {
   CardWrapper,
 } from '@moeasy/storybook/ui/card/compound-card';
 import { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
-import { BookMarkIcon, ChevronDown, XIcon } from '@moeasy/storybook/ui/icon';
+import { BookMarkIcon, XIcon } from '@moeasy/storybook/ui/icon';
 import { Separator } from '@moeasy/storybook/ui/separator';
 import { NameTag } from '@moeasy/storybook/ui/tag';
-import { Toggle } from '@moeasy/storybook/ui/toggle';
 import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
+import { CardMember, MeetingAuthority, MeetingCardPopupState, MeetingType } from '../../types';
+
 import { MeetingDeleteModal } from './delete';
-import { MeetingExpel } from './expel';
 import { MeetingInviteModal } from './invite';
 import { MeetingWithdrawal } from './withdrawal';
 
 import * as styles from './card.css';
-
-export type MeetingType = components['schemas']['MeetingListMeetingDto'];
-export type MeetingAuthority = MeetingType['authority'];
+import { UserCard } from './user';
 
 /** 매니저/관리자 권한인지 여부 */
 export const isManagerAutorized = (authority?: MeetingAuthority) =>
@@ -50,7 +46,7 @@ export type CardProps = {
 export function MeetingCard({ className, limit = 5, members = [], team, ...props }: CardProps) {
   const { meetingId, name, authority = 'MANAGER', explanation } = team;
   return (
-    <CardWrapper data-meeting-index={meetingId} {...props}>
+    <CardWrapper data-meeting-index={meetingId} {...props} hoverEffect>
       <CardThumbnail src={`https://via.placeholder.com/72/${meetingId}`} alt={name} />
       <CardHeader>
         <MeetingCardDropDown authority={authority} />
@@ -111,11 +107,6 @@ function MeetingCardDropDown({ authority }: { authority?: MeetingAuthority }) {
     </Modal>
   );
 }
-
-export type MeetingCardPopupState =
-  | { popupType: 'MEETING'; fromOutside?: boolean }
-  | { popupType: 'MEMBER'; fromOutside?: boolean; member: CardMember }
-  | null;
 
 export function CardMembers({
   limit = 5,
@@ -188,17 +179,15 @@ export function CardMembersInPopup({
     <>
       <NameTag userRole="limit">{limit}명</NameTag>
       {members?.map((member, index) => (
-        <ModalTrigger key={member.name} asChild>
-          <NameTag
-            key={`${index}-${name}`}
-            name={member.name}
-            userRole={member.userRole}
-            src={member.avatar || `https://via.placeholder.com/30/${index + 1}`}
-            onClick={() => setCardPopupState({ popupType: 'MEMBER', member: member })}
-          >
-            {member.name}
-          </NameTag>
-        </ModalTrigger>
+        <NameTag
+          key={`${index}-${member.name}`}
+          name={member.name}
+          userRole={member.userRole}
+          src={member.avatar || `https://via.placeholder.com/30/${index + 1}`}
+          onClick={() => setCardPopupState({ popupType: 'MEMBER', member: member })}
+        >
+          {member.name}
+        </NameTag>
       )) ?? null}
     </>
   );
@@ -271,107 +260,5 @@ function PopupCard({
         <NameTag onClick={() => copyText({ text: meetingId })}>복사</NameTag>
       </CardTagsWrapper>
     </>
-  );
-}
-
-export function UserCard({
-  member,
-  setCardPopupState,
-  authority,
-  fromOutside,
-}: {
-  member: CardMember;
-  setCardPopupState: Dispatch<SetStateAction<MeetingCardPopupState>>;
-  authority?: MeetingAuthority;
-  /** 내부가 아닌 외부에서 유저 정보로 진입 시 뒤로가기 버튼 제거 */
-  fromOutside?: boolean;
-}) {
-  const { name, userRole } = member;
-  // const parsedRole: MeetingAuthority = userRole === 'admin' ? 'MANAGER' : 'MEMBER';
-  const explanation = '자기소개 자기소개';
-  const userCode = `G-${name}`;
-  const isManager = isManagerAutorized(authority);
-
-  return (
-    <>
-      <CardThumbnail src={`https://via.placeholder.com/72/${userCode}`} alt={name || 'thumbnail'} />
-      <CardHeader>
-        <UserCardDropDown member={member} setCardPopupState={setCardPopupState} />
-        <Button variant="dark" size="icon" rounded="full" asChild>
-          <ModalClose>
-            <XIcon />
-          </ModalClose>
-        </Button>
-      </CardHeader>
-      <CardTitle>{name}</CardTitle>
-      <CardDescription>{explanation}</CardDescription>
-      <button className={styles.userFollow}>팔로우</button>
-      <CardTagsWrapper>
-        <NameTag userRole="limit">친구코드</NameTag>
-        <div>{userCode}</div>
-        <NameTag onClick={() => copyText({ text: userCode })}>복사</NameTag>
-      </CardTagsWrapper>
-      <CardTagsWrapper
-        className={sprinkles({
-          display: 'flex',
-          justifyContent: 'space-between',
-        })}
-      >
-        {isManager && (
-          <span
-            className={sprinkles({
-              display: 'flex',
-              gap: 'small',
-              alignItems: 'center',
-            })}
-          >
-            매니저 설정
-            <Toggle />
-          </span>
-        )}
-        {!fromOutside && (
-          <button
-            className={sprinkles({
-              display: 'flex',
-              gap: 'xsmall',
-              alignItems: 'center',
-            })}
-            onClick={() => setCardPopupState({ popupType: 'MEETING' })}
-          >
-            <ChevronDown height={6} transform="rotate(90)" />
-            뒤로가기
-          </button>
-        )}
-      </CardTagsWrapper>
-    </>
-  );
-}
-
-const UserCardDropDownItems = ['퇴장'] as const;
-type UserCardDropDownEnum = (typeof UserCardDropDownItems)[number];
-
-function UserCardDropDown({
-  member,
-  setCardPopupState,
-}: {
-  member: CardMember;
-  setCardPopupState: Dispatch<SetStateAction<MeetingCardPopupState>>;
-}) {
-  const [menu, setMenu] = useState<UserCardDropDownEnum>('퇴장');
-  const changeMenu = (key: UserCardDropDownEnum) => () => setMenu(key);
-
-  return (
-    <Modal>
-      <CardTrigger>
-        <CardTriggerItem padding align="center" onClick={changeMenu('퇴장')} asChild>
-          <ModalTrigger>강제퇴장</ModalTrigger>
-        </CardTriggerItem>
-      </CardTrigger>
-      <ModalPortal>
-        <ModalOverlay className={styles.popupOverlay}>
-          {menu === '퇴장' && <MeetingExpel memberName={member.name} setCardPopupState={setCardPopupState} />}
-        </ModalOverlay>
-      </ModalPortal>
-    </Modal>
   );
 }
