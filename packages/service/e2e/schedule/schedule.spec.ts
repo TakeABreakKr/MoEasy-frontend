@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
 
-test('schedule create', () => {
+test.describe('schedule create', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/schedule/create');
   });
