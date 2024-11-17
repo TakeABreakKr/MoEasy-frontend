@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { copyText } from '@/shared/utils/copy-text';
 
 import { Button } from '@moeasy/storybook/ui/button';
@@ -43,17 +42,7 @@ export function MeetingInviteModal({ code = 'G-1234123412341234' }: { code?: str
           </ModalClose>
         </Button>
       </div>
-      <div
-        className={sprinkles({
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'medium',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          alignSelf: 'stretch',
-          position: 'relative',
-        })}
-      >
+      <div className={styles.popupContent}>
         <div className={styles.popupTitle}>{title}</div>
         <div className={styles.popupDesc}>{content}</div>
       </div>

@@ -1,3 +1,5 @@
+import { sprinkles } from '@/shared/style/sprinkles/index.css';
+
 import { rem } from '@moeasy/storybook/utils/css';
 import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
@@ -34,6 +36,16 @@ export const popupHeader = style({
   justifyContent: 'flex-end',
   alignItems: 'center',
   height: rem(35),
+  position: 'relative',
+});
+
+export const popupContent = sprinkles({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 'medium',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  alignSelf: 'stretch',
   position: 'relative',
 });
 

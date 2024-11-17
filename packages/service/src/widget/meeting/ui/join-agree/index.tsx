@@ -1,5 +1,9 @@
-import clsx from 'clsx';
+'use client';
 
+import clsx from 'clsx';
+import { overlay } from 'overlay-kit';
+
+import { usePathnameChange } from '@/shared/hooks/use-pathname-change';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
 import { Button } from '@moeasy/storybook/ui/button';
@@ -7,7 +11,10 @@ import { Checkbox } from '@moeasy/storybook/ui/checkbox';
 import { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
 import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { UserIcon, XIcon } from '@moeasy/storybook/ui/icon';
+import { Text } from '@moeasy/storybook/ui/text';
+import { delay } from '@moeasy/storybook/utils/lib/delay';
 
+import * as cardStyles from '../card/card.css';
 import * as styles from './join-agree.css';
 
 /**
@@ -69,14 +76,15 @@ export function MeetingJoinAgreePopup() {
                 <Checkbox rounded={false} />
                 전체 선택
               </label>
-              <div
+              <Text
+                label="small"
                 className={sprinkles({
                   display: 'flex',
                   gap: 'small',
                 })}
               >
                 선택 거절 | 선택 수락
-              </div>
+              </Text>
             </div>
             <div className={styles.meetingWaitingList}>
               <div className={styles.meetingWaiting}>
@@ -105,6 +113,51 @@ export function MeetingJoinAgreePopup() {
   );
 }
 
+const meetingWaitingMesseges = {
+  agree: {
+    success: {
+      title: '모임 수락',
+      description: () => '선택한 대기 인원을 모임에 추가하였습니다.',
+    },
+    fail: {
+      title: '모임 수락',
+      description: () => (
+        <>
+          선택한 대기 인원을 모임에 추가에 실패하였습니다.
+          <br />
+          다시 선택을 진행해주세요.
+        </>
+      ),
+    },
+    exceed: {
+      title: '모임 인원 제한 초과',
+      description: () => (
+        <>
+          모임 인원 제한을 초과하였습니다. <br />
+          ‘모임 수정’에서 인원 제한 수를 수정 후<br />
+          대기인원을 수락해주세요.
+        </>
+      ),
+    },
+  },
+  reject: {
+    success: {
+      title: '모임 수락 거절',
+      description: () => '선택한 대기 인원에 대한 모임 추가를 거절하였습니다.',
+    },
+    fail: {
+      title: '모임 수락 거절',
+      description: () => (
+        <>
+          선택한 대기 인원에 대한 거절 요청에 실패하였습니다.
+          <br />
+          다시 선택을 진행해주세요.
+        </>
+      ),
+    },
+  },
+};
+
 function MeetingWaitingUser({ userName = 'Kim moeasy' }: { userName?: string }) {
   return (
     <div className={styles.waitingUserWrapper}>
@@ -121,9 +174,69 @@ function MeetingWaitingUser({ userName = 'Kim moeasy' }: { userName?: string }) 
         </div>
       </div>
       <div className={styles.buttonWrapper}>
-        <button className={styles.buttonVariant.reject}>거절</button>
-        <button className={styles.buttonVariant.admit}>수락</button>
+        <button
+          className={styles.buttonVariant.reject}
+          onClick={async () => {
+            await delay(1000);
+            const random = Math.random();
+            const result = random < 0.5 ? meetingWaitingMesseges.reject.success : meetingWaitingMesseges.reject.fail;
+            overlay.open(({ unmount }) => {
+              return <MeetingJoinSubPopup unmount={unmount} title={result.title} description={result.description()} />;
+            });
+          }}
+        >
+          거절
+        </button>
+        <button
+          className={styles.buttonVariant.admit}
+          onClick={async () => {
+            await delay(1000);
+            const random = Math.random();
+            const result =
+              random < 0.4
+                ? meetingWaitingMesseges.agree.success
+                : random < 0.7
+                  ? meetingWaitingMesseges.agree.fail
+                  : meetingWaitingMesseges.agree.exceed;
+            overlay.open(({ unmount }) => {
+              return <MeetingJoinSubPopup unmount={unmount} title={result.title} description={result.description()} />;
+            });
+          }}
+        >
+          수락
+        </button>
       </div>
     </div>
+  );
+}
+
+function MeetingJoinSubPopup({
+  unmount,
+  title,
+  description,
+}: {
+  unmount: () => void;
+  title: React.ReactNode;
+  description: React.ReactNode;
+}) {
+  usePathnameChange(unmount);
+  return (
+    <Modal open>
+      <ModalPortal>
+        <ModalOverlay className={cardStyles.popupOverlay}>
+          <ModalContent className={cardStyles.popupContainer}>
+            <div className={cardStyles.popupHeader}>
+              <Button size="icon" rounded="full" onClick={unmount}>
+                <XIcon />
+              </Button>
+            </div>
+            <div className={cardStyles.popupContent}>
+              <h2 className={cardStyles.popupTitle}>{title}</h2>
+              <div className={cardStyles.popupDesc}>{description}</div>
+            </div>
+          </ModalContent>
+        </ModalOverlay>
+      </ModalPortal>
+    </Modal>
   );
 }

@@ -60,17 +60,7 @@ export function MeetingExpel({ memberName, setCardPopupState }: MeetingExpelProp
           </ModalClose>
         </Button>
       </div>
-      <div
-        className={sprinkles({
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'medium',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          alignSelf: 'stretch',
-          position: 'relative',
-        })}
-      >
+      <div className={styles.popupContent}>
         <div className={styles.popupTitle}>{title}</div>
         <div className={styles.popupDesc}>{content({ memberName })}</div>
       </div>
