@@ -9,13 +9,11 @@ import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { XIcon } from '@moeasy/storybook/ui/icon';
 import { delay } from '@moeasy/storybook/utils/lib/delay';
 
-import { escapePopup } from '../../../utils';
-
-import * as styles from '../card.css';
+import * as styles from '../../card.css';
 
 const steps = createFunnelSteps<{}>().extends('탈퇴하기').extends('탈퇴완료').build();
 
-export function MeetingWithdrawal({ authority }: { authority?: MeetingAuthority }) {
+export function MeetingWithdrawal({ meetingId, authority }: { meetingId: string; authority?: MeetingAuthority }) {
   const funnel = useFunnel({
     id: 'meeting-withdrawal',
     steps,
@@ -29,7 +27,7 @@ export function MeetingWithdrawal({ authority }: { authority?: MeetingAuthority 
     <ModalContent className={styles.popupContainer} contentDraggable>
       <div className={styles.popupHeader}>
         <Button asChild variant="dark" rounded="full" size="icon" type="button">
-          <ModalClose onClick={escapePopup}>
+          <ModalClose>
             <XIcon />
           </ModalClose>
         </Button>
@@ -40,6 +38,7 @@ export function MeetingWithdrawal({ authority }: { authority?: MeetingAuthority 
             authority={authority}
             onWithdrawal={async () => {
               await delay(1000);
+              console.table([{ meetingId }]);
               history.push('탈퇴완료');
             }}
           />

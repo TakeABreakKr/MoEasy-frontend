@@ -13,7 +13,7 @@ export const isIdValid = (...ids: Array<string | null | undefined>) => {
 };
 
 /**
- * 팝업에서 나오는 메서드
+ * 모든 퍼널에서 탈출하는 메서드
  */
 export const escapePopup = () => window?.history.pushState({}, '', new URL(window?.location.href).pathname);
 

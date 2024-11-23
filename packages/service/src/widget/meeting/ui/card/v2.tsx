@@ -29,35 +29,27 @@ export function MeetingCard({ className, meeting, ...props }: CardProps) {
     <CardWrapper data-meeting-index={meetingId} {...props} hoverEffect>
       <CardThumbnail src={meeting.thumbnail} alt={name} />
       <CardHeader>
-        <MeetingCardDropDown authority={authority} />
+        <MeetingCardDropDown meetingId={meetingId} authority={authority} />
       </CardHeader>
       <div>
         <CardTitle>{name}</CardTitle>
         <CardDescription>{explanation}</CardDescription>
       </div>
       <CardTagsWrapper>
-        <CardMembers meeting={meeting} />
+        <NameTag userRole="limit">{meeting.limit}명</NameTag>
+        {meeting.members.slice(0, 5).map((member, index) => (
+          <NameTag
+            key={member.memberId}
+            name={member.username}
+            userRole={getUserRoleForTags(member.authority)}
+            src={member.thumbnail}
+            onClick={() => toPopupCard({ memberId: member.memberId })}
+          >
+            {member.username}
+          </NameTag>
+        ))}
+        <NameTag onClick={() => toPopupCard({ meetingId: meeting.meetingId })}>더 보기</NameTag>
       </CardTagsWrapper>
     </CardWrapper>
-  );
-}
-
-export function CardMembers({ meeting }: { meeting: MeetingType }) {
-  return (
-    <>
-      <NameTag userRole="limit">{meeting.limit}명</NameTag>
-      {meeting.members.slice(0, 5).map((member, index) => (
-        <NameTag
-          key={member.memberId}
-          name={member.username}
-          userRole={getUserRoleForTags(member.authority)}
-          src={member.thumbnail || `https://via.placeholder.com/30/${index + 1}`}
-          onClick={() => toPopupCard({ memberId: member.memberId })}
-        >
-          {member.username}
-        </NameTag>
-      ))}
-      <NameTag onClick={() => toPopupCard({ meetingId: meeting.meetingId })}>더 보기</NameTag>
-    </>
   );
 }

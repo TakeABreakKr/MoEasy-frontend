@@ -13,10 +13,9 @@ import { useIntersectionObserver } from '@moeasy/storybook/utils/use-intersectio
 import { isIdValid } from '../utils';
 
 import { PopupCard } from './card/popup/v2';
-import { UserCard } from './card/user';
 import { MeetingCard } from './card/v2';
 
-import * as teamStyle from './list.css';
+import * as styles from './list.css';
 
 export default function MeetingList() {
   const [meetingList, setTeamlist] = useState<MeetingType[]>(initializeMeetingList);
@@ -25,6 +24,8 @@ export default function MeetingList() {
   const searchParams = useSearchParams();
   const meetingId = searchParams.get('meetingId');
   const memberId = searchParams.get('memberId');
+  const isMeetingIdValid = isIdValid(meetingId);
+  const isMemberIdValid = isIdValid(memberId);
   const authority = 'MANAGER';
 
   useEffect(() => {
@@ -43,15 +44,16 @@ export default function MeetingList() {
   return (
     <>
       <section className={sprinkles({ justifyContent: 'center' })}>
-        <div className={teamStyle.teamgrid}>
+        <div className={styles.teamgrid}>
           {meetingList.map((meeting) => (
             <MeetingCard key={meeting.name} meeting={meeting} />
           ))}
           {!loading && <span ref={ref} />}
         </div>
       </section>
-      {isIdValid(meetingId) && !isIdValid(memberId) && <PopupCard meetingId={meetingId} />}
-      {isIdValid(memberId) && <UserCard meetingId={meetingId} memberId={memberId} authority={authority} />}
+      {(isMeetingIdValid || isMemberIdValid) && (
+        <PopupCard meetingId={meetingId} memberId={memberId} authority={authority} />
+      )}
     </>
   );
 }

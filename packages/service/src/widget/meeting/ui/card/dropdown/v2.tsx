@@ -8,26 +8,33 @@ import { Modal, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storyboo
 import { Separator } from '@moeasy/storybook/ui/separator';
 
 import { escapePopup, isManagerAutorized } from '../../../utils';
-import { MeetingDeleteModal } from '../delete';
-import { MeetingInviteModal } from '../invite';
-import { MeetingWithdrawal } from '../withdrawal';
+
+import { MeetingDeleteModal } from './delete';
+import { MeetingInviteModal } from './invite';
+import { MeetingWithdrawal } from './withdrawal';
 
 import * as styles from '../card.css';
 
-const MeetingDropDownItems = ['수정', '초대', '탈퇴', '삭제', '닫힘'] as const;
-type MeetingDropDownEnum = (typeof MeetingDropDownItems)[number];
+const MeetingDropDownItems = ['수정', '초대', '탈퇴', '삭제'] as const;
+export type MeetingDropDownEnum = (typeof MeetingDropDownItems)[number];
 
-export function MeetingCardDropDown({ authority }: { authority?: MeetingAuthority }) {
-  const [menu, setMenu] = useState<MeetingDropDownEnum>('닫힘');
+type MeetingCardDropDownProps = {
+  meetingId: string;
+  authority?: MeetingAuthority;
+  onEscape?: (currentMenu: MeetingDropDownEnum) => void;
+};
+
+export function MeetingCardDropDown({ meetingId, authority, onEscape = escapePopup }: MeetingCardDropDownProps) {
+  const [menu, setMenu] = useState<MeetingDropDownEnum>('수정');
   const isManager = isManagerAutorized(authority);
   const changeMenu = (key: MeetingDropDownEnum) => () => setMenu(key);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (open) {
-      return escapePopup;
+    if (open && typeof window !== 'undefined') {
+      return () => onEscape(menu);
     }
-  }, [open]);
+  }, [open, menu, onEscape]);
 
   return (
     <Modal open={open} onOpenChange={setOpen}>
@@ -58,9 +65,9 @@ export function MeetingCardDropDown({ authority }: { authority?: MeetingAuthorit
       </CardTrigger>
       <ModalPortal>
         <ModalOverlay className={styles.popupOverlay}>
-          {menu === '초대' && <MeetingInviteModal />}
-          {menu === '탈퇴' && <MeetingWithdrawal authority={authority} />}
-          {menu === '삭제' && <MeetingDeleteModal />}
+          {menu === '초대' && <MeetingInviteModal meetingId={meetingId} />}
+          {menu === '탈퇴' && <MeetingWithdrawal meetingId={meetingId} authority={authority} />}
+          {menu === '삭제' && <MeetingDeleteModal meetingId={meetingId} />}
         </ModalOverlay>
       </ModalPortal>
     </Modal>

@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createFunnelSteps, useFunnel } from '@use-funnel/browser';
 
 import { MeetingAuthority } from '@/entities';
 import { MemberType } from '@/entities/member/api';
 import { useQuery } from '@/shared/hooks/use-query';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { copyText } from '@/shared/utils/copy-text';
-import { escapePopup, isIdValid, isManagerAutorized } from '@/widget/meeting/utils';
+import { escapePopup, isManagerAutorized, toPopupCard } from '@/widget/meeting/utils';
 
 import { Button } from '@moeasy/storybook/ui/button';
 import {
@@ -23,41 +24,57 @@ import { ChevronDown, XIcon } from '@moeasy/storybook/ui/icon';
 import { NameTag } from '@moeasy/storybook/ui/tag';
 import { Toggle } from '@moeasy/storybook/ui/toggle';
 
-import { MeetingExpel } from '../expel';
+import { MeetingExpel } from './expel';
 
-import * as styles from '../card.css';
+import * as styles from '../../card.css';
 
-export function UserCard({
+const steps = createFunnelSteps<{}>().extends('intro').extends('changeInfo').build();
+
+/**
+ * memberId와 meetingId가 valid하지 않으면 null로 들어오도록 해야한다.
+ */
+export function MemberCard({
   memberId,
   meetingId,
   authority,
+  toMeeting,
 }: {
-  memberId: string | null;
-  meetingId?: string | null;
+  memberId: string;
+  meetingId: string | null;
   /** 현재 창의 user의 authority가 아닌 사용자의 authority */
   authority?: MeetingAuthority;
+  toMeeting: () => void;
 }) {
-  const [step, setStep] = useState(0);
-  const toNextStep = () => setStep(1);
-  const toPrevStep = () => setStep(0);
-  const { data, loading, error, refetch } = useQuery<MemberType>({ queryURL: `/mock/member/${memberId || ''}` });
+  const funnel = useFunnel({
+    id: 'member-popup',
+    steps,
+    initial: {
+      step: 'intro',
+      context: {},
+    },
+  });
+  const { data, loading, error, refetch } = useQuery<MemberType>({ queryURL: `/mock/member/${memberId}` });
 
   let renderComponent: React.ReactNode;
   if (loading) renderComponent = <div>loading...</div>;
-  if (error) renderComponent = <UserCardErrorFallback refetch={refetch} fromOutside={!isIdValid(meetingId)} />;
+  if (error) renderComponent = <UserCardErrorFallback refetch={refetch} meetingId={meetingId} toMeeting={toMeeting} />;
   if (data) {
-    if (step === 0)
-      renderComponent = (
-        <UserCardFirstStep
-          member={data}
-          authority={authority}
-          fromOutside={!isIdValid(meetingId)}
-          toNextStep={toNextStep}
-        />
-      );
-    if (step === 1) {
-      renderComponent = <UserCardLastStep member={data} toPrevStep={toPrevStep} />;
-    }
+    renderComponent = (
+      <funnel.Render
+        intro={({ history }) => (
+          <MemberPopupCardContent
+            member={data}
+            meetingId={meetingId}
+            authority={authority}
+            toMeeting={toMeeting}
+            toNextStep={() => {
+              history.push('changeInfo');
+            }}
+          />
+        )}
+        changeInfo={({ history }) => <MemberPopupCardChangeInfo member={data} toPrevStep={history.back} />}
+      />
+    );
   }
   return (
     <div className={styles.popupOverlay}>
@@ -66,17 +83,18 @@ export function UserCard({
   );
 }
 
-function UserCardFirstStep({
+function MemberPopupCardContent({
   member,
   authority: userAuthority,
-  fromOutside,
   toNextStep,
+  toMeeting,
+  meetingId,
 }: {
   member: MemberType;
+  meetingId: string | null;
   /** 현재 창의 user의 authority가 아닌 사용자의 authority */
   authority?: MeetingAuthority;
-  /** 내부가 아닌 외부에서 유저 정보로 진입 시 뒤로가기 버튼 제거 */
-  fromOutside?: boolean;
+  toMeeting: () => void;
   toNextStep: () => void;
 }) {
   const { memberId, username, authority, thumbnail } = member;
@@ -88,8 +106,8 @@ function UserCardFirstStep({
     <>
       <CardThumbnail as="button" onThumbnailClick={toNextStep} src={thumbnail} alt={username || 'thumbnail'} />
       <CardHeader>
-        <UserCardDropDown member={member} />
-        <Button variant="dark" size="icon" rounded="full" onClick={escapePopup}>
+        <UserCardDropDown member={member} meetingId={meetingId} />
+        <Button variant="dark" size="icon" rounded="full" onClick={toMeeting}>
           <XIcon />
         </Button>
       </CardHeader>
@@ -124,14 +142,14 @@ function UserCardFirstStep({
             />
           </span>
         )}
-        {!fromOutside && (
+        {meetingId && (
           <button
             className={sprinkles({
               display: 'flex',
               gap: 'xsmall',
               alignItems: 'center',
             })}
-            onClick={escapePopup}
+            onClick={toMeeting}
           >
             <ChevronDown height={6} transform="rotate(90)" />
             뒤로가기
@@ -142,7 +160,7 @@ function UserCardFirstStep({
   );
 }
 
-function UserCardLastStep({ member, toPrevStep }: { member: MemberType; toPrevStep: () => void }) {
+function MemberPopupCardChangeInfo({ member, toPrevStep }: { member: MemberType; toPrevStep: () => void }) {
   const { memberId, username, thumbnail } = member;
   return (
     <>
@@ -195,12 +213,19 @@ function UserCardLastStep({ member, toPrevStep }: { member: MemberType; toPrevSt
 const UserCardDropDownItems = ['퇴장'] as const;
 type UserCardDropDownEnum = (typeof UserCardDropDownItems)[number];
 
-function UserCardDropDown({ member }: { member: MemberType }) {
+function UserCardDropDown({ member, meetingId }: { member: MemberType; meetingId: string | null }) {
   const [menu, setMenu] = useState<UserCardDropDownEnum>('퇴장');
   const changeMenu = (key: UserCardDropDownEnum) => () => setMenu(key);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (open && meetingId) {
+      return () => toPopupCard({ meetingId });
+    }
+  }, [open, meetingId]);
 
   return (
-    <Modal>
+    <Modal open={open} onOpenChange={setOpen}>
       <CardTrigger>
         <CardTriggerItem padding align="center" onClick={changeMenu('퇴장')} asChild>
           <ModalTrigger>강제퇴장</ModalTrigger>
@@ -215,7 +240,15 @@ function UserCardDropDown({ member }: { member: MemberType }) {
   );
 }
 
-function UserCardErrorFallback({ refetch, fromOutside }: { refetch: () => void; fromOutside?: boolean }) {
+function UserCardErrorFallback({
+  refetch,
+  toMeeting,
+  meetingId,
+}: {
+  refetch: () => void;
+  meetingId: string | null;
+  toMeeting: () => void;
+}) {
   return (
     <>
       <CardThumbnail />
@@ -240,14 +273,14 @@ function UserCardErrorFallback({ refetch, fromOutside }: { refetch: () => void; 
           justifyContent: 'space-between',
         })}
       >
-        {!fromOutside && (
+        {meetingId && (
           <button
             className={sprinkles({
               display: 'flex',
               gap: 'xsmall',
               alignItems: 'center',
             })}
-            onClick={escapePopup}
+            onClick={toMeeting}
           >
             <ChevronDown height={6} transform="rotate(90)" />
             뒤로가기
