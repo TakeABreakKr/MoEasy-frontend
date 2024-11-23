@@ -1,7 +1,8 @@
-import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
+
 import { rem } from '../../utils/css';
 import { globalVars } from '../../utils/styles/global.css';
-import { recipe } from '@vanilla-extract/recipes';
+import { style } from '@vanilla-extract/css';
 
 export const toggleWrapper = recipe({
   base: {

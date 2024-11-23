@@ -1,7 +1,7 @@
 // styles.css.ts
 import { rem } from '../../utils/css';
-import { style } from '@vanilla-extract/css';
 import { globalVars } from '../../utils/styles/global.css';
+import { style } from '@vanilla-extract/css';
 
 export const card = style({
   width: '100%',
@@ -15,6 +15,9 @@ export const card = style({
   gap: rem(15),
   ...globalVars.text.label.medium.regular,
   transition: 'background-color 200ms ease-in-out',
+});
+
+export const cardHover = style({
   ':hover': {
     backgroundColor: globalVars.color.yellow[40],
   },
@@ -60,11 +63,12 @@ export const description = style({
   lineClamp: 3,
 });
 
-export const memberWrapper = style({
+export const tagWrapper = style({
   display: 'flex',
   gap: `${rem(8)} ${rem(4)}`, // 0.5rem 0.25rem
   flexWrap: 'wrap',
   paddingBottom: rem(15),
+  alignItems: 'center',
 });
 
 export const interact = style({

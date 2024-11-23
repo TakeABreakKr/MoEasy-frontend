@@ -1,41 +1,52 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 
+import { sprinkles } from '@/shared/style/sprinkles/index.css';
+
+import { delay } from '@moeasy/storybook/utils/lib/delay';
 import { useIntersectionObserver } from '@moeasy/storybook/utils/use-intersection-observer';
+
+import { MeetingType } from '../types';
+
+import { MeetingCard } from './card';
 
 import * as teamStyle from './team-list.css';
 
-type TeamType = {
-  name: string;
-};
-const initialTeams = Array.from({ length: 20 }, (_, idx) => ({ name: `Team ${idx + 1}` }));
+const initializeMeetingList = (lastIndex = 0): MeetingType[] =>
+  Array.from({ length: 20 }, (_, index) => ({
+    meetingId: `G-${lastIndex + index}`,
+    name: `Team ${lastIndex + index + 1}`,
+    explanation: `explanation ${index}`,
+    authority: 'MANAGER',
+  }));
 
-export default function TeamList() {
-  const [teamlist, setTeamlist] = useState<TeamType[]>(initialTeams);
+export default function MeetingList() {
+  const [teamlist, setTeamlist] = useState<MeetingType[]>(initializeMeetingList);
+  const [loading, setLoading] = useState(false);
   const [ref, inView] = useIntersectionObserver();
+
   useEffect(() => {
-    if (inView) setTeamlist((prevState) => [...prevState, ...initialTeams]);
+    if (inView) {
+      setLoading(true);
+
+      setTeamlist((prevState) => {
+        const lastIndex = prevState.length;
+        return [...prevState, ...initializeMeetingList(lastIndex)];
+      });
+
+      delay(100).then(() => setLoading(false));
+    }
   }, [inView]);
 
   return (
-    <section>
+    <section className={sprinkles({ justifyContent: 'center' })}>
       <div className={teamStyle.teamgrid}>
         {teamlist.map((team) => (
-          <div key={team.name} className={teamStyle.teamgridItem}>
-            <Image
-              className={teamStyle.teamItemImage}
-              width={300}
-              height={300}
-              src="https://via.placeholder.com/300"
-              alt="People sitting at a table"
-            />
-            <span>{team.name}</span>
-          </div>
+          <MeetingCard key={team.name} team={team} members={[{ name: 'JAMES' }]} />
         ))}
+        {!loading && <span ref={ref} />}
       </div>
-      <span ref={ref}></span>
     </section>
   );
 }

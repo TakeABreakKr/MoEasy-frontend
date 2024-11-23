@@ -1,8 +1,8 @@
 import { recipe } from '@vanilla-extract/recipes';
 
 import { rem } from '../../utils/css';
-import { keyframes, style } from '@vanilla-extract/css';
 import { globalVars } from '../../utils/styles/global.css';
+import { keyframes, style } from '@vanilla-extract/css';
 
 const dropdownBorderColor = '#e1e1e1';
 
@@ -36,6 +36,8 @@ export const dropdownMenuContent = style({
   borderColor: dropdownBorderColor,
   backgroundColor: 'white',
   textAlign: 'left',
+  display: 'flex',
+  flexDirection: 'column',
   boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
   selectors: {
     '&[data-state="open"]': {

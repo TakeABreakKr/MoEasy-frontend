@@ -5,9 +5,10 @@ import { style } from '@vanilla-extract/css';
 export const teamgrid = style({
   display: 'grid',
   placeItems: 'center',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(25rem, 1fr))',
+  gridTemplateColumns: `repeat(auto-fit, minmax(${rem(250)}, 1fr))`,
   width: '100%',
-  gap: '2rem 0',
+  gap: rem(32),
+  maxWidth: rem(664),
 });
 
 export const teamgridItem = style({

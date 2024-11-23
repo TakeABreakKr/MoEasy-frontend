@@ -2,16 +2,7 @@ import { HTMLAttributes } from 'react';
 
 import { Separator } from '../separator';
 
-import {
-  CardDescription,
-  CardMember,
-  CardMembers,
-  CardThumbnail,
-  CardTitle,
-  CardTrigger,
-  CardTriggerItem,
-  CardWrapper,
-} from './compound-card';
+import { CardDescription, CardThumbnail, CardTitle, CardTrigger, CardTriggerItem, CardWrapper } from './compound-card';
 
 export type CardProps = {
   idx: number | string;
@@ -20,7 +11,6 @@ export type CardProps = {
   thumbnail?: string;
   count?: number;
   maxCount?: number;
-  members?: CardMember[];
 } & HTMLAttributes<HTMLDivElement>;
 
 export default function Card({
@@ -30,7 +20,6 @@ export default function Card({
   description = '',
   count = 0,
   maxCount = 10,
-  members = [],
   ...props
 }: CardProps) {
   return (
@@ -57,7 +46,7 @@ export default function Card({
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </div>
-      <CardMembers members={members} />
+      {/* <CardMembers members={members} /> */}
     </CardWrapper>
   );
 }
