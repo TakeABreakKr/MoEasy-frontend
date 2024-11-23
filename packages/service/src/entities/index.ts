@@ -1,3 +1,5 @@
+import { components } from '@/shared/api/my-schema';
+
 export type CommonFormActionState =
   | {
       type: 'error';
@@ -9,3 +11,5 @@ export type CommonFormActionState =
     };
 
 export type CommonFormAction = (_: CommonFormActionState, formData: FormData) => Promise<CommonFormActionState>;
+
+export type MeetingAuthority = components['schemas']['MeetingMemberDto']['authority'];

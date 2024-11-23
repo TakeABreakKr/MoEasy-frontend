@@ -2,11 +2,12 @@ import 'server-only';
 import { InputHTMLAttributes } from 'react';
 import { redirect } from 'next/navigation';
 
+import { MemberType } from '@/entities/member/api';
 import client from '@/shared/api/baseApi';
 import { components } from '@/shared/api/my-schema';
 import { fileParser, numberParser, stringParser } from '@/shared/utils/utils';
 
-import { CommonFormAction } from '../..';
+import { CommonFormAction, MeetingAuthority } from '../..';
 
 export type CreateMeetingType = components['schemas']['MeetingCreateRequest'];
 
@@ -70,4 +71,11 @@ export const meetingModifyAction: CommonFormAction = async (_, formData) => {
 
 export const gotoTeamList = async () => {
   redirect('/team');
+};
+
+export type MeetingType = Omit<components['schemas']['MeetingCreateRequest'], 'members' | 'thumbnail'> & {
+  meetingId: string;
+  authority: MeetingAuthority;
+  members: Array<MemberType>;
+  thumbnail: string;
 };

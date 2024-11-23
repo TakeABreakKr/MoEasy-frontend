@@ -50,6 +50,7 @@ export const triggerButton = style({
 
 export const title = style({
   ...globalVars.text.title.large,
+  marginBlock: 0,
 });
 
 export const description = style({
