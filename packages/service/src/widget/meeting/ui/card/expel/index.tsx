@@ -8,13 +8,10 @@ import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { XIcon } from '@moeasy/storybook/ui/icon';
 import { delay } from '@moeasy/storybook/utils/lib/delay';
 
-import { MeetingCardPopupState } from '../../../types';
-
 import * as styles from '../card.css';
 
 type MeetingExpelProps = {
   memberName?: string;
-  setCardPopupState: React.Dispatch<React.SetStateAction<MeetingCardPopupState>>;
 };
 
 const expelStepTexts = [
@@ -36,20 +33,13 @@ const expelStepTexts = [
   },
 ];
 
-export function MeetingExpel({ memberName, setCardPopupState }: MeetingExpelProps) {
+export function MeetingExpel({ memberName }: MeetingExpelProps) {
   const [step, setStep] = useState(0);
   const { title, content } = expelStepTexts[step];
   const withdrawal = async () => {
     await delay(1000);
     setStep(1);
   };
-
-  useEffect(() => {
-    if (!step) return;
-    return () => {
-      setCardPopupState({ popupType: 'MEETING' });
-    };
-  }, [step, setCardPopupState]);
 
   return (
     <ModalContent className={styles.popupContainer} contentDraggable>

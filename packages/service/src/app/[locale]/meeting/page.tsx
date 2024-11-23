@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import { MeetingListFilter } from '@/widget/meeting/ui/filter';
-import MeetingList from '@/widget/meeting/ui/team-list';
+import MeetingList from '@/widget/meeting/ui/list';
 
 import * as mainStyle from '../main.css';
 

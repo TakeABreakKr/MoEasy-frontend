@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { copyText } from '@/shared/utils/copy-text';
-import { isManagerAutorized } from '@/widget/meeting/utils';
+import { escapePopup, isIdValid, isManagerAutorized } from '@/widget/meeting/utils';
 
 import { Button } from '@moeasy/storybook/ui/button';
 import {
@@ -13,97 +13,93 @@ import {
   CardTitle,
   CardTrigger,
   CardTriggerItem,
+  CardWrapper,
 } from '@moeasy/storybook/ui/card/compound-card';
 import { Modal, ModalClose, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
 import { ChevronDown, XIcon } from '@moeasy/storybook/ui/icon';
 import { NameTag } from '@moeasy/storybook/ui/tag';
 import { Toggle } from '@moeasy/storybook/ui/toggle';
 
-import { CardMember, MeetingAuthority } from '../../../types';
 import { MeetingExpel } from '../expel';
 
 import * as styles from '../card.css';
-
-export type MeetingCardPopupState =
-  | { popupType: 'MEETING'; fromOutside?: boolean }
-  | { popupType: 'MEMBER'; fromOutside?: boolean; member: CardMember }
-  | null;
+import { useQuery } from '@/shared/hooks/use-query';
+import { MemberType } from '@/entities/member/api';
+import { MeetingAuthority } from '@/entities';
 
 export function UserCard({
-  member,
-  setCardPopupState,
+  memberId,
+  meetingId,
   authority,
-  fromOutside,
 }: {
-  member: CardMember;
-  setCardPopupState: Dispatch<SetStateAction<MeetingCardPopupState>>;
+  memberId: string | null;
+  meetingId?: string | null;
+  /** 현재 창의 user의 authority가 아닌 사용자의 authority */
   authority?: MeetingAuthority;
-  /** 내부가 아닌 외부에서 유저 정보로 진입 시 뒤로가기 버튼 제거 */
-  fromOutside?: boolean;
 }) {
   const [step, setStep] = useState(0);
   const toNextStep = () => setStep(1);
   const toPrevStep = () => setStep(0);
+  const { data, loading, error, refetch } = useQuery<MemberType>({ queryURL: `/mock/member/${memberId || ''}` });
 
-  return (
-    <>
-      {step === 0 && (
+  let renderComponent: React.ReactNode;
+  if (loading) renderComponent = <div>loading...</div>;
+  if (error) renderComponent = <UserCardErrorFallback refetch={refetch} fromOutside={!isIdValid(meetingId)} />;
+  if (data) {
+    if (step === 0)
+      renderComponent = (
         <UserCardFirstStep
-          member={member}
-          setCardPopupState={setCardPopupState}
+          member={data}
           authority={authority}
-          fromOutside={fromOutside}
+          fromOutside={!isIdValid(meetingId)}
           toNextStep={toNextStep}
         />
-      )}
-      {step === 1 && <UserCardLastStep member={member} toPrevStep={toPrevStep} />}
-    </>
+      );
+    if (step === 1) {
+      renderComponent = <UserCardLastStep member={data} toPrevStep={toPrevStep} />;
+    }
+  }
+  return (
+    <div className={styles.popupOverlay}>
+      <CardWrapper>{renderComponent}</CardWrapper>
+    </div>
   );
 }
 
 function UserCardFirstStep({
   member,
-  setCardPopupState,
-  authority,
+  authority: userAuthority,
   fromOutside,
   toNextStep,
 }: {
-  member: CardMember;
-  setCardPopupState: Dispatch<SetStateAction<MeetingCardPopupState>>;
+  member: MemberType;
+  /** 현재 창의 user의 authority가 아닌 사용자의 authority */
   authority?: MeetingAuthority;
   /** 내부가 아닌 외부에서 유저 정보로 진입 시 뒤로가기 버튼 제거 */
   fromOutside?: boolean;
   toNextStep: () => void;
 }) {
-  const { name, userRole } = member;
-  const [parsedRole, toggleParseRole] = useState<MeetingAuthority>(() => (userRole === 'admin' ? 'MANAGER' : 'MEMBER'));
+  const { memberId, username, authority, thumbnail } = member;
+  const [parsedRole, toggleParseRole] = useState<MeetingAuthority>(authority);
   const explanation = '자기소개 자기소개';
-  const userCode = `G-${name}`;
-  const isManager = isManagerAutorized(authority);
+  const isManager = isManagerAutorized(userAuthority);
 
   return (
     <>
-      <CardThumbnail
-        as="button"
-        onThumbnailClick={toNextStep}
-        src={`https://via.placeholder.com/72/${userCode}`}
-        alt={name || 'thumbnail'}
-      />
+      <CardThumbnail as="button" onThumbnailClick={toNextStep} src={thumbnail} alt={username || 'thumbnail'} />
       <CardHeader>
-        <UserCardDropDown member={member} setCardPopupState={setCardPopupState} />
-        <Button variant="dark" size="icon" rounded="full" asChild>
-          <ModalClose>
-            <XIcon />
-          </ModalClose>
+        <UserCardDropDown member={member} />
+        <Button variant="dark" size="icon" rounded="full" onClick={escapePopup}>
+          <XIcon />
         </Button>
       </CardHeader>
-      <CardTitle>{name}</CardTitle>
+      <CardTitle>{username}</CardTitle>
       <CardDescription>{explanation}</CardDescription>
       <button className={styles.userFollow}>팔로우</button>
       <CardTagsWrapper>
         <NameTag userRole="limit">친구코드</NameTag>
-        <div>{userCode}</div>
-        <NameTag onClick={() => copyText({ text: userCode })}>복사</NameTag>
+        <div>{memberId}</div>
+        <NameTag onClick={() => copyText({ text: memberId })}>복사</NameTag>
       </CardTagsWrapper>
       <CardTagsWrapper
         className={sprinkles({
@@ -135,7 +131,7 @@ function UserCardFirstStep({
               gap: 'xsmall',
               alignItems: 'center',
             })}
-            onClick={() => setCardPopupState({ popupType: 'MEETING' })}
+            onClick={escapePopup}
           >
             <ChevronDown height={6} transform="rotate(90)" />
             뒤로가기
@@ -146,26 +142,17 @@ function UserCardFirstStep({
   );
 }
 
-function UserCardLastStep({ member, toPrevStep }: { member: CardMember; toPrevStep: () => void }) {
-  const { name, userRole } = member;
-  const userCode = `G-${name}`;
-
+function UserCardLastStep({ member, toPrevStep }: { member: MemberType; toPrevStep: () => void }) {
+  const { memberId, username, thumbnail } = member;
   return (
     <>
-      <CardThumbnail
-        as="button"
-        onThumbnailClick={toPrevStep}
-        src={`https://via.placeholder.com/72/${userCode}`}
-        alt={name || 'thumbnail'}
-      />
+      <CardThumbnail as="button" onThumbnailClick={toPrevStep} src={thumbnail} alt={memberId || 'thumbnail'} />
       <CardHeader>
-        <Button variant="dark" size="icon" rounded="full" asChild>
-          <ModalClose>
-            <XIcon />
-          </ModalClose>
+        <Button variant="dark" size="icon" rounded="full" onClick={escapePopup}>
+          <XIcon />
         </Button>
       </CardHeader>
-      <CardTitle>{name}</CardTitle>
+      <CardTitle>{username}</CardTitle>
       <div>
         <div className={styles.userHistoryWrapper}>
           <div className={styles.userhistory}>Kim &gt; Kim moeasy 닉네임이 변경되었습니다.</div>
@@ -208,13 +195,7 @@ function UserCardLastStep({ member, toPrevStep }: { member: CardMember; toPrevSt
 const UserCardDropDownItems = ['퇴장'] as const;
 type UserCardDropDownEnum = (typeof UserCardDropDownItems)[number];
 
-function UserCardDropDown({
-  member,
-  setCardPopupState,
-}: {
-  member: CardMember;
-  setCardPopupState: Dispatch<SetStateAction<MeetingCardPopupState>>;
-}) {
+function UserCardDropDown({ member }: { member: MemberType }) {
   const [menu, setMenu] = useState<UserCardDropDownEnum>('퇴장');
   const changeMenu = (key: UserCardDropDownEnum) => () => setMenu(key);
 
@@ -227,9 +208,52 @@ function UserCardDropDown({
       </CardTrigger>
       <ModalPortal>
         <ModalOverlay className={styles.popupOverlay}>
-          {menu === '퇴장' && <MeetingExpel memberName={member.name} setCardPopupState={setCardPopupState} />}
+          {menu === '퇴장' && <MeetingExpel memberName={member.username} />}
         </ModalOverlay>
       </ModalPortal>
     </Modal>
+  );
+}
+
+function UserCardErrorFallback({ refetch, fromOutside }: { refetch: () => void; fromOutside?: boolean }) {
+  return (
+    <>
+      <CardThumbnail />
+      <CardHeader>
+        <Button variant="dark" size="icon" rounded="full" onClick={escapePopup}>
+          <XIcon />
+        </Button>
+      </CardHeader>
+      <CardTitle>유저 정보 불러오기 실패</CardTitle>
+      <CardDescription>유저 정보를 불러올 수 없습니다. 다시 시도해주세요.</CardDescription>
+      <button className={styles.userFollow} onClick={refetch}>
+        재시도
+      </button>
+      <CardTagsWrapper>
+        <NameTag userRole="limit">친구코드</NameTag>
+        <div>...</div>
+        <NameTag>복사</NameTag>
+      </CardTagsWrapper>
+      <CardTagsWrapper
+        className={sprinkles({
+          display: 'flex',
+          justifyContent: 'space-between',
+        })}
+      >
+        {!fromOutside && (
+          <button
+            className={sprinkles({
+              display: 'flex',
+              gap: 'xsmall',
+              alignItems: 'center',
+            })}
+            onClick={escapePopup}
+          >
+            <ChevronDown height={6} transform="rotate(90)" />
+            뒤로가기
+          </button>
+        )}
+      </CardTagsWrapper>
+    </>
   );
 }
