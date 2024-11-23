@@ -11,11 +11,11 @@ import React, {
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
+import { Slot } from '@radix-ui/react-slot';
 
 import { useControlledState } from '../../hooks/use-controlled-state';
 import { useMovablePopup } from '../../hooks/use-movable';
 import { useOnEscape } from '../../hooks/use-on-escape';
-import { Slot } from '@radix-ui/react-slot';
 
 type ModalProps = {
   open?: boolean;
@@ -80,13 +80,11 @@ function Modal({
     if (parentModal && open) {
       parentModal.setCloseDisabled(true);
       parentModal.setChildModalOpen(true);
-    }
-    return () => {
-      if (parentModal) {
+      return () => {
         parentModal.setChildModalOpen(false);
         parentModal.setCloseDisabled(false);
-      }
-    };
+      };
+    }
   }, [open, parentModal]);
 
   const contextValue = {
