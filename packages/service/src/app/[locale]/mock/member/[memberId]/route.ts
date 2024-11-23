@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { isIdValid } from '@/widget/meeting/utils';
 import { initializeMember } from '@/entities/member/api/mock';
+import { isIdValid } from '@/widget/meeting/utils';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;

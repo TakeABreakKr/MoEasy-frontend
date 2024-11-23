@@ -1,5 +1,8 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 
+import { MeetingAuthority } from '@/entities';
+import { MemberType } from '@/entities/member/api';
+import { useQuery } from '@/shared/hooks/use-query';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { copyText } from '@/shared/utils/copy-text';
 import { escapePopup, isIdValid, isManagerAutorized } from '@/widget/meeting/utils';
@@ -15,7 +18,7 @@ import {
   CardTriggerItem,
   CardWrapper,
 } from '@moeasy/storybook/ui/card/compound-card';
-import { Modal, ModalClose, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
+import { Modal, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
 import { ChevronDown, XIcon } from '@moeasy/storybook/ui/icon';
 import { NameTag } from '@moeasy/storybook/ui/tag';
 import { Toggle } from '@moeasy/storybook/ui/toggle';
@@ -23,9 +26,6 @@ import { Toggle } from '@moeasy/storybook/ui/toggle';
 import { MeetingExpel } from '../expel';
 
 import * as styles from '../card.css';
-import { useQuery } from '@/shared/hooks/use-query';
-import { MemberType } from '@/entities/member/api';
-import { MeetingAuthority } from '@/entities';
 
 export function UserCard({
   memberId,

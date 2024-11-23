@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
+import { MeetingAuthority } from '@/entities';
+
 import { CardTrigger, CardTriggerItem } from '@moeasy/storybook/ui/card/compound-card';
 import { Modal, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
 import { Separator } from '@moeasy/storybook/ui/separator';
@@ -11,7 +13,6 @@ import { MeetingInviteModal } from '../invite';
 import { MeetingWithdrawal } from '../withdrawal';
 
 import * as styles from '../card.css';
-import { MeetingAuthority } from '@/entities';
 
 const MeetingDropDownItems = ['수정', '초대', '탈퇴', '삭제', '닫힘'] as const;
 type MeetingDropDownEnum = (typeof MeetingDropDownItems)[number];

@@ -2,12 +2,12 @@ import 'server-only';
 import { InputHTMLAttributes } from 'react';
 import { redirect } from 'next/navigation';
 
+import { MemberType } from '@/entities/member/api';
 import client from '@/shared/api/baseApi';
 import { components } from '@/shared/api/my-schema';
 import { fileParser, numberParser, stringParser } from '@/shared/utils/utils';
 
 import { CommonFormAction, MeetingAuthority } from '../..';
-import { MemberType } from '@/entities/member/api';
 
 export type CreateMeetingType = components['schemas']['MeetingCreateRequest'];
 

@@ -1,4 +1,5 @@
 import { mockmembers } from '../../member/api/mock';
+
 import { MeetingType } from '.';
 
 export const initializeMeeting = (index: number): MeetingType => {

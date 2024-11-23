@@ -13,10 +13,10 @@ import { useIntersectionObserver } from '@moeasy/storybook/utils/use-intersectio
 import { isIdValid } from '../utils';
 
 import { PopupCard } from './card/popup/v2';
+import { UserCard } from './card/user';
 import { MeetingCard } from './card/v2';
 
 import * as teamStyle from './list.css';
-import { UserCard } from './card/user';
 
 export default function MeetingList() {
   const [meetingList, setTeamlist] = useState<MeetingType[]>(initializeMeetingList);

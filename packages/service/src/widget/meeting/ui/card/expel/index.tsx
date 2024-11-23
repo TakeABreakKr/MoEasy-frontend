@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 

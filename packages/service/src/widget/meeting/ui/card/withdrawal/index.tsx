@@ -1,5 +1,6 @@
 import { createFunnelSteps, useFunnel } from '@use-funnel/browser';
 
+import { MeetingAuthority } from '@/entities';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
 import { Button } from '@moeasy/storybook/ui/button';
@@ -11,7 +12,6 @@ import { delay } from '@moeasy/storybook/utils/lib/delay';
 import { escapePopup } from '../../../utils';
 
 import * as styles from '../card.css';
-import { MeetingAuthority } from '@/entities';
 
 const steps = createFunnelSteps<{}>().extends('탈퇴하기').extends('탈퇴완료').build();
 
