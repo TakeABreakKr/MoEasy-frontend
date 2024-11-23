@@ -43,16 +43,14 @@ function CardThumbnail({
   onThumbnailClick,
 }: {
   src?: string;
-  alt: string;
+  alt?: string;
   as?: 'div' | 'button';
   onThumbnailClick?: () => void;
 }) {
   const Tag = as;
   return (
     <Tag className={cardStyle.thumbnailWrapper} onClick={onThumbnailClick}>
-      <div className={cardStyle.thumbnail}>
-        <Image src={src ?? `https://via.placeholder.com/72/${1}`} width={72} height={72} alt={alt} />
-      </div>
+      <div className={cardStyle.thumbnail}>{src && <Image src={src} width={72} height={72} alt={alt} />}</div>
     </Tag>
   );
 }
