@@ -43,14 +43,14 @@ const steps = createFunnelSteps<CreateMeetingData>()
   .extends('limit')
   .build();
 
-function CreateForm({ data = {} }: CreateFormProps) {
+function CreateForm() {
   const [file, setFile] = useState<File | null>(null);
   const funnel = useFunnel({
     id: 'create-meeting',
     steps,
     initial: {
       step: 'greeting',
-      context: data,
+      context: {},
     },
   });
 
