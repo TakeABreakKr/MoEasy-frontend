@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useId, useState } from 'react';
+import React, { useId } from 'react';
 
+import { useControlledState } from '../../hooks/use-controlled-state';
+import { Delay } from '../delay';
 import { PlusIcon } from '../icon';
 
 import * as styles from './file-upload.css';
@@ -8,65 +10,74 @@ import * as styles from './file-upload.css';
 interface ImageUploadProps {
   name?: string;
   selectedFile?: File | null;
-  onImageUpload: (file: File) => void;
+  initialPreview?: string;
+  onImageUpload?: (file: File | null) => void;
 }
 
-export const ImageUpload = ({ name = 'thumbnail', selectedFile, onImageUpload }: ImageUploadProps) => {
-  const id = useId();
-  const [preview, setPreview] = useState<string | null>(null);
+const fileUploadFalllback = (
+  <div className={styles.uploadButton}>
+    <div className={styles.plusIcon}>
+      <PlusIcon width={10} height={10} />
+    </div>
+    <div className={styles.uploadText}>
+      1:1 비율
+      <br />
+      (500*500 px 권장)
+    </div>
+  </div>
+);
 
+export const ImageUpload = ({ name = 'thumbnail', initialPreview, selectedFile, onImageUpload }: ImageUploadProps) => {
+  const id = useId();
+  const [fileState, setFile] = useControlledState({
+    prop: selectedFile,
+    defaultProp: null,
+    onChange: onImageUpload,
+  });
+
+  const preview = useImagePreview({ initialPreview, file: fileState });
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
+    if (event.target.files && event.target.files.length !== 0) {
       const file = event.target.files[0];
-      onImageUpload(file);
-      // uncontrolled state인 경우에도 thumbnail 업데이트를 진행한다.
-      if (!selectedFile) {
-        const newThumbnail = await imgFileToDataURL(file);
-        setPreview(newThumbnail);
-      }
+      setFile(file);
     }
   };
-
-  useEffect(() => {
-    if (selectedFile) {
-      (async () => {
-        const newThumbnail = await imgFileToDataURL(selectedFile);
-        setPreview(newThumbnail);
-      })();
-    }
-  }, [selectedFile]);
 
   return (
     <div className={styles.imageUploadContainer}>
       <label className={styles.uploadPlaceholder} htmlFor={id} data-testid="file-upload">
         <input type="file" hidden accept="image/*" name={name} onChange={handleFileChange} id={id} />
-        {preview ? (
-          <div className={styles.croppedImageContainer}>
-            <img className={styles.croppedImageContainerImg} src={preview} alt="Cropped" width={200} height={200} />
-          </div>
-        ) : (
-          <div className={styles.uploadButton}>
-            <div className={styles.plusIcon}>
-              <PlusIcon width={10} height={10} />
+        <Delay ms={0} fallback={fileUploadFalllback}>
+          {preview ? (
+            <div className={styles.croppedImageContainer}>
+              <img className={styles.croppedImageContainerImg} src={preview} alt="Cropped" width={200} height={200} />
             </div>
-            <div className={styles.uploadText}>
-              1:1 비율
-              <br />
-              (500*500 px 권장)
-            </div>
-          </div>
-        )}
+          ) : (
+            fileUploadFalllback
+          )}
+        </Delay>
       </label>
     </div>
   );
 };
 
-function imgFileToDataURL(file: File) {
-  const reader = new FileReader();
-  return new Promise<string>((res) => {
-    reader.onloadend = () => {
-      res(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-  });
+function useImagePreview({
+  initialPreview = null,
+  file = null,
+}: {
+  initialPreview?: string | null;
+  file?: File | null;
+}) {
+  const [preview, setPreview] = React.useState<string | null>(initialPreview);
+
+  React.useEffect(() => {
+    if (file) {
+      const objectUrl = URL.createObjectURL(file);
+      setPreview(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+    setPreview(null);
+  }, [file]);
+
+  return preview;
 }
