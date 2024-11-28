@@ -16,7 +16,7 @@ import { SearchButton } from '@moeasy/storybook/ui/button';
 import Calendar from '@moeasy/storybook/ui/calendar/calendar';
 import { Checkbox } from '@moeasy/storybook/ui/checkbox';
 import { CreateStepButton, FormCreateUnderLine } from '@moeasy/storybook/ui/create/step-button';
-import { CreateStepList } from '@moeasy/storybook/ui/create/step-list';
+// import { CreateStepList } from '@moeasy/storybook/ui/create/step-list';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 import { Input } from '@moeasy/storybook/ui/input';
 import { List, ListContent, ListFooter, ListItemType } from '@moeasy/storybook/ui/list';
@@ -51,7 +51,7 @@ export function ScheduleCreateForm({ action }: ScheduleCreateFormProps) {
     <div className={styles.container}>
       <form className={formStyles.formStyle} action={formAction}>
         <div className={formStyles.body}>
-          <CreateStepList steps={scheduleCeateStepArray} currentStep={currentStep} />
+          {/* <CreateStepList steps={scheduleCeateStepArray} currentStep={currentStep} /> */}
           <ScheduleCreateFormInput currentStep={currentStep} searchParams={searchParams} />
         </div>
         <CreateStepButton
