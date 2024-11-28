@@ -1,6 +1,8 @@
+import browserClient from '@/shared/api/browser-client';
+
 import { mockmembers } from '../../member/api/mock';
 
-import { MeetingType } from '.';
+import { CreateMeetingType, MeetingType } from '.';
 
 export const initializeMeeting = (index: number): MeetingType => {
   return {
@@ -17,3 +19,26 @@ export const initializeMeeting = (index: number): MeetingType => {
 
 export const initializeMeetingList = (lastIndex = 0): MeetingType[] =>
   Array.from({ length: 20 }, (_, index) => initializeMeeting(lastIndex + index));
+
+export const createMeeting = (body: CreateMeetingType) =>
+  browserClient.POST('/meeting/create', {
+    body,
+    bodySerializer: (body) => {
+      const formData = new FormData();
+      for (const [key, values] of Object.entries(body)) {
+        if (Array.isArray(values)) {
+          for (const value of values) {
+            formData.append(key, value);
+          }
+        } else {
+          if (typeof values === 'number') {
+            formData.append(key, String(values));
+          } else {
+            formData.append(key, values);
+          }
+        }
+      }
+      return formData;
+    },
+    next: { revalidate: 0 },
+  });

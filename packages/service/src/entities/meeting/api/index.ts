@@ -3,7 +3,6 @@ import { InputHTMLAttributes } from 'react';
 import { redirect } from 'next/navigation';
 
 import { MemberType } from '@/entities/member/api';
-import client from '@/shared/api/baseApi';
 import { components } from '@/shared/api/my-schema';
 import { fileParser, numberParser, stringParser } from '@/shared/utils/utils';
 
@@ -29,29 +28,6 @@ export type TypeMap = {
   string: string;
   file: File;
 };
-
-export const createMeeting = (body: CreateMeetingType) =>
-  client.POST('/meeting/create', {
-    body,
-    bodySerializer: (body) => {
-      const formData = new FormData();
-      for (const [key, values] of Object.entries(body)) {
-        if (Array.isArray(values)) {
-          for (const value of values) {
-            formData.append(key, value);
-          }
-        } else {
-          if (typeof values === 'number') {
-            formData.append(key, String(values));
-          } else {
-            formData.append(key, values);
-          }
-        }
-      }
-      return formData;
-    },
-    next: { revalidate: 0 },
-  });
 
 export const meetingModifyAction: CommonFormAction = async (_, formData) => {
   const parsedForm = {

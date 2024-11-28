@@ -2,7 +2,7 @@ import { CreateScheduleType } from '@/entities/schedule/api';
 
 //#region schedule request
 
-type CreateScheduleTypeDateMutated = Omit<CreateScheduleType, 'startDate' | 'endDate'> & {
+type CreateScheduleTypeDateMutated = Omit<CreateScheduleType, 'startDate' | 'endDate' | 'address'> & {
   startDate: Date;
   endDate: Date;
 };
