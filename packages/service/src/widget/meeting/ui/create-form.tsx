@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { createFunnelSteps, useFunnel } from '@use-funnel/browser';
 import { overlay } from 'overlay-kit';
 
-import { CommonFormAction } from '@/entities';
 import { CreateMeetingType } from '@/entities/meeting/api';
 import * as styles from '@/shared/style/create-form/index.css';
 import * as popupStyles from '@/shared/style/popup/index.css';
@@ -25,10 +24,6 @@ import { Textarea } from '@moeasy/storybook/ui/textarea';
 
 type CreateMeetingData = Partial<Omit<CreateMeetingType, 'thumbnail'>> & { thumbnail?: string };
 
-type CreateFormProps = {
-  action: CommonFormAction;
-  data: CreateMeetingData;
-};
 const createStepArray = [
   { key: 'greeting', text: '모임명/소개' },
   { key: 'thumbnail', text: '썸네일 설정' },
