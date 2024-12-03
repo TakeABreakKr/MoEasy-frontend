@@ -5,7 +5,7 @@ import createClient, { Middleware } from 'openapi-fetch';
 import { paths } from './my-schema';
 import { cookies } from 'next/headers';
 
-const client = createClient<paths>({ baseUrl: 'http:localhost:5000' });
+const serverClient = createClient<paths>({ baseUrl: 'http:localhost:5000' });
 
 const serverActionMiddleware: Middleware = {
   async onRequest({ request, options }) {
@@ -17,6 +17,6 @@ const serverActionMiddleware: Middleware = {
   },
 };
 
-client.use(serverActionMiddleware);
+serverClient.use(serverActionMiddleware);
 
-export default client;
+export default serverClient;

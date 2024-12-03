@@ -141,6 +141,9 @@ importers:
       '@radix-ui/react-hover-card':
         specifier: ^1.1.1
         version: 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@use-funnel/browser':
+        specifier: ^0.0.8
+        version: 0.0.8(react@18.3.1)
       '@vanilla-extract/css':
         specifier: ^1.15.3
         version: 1.15.5
@@ -2494,6 +2497,16 @@ packages:
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
+
+  '@use-funnel/browser@0.0.8':
+    resolution: {integrity: sha512-WosdwbQ2CiaGUe+a2X22lrtfePyiw1BhB8iUXW+ExLeJsnd4+K7HLTw3BOF+yDY291MeWrTAC7bziDu/hhBmpA==}
+    peerDependencies:
+      react: '>=16.8'
+
+  '@use-funnel/core@0.0.7':
+    resolution: {integrity: sha512-aInoq3dv5MSuYIPb1w1Y1pTJEAncQghoX99suMwsqnkMGunnCOw6UAPo131oyM4H52m2rbsoBnHBreDEDYmvzg==}
+    peerDependencies:
+      react: '>=16.8'
 
   '@vanilla-extract/babel-plugin-debug-ids@1.0.6':
     resolution: {integrity: sha512-C188vUEYmw41yxg3QooTs8r1IdbDQQ2mH7L5RkORBnHx74QlmsNfqVmKwAVTgrlYt8JoRaWMtPfGm/Ql0BNQrA==}
@@ -9247,6 +9260,15 @@ snapshots:
       eslint-visitor-keys: 3.4.3
 
   '@ungap/structured-clone@1.2.0': {}
+
+  '@use-funnel/browser@0.0.8(react@18.3.1)':
+    dependencies:
+      '@use-funnel/core': 0.0.7(react@18.3.1)
+      react: 18.3.1
+
+  '@use-funnel/core@0.0.7(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
 
   '@vanilla-extract/babel-plugin-debug-ids@1.0.6':
     dependencies:

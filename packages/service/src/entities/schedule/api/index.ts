@@ -5,7 +5,7 @@ import { stringParser } from '@/shared/utils/utils';
 
 import { CommonFormAction } from '../..';
 
-export type CreateScheduleType = Omit<components['schemas']['ScheduleCreateRequest'], 'address'>;
+export type CreateScheduleType = components['schemas']['ScheduleCreateRequest'];
 
 export type ScheduleCreateKeyMap = keyof CreateScheduleType;
 
