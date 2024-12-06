@@ -3,7 +3,6 @@ import { Slot } from '@radix-ui/react-slot';
 import clsx from 'clsx';
 
 import { contextCreator } from '../../utils/useSafeContext';
-import { AlertProps } from '../alert/alert';
 import { Button } from '../button';
 import { CheckBoxActionType, checkGroupReducer } from '../checkbox';
 
@@ -20,13 +19,13 @@ export type ListItemType = {
   avatar?: string;
 };
 
-export type ListProps = {
+export type ListProps = PropsWithChildren<{
   list?: ListItemType[];
   selected?: ListItemType[];
   close?: (list: ListItemType[]) => void;
   dispatchKeyword?: (keyword: string) => void;
   limit?: number;
-} & Omit<AlertProps, 'close'>;
+}>;
 
 export type SelectedListDispatch = React.Dispatch<CheckBoxActionType<ListItemType>>;
 

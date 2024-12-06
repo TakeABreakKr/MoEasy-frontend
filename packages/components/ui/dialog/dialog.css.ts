@@ -7,31 +7,30 @@ import { style } from '@vanilla-extract/css';
 
 export const overlay = style({
   position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+  inset: 0,
   backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  zIndex: 2,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: rem(16),
+  zIndex: 60,
 });
 
-export const content = recipe({
+export const container = recipe({
   base: {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
     zIndex: 10,
-    backgroundColor: globalVars.color.neutral.white,
     borderRadius: rem(8),
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    overflow: 'hidden',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    position: 'relative',
+    backgroundColor: globalVars.color.neutral.white,
+    gap: rem(10),
+    width: rem(360),
+    userSelect: 'none',
   },
   variants: {
     size: {
@@ -47,20 +46,53 @@ export const content = recipe({
         width: rem(360),
       },
     },
+    padding: {
+      small: {
+        padding: rem(0, 10, 20),
+      },
+    },
   },
+});
+
+export const header = style({
+  alignSelf: 'stretch',
+  display: 'flex',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  height: rem(35),
+  position: 'relative',
+});
+
+export const popupContent = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: rem(8),
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  alignSelf: 'stretch',
+  position: 'relative',
+  fontFamily: 'inherit',
+  color: globalVars.color.neutral[95],
+});
+
+export const popupTitle = style({
+  textAlign: 'center',
+  ...globalVars.text.title.large,
+  position: 'relative',
+});
+
+export const popupDesc = style({
+  textAlign: 'center',
+  ...globalVars.text.body.small,
+  position: 'relative',
+  alignSelf: 'stretch',
 });
 
 export const footer = style({
   display: 'flex',
-  justifyContent: 'flex-end',
+  justifyContent: 'center',
   width: '100%',
   gap: rem(15),
-});
-
-export const title = style({
-  marginBottom: rem(16),
-  color: globalVars.color.neutral[95],
-  ...globalVars.text.title.large,
 });
 
 export const message = style({

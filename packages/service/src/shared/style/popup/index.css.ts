@@ -5,17 +5,6 @@ import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 import { style } from '@vanilla-extract/css';
 
-export const popupOverlay = style({
-  position: 'fixed',
-  inset: 0,
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: rem(16),
-  zIndex: 60,
-});
-
 export const popupContainer = style({
   display: 'flex',
   flexDirection: 'column',

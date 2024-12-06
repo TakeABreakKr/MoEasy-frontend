@@ -23,7 +23,6 @@ import { ChevronDown, UserIcon, XIcon } from '@moeasy/storybook/ui/icon';
 import { Text } from '@moeasy/storybook/ui/text';
 import { delay } from '@moeasy/storybook/utils/lib/delay';
 
-import * as cardStyles from '../card/card.css';
 import * as styles from './join-agree.css';
 
 const meetingWaitingMesseges = {
@@ -105,7 +104,7 @@ export function MeetingJoinAgreePopup() {
       </ModalTrigger>
       <ModalPortal>
         <ModalOverlay className={modalStyles.overlay}>
-          <ModalContent className={modalStyles.content({ size: 'medium' })}>
+          <ModalContent className={modalStyles.container({ size: 'medium' })}>
             <div
               className={sprinkles({
                 display: 'flex',
@@ -208,7 +207,7 @@ function MeetingWaitingUser({ userName = 'Kim moeasy' }: { userName?: string }) 
             </button>
           </ModalTrigger>
           <ModalPortal>
-            <ModalOverlay className={cardStyles.popupOverlay}>
+            <ModalOverlay className={modalStyles.overlay}>
               <MeetingWaitingUserInfo userName={userName} explanation={'description'} />
             </ModalOverlay>
           </ModalPortal>
@@ -240,16 +239,16 @@ function MeetingJoinSubPopup({
   return (
     <Modal open>
       <ModalPortal>
-        <ModalOverlay className={cardStyles.popupOverlay}>
-          <ModalContent className={cardStyles.popupContainer}>
-            <div className={cardStyles.popupHeader}>
+        <ModalOverlay className={modalStyles.overlay}>
+          <ModalContent className={modalStyles.container({ size: 'alert', padding: 'small' })}>
+            <div className={modalStyles.header}>
               <Button size="icon" rounded="full" onClick={unmount}>
                 <XIcon />
               </Button>
             </div>
-            <div className={cardStyles.popupContent}>
-              <h2 className={cardStyles.popupTitle}>{title}</h2>
-              <div className={cardStyles.popupDesc}>{description}</div>
+            <div className={modalStyles.popupContent}>
+              <h2 className={modalStyles.popupTitle}>{title}</h2>
+              <div className={modalStyles.popupDesc}>{description}</div>
             </div>
           </ModalContent>
         </ModalOverlay>

@@ -18,6 +18,7 @@ import { FormCreateUnderLine } from '@moeasy/storybook/ui/create/step-button';
 import { CreateStepList } from '@moeasy/storybook/ui/create/step-list';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 import { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal } from '@moeasy/storybook/ui/dialog';
+import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { XIcon } from '@moeasy/storybook/ui/icon';
 import { Input } from '@moeasy/storybook/ui/input';
 import { Tag } from '@moeasy/storybook/ui/tag';
@@ -424,7 +425,7 @@ function 스케쥴공지입력({
               return (
                 <Modal open={isOpen}>
                   <ModalPortal>
-                    <ModalOverlay className={popupStyles.popupOverlay}>
+                    <ModalOverlay className={modalStyles.overlay}>
                       <ModalContent className={popupStyles.popupContainer}>
                         <div className={popupStyles.popupHeader}>
                           <Button asChild variant="dark" rounded="full" size="icon" type="button">
