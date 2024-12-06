@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useReducer, useState } from 'react';
-import Link from 'next/link';
 import { createFunnelSteps, useFunnel } from '@use-funnel/browser';
 
 import { CreateMeetingType } from '@/entities/meeting/api';
@@ -10,7 +9,7 @@ import { alertCall } from '@/shared/utils/alert-call';
 import { objectReducer } from '@/shared/utils/object-reducer';
 
 import { Button } from '@moeasy/storybook/ui/button';
-import { FormCreateUnderLine } from '@moeasy/storybook/ui/create/step-button';
+import { CreateButtonCommon, CreateButtonFirst, FormCreateUnderLine } from '@moeasy/storybook/ui/create/step-button';
 import { CreateStepList } from '@moeasy/storybook/ui/create/step-list';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
@@ -151,20 +150,7 @@ function 모임명및소개({
           />
         </label>
       </div>
-      <div className={formStyles.navigation}>
-        <Link className={formStyles.navButton} href="/mypage">
-          이전
-        </Link>
-        <button
-          type="button"
-          className={formStyles.navButton}
-          onClick={() => {
-            onNextStep(state);
-          }}
-        >
-          다음
-        </button>
-      </div>
+      <CreateButtonFirst prevHref="/mypage" onNextStep={() => onNextStep(state)} />
     </>
   );
 }
@@ -186,19 +172,12 @@ function ThumbnailInputForm({
   return (
     <>
       <div className={formStyles.formGroup}>
-        <div className={formStyles.label}>
+        <label className={formStyles.label}>
           <span>썸네일</span>
           <ImageUpload selectedFile={file} onImageUpload={setFile} initialPreview={thumbnail} />
-        </div>
+        </label>
       </div>
-      <div className={formStyles.navigation}>
-        <button type="button" className={formStyles.navButton} onClick={onPrevStep}>
-          이전
-        </button>
-        <button type="button" className={formStyles.navButton} onClick={() => onNextStep({ file })}>
-          다음
-        </button>
-      </div>
+      <CreateButtonCommon onPrevStep={onPrevStep} onNextStep={() => onNextStep({ file })} />
     </>
   );
 }
@@ -267,14 +246,7 @@ function 키워드입력({
           </div>
         </div>
       </div>
-      <div className={formStyles.navigation}>
-        <button type="button" className={formStyles.navButton} onClick={onPrevStep}>
-          이전
-        </button>
-        <button type="button" className={formStyles.navButton} onClick={() => onNextStep({ keywords })}>
-          다음
-        </button>
-      </div>
+      <CreateButtonCommon onPrevStep={onPrevStep} onNextStep={() => onNextStep({ keywords })} />
     </>
   );
 }
@@ -347,18 +319,10 @@ function 인원제한입력({
           </div>
         </fieldset> */}
       </div>
-      <div className={formStyles.navigation}>
-        <button type="button" className={formStyles.navButton} onClick={onPrevStep}>
-          이전
-        </button>
-        <button
-          type="button"
-          className={formStyles.navButton}
-          onClick={() => alertCall({ message: '모임 생성에 성공했습니다.', href: '/meeting' })}
-        >
-          다음
-        </button>
-      </div>
+      <CreateButtonCommon
+        onPrevStep={onPrevStep}
+        onNextStep={() => alertCall({ message: '모임 생성에 성공했습니다.', href: '/meeting' })}
+      />
     </>
   );
 }
