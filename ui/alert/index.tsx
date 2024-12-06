@@ -10,8 +10,8 @@ import { XIcon } from '../icon';
 import * as styles from '../dialog/dialog.css';
 
 export type AlertProps = ModalProps & {
-  title?: string;
-  message?: string;
+  title?: React.ReactNode;
+  message?: React.ReactNode;
   close?: () => void;
   confirmButton?: React.ReactNode;
   cancelButton?: React.ReactNode;
@@ -44,10 +44,12 @@ export function SimpleAlert({
                 </ModalClose>
               </Button>
             </div>
-            <pre className={styles.popupContent}>
-              <h2 className={styles.popupTitle}>{title}</h2>
-              <div className={styles.popupDesc}>{message}</div>
-            </pre>
+            {title || message ? (
+              <pre className={styles.popupContent}>
+                {title && <h2 className={styles.popupTitle}>{title}</h2>}
+                {message && <div className={styles.popupDesc}>{message}</div>}
+              </pre>
+            ) : null}
             <div className={styles.footer}>
               {typeof cancelButton === 'string' && (
                 <Button variant="secondary" rounded="medium" size="large" type="button" asChild>
