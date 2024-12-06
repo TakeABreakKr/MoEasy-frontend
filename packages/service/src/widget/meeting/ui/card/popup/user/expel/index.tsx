@@ -8,8 +8,6 @@ import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { XIcon } from '@moeasy/storybook/ui/icon';
 import { delay } from '@moeasy/storybook/utils/lib/delay';
 
-import * as styles from '../../../card.css';
-
 type MeetingExpelProps = {
   memberName: string;
 };
@@ -26,8 +24,8 @@ export function MeetingExpel({ memberName }: MeetingExpelProps) {
   });
 
   return (
-    <ModalContent className={styles.popupContainer} contentDraggable>
-      <div className={styles.popupHeader}>
+    <ModalContent className={modalStyles.container({ size: 'alert', padding: 'small' })} contentDraggable>
+      <div className={modalStyles.header}>
         <Button asChild variant="dark" rounded="full" size="icon" type="button">
           <ModalClose>
             <XIcon />
@@ -53,9 +51,9 @@ export function MeetingExpel({ memberName }: MeetingExpelProps) {
 export function 내보내기({ memberName, onExpel }: { memberName: string; onExpel: () => void }) {
   return (
     <>
-      <div className={styles.popupContent}>
-        <div className={styles.popupTitle}>모임원 강제퇴장</div>
-        <div className={styles.popupDesc}>
+      <div className={modalStyles.popupContent}>
+        <div className={modalStyles.popupTitle}>모임원 강제퇴장</div>
+        <div className={modalStyles.popupDesc}>
           <strong>{memberName}</strong>님을 모임에서 탈퇴하시겠습니까?
         </div>
       </div>
@@ -73,9 +71,9 @@ export function 내보내기({ memberName, onExpel }: { memberName: string; onEx
 
 export function 내보내기완료({ memberName }: { memberName: string }) {
   return (
-    <div className={styles.popupContent}>
-      <div className={styles.popupTitle}>강제퇴장 완료</div>
-      <div className={styles.popupDesc}>
+    <div className={modalStyles.popupContent}>
+      <div className={modalStyles.popupTitle}>강제퇴장 완료</div>
+      <div className={modalStyles.popupDesc}>
         <strong>{memberName}</strong>님을 모임에서 퇴장하였습니다.
       </div>
     </div>

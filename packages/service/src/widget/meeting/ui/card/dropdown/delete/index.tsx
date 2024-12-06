@@ -8,8 +8,6 @@ import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { XIcon } from '@moeasy/storybook/ui/icon';
 import { delay } from '@moeasy/storybook/utils/lib/delay';
 
-import * as styles from '../../card.css';
-
 const steps = createFunnelSteps<{}>().extends('삭제하기').extends('삭제완료').build();
 
 export function MeetingDeleteModal({ meetingId }: { meetingId: string }) {
@@ -23,8 +21,8 @@ export function MeetingDeleteModal({ meetingId }: { meetingId: string }) {
   });
 
   return (
-    <ModalContent className={styles.popupContainer}>
-      <div className={styles.popupHeader}>
+    <ModalContent className={modalStyles.container({ size: 'alert', padding: 'small' })}>
+      <div className={modalStyles.header}>
         <Button asChild variant="dark" rounded="full" size="icon" type="button">
           <ModalClose>
             <XIcon />
@@ -61,8 +59,8 @@ function 삭제하기({ onDelete }: { onDelete: () => void }) {
           position: 'relative',
         })}
       >
-        <div className={styles.popupTitle}>모임 삭제</div>
-        <div className={styles.popupDesc}>
+        <div className={modalStyles.popupTitle}>모임 삭제</div>
+        <div className={modalStyles.popupDesc}>
           삭제할 경우 복구할 수 없습니다.
           <br />
           모임을 삭제하시겠습니까?
@@ -93,8 +91,8 @@ function 삭제완료() {
         position: 'relative',
       })}
     >
-      <div className={styles.popupTitle}>모임 삭제</div>
-      <div className={styles.popupDesc}>모임이 삭제되었습니다.</div>
+      <div className={modalStyles.popupTitle}>모임 삭제</div>
+      <div className={modalStyles.popupDesc}>모임이 삭제되었습니다.</div>
     </div>
   );
 }

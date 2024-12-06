@@ -9,8 +9,6 @@ import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { XIcon } from '@moeasy/storybook/ui/icon';
 import { delay } from '@moeasy/storybook/utils/lib/delay';
 
-import * as styles from '../../card.css';
-
 const steps = createFunnelSteps<{}>().extends('탈퇴하기').extends('탈퇴완료').build();
 
 export function MeetingWithdrawal({ meetingId, authority }: { meetingId: string; authority?: MeetingAuthority }) {
@@ -24,8 +22,8 @@ export function MeetingWithdrawal({ meetingId, authority }: { meetingId: string;
   });
 
   return (
-    <ModalContent className={styles.popupContainer} contentDraggable>
-      <div className={styles.popupHeader}>
+    <ModalContent className={modalStyles.container({ size: 'alert', padding: 'small' })} contentDraggable>
+      <div className={modalStyles.header}>
         <Button asChild variant="dark" rounded="full" size="icon" type="button">
           <ModalClose>
             <XIcon />
@@ -62,8 +60,8 @@ function 모임탈퇴하기({ authority, onWithdrawal }: { authority?: MeetingAu
         position: 'relative',
       })}
     >
-      <div className={styles.popupTitle}>모임에서 탈퇴</div>
-      <div className={styles.popupDesc}>
+      <div className={modalStyles.popupTitle}>모임에서 탈퇴</div>
+      <div className={modalStyles.popupDesc}>
         {authority !== 'MEMBER' && (
           <>
             [매니저]권한으로 있는 모임에서 탈퇴할 경우
@@ -97,8 +95,8 @@ function 모임탈퇴완료() {
         position: 'relative',
       })}
     >
-      <div className={styles.popupTitle}>모임에서 탈퇴</div>
-      <div className={styles.popupDesc}>모임에서 탈퇴하였습니다</div>
+      <div className={modalStyles.popupTitle}>모임에서 탈퇴</div>
+      <div className={modalStyles.popupDesc}>모임에서 탈퇴하였습니다</div>
     </div>
   );
 }

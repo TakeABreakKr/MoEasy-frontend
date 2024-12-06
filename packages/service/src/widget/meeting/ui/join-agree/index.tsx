@@ -1,12 +1,10 @@
 'use client';
 
 import clsx from 'clsx';
-import { overlay } from 'overlay-kit';
 
-import { usePathnameChange } from '@/shared/hooks/use-pathname-change';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
+import { alertCall } from '@/shared/utils/alert-call';
 
-import { useOnEscape } from '@moeasy/storybook/hooks/use-on-escape';
 import { Button } from '@moeasy/storybook/ui/button';
 import {
   CardDescription,
@@ -79,18 +77,15 @@ const onApplyDummy = async () => {
       : random < 0.7
         ? meetingWaitingMesseges.agree.fail
         : meetingWaitingMesseges.agree.exceed;
-  overlay.open(({ unmount }) => {
-    return <MeetingJoinSubPopup unmount={unmount} title={result.title} description={result.description()} />;
-  });
+
+  alertCall({ title: result.title, message: result.description() });
 };
 
 const onRejectDummy = async () => {
   await delay(1000);
   const random = Math.random();
   const result = random < 0.5 ? meetingWaitingMesseges.reject.success : meetingWaitingMesseges.reject.fail;
-  overlay.open(({ unmount }) => {
-    return <MeetingJoinSubPopup unmount={unmount} title={result.title} description={result.description()} />;
-  });
+  alertCall({ title: result.title, message: result.description() });
 };
 
 /**
@@ -222,38 +217,6 @@ function MeetingWaitingUser({ userName = 'Kim moeasy' }: { userName?: string }) 
         </button>
       </div>
     </div>
-  );
-}
-
-function MeetingJoinSubPopup({
-  unmount,
-  title,
-  description,
-}: {
-  unmount: () => void;
-  title: React.ReactNode;
-  description: React.ReactNode;
-}) {
-  usePathnameChange(unmount);
-  useOnEscape(true, unmount);
-  return (
-    <Modal open>
-      <ModalPortal>
-        <ModalOverlay className={modalStyles.overlay}>
-          <ModalContent className={modalStyles.container({ size: 'alert', padding: 'small' })}>
-            <div className={modalStyles.header}>
-              <Button size="icon" rounded="full" onClick={unmount}>
-                <XIcon />
-              </Button>
-            </div>
-            <div className={modalStyles.popupContent}>
-              <h2 className={modalStyles.popupTitle}>{title}</h2>
-              <div className={modalStyles.popupDesc}>{description}</div>
-            </div>
-          </ModalContent>
-        </ModalOverlay>
-      </ModalPortal>
-    </Modal>
   );
 }
 

@@ -3,21 +3,17 @@
 import { useEffect, useReducer, useState } from 'react';
 import Link from 'next/link';
 import { createFunnelSteps, useFunnel } from '@use-funnel/browser';
-import { overlay } from 'overlay-kit';
 
 import { CreateMeetingType } from '@/entities/meeting/api';
 import * as styles from '@/shared/style/create-form/index.css';
-import * as popupStyles from '@/shared/style/popup/index.css';
+import { alertCall } from '@/shared/utils/alert-call';
 import { objectReducer } from '@/shared/utils/object-reducer';
 
 import { Button } from '@moeasy/storybook/ui/button';
 import { FormCreateUnderLine } from '@moeasy/storybook/ui/create/step-button';
 import { CreateStepList } from '@moeasy/storybook/ui/create/step-list';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
-import { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal } from '@moeasy/storybook/ui/dialog';
-import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
-import { XIcon } from '@moeasy/storybook/ui/icon';
 import { Input } from '@moeasy/storybook/ui/input';
 import { Label } from '@moeasy/storybook/ui/label/label';
 import { Tag } from '@moeasy/storybook/ui/tag';
@@ -358,37 +354,7 @@ function 인원제한입력({
         <button
           type="button"
           className={formStyles.navButton}
-          onClick={() => {
-            overlay.open(({ isOpen, unmount }) => {
-              return (
-                <Modal open={isOpen}>
-                  <ModalPortal>
-                    <ModalOverlay className={modalStyles.overlay}>
-                      <ModalContent className={popupStyles.popupContainer}>
-                        <div className={popupStyles.popupHeader}>
-                          <Button asChild variant="dark" rounded="full" size="icon" type="button">
-                            <ModalClose onClick={unmount}>
-                              <XIcon />
-                            </ModalClose>
-                          </Button>
-                        </div>
-                        <div className={popupStyles.popupContent}>
-                          <div className={popupStyles.popupDesc}>모임 생성에 성공했습니다.</div>
-                        </div>
-                        <div className={popupStyles.footer}>
-                          <Button size="large" rounded="medium" asChild>
-                            <Link href="/meeting" onClick={unmount}>
-                              확인
-                            </Link>
-                          </Button>
-                        </div>
-                      </ModalContent>
-                    </ModalOverlay>
-                  </ModalPortal>
-                </Modal>
-              );
-            });
-          }}
+          onClick={() => alertCall({ message: '모임 생성에 성공했습니다.', href: '/meeting' })}
         >
           다음
         </button>
