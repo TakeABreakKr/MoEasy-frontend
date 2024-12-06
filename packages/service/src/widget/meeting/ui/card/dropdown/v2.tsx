@@ -5,6 +5,7 @@ import { MeetingAuthority } from '@/entities';
 
 import { CardTrigger, CardTriggerItem } from '@moeasy/storybook/ui/card/compound-card';
 import { Modal, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
+import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { Separator } from '@moeasy/storybook/ui/separator';
 
 import { escapePopup, isManagerAutorized } from '../../../utils';
@@ -12,8 +13,6 @@ import { escapePopup, isManagerAutorized } from '../../../utils';
 import { MeetingDeleteModal } from './delete';
 import { MeetingInviteModal } from './invite';
 import { MeetingWithdrawal } from './withdrawal';
-
-import * as styles from '../card.css';
 
 const MeetingDropDownItems = ['수정', '초대', '탈퇴', '삭제'] as const;
 export type MeetingDropDownEnum = (typeof MeetingDropDownItems)[number];
@@ -64,7 +63,7 @@ export function MeetingCardDropDown({ meetingId, authority, onEscape = escapePop
         )}
       </CardTrigger>
       <ModalPortal>
-        <ModalOverlay className={styles.popupOverlay}>
+        <ModalOverlay className={modalStyles.overlay}>
           {menu === '초대' && <MeetingInviteModal meetingId={meetingId} />}
           {menu === '탈퇴' && <MeetingWithdrawal meetingId={meetingId} authority={authority} />}
           {menu === '삭제' && <MeetingDeleteModal meetingId={meetingId} />}

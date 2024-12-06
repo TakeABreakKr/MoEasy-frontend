@@ -20,6 +20,7 @@ import {
   CardWrapper,
 } from '@moeasy/storybook/ui/card/compound-card';
 import { Modal, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
+import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { ChevronDown, XIcon } from '@moeasy/storybook/ui/icon';
 import { NameTag } from '@moeasy/storybook/ui/tag';
 import { Toggle } from '@moeasy/storybook/ui/toggle';
@@ -77,7 +78,7 @@ export function MemberCard({
     );
   }
   return (
-    <div className={styles.popupOverlay}>
+    <div className={modalStyles.overlay}>
       <CardWrapper>{renderComponent}</CardWrapper>
     </div>
   );
@@ -232,7 +233,7 @@ function UserCardDropDown({ member, meetingId }: { member: MemberType; meetingId
         </CardTriggerItem>
       </CardTrigger>
       <ModalPortal>
-        <ModalOverlay className={styles.popupOverlay}>
+        <ModalOverlay className={modalStyles.overlay}>
           {menu === '퇴장' && <MeetingExpel memberName={member.username} />}
         </ModalOverlay>
       </ModalPortal>

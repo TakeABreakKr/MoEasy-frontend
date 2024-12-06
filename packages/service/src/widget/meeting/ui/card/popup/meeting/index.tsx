@@ -17,13 +17,12 @@ import {
   CardTitle,
   CardWrapper,
 } from '@moeasy/storybook/ui/card/compound-card';
+import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { BookMarkIcon, XIcon } from '@moeasy/storybook/ui/icon';
 import { NameTag } from '@moeasy/storybook/ui/tag';
 import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 import { MeetingCardDropDown, MeetingDropDownEnum } from '../../dropdown/v2';
-
-import * as styles from '../../card.css';
 
 export type toMemberCardCallback = (memberId: string) => void;
 
@@ -40,7 +39,7 @@ export function MeetingPopupCard({
   if (loading) renderComponent = <div>loading...</div>;
   if (error) renderComponent = <MeetingPopupCardContentErrorFallback refetch={refetch} />;
   if (data) renderComponent = <MeetingPopupCardContent meeting={data} toMemberCard={toMemberCard} />;
-  return <div className={styles.popupOverlay}>{renderComponent}</div>;
+  return <div className={modalStyles.overlay}>{renderComponent}</div>;
 }
 
 /**

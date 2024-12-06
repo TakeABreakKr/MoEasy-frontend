@@ -1,12 +1,10 @@
 'use client';
 
 import clsx from 'clsx';
-import { overlay } from 'overlay-kit';
 
-import { usePathnameChange } from '@/shared/hooks/use-pathname-change';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
+import { alertCall } from '@/shared/utils/alert-call';
 
-import { useOnEscape } from '@moeasy/storybook/hooks/use-on-escape';
 import { Button } from '@moeasy/storybook/ui/button';
 import {
   CardDescription,
@@ -23,7 +21,6 @@ import { ChevronDown, UserIcon, XIcon } from '@moeasy/storybook/ui/icon';
 import { Text } from '@moeasy/storybook/ui/text';
 import { delay } from '@moeasy/storybook/utils/lib/delay';
 
-import * as cardStyles from '../card/card.css';
 import * as styles from './join-agree.css';
 
 const meetingWaitingMesseges = {
@@ -80,18 +77,15 @@ const onApplyDummy = async () => {
       : random < 0.7
         ? meetingWaitingMesseges.agree.fail
         : meetingWaitingMesseges.agree.exceed;
-  overlay.open(({ unmount }) => {
-    return <MeetingJoinSubPopup unmount={unmount} title={result.title} description={result.description()} />;
-  });
+
+  alertCall({ title: result.title, message: result.description() });
 };
 
 const onRejectDummy = async () => {
   await delay(1000);
   const random = Math.random();
   const result = random < 0.5 ? meetingWaitingMesseges.reject.success : meetingWaitingMesseges.reject.fail;
-  overlay.open(({ unmount }) => {
-    return <MeetingJoinSubPopup unmount={unmount} title={result.title} description={result.description()} />;
-  });
+  alertCall({ title: result.title, message: result.description() });
 };
 
 /**
@@ -105,7 +99,7 @@ export function MeetingJoinAgreePopup() {
       </ModalTrigger>
       <ModalPortal>
         <ModalOverlay className={modalStyles.overlay}>
-          <ModalContent className={modalStyles.content({ size: 'medium' })}>
+          <ModalContent className={modalStyles.container({ size: 'medium' })}>
             <div
               className={sprinkles({
                 display: 'flex',
@@ -208,7 +202,7 @@ function MeetingWaitingUser({ userName = 'Kim moeasy' }: { userName?: string }) 
             </button>
           </ModalTrigger>
           <ModalPortal>
-            <ModalOverlay className={cardStyles.popupOverlay}>
+            <ModalOverlay className={modalStyles.overlay}>
               <MeetingWaitingUserInfo userName={userName} explanation={'description'} />
             </ModalOverlay>
           </ModalPortal>
@@ -223,38 +217,6 @@ function MeetingWaitingUser({ userName = 'Kim moeasy' }: { userName?: string }) 
         </button>
       </div>
     </div>
-  );
-}
-
-function MeetingJoinSubPopup({
-  unmount,
-  title,
-  description,
-}: {
-  unmount: () => void;
-  title: React.ReactNode;
-  description: React.ReactNode;
-}) {
-  usePathnameChange(unmount);
-  useOnEscape(true, unmount);
-  return (
-    <Modal open>
-      <ModalPortal>
-        <ModalOverlay className={cardStyles.popupOverlay}>
-          <ModalContent className={cardStyles.popupContainer}>
-            <div className={cardStyles.popupHeader}>
-              <Button size="icon" rounded="full" onClick={unmount}>
-                <XIcon />
-              </Button>
-            </div>
-            <div className={cardStyles.popupContent}>
-              <h2 className={cardStyles.popupTitle}>{title}</h2>
-              <div className={cardStyles.popupDesc}>{description}</div>
-            </div>
-          </ModalContent>
-        </ModalOverlay>
-      </ModalPortal>
-    </Modal>
   );
 }
 
