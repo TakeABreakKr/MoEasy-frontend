@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
 
 import { useIntersectionObserver } from '../../utils/use-intersection-observer';
-import { AlertTitle } from '../alert/alert';
 
 import { List, ListContent, ListFooter, ListItemType } from '.';
 
@@ -19,7 +18,7 @@ function LISTSAMPLE({ list = [], dispatchKeyword, ...props }: ComponentPropsWith
 
   return (
     <div className={popupContainer}>
-      <AlertTitle>모임원 선택</AlertTitle>
+      <h2>모임원 선택</h2>
       <List
         {...props}
         list={userList}

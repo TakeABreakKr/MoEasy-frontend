@@ -1,35 +1,82 @@
+import { isValidElement } from 'react';
+import { RecipeVariants } from '@vanilla-extract/recipes';
+
+import Link from 'next/link';
+
+import { Button } from '../button';
+import { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal, type ModalProps, ModalTrigger } from '../dialog';
 import { XIcon } from '../icon';
 
-import { Alert, AlertCloseButton, AlertContent, AlertMessage, AlertTitle } from './alert';
+import * as styles from '../dialog/dialog.css';
 
-import { closeWrapper } from './alert.css';
+export type AlertProps = ModalProps & {
+  title?: string;
+  message?: string;
+  close?: () => void;
+  confirmButton?: React.ReactNode;
+  cancelButton?: React.ReactNode;
+  href?: string;
+  children?: React.ReactNode;
+} & RecipeVariants<typeof styles.container>;
 
-type Props = {
-  title?: string | JSX.Element;
-  message?: string | JSX.Element;
-  open?(): void;
-  close?(): void;
-  closeVisible?: boolean;
-};
-
-export function CommonAlert({ title, message, open, close, closeVisible }: Props) {
+export function SimpleAlert({
+  title,
+  message,
+  close,
+  size = 'alert',
+  padding = 'small',
+  cancelButton,
+  confirmButton = '확인',
+  children,
+  href,
+  ...props
+}: AlertProps) {
   return (
-    <Alert isOpen>
-      <AlertContent>
-        {closeVisible && (
-          <div className={closeWrapper}>
-            <AlertCloseButton variant="dark" rounded="full" size="icon">
-              <XIcon width={15} height={15} />
-            </AlertCloseButton>
-          </div>
-        )}
-        {title && <AlertTitle>{title}</AlertTitle>}
-        {message && <AlertMessage>{message}</AlertMessage>}
-
-        <AlertCloseButton size="medium" onClick={close}>
-          확인
-        </AlertCloseButton>
-      </AlertContent>
-    </Alert>
+    <Modal {...props}>
+      {isValidElement(children) && <ModalTrigger asChild>{children}</ModalTrigger>}
+      <ModalPortal>
+        <ModalOverlay className={styles.overlay}>
+          <ModalContent className={styles.container({ size, padding })}>
+            <div className={styles.header}>
+              <Button asChild variant="dark" rounded="full" size="icon" type="button">
+                <ModalClose onClick={close}>
+                  <XIcon />
+                </ModalClose>
+              </Button>
+            </div>
+            <pre className={styles.popupContent}>
+              <h2 className={styles.popupTitle}>{title}</h2>
+              <div className={styles.popupDesc}>{message}</div>
+            </pre>
+            <div className={styles.footer}>
+              {typeof cancelButton === 'string' && (
+                <Button variant="secondary" rounded="medium" size="large" type="button" asChild>
+                  <ModalClose onClick={close}>{cancelButton}</ModalClose>
+                </Button>
+              )}
+              {isValidElement(cancelButton) && (
+                <ModalClose onClick={close} asChild>
+                  {cancelButton}
+                </ModalClose>
+              )}
+              {typeof confirmButton === 'string' && (
+                <Button size="large" rounded="medium" type="button" onClick={close} asChild>
+                  {href ? <Link href={href}>{confirmButton}</Link> : <ModalClose>{confirmButton}</ModalClose>}
+                </Button>
+              )}
+              {isValidElement(confirmButton) && (
+                <ModalClose onClick={close} asChild>
+                  {confirmButton}
+                </ModalClose>
+              )}
+            </div>
+          </ModalContent>
+        </ModalOverlay>
+      </ModalPortal>
+    </Modal>
   );
+}
+
+export function SimpleConfirm({ cancelButton = '취소', ...props }: AlertProps) {
+  return <SimpleAlert {...props} cancelButton={cancelButton} />;
 }

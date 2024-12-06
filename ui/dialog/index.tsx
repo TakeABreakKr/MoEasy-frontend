@@ -184,4 +184,4 @@ const ModalClose = forwardRef<HTMLButtonElement, ModalCloseProps>(function (
 });
 ModalClose.displayName = 'ModalClose';
 
-export { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal, ModalTrigger };
+export { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal, type ModalProps, ModalTrigger };
