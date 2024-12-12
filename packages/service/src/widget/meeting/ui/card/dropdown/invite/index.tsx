@@ -4,6 +4,7 @@ import { copyText } from '@/shared/utils/copy-text';
 
 import { Button } from '@moeasy/storybook/ui/button';
 import { ModalClose, ModalContent } from '@moeasy/storybook/ui/dialog';
+import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { XIcon } from '@moeasy/storybook/ui/icon';
 
 import * as styles from '../../card.css';
@@ -23,8 +24,8 @@ export function MeetingInviteModal({ meetingId }: { meetingId: string }) {
   });
 
   return (
-    <ModalContent className={styles.popupContainer}>
-      <div className={styles.popupHeader}>
+    <ModalContent className={modalStyles.container({ size: 'alert', padding: 'small' })}>
+      <div className={modalStyles.header}>
         <Button asChild variant="dark" rounded="full" size="icon" type="button">
           <ModalClose>
             <XIcon />
@@ -48,9 +49,9 @@ function 초대하기({ meetingId, onInvite }: { meetingId: string; onInvite: ()
   };
   return (
     <>
-      <div className={styles.popupContent}>
-        <div className={styles.popupTitle}>모임으로 초대</div>
-        <div className={styles.popupDesc}>
+      <div className={modalStyles.popupContent}>
+        <div className={modalStyles.popupTitle}>모임으로 초대</div>
+        <div className={modalStyles.popupDesc}>
           아래 기재된 링크를 친구에게 공유해주세요!
           <br />
           (7일 후 링크가 만료됩니다.)
@@ -66,9 +67,9 @@ function 초대하기({ meetingId, onInvite }: { meetingId: string; onInvite: ()
 
 function 초대완료() {
   return (
-    <div className={styles.popupContent}>
-      <div className={styles.popupTitle}>모임 코드가 복사 되었습니다.</div>
-      <div className={styles.popupDesc}>모임코드를 공유해서 친구를 초대해보세요.</div>
+    <div className={modalStyles.popupContent}>
+      <div className={modalStyles.popupTitle}>모임 코드가 복사 되었습니다.</div>
+      <div className={modalStyles.popupDesc}>모임코드를 공유해서 친구를 초대해보세요.</div>
     </div>
   );
 }

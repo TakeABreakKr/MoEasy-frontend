@@ -1,22 +1,18 @@
 'use client';
 
 import { useEffect, useReducer, useState } from 'react';
-import Link from 'next/link';
 import { createFunnelSteps, useFunnel } from '@use-funnel/browser';
-import { overlay } from 'overlay-kit';
 
 import { CreateMeetingType } from '@/entities/meeting/api';
 import * as styles from '@/shared/style/create-form/index.css';
-import * as popupStyles from '@/shared/style/popup/index.css';
+import { alertCall } from '@/shared/utils/alert-call';
 import { objectReducer } from '@/shared/utils/object-reducer';
 
 import { Button } from '@moeasy/storybook/ui/button';
-import { FormCreateUnderLine } from '@moeasy/storybook/ui/create/step-button';
+import { CreateButtonCommon, CreateButtonFirst, FormCreateUnderLine } from '@moeasy/storybook/ui/create/step-button';
 import { CreateStepList } from '@moeasy/storybook/ui/create/step-list';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
-import { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal } from '@moeasy/storybook/ui/dialog';
 import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
-import { XIcon } from '@moeasy/storybook/ui/icon';
 import { Input } from '@moeasy/storybook/ui/input';
 import { Label } from '@moeasy/storybook/ui/label/label';
 import { Tag } from '@moeasy/storybook/ui/tag';
@@ -154,20 +150,7 @@ function 모임명및소개({
           />
         </label>
       </div>
-      <div className={formStyles.navigation}>
-        <Link className={formStyles.navButton} href="/mypage">
-          이전
-        </Link>
-        <button
-          type="button"
-          className={formStyles.navButton}
-          onClick={() => {
-            onNextStep(state);
-          }}
-        >
-          다음
-        </button>
-      </div>
+      <CreateButtonFirst prevHref="/mypage" onNextStep={() => onNextStep(state)} />
     </>
   );
 }
@@ -189,19 +172,12 @@ function ThumbnailInputForm({
   return (
     <>
       <div className={formStyles.formGroup}>
-        <div className={formStyles.label}>
+        <label className={formStyles.label}>
           <span>썸네일</span>
           <ImageUpload selectedFile={file} onImageUpload={setFile} initialPreview={thumbnail} />
-        </div>
+        </label>
       </div>
-      <div className={formStyles.navigation}>
-        <button type="button" className={formStyles.navButton} onClick={onPrevStep}>
-          이전
-        </button>
-        <button type="button" className={formStyles.navButton} onClick={() => onNextStep({ file })}>
-          다음
-        </button>
-      </div>
+      <CreateButtonCommon onPrevStep={onPrevStep} onNextStep={() => onNextStep({ file })} />
     </>
   );
 }
@@ -270,14 +246,7 @@ function 키워드입력({
           </div>
         </div>
       </div>
-      <div className={formStyles.navigation}>
-        <button type="button" className={formStyles.navButton} onClick={onPrevStep}>
-          이전
-        </button>
-        <button type="button" className={formStyles.navButton} onClick={() => onNextStep({ keywords })}>
-          다음
-        </button>
-      </div>
+      <CreateButtonCommon onPrevStep={onPrevStep} onNextStep={() => onNextStep({ keywords })} />
     </>
   );
 }
@@ -350,48 +319,10 @@ function 인원제한입력({
           </div>
         </fieldset> */}
       </div>
-      <div className={formStyles.navigation}>
-        <button type="button" className={formStyles.navButton} onClick={onPrevStep}>
-          이전
-        </button>
-        <button
-          type="button"
-          className={formStyles.navButton}
-          onClick={() => {
-            overlay.open(({ isOpen, unmount }) => {
-              return (
-                <Modal open={isOpen}>
-                  <ModalPortal>
-                    <ModalOverlay className={popupStyles.popupOverlay}>
-                      <ModalContent className={popupStyles.popupContainer}>
-                        <div className={popupStyles.popupHeader}>
-                          <Button asChild variant="dark" rounded="full" size="icon" type="button">
-                            <ModalClose onClick={unmount}>
-                              <XIcon />
-                            </ModalClose>
-                          </Button>
-                        </div>
-                        <div className={popupStyles.popupContent}>
-                          <div className={popupStyles.popupDesc}>모임 생성에 성공했습니다.</div>
-                        </div>
-                        <div className={popupStyles.footer}>
-                          <Button size="large" rounded="medium" asChild>
-                            <Link href="/meeting" onClick={unmount}>
-                              확인
-                            </Link>
-                          </Button>
-                        </div>
-                      </ModalContent>
-                    </ModalOverlay>
-                  </ModalPortal>
-                </Modal>
-              );
-            });
-          }}
-        >
-          다음
-        </button>
-      </div>
+      <CreateButtonCommon
+        onPrevStep={onPrevStep}
+        onNextStep={() => alertCall({ message: '모임 생성에 성공했습니다.', href: '/meeting' })}
+      />
     </>
   );
 }

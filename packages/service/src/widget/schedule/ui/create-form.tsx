@@ -1,24 +1,20 @@
 'use client';
 
 import { useEffect, useReducer, useState } from 'react';
-import Link from 'next/link';
 import { createFunnelSteps, useFunnel } from '@use-funnel/browser';
-import { overlay } from 'overlay-kit';
 
 import { CreateScheduleType } from '@/entities/schedule/api';
 import { useScopedI18n } from '@/locales/clients';
 import * as styles from '@/shared/style/create-form/index.css';
-import * as popupStyles from '@/shared/style/popup/index.css';
+import { alertCall } from '@/shared/utils/alert-call';
 import { objectReducer } from '@/shared/utils/object-reducer';
 
-import { Button, SearchButton } from '@moeasy/storybook/ui/button';
+import { SearchButton } from '@moeasy/storybook/ui/button';
 import Calendar from '@moeasy/storybook/ui/calendar/calendar';
 import { Checkbox } from '@moeasy/storybook/ui/checkbox';
-import { FormCreateUnderLine } from '@moeasy/storybook/ui/create/step-button';
+import { CreateButtonCommon, CreateButtonFirst, FormCreateUnderLine } from '@moeasy/storybook/ui/create/step-button';
 import { CreateStepList } from '@moeasy/storybook/ui/create/step-list';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
-import { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal } from '@moeasy/storybook/ui/dialog';
-import { XIcon } from '@moeasy/storybook/ui/icon';
 import { Input } from '@moeasy/storybook/ui/input';
 import { Tag } from '@moeasy/storybook/ui/tag';
 import { Textarea } from '@moeasy/storybook/ui/textarea';
@@ -178,20 +174,7 @@ function 스케쥴이름및소개({
           />
         </label>
       </div>
-      <div className={formStyles.navigation}>
-        <Link className={formStyles.navButton} href="/mypage">
-          이전
-        </Link>
-        <button
-          type="button"
-          className={formStyles.navButton}
-          onClick={() => {
-            onNextStep(state);
-          }}
-        >
-          다음
-        </button>
-      </div>
+      <CreateButtonFirst prevHref="/mypage" onNextStep={() => onNextStep(state)} />
     </>
   );
 }
@@ -259,20 +242,7 @@ function 스케쥴시간입력({
           </div>
         </div>
       </div>
-      <div className={formStyles.navigation}>
-        <button type="button" className={formStyles.navButton} onClick={onPrevStep}>
-          이전
-        </button>
-        <button
-          type="button"
-          className={formStyles.navButton}
-          onClick={() => {
-            onNextStep(state);
-          }}
-        >
-          다음
-        </button>
-      </div>
+      <CreateButtonCommon onPrevStep={onPrevStep} onNextStep={() => onNextStep(state)} />
     </>
   );
 }
@@ -321,20 +291,7 @@ function 스케쥴리마인더입력({
           <div className={styles.tagListGradient} />
         </div>
       </div>
-      <div className={formStyles.navigation}>
-        <button type="button" className={formStyles.navButton} onClick={onPrevStep}>
-          이전
-        </button>
-        <button
-          type="button"
-          className={formStyles.navButton}
-          onClick={() => {
-            onNextStep({ reminder });
-          }}
-        >
-          다음
-        </button>
-      </div>
+      <CreateButtonCommon onPrevStep={onPrevStep} onNextStep={() => onNextStep({ reminder })} />
     </>
   );
 }
@@ -412,48 +369,10 @@ function 스케쥴공지입력({
           />
         </fieldset>
       </div>
-      <div className={formStyles.navigation}>
-        <button type="button" className={formStyles.navButton} onClick={onPrevStep}>
-          이전
-        </button>
-        <button
-          type="button"
-          className={formStyles.navButton}
-          onClick={() => {
-            overlay.open(({ isOpen, unmount }) => {
-              return (
-                <Modal open={isOpen}>
-                  <ModalPortal>
-                    <ModalOverlay className={popupStyles.popupOverlay}>
-                      <ModalContent className={popupStyles.popupContainer}>
-                        <div className={popupStyles.popupHeader}>
-                          <Button asChild variant="dark" rounded="full" size="icon" type="button">
-                            <ModalClose onClick={unmount}>
-                              <XIcon />
-                            </ModalClose>
-                          </Button>
-                        </div>
-                        <div className={popupStyles.popupContent}>
-                          <div className={popupStyles.popupDesc}>일정 생성에 성공했습니다.</div>
-                        </div>
-                        <div className={popupStyles.footer}>
-                          <Button size="large" rounded="medium" asChild>
-                            <Link href="/meeting" onClick={unmount}>
-                              확인
-                            </Link>
-                          </Button>
-                        </div>
-                      </ModalContent>
-                    </ModalOverlay>
-                  </ModalPortal>
-                </Modal>
-              );
-            });
-          }}
-        >
-          다음
-        </button>
-      </div>
+      <CreateButtonCommon
+        onPrevStep={onPrevStep}
+        onNextStep={() => alertCall({ message: '일정 생성에 성공했습니다.', href: '/schedule' })}
+      />
     </>
   );
 }
