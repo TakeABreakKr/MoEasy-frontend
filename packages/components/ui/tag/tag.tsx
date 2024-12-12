@@ -18,12 +18,13 @@ export const Tag = ({ variant = 'light', className, isDelete, children, ...props
       {isDelete && (
         <Button
           asChild
+          type="button"
           variant={variant === 'dark' ? 'light' : 'dark'}
           className={tagStyle.deleteButton}
           rounded="full"
         >
           <span>
-            <XIcon color="white" width={8} height={8} />
+            <XIcon width={8} height={8} />
           </span>
         </Button>
       )}

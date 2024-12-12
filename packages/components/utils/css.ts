@@ -34,3 +34,5 @@ export const rem = (...values: Array<string | number>) =>
       return `${value / 16}rem`;
     })
     .join(' ');
+
+export const withHSLOpacity = (hslColor: string, opacity: string | number) => `hsla(${hslColor}, ${opacity})`;

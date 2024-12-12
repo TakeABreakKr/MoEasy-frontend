@@ -16,7 +16,7 @@ export type NameTagProps = ComponentPropsWithoutRef<typeof Button> & {
 export const NameTag = ({ asChild, userRole, className, src, children, ...props }: NameTagProps) => {
   const Comp = asChild ? Slot : 'button';
   return (
-    <Comp className={clsx(nameTagStyle.badge({ userRole, iconContain: !!src }), className)} {...props}>
+    <Comp className={clsx(nameTagStyle.badge({ userRole, iconContain: !!src }), className)} type="button" {...props}>
       {src && <NameTagIcon src={src} alt={children?.toString() ?? 'user-thumbnail'} />}
       {children}
     </Comp>
@@ -28,6 +28,6 @@ const NameTagIcon = ({
   ...props
 }: Omit<ComponentPropsWithoutRef<typeof Image>, 'width' | 'height'>) => (
   <span className={nameTagStyle.icon}>
-    <Image width={30} height={30} alt={alt} {...props} />
+    <Image width={15} height={15} alt={alt} {...props} />
   </span>
 );

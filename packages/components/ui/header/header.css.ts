@@ -1,7 +1,7 @@
 // header.css.ts
-import { style, globalStyle } from '@vanilla-extract/css';
 import { rem } from '../../utils/css';
-import { headerHeight } from '../../utils/styles/global.css';
+import { globalVars, headerHeight } from '../../utils/styles/global.css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 export const header = style({
   borderBottom: `1px solid rgba(0, 0, 0, 0.1)`,
@@ -25,20 +25,6 @@ export const headerWrapper = style({
   height: headerHeight,
 });
 
-globalStyle(`${header} svg`, {
-  display: 'inline-block',
-  verticalAlign: 'top',
-});
-
-globalStyle(`${header} h1`, {
-  fontWeight: 700,
-  fontSize: rem(20), // 20px
-  lineHeight: 1,
-  margin: `${rem(6)} 0 ${rem(6)} ${rem(10)}`, // 6px, 10px
-  display: 'inline-block',
-  verticalAlign: 'top',
-});
-
 const commonSideStyles = {
   display: 'flex',
   alignItems: 'center',
@@ -49,14 +35,16 @@ const commonSideStyles = {
 
 export const leftHandSide = style(commonSideStyles);
 
-export const rightHandSide = style(commonSideStyles);
+export const rightHandSide = style({ ...commonSideStyles, gap: rem(5) });
 
 export const linkWrapper = style({
   display: 'flex',
   alignItems: 'center',
-  gap: rem(52), // 3.25rem
+  gap: rem(30),
   listStyle: 'none',
   height: '100%',
+  color: globalVars.color.neutral.black,
+  ...globalVars.text.label.small.regular,
 });
 
 globalStyle(`${linkWrapper} li`, {
@@ -68,7 +56,7 @@ globalStyle(`${linkWrapper} li`, {
 export const active = style({
   selectors: {
     [`${linkWrapper} &`]: {
-      borderBottom: '1px solid white',
+      borderBottom: `1px solid ${globalVars.color.neutral.white}`,
       borderTop: '1px solid transparent',
     },
   },
@@ -76,10 +64,6 @@ export const active = style({
 
 globalStyle(`${header} a:visited, ${header} a:link`, {
   textDecoration: 'none',
-});
-
-globalStyle(`${linkWrapper} a:hover, ${linkWrapper} a:active`, {
-  fontWeight: 700,
 });
 
 export const welcome = style({
@@ -97,22 +81,29 @@ export const icon = style({
 });
 
 export const searchIcon = style({
-  width: rem(44), // 44px
-  height: rem(44), // 44px
-  backgroundColor: '#d9d9d9',
+  width: rem(34), // 34px
+  height: rem(34), // 34px
+  color: globalVars.color.neutral[95],
+  backgroundColor: globalVars.color.neutral[5],
   ':hover': {
-    backgroundColor: 'black',
-    color: 'white',
+    backgroundColor: globalVars.color.neutral[20],
+  },
+  ':active': {
+    backgroundColor: globalVars.color.neutral[40],
   },
 });
 
 export const userIcon = style({
-  width: rem(56), // 56px
-  height: rem(56), // 56px
-  backgroundColor: '#d9d9d9',
-  color: 'white',
+  width: rem(34), // 34px
+  height: rem(34), // 34px
+  backgroundColor: globalVars.color.neutral[5],
+  color: globalVars.color.neutral.white,
   ':hover': {
-    backgroundColor: '#969696',
-    color: '#c1c1c1',
+    backgroundColor: globalVars.color.neutral[20],
+    color: globalVars.color.neutral[3],
+  },
+  ':active': {
+    backgroundColor: globalVars.color.neutral[40],
+    color: globalVars.color.neutral[10],
   },
 });

@@ -1,7 +1,8 @@
 import React, { ChangeEvent, ComponentPropsWithoutRef, useLayoutEffect, useRef } from 'react';
 import clsx from 'clsx';
 
-import { useControlledState } from '../../utils/useControlledState';
+import { useControlledState } from '../../hooks/use-controlled-state';
+import { Delay } from '../delay';
 import { XIcon } from '../icon';
 import { validateInput } from '../input/input';
 
@@ -38,7 +39,11 @@ export const Textarea = ({
   maxLength,
   ...props
 }: AutoResizeTextareaProps) => {
-  const [value, setValue] = useControlledState(props.value, props.defaultValue);
+  const [value, setValue] = useControlledState({
+    prop: props.value,
+    defaultProp: props.defaultValue || '',
+    onChange: onValueChange,
+  });
   const currentLength = value.length;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -69,28 +74,30 @@ export const Textarea = ({
       <textarea
         ref={textareaRef}
         onChange={handleChange}
-        className={clsx(textareaStyles, inputStyles.inputVariants(), className)}
+        className={clsx(textareaStyles, inputStyles.inputVariants.classNames.base, className)}
         style={{ minHeight, maxHeight }}
         maxLength={maxLength}
         {...props}
       />
-      <span className={inputStyles.inputCtlWrapper}>
-        {currentLength !== 0 && (
-          <button className={inputStyles.resetXIconStyles} onClick={refresh}>
-            <XIcon color="#fff" />
-          </button>
-        )}
-        {maxLength && (
-          <span>
-            <span
-              className={clsx(currentLength === 0 ? inputStyles.ctlTextMax : isError && inputStyles.errorTextColor)}
-            >
-              {currentLength <= maxLength ? currentLength : maxLength}
+      <Delay ms={0}>
+        <span className={inputStyles.inputCtlWrapper}>
+          {currentLength !== 0 && (
+            <button className={inputStyles.resetXIconStyles} onClick={refresh}>
+              <XIcon color="#fff" />
+            </button>
+          )}
+          {maxLength && (
+            <span>
+              <span
+                className={clsx(currentLength === 0 ? inputStyles.ctlTextMax : isError && inputStyles.errorTextColor)}
+              >
+                {currentLength <= maxLength ? currentLength : maxLength}
+              </span>
+              <span className={inputStyles.ctlTextMax}>/{maxLength}</span>
             </span>
-            <span className={inputStyles.ctlTextMax}>/{maxLength}</span>
-          </span>
-        )}
-      </span>
+          )}
+        </span>
+      </Delay>
     </div>
   );
 };

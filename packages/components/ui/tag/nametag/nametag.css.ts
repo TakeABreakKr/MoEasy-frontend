@@ -1,27 +1,32 @@
-import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
 import { rem } from '../../../utils/css';
+import { globalVars } from '../../../utils/styles/global.css';
+import { style } from '@vanilla-extract/css';
 
 export const badge = recipe({
   base: {
     borderRadius: rem(30),
-    backgroundColor: 'white',
+    backgroundColor: globalVars.color.neutral.white,
     display: 'flex',
     alignItems: 'center',
     gap: rem(7),
-    padding: rem(4, 12),
-    height: rem(37),
+    padding: rem(2, 8, 2),
+    height: rem(20),
+    color: globalVars.color.neutral[70],
+    textWrap: 'nowrap',
     ':hover': {
-      backgroundColor: '#c6c6c6',
+      backgroundColor: globalVars.color.neutral[20],
     },
     ':active': {
-      backgroundColor: '#9a9a9a',
+      backgroundColor: globalVars.color.neutral[50],
     },
+    ...globalVars.text.label.small.regular,
   },
   variants: {
     userRole: {
       admin: {
-        backgroundColor: '#ffc83a',
+        backgroundColor: globalVars.color.yellow[60],
         ':hover': {
           backgroundColor: '#e4a810',
         },
@@ -30,7 +35,7 @@ export const badge = recipe({
         },
       },
       manager: {
-        backgroundColor: '#a7cdf9',
+        backgroundColor: globalVars.color.blue[20],
         ':hover': {
           backgroundColor: '#84afe3',
         },
@@ -39,7 +44,7 @@ export const badge = recipe({
         },
       },
       limit: {
-        backgroundColor: '#3b3b3b',
+        backgroundColor: globalVars.color.neutral[80],
         color: 'white',
       },
     },
@@ -54,10 +59,10 @@ export const badge = recipe({
       variants: { userRole: 'limit' },
       style: {
         ':hover': {
-          backgroundColor: '#3b3b3b',
+          backgroundColor: globalVars.color.neutral[95],
         },
         ':active': {
-          backgroundColor: '#3b3b3b',
+          backgroundColor: globalVars.color.neutral.black,
         },
       },
     },

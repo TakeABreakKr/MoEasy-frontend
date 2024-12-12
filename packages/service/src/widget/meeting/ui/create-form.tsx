@@ -1,148 +1,225 @@
 'use client';
 
-import { Dispatch, SetStateAction, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import clsx from 'clsx';
+import { useEffect, useReducer, useState } from 'react';
+import { createFunnelSteps, useFunnel } from '@use-funnel/browser';
 
-import { teamModifyAction } from '@/app/[locale]/meeting/action';
 import { CreateMeetingType } from '@/entities/meeting/api';
-import { createQueryString } from '@/shared/utils/utils';
+import * as styles from '@/shared/style/create-form/index.css';
+import { alertCall } from '@/shared/utils/alert-call';
+import { objectReducer } from '@/shared/utils/object-reducer';
 
-import {
-  Alert,
-  AlertCloseButton,
-  AlertContent,
-  AlertMessage,
-  AlertTitle,
-  AlertTrigger,
-} from '@moeasy/storybook/ui/alert/alert';
-import { closeWrapper } from '@moeasy/storybook/ui/alert/alert.css';
-import { Button, SearchButton } from '@moeasy/storybook/ui/button';
+import { Button } from '@moeasy/storybook/ui/button';
+import { CreateButtonCommon, CreateButtonFirst, FormCreateUnderLine } from '@moeasy/storybook/ui/create/step-button';
+import { CreateStepList } from '@moeasy/storybook/ui/create/step-list';
+import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
-import { XIcon } from '@moeasy/storybook/ui/icon';
 import { Input } from '@moeasy/storybook/ui/input';
-import { List, ListFooter, ListItemType } from '@moeasy/storybook/ui/list';
+import { Label } from '@moeasy/storybook/ui/label/label';
 import { Tag } from '@moeasy/storybook/ui/tag';
 import { Textarea } from '@moeasy/storybook/ui/textarea';
 
-import * as styles from './create-form.css';
+type CreateMeetingData = Partial<Omit<CreateMeetingType, 'thumbnail'>> & { thumbnail?: string };
 
-type CreateFormProps = {
-  action: typeof teamModifyAction;
-  data?: Partial<Omit<CreateMeetingType, 'thumbnail'> & { thumbnail: string }>;
-};
+const createStepArray = [
+  { key: 'greeting', text: '모임명/소개' },
+  { key: 'thumbnail', text: '썸네일 설정' },
+  { key: 'keywords', text: '카테고리 / 키워드' },
+  { key: 'limit', text: '인원제한 / 모임원' },
+] as const;
 
-const CreateForm = ({ action, data = {} }: CreateFormProps) => {
-  const searchParams = useSearchParams();
-  const [message, formAction] = useFormState(action, { type: 'waiting' });
-  const currentStep = Number(searchParams.get('step') || '1');
-  return (
-    <form className={styles.container} action={formAction}>
-      <div className={styles.body}>
-        <CreateFormAside step={currentStep} />
-        <CreateFormInput step={currentStep} searchParams={searchParams} />
+const steps = createFunnelSteps<CreateMeetingData>()
+  .extends('greeting')
+  .extends('thumbnail', { requiredKeys: 'name' })
+  .extends('keywords')
+  .extends('limit')
+  .build();
+
+function CreateForm() {
+  const [file, setFile] = useState<File | null>(null);
+  const funnel = useFunnel({
+    id: 'create-meeting',
+    steps,
+    initial: {
+      step: 'greeting',
+      context: {},
+    },
+  });
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted)
+    return (
+      <div className={styles.container}>
+        <form className={formStyles.formStyle}>
+          <div className={formStyles.body}>이전 입력 값 불러오는 중...</div>
+        </form>
       </div>
-      {message.type === 'success' && (
-        <Alert isOpen>
-          <AlertContent size="alert">
-            <div className={closeWrapper}>
-              <AlertCloseButton variant="dark" rounded="full" size="small" type="button">
-                <XIcon width={15} height={15} />
-              </AlertCloseButton>
-            </div>
-            <AlertMessage>{message.message}</AlertMessage>
-            <Button size="large" rounded="medium" asChild>
-              <Link href="/meeting">확인</Link>
-            </Button>
-          </AlertContent>
-        </Alert>
-      )}
-    </form>
+    );
+
+  return (
+    <div className={styles.container}>
+      <form className={formStyles.formStyle}>
+        <div className={formStyles.body}>
+          <CreateStepList steps={createStepArray} currentStep={funnel.step} />
+          <div className={formStyles.formWrapper}>
+            <funnel.Render
+              greeting={({ history, context }) => (
+                <모임명및소개
+                  name={context.name}
+                  explanation={context.explanation}
+                  onNextStep={(param) => history.push('thumbnail', { name: param.name })}
+                />
+              )}
+              thumbnail={({ history, context = {} }) => (
+                <ThumbnailInputForm
+                  thumbnail={context.thumbnail}
+                  file={file}
+                  onPrevStep={() => history.back()}
+                  onNextStep={({ file }) => {
+                    setFile(file);
+                    history.push('keywords', context);
+                  }}
+                />
+              )}
+              keywords={({ history, context }) => (
+                <키워드입력
+                  keywords={context.keywords}
+                  onPrevStep={() => history.back()}
+                  onNextStep={(param) => history.push('limit', { ...context, ...param })}
+                />
+              )}
+              limit={({ history, context }) => (
+                <인원제한입력
+                  payload={{
+                    name: '',
+                    explanation: '',
+                    keywords: [],
+                    members: [],
+                    thumbnail: file!,
+                    limit: 10,
+                  }}
+                  onPrevStep={() => history.back()}
+                />
+              )}
+            />
+          </div>
+        </div>
+      </form>
+      <FormCreateUnderLine />
+    </div>
   );
-};
+}
 
-CreateForm.displayName = 'CreateForm';
+type 모임명및소개입력값 = Pick<CreateMeetingData, 'name' | 'explanation'>;
 
-const createStepArray = ['모임명 / 소개', '썸네일 설정', '카테고리 / 키워드', '인원제한 / 모임원'];
-
-const CreateFormAside = ({ step }: { step: number }) => {
+function 모임명및소개({
+  name = '',
+  explanation = '',
+  onNextStep,
+}: 모임명및소개입력값 & { onNextStep: (param: { name: string; explanation?: string }) => void }) {
+  const [state, dispatch] = useReducer(objectReducer<{ name: string; explanation: string }>, {
+    name,
+    explanation,
+  });
   return (
     <>
-      <aside className={styles.aside}>
-        <h1 className={styles.headerH1}>모임 생성</h1>
-        <ul className={styles.asideStep}>
-          {createStepArray.map((txt, index) => (
-            <li key={index} className={clsx(styles.stepLi, step === index + 1 && styles.stepLiSelected)}>
-              <span className={clsx(styles.stepNumber, step === index + 1 && styles.numberSelected)}>{index + 1}</span>
-              <span>{txt}</span>
-            </li>
-          ))}
-        </ul>
-      </aside>
-    </>
-  );
-};
-
-const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: URLSearchParams }) => {
-  const [thumbnail, setThumbnail] = useState<File | null>(null);
-  const [keywords, setKeywords] = useState<string[]>([]);
-  const [members, setMembers] = useState<ListItemType[]>([]);
-  const limitDisabled = searchParams.get('limit') === 'disabled';
-
-  return (
-    <div className={styles.formWrapper}>
-      <div className={clsx(styles.formGroup, step !== 1 && styles.formGroupInvisible)}>
-        <label>
-          <span className={styles.label}>모임 이름</span>
+      <div className={formStyles.formGroup}>
+        <label className={formStyles.label}>
+          <span>모임 이름</span>
           <Input
             type="text"
-            className={styles.input}
+            className={formStyles.input}
             placeholder="모임 이름을 입력해주세요"
             name="name"
             maxLength={30}
-            defaultValue={searchParams.get('name') || ''}
-            onValueChange={onValueChange('name', searchParams)}
+            value={state.name}
+            onValueChange={(name) => dispatch({ name })}
           />
         </label>
-        <label>
-          <span className={styles.label}>모임 소개</span>
+        <label className={formStyles.label}>
+          <span>모임 소개</span>
           <Textarea
-            className={styles.input}
+            className={formStyles.input}
             placeholder="모임 소개를 입력해주세요"
             name="explanation"
             minLength={10}
             maxLength={100}
-            defaultValue={searchParams.get('explanation') || ''}
-            onValueChange={onValueChange('explanation', searchParams)}
+            value={state.explanation}
+            onValueChange={(explanation) => dispatch({ explanation })}
           />
         </label>
       </div>
-      <div className={clsx(styles.formGroup, step !== 2 && styles.formGroupInvisible)}>
-        <span className={styles.label}>썸네일</span>
-        <ImageUpload selectedFile={thumbnail} onImageUpload={setThumbnail} />
+      <CreateButtonFirst prevHref="/mypage" onNextStep={() => onNextStep(state)} />
+    </>
+  );
+}
+
+type ThumbnailInputType = { file: File | null };
+
+function ThumbnailInputForm({
+  thumbnail,
+  file: fileProp,
+  onPrevStep,
+  onNextStep,
+}: ThumbnailInputType & {
+  thumbnail?: string;
+  onPrevStep: () => void;
+  onNextStep: (param: ThumbnailInputType) => void;
+}) {
+  const [file, setFile] = useState<File | null>(fileProp);
+
+  return (
+    <>
+      <div className={formStyles.formGroup}>
+        <label className={formStyles.label}>
+          <span>썸네일</span>
+          <ImageUpload selectedFile={file} onImageUpload={setFile} initialPreview={thumbnail} />
+        </label>
       </div>
-      <div className={clsx(styles.formGroup, step !== 3 && styles.formGroupInvisible)}>
+      <CreateButtonCommon onPrevStep={onPrevStep} onNextStep={() => onNextStep({ file })} />
+    </>
+  );
+}
+
+type 키워드입력값 = Pick<CreateMeetingData, 'keywords'>;
+
+function 키워드입력({
+  keywords: keywordsProp = [],
+  onPrevStep,
+  onNextStep,
+}: 키워드입력값 & { onPrevStep: () => void; onNextStep: (param: 키워드입력값) => void }) {
+  const [keywords, setKeywords] = useState<string[]>(keywordsProp);
+  const [innerKeyword, setKeyword] = useState('');
+  const keywordAddDisabled = keywords.length >= 10;
+
+  return (
+    <>
+      <div className={formStyles.formGroup}>
         <label>
-          <span className={styles.label}>
+          <span className={formStyles.label}>
             키워드 설정
-            <span className={styles.detail}>키워드 5개까지 설정가능</span>
+            {keywordAddDisabled && <Label variant="error">키워드는 최대 10개까지 등록 가능합니다.</Label>}
           </span>
           <Input
             type="text"
-            className={styles.input}
+            className={formStyles.input}
             placeholder="검색창에 #키워드 를 검색하면 나의 모임이 보여요-!"
-            defaultValue={searchParams.get('keyword') || ''}
-            onValueChange={onValueChange('keyword', searchParams)}
+            name="keyword"
+            value={innerKeyword}
+            onValueChange={setKeyword}
+            disabled={keywordAddDisabled}
+            isError={keywords.length >= 10}
             onKeyUp={(e) => {
               e.preventDefault();
               if (e.key === 'Enter') {
-                const keyword = searchParams.get('keyword');
+                const keyword = e.currentTarget.value;
                 if (keyword) {
-                  setKeywords((prev) => [...prev, keyword]);
-                  onValueChange('keyword', searchParams)('');
-                  e.currentTarget.value = '';
+                  setKeywords((prev) => {
+                    if (prev.includes(keyword)) return prev;
+                    return [...prev, keyword];
+                  });
+                  setKeyword('');
                 }
               }
             }}
@@ -150,21 +227,49 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
               if (e.key === 'Enter') e.preventDefault();
             }}
           />
-          {keywords.map((keyword) => (
-            <Tag isDelete key={keyword} onClick={() => setKeywords((prev) => prev.filter((item) => item !== keyword))}>
-              {keyword}
-            </Tag>
-          ))}
         </label>
+        <div className={styles.tagWrapper}>
+          <div className={styles.tagList}>
+            {keywords.map((keyword) => (
+              <Tag
+                isDelete
+                key={keyword}
+                value={keyword}
+                data-testid="keyword-item"
+                onClick={() => setKeywords((prev) => prev.filter((item) => item !== keyword))}
+              >
+                <input readOnly hidden value={keyword} name="keywords" />
+                {keyword}
+              </Tag>
+            ))}
+            <div className={styles.tagListGradient} />
+          </div>
+        </div>
       </div>
-      <div className={clsx(styles.formGroup, step !== 4 && styles.formGroupInvisible)}>
-        <fieldset className={styles.labelWrapper}>
-          <span className={styles.label}>모임 인원</span>
+      <CreateButtonCommon onPrevStep={onPrevStep} onNextStep={() => onNextStep({ keywords })} />
+    </>
+  );
+}
+
+function 인원제한입력({
+  payload,
+  onPrevStep,
+}: {
+  payload: Omit<CreateMeetingType, 'limit'> & { limit?: number };
+  onPrevStep: () => void;
+}) {
+  const [limit, setLimit] = useState(payload.limit || 10);
+  const [limitDisabled, setLimitDisabled] = useState(false);
+
+  return (
+    <>
+      <div className={formStyles.formGroup}>
+        <fieldset className={formStyles.labelWrapper}>
+          <span className={formStyles.label}>모임 인원</span>
           <div style={{ display: 'flex', gap: 10 }}>
             {limitDisabled ? (
               <Input
-                className={styles.input}
-                style={{ flex: '1' }}
+                className={formStyles.input}
                 disabled={limitDisabled}
                 placeholder="∞"
                 name="limit"
@@ -174,129 +279,86 @@ const CreateFormInput = ({ step, searchParams }: { step: number; searchParams: U
             ) : (
               <Input
                 type="number"
-                className={styles.input}
-                style={{ flex: '1' }}
+                className={formStyles.input}
                 placeholder="모임 인원을 입력해주세요"
                 name="limit"
                 min={1}
-                value={parseInt(limitDisabled ? '10' : searchParams.get('limit') || '10')}
-                onValueChange={onValueChange('limit', searchParams)}
+                value={limit}
+                onValueChange={(limit) => setLimit(limit)}
               />
             )}
-            <Button asChild type="button" variant="primary" size="thick" rounded="medium">
-              <Link
-                href={{
-                  pathname: '/meeting/create',
-                  query: { ...Object.fromEntries(searchParams), limit: limitDisabled ? '10' : 'disabled' },
-                }}
-              >
-                제한 없음
-              </Link>
+            <Button
+              type="button"
+              variant={limitDisabled ? 'primary' : 'secondary'}
+              size="small"
+              rounded="medium"
+              onClick={() => setLimitDisabled(!limitDisabled)}
+            >
+              제한 없음
             </Button>
           </div>
         </fieldset>
-        <label className={styles.labelWrapper}>
-          <span className={styles.label}>누구와 함께</span>
-          <FriendListPopup selected={members} dispatch={setMembers} />
-          <div>
-            {members.map((member) => (
-              <Tag
-                isDelete
-                key={member.id}
-                onClick={() => setMembers((prev) => prev.filter((item) => item.id !== member.id))}
-              >
-                {member.name}
-              </Tag>
-            ))}
+        {/* <fieldset className={formStyles.labelWrapper}>
+          <span className={formStyles.label}>누구와 함께</span>
+          <FriendListPopup selected={members} dispatch={setMembers} limit={limitDisabled ? undefined : memberLimit} />
+          <div className={styles.tagWrapper}>
+            <div className={styles.tagList}>
+              {members.map((member) => (
+                <Tag
+                  isDelete
+                  key={member.id}
+                  data-testid="member-item"
+                  onClick={() => setMembers((prev) => prev.filter((item) => item.id !== member.id))}
+                >
+                  <input readOnly hidden value={member.id} name="members" />
+                  {member.name}
+                </Tag>
+              ))}
+            </div>
+            <div className={styles.tagListGradient} />
           </div>
-        </label>
+        </fieldset> */}
       </div>
-      <CreateFormButton step={step} searchParams={searchParams} />
-    </div>
-  );
-};
-
-function FriendListPopup({
-  selected,
-  dispatch,
-}: {
-  selected: ListItemType[];
-  dispatch: Dispatch<SetStateAction<ListItemType[]>>;
-}) {
-  return (
-    <Alert>
-      <AlertTrigger asChild>
-        <SearchButton>유저 닉네임을 검색해보세요.</SearchButton>
-      </AlertTrigger>
-      <AlertContent size="medium">
-        <div className={closeWrapper}>
-          <AlertCloseButton variant="dark" rounded="full" size="small" type="button">
-            <XIcon width={15} height={15} />
-          </AlertCloseButton>
-        </div>
-        <AlertTitle>모임원 모집</AlertTitle>
-        <List list={[{ id: '2', name: 'aa' }]} selected={selected}>
-          <ListFooter asChild close={dispatch}>
-            <AlertCloseButton>확인</AlertCloseButton>
-          </ListFooter>
-        </List>
-      </AlertContent>
-    </Alert>
+      <CreateButtonCommon
+        onPrevStep={onPrevStep}
+        onNextStep={() => alertCall({ message: '모임 생성에 성공했습니다.', href: '/meeting' })}
+      />
+    </>
   );
 }
 
-const CreateFormButton = ({ step, searchParams }: { step: number; searchParams: URLSearchParams }) => {
-  const searchParamsObject = Object.fromEntries(searchParams);
-  return (
-    <div className={styles.navigation}>
-      {step === 1 && (
-        <Link className={styles.navButton} href="/mypage">
-          이전
-        </Link>
-      )}
-      {step !== 1 && (
-        <Link
-          className={styles.navButton}
-          href={{
-            pathname: '/meeting/create',
-            query: { ...searchParamsObject, step: Number(searchParamsObject.step || '1') - 1 },
-          }}
-        >
-          이전
-        </Link>
-      )}
-      {step !== createStepArray.length && (
-        <Link
-          className={styles.navButton}
-          href={{
-            pathname: '/meeting/create',
-            query: { ...searchParamsObject, step: Number(searchParamsObject.step || '1') + 1 },
-          }}
-        >
-          다음
-        </Link>
-      )}
-      {step === createStepArray.length && <FormCreateSubmitButton />}
-    </div>
-  );
-};
-
-/** 값 변경시 searchParams을 변경 */
-const onValueChange = (key: string, searchParams: URLSearchParams) => (value: string | number) => {
-  window.history.replaceState(
-    null,
-    '',
-    '?' + createQueryString(searchParams, key, typeof value === 'number' ? String(value) : value),
-  );
-};
-
-function FormCreateSubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <button type="submit" className={styles.navButton} disabled={pending}>
-      {pending ? '모임 생성 중...' : '모임 생성'}
-    </button>
-  );
-}
+// function FriendListPopup({
+//   selected,
+//   dispatch,
+//   limit,
+// }: {
+//   selected: ListItemType[];
+//   dispatch: Dispatch<SetStateAction<ListItemType[]>>;
+//   limit?: number;
+// }) {
+//   return (
+//     <Alert>
+//       <AlertTrigger asChild>
+//         <SearchButton>유저 닉네임을 검색해보세요.</SearchButton>
+//       </AlertTrigger>
+//       <AlertContent size="medium">
+//         <AlertTitle>모임원 추가</AlertTitle>
+//         <List
+//           list={[
+//             { id: '2', name: 'aa' },
+//             { id: '3', name: 'javme' },
+//           ]}
+//           selected={selected}
+//           limit={limit}
+//         >
+//           <ListContent></ListContent>
+//           <ListFooter asChild close={dispatch}>
+//             <AlertCloseButton>확인</AlertCloseButton>
+//           </ListFooter>
+//         </List>
+//       </AlertContent>
+//     </Alert>
+//   );
+// }
 
 export default CreateForm;

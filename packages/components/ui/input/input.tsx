@@ -1,7 +1,9 @@
-import { ComponentProps, useRef, useState } from 'react';
+import { ComponentProps, useRef } from 'react';
 import clsx from 'clsx';
 
+import { useControlledState } from '../../hooks/use-controlled-state';
 import { contextCreator } from '../../utils/useSafeContext';
+import { Delay } from '../delay';
 import { XIcon } from '../icon';
 
 import {
@@ -66,18 +68,47 @@ export const Input = <T extends string | number>({
   className,
   onKeyUp,
   maxLength,
+  minLength,
   isError = false,
   dispatchError,
   onValueChange,
+  value: valueProps,
+  defaultValue,
   children,
   ...props
 }: InputProps<T>) => {
-  const { value, defaultValue } = props;
-  const initValuelength = typeof value === 'number' ? value : value?.length;
-  const initDefaultValueLength = typeof defaultValue === 'number' ? defaultValue : defaultValue?.length;
-
+  const parsedDefault = defaultValue ?? ((props.type === 'number' ? (props.min ?? 0) : '') as T);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [currentLength, setLength] = useState(initValuelength || initDefaultValueLength || 0);
+  const [innerValue, setInnerValue] = useControlledState<T>({
+    prop: valueProps,
+    defaultProp: parsedDefault,
+    onChange: onValueChange,
+  });
+  const currentLength = typeof innerValue === 'string' ? innerValue.length : null;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, valueAsNumber } = e.target;
+    const newValue = props.type === 'number' && !isNaN(valueAsNumber) ? valueAsNumber : value;
+
+    onValueChange?.(newValue as T);
+    props.onChange?.(e);
+
+    validateAndDispatchError(e.target);
+  };
+
+  const validateAndDispatchError = (target: HTMLInputElement) => {
+    const validationResult = validateInput(target);
+    dispatchError?.(validationResult);
+  };
+
+  const handleClear = () => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+      setInnerValue(parsedDefault);
+      onValueChange?.(parsedDefault);
+      validateAndDispatchError(inputRef.current);
+    }
+  };
 
   return (
     <InputProvider value={{ isError }}>
@@ -86,49 +117,33 @@ export const Input = <T extends string | number>({
           ref={inputRef}
           className={clsx(inputVariants({ error: isError }), className)}
           onKeyUp={(e) => {
-            if (onKeyUp) onKeyUp(e);
-            setLength(e.currentTarget.value.length);
-            const validationResult = validateInput(e.currentTarget);
-            dispatchError && dispatchError(validationResult);
+            onKeyUp?.(e);
+            if (!e.currentTarget.value) setInnerValue(parsedDefault);
+            validateAndDispatchError(e.currentTarget);
           }}
           maxLength={maxLength}
-          onChange={(e) => {
-            if (props.onChange) props.onChange(e);
-            const { value, valueAsNumber } = e.currentTarget;
-            if (onValueChange) onValueChange((isNaN(valueAsNumber) ? value : valueAsNumber) as T);
-            setLength(value.length);
-            const validationResult = validateInput(e.currentTarget);
-            dispatchError && dispatchError(validationResult);
-          }}
+          minLength={minLength}
+          onChange={handleChange}
+          value={innerValue}
           {...props}
         />
-        <span className={inputCtlWrapper}>
-          {currentLength !== 0 && (
-            <button
-              className={resetXIconStyles}
-              onClick={() => {
-                if (inputRef?.current) {
-                  inputRef.current.value = '';
-                  const { value, valueAsNumber } = inputRef.current;
-                  const validationResult = validateInput(inputRef.current);
-                  dispatchError?.(validationResult);
-                  setLength(0);
-                  onValueChange?.((isNaN(valueAsNumber) ? value : valueAsNumber) as T);
-                }
-              }}
-            >
-              <XIcon color="#fff" />
-            </button>
-          )}
-          {maxLength && (
-            <span>
-              <span className={clsx(currentLength === 0 ? ctlTextMax : isError && errorTextColor)}>
-                {currentLength <= maxLength ? currentLength : maxLength}
+        <div className={inputCtlWrapper}>
+          <Delay ms={0}>
+            {currentLength ? (
+              <button className={resetXIconStyles} onClick={handleClear}>
+                <XIcon color="#fff" />
+              </button>
+            ) : null}
+            {props.type !== 'number' && typeof currentLength == 'number' && maxLength && (
+              <span>
+                <span className={clsx(currentLength === 0 ? ctlTextMax : isError && errorTextColor)}>
+                  {currentLength <= maxLength ? currentLength : maxLength}
+                </span>
+                <span className={ctlTextMax}>/{maxLength}</span>
               </span>
-              <span className={ctlTextMax}>/{maxLength}</span>
-            </span>
-          )}
-        </span>
+            )}
+          </Delay>
+        </div>
       </div>
       {children}
     </InputProvider>

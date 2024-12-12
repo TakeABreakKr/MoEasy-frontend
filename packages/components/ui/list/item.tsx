@@ -12,11 +12,12 @@ import * as styles from './list.css';
 
 type ListItemProps = {
   item: ListItemType;
+  disabled?: boolean;
   checked?: boolean;
   toggleItemSelection: (id: string) => void;
 };
 
-export const ListItem = ({ item, checked, toggleItemSelection }: ListItemProps) => {
+export const ListItem = ({ item, disabled, checked, toggleItemSelection }: ListItemProps) => {
   const [fadeOut, setFadeOut] = useState(false);
   const onSelected = async (id: string) => {
     setFadeOut(true);
@@ -32,7 +33,8 @@ export const ListItem = ({ item, checked, toggleItemSelection }: ListItemProps) 
       role="button"
       key={item.id}
       className={clsx(styles.itemBase, fadeOut && styles.itemFadeOut)}
-      onClick={() => onSelected(item.id)}
+      onClick={() => !disabled && onSelected(item.id)}
+      data-testid="list-item"
     >
       <div className={styles.itemInfo}>
         <span className={styles.itemAvatar}>

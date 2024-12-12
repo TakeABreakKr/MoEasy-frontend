@@ -1,8 +1,8 @@
 import { rem } from '../../utils/css';
 import { style } from '@vanilla-extract/css';
+import { globalVars } from '../../utils/styles/global.css';
 
 export const scrollStyle = style({
-  borderRadius: 1,
   '::-webkit-scrollbar': {
     width: rem(7),
   },
@@ -17,7 +17,8 @@ export const scrollStyle = style({
   },
   selectors: {
     '&:hover::-webkit-scrollbar-thumb': {
-      backgroundColor: '#d9d9d9',
+      backgroundColor: globalVars.color.neutral[20],
+      borderRadius: 4,
     },
   },
 });

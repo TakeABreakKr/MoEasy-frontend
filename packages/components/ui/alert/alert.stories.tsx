@@ -1,44 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { XIcon } from '../icon';
+import { SimpleAlert } from '.';
 
-import { Alert, AlertCloseButton, AlertContent, AlertMessage, AlertTitle, AlertTrigger } from './alert';
-
-import { closeWrapper } from './alert.css';
-
-type Props = {
-  title?: string | JSX.Element;
-  message?: string | JSX.Element;
-  /** 메세지 아래 버튼 제거 */
-  excludeButton?: boolean;
-  className?: string;
-};
-
-const SampleAlert = ({ title, message, excludeButton, className }: Props) => {
-  return (
-    <Alert>
-      <AlertTrigger>팝업 열기</AlertTrigger>
-      <AlertContent className={className} size="alert">
-        <div className={closeWrapper}>
-          <AlertCloseButton variant="dark" rounded="full" size="small">
-            <XIcon width={15} height={15} />
-          </AlertCloseButton>
-        </div>
-        <AlertTitle>{title}</AlertTitle>
-        <AlertMessage>{message}</AlertMessage>
-        {!excludeButton && (
-          <AlertCloseButton variant="dark" size="large" rounded="medium">
-            확인
-          </AlertCloseButton>
-        )}
-      </AlertContent>
-    </Alert>
-  );
-};
+const customStyle = {
+  width: 180,
+  height: 40,
+  backgroundColor: 'lightblue',
+  borderRadius: 4,
+} as const;
 
 const meta = {
   title: 'Common/Alert',
-  component: SampleAlert,
+  component: SimpleAlert,
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
@@ -50,18 +23,31 @@ const meta = {
     },
   },
   args: {
+    defaultOpen: false,
     title: '모임 이름을 수정해주세요',
     message: '모임 이름은 최대 30글자 까지 입력 가능합니다.',
+    children: <button style={customStyle}>모달을 컨트롤 하는 버튼</button>,
   },
-} satisfies Meta<typeof SampleAlert>;
+} satisfies Meta<typeof SimpleAlert>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Sample: Story = {};
-
+export const StandaloneModal: Story = {
+  args: {
+    children: null,
+    defaultOpen: true,
+  },
+};
 export const ExcludeButton: Story = {
   args: {
-    excludeButton: true,
+    confirmButton: null,
+  },
+};
+
+export const CustomButton: Story = {
+  args: {
+    confirmButton: <button style={customStyle}>커스텀 확인</button>,
   },
 };

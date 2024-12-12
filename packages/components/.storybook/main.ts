@@ -4,6 +4,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const config: StorybookConfig = {
   stories: ['../ui/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  staticDirs: [{ from: '../font', to: '/font' }],
   addons: [
     '@storybook/addon-onboarding',
     '@storybook/addon-links',

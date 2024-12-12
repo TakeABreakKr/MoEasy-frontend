@@ -73,6 +73,7 @@ export type CalendarProps = {
   max?: DateInput;
   hasTime?: boolean;
   disabled?: boolean;
+  name?: string;
 };
 
 const calcInputValue = (date: Date) => {
@@ -81,7 +82,7 @@ const calcInputValue = (date: Date) => {
   return dateOffset;
 };
 
-export default function Calendar({ date, onSelect, min, max, hasTime, disabled }: CalendarProps) {
+export default function Calendar({ date, onSelect, min, max, hasTime, disabled, name }: CalendarProps) {
   // only control calendar by initial date prop
   const [state, dispatch] = useReducer(calendarReducer, date, calendarInitializer);
   // contains initial date and inner controlled date
@@ -104,19 +105,21 @@ export default function Calendar({ date, onSelect, min, max, hasTime, disabled }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className={clsx(inputVariants.classNames.base, styles.calendarTrigger)} disabled={disabled}>
-        <CalendarIcon color="#282828" />
+        <CalendarIcon color="#282828" height={14} />
         {showDate}
       </DropdownMenuTrigger>
-      <input type="datetime-local" value={formInputValue} readOnly hidden />
+      <input type="datetime-local" name={name} value={formInputValue} readOnly hidden />
       <DropdownMenuContent>
         <div className={styles.calendarWrapper}>
           <div className={styles.calendarHeaderWrapper}>
-            <Button variant="ghost" size="small" rounded="small" onClick={() => dispatch({ type: 'MINUS' })}>
-              <ChevronDown transform="rotate(90)" />
+            <Button variant="text" size="small" rounded="small" onClick={() => dispatch({ type: 'MINUS' })}>
+              <ChevronDown transform="rotate(90)" height={7} />
             </Button>
-            {monthParser(state.month)} {state.year}
-            <Button variant="ghost" size="small" rounded="small" onClick={() => dispatch({ type: 'ADD' })}>
-              <ChevronDown transform="rotate(270)" />
+            <span>
+              {monthParser(state.month)} {state.year}
+            </span>
+            <Button variant="text" size="small" rounded="small" onClick={() => dispatch({ type: 'ADD' })}>
+              <ChevronDown transform="rotate(270)" height={7} />
             </Button>
           </div>
           <ul className={styles.calendarContent}>
@@ -145,9 +148,9 @@ export default function Calendar({ date, onSelect, min, max, hasTime, disabled }
               </li>
             ))}
           </ul>
+          {hasTime && <Separator direction="horizontal" className={styles.line} />}
           {hasTime && (
             <>
-              <Separator direction="horizontal" color="#D0D0D0" />
               <div className={styles.calendarTimeWrapper}>
                 <Time
                   value={innerDate.initDate}
@@ -167,7 +170,7 @@ export default function Calendar({ date, onSelect, min, max, hasTime, disabled }
                 innerDispatch({ type: 'INNER_UPDATE' });
               }}
             >
-              <Button size="large" className={styles.footerButton}>
+              <Button size="small" className={styles.footerButton}>
                 확인
               </Button>
             </DropdownMenuItem>
@@ -178,7 +181,7 @@ export default function Calendar({ date, onSelect, min, max, hasTime, disabled }
                 innerDispatch({ type: 'INNER_RESET' });
               }}
             >
-              <Button variant="light" size="large" className={styles.footerButton}>
+              <Button variant="light" size="small" className={styles.footerButton}>
                 취소
               </Button>
             </DropdownMenuItem>
