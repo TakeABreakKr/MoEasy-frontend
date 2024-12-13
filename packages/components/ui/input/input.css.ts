@@ -54,6 +54,23 @@ export const inputVariants = recipe({
         },
       },
     },
+    plain: {
+      true: {
+        borderWidth: 0,
+        minWidth: 'auto',
+        selectors: {
+          '&:hover:not(:disabled)': {
+            borderColor: 'transparent',
+          },
+          '&:focus:not(:disabled)': {
+            borderColor: 'transparent',
+          },
+          '&:active:not(:disabled)': {
+            borderColor: 'transparent',
+          },
+        },
+      },
+    },
   },
 });
 
