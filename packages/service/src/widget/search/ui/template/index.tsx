@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
 import { MeetingType } from '@/entities/meeting/api';
@@ -16,30 +17,44 @@ import { SearchMemberCard } from '../card/member';
 import * as styles from './template.css';
 
 export function SearchResultByKeyword({ keyword }: { keyword: string }) {
+  const searchParam = useSearchParams();
+  const filters = searchParam.getAll('filter');
   return (
     <>
-      <SearchListTemplate title="키워드" keyword={keyword} detail="keyword">
-        <SearchResultMeetingKeywordContainer keyword={keyword} detail="keyword" />
-      </SearchListTemplate>
-      <SearchListTemplate title="모임 이름" keyword={keyword} detail="meeting">
-        <SearchResultMeetingKeywordContainer keyword={keyword} detail="meeting" />
-      </SearchListTemplate>
-      <SearchListTemplate title="닉네임" keyword={keyword} detail="member">
-        <SearchResultMemberKeywordContainer keyword={keyword} detail="member" />
-      </SearchListTemplate>
+      {filters.includes('keyword') && (
+        <SearchListTemplate title="키워드" keyword={keyword} detail="keyword">
+          <SearchResultMeetingKeywordContainer keyword={keyword} detail="keyword" />
+        </SearchListTemplate>
+      )}
+      {filters.includes('meeting') && (
+        <SearchListTemplate title="모임 이름" keyword={keyword} detail="meeting">
+          <SearchResultMeetingKeywordContainer keyword={keyword} detail="meeting" />
+        </SearchListTemplate>
+      )}
+      {filters.includes('member') && (
+        <SearchListTemplate title="닉네임" keyword={keyword} detail="member">
+          <SearchResultMemberKeywordContainer keyword={keyword} detail="member" />
+        </SearchListTemplate>
+      )}
     </>
   );
 }
 
 export function SearchResultByCode({ keyword }: { keyword: string }) {
+  const searchParam = useSearchParams();
+  const filters = searchParam.getAll('filter');
   return (
     <>
-      <SearchListTemplate title="모임 코드" keyword={keyword} detail="meeting_code">
-        <SearchResultMeetingKeywordContainer keyword={keyword} detail="meeting_code" />
-      </SearchListTemplate>
-      <SearchListTemplate title="유저 코드" keyword={keyword} detail="member_code">
-        <SearchResultMemberKeywordContainer keyword={keyword} detail="member_code" />
-      </SearchListTemplate>
+      {filters.includes('meeting') && (
+        <SearchListTemplate title="모임 코드" keyword={keyword} detail="meeting_code">
+          <SearchResultMeetingKeywordContainer keyword={keyword} detail="meeting_code" />
+        </SearchListTemplate>
+      )}
+      {filters.includes('member') && (
+        <SearchListTemplate title="유저 코드" keyword={keyword} detail="member_code">
+          <SearchResultMemberKeywordContainer keyword={keyword} detail="member_code" />
+        </SearchListTemplate>
+      )}
     </>
   );
 }
