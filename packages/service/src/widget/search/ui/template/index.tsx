@@ -23,7 +23,7 @@ export function SearchResultByKeyword({ keyword }: { keyword: string }) {
     <>
       {filters.includes('keyword') && (
         <SearchListTemplate title="키워드" keyword={keyword} detail="keyword">
-          <SearchResultMeetingKeywordContainer keyword={keyword} detail="keyword" />
+          <SearchResultMeetingKeywordContainer keyword={keyword} expostKeywords detail="keyword" />
         </SearchListTemplate>
       )}
       {filters.includes('meeting') && (
@@ -47,12 +47,12 @@ export function SearchResultByCode({ keyword }: { keyword: string }) {
     <>
       {filters.includes('meeting') && (
         <SearchListTemplate title="모임 코드" keyword={keyword} detail="meeting_code">
-          <SearchResultMeetingKeywordContainer keyword={keyword} detail="meeting_code" />
+          <SearchResultMeetingKeywordContainer keyword={keyword} exposeCode detail="meeting_code" />
         </SearchListTemplate>
       )}
       {filters.includes('member') && (
         <SearchListTemplate title="유저 코드" keyword={keyword} detail="member_code">
-          <SearchResultMemberKeywordContainer keyword={keyword} detail="member_code" />
+          <SearchResultMemberKeywordContainer keyword={keyword} exposeCode detail="member_code" />
         </SearchListTemplate>
       )}
     </>
@@ -80,7 +80,17 @@ export function SearchListTemplate({
   );
 }
 
-export function SearchResultMeetingKeywordContainer({ keyword, detail }: { keyword: string; detail: string }) {
+export function SearchResultMeetingKeywordContainer({
+  keyword,
+  detail,
+  expostKeywords,
+  exposeCode,
+}: {
+  keyword: string;
+  detail: string;
+  expostKeywords?: boolean;
+  exposeCode?: boolean;
+}) {
   const { data, loading, error, refetch } = useQuery<MeetingType[]>({
     queryURL: `mock/meeting/list?keyword=${keyword}&detail=${detail}`,
   });
@@ -98,13 +108,28 @@ export function SearchResultMeetingKeywordContainer({ keyword, detail }: { keywo
       <div className={clsx(cardGrid, styles.gridMargin)}>
         {data
           ?.slice(0, 4)
-          .map((meeting) => <SearchMeetingCard key={meeting.meetingId} meeting={meeting} keyword={keyword} />)}
+          .map((meeting) => (
+            <SearchMeetingCard
+              key={meeting.meetingId}
+              meeting={meeting}
+              keyword={expostKeywords ? keyword : ''}
+              exposeCode={exposeCode}
+            />
+          ))}
       </div>
     );
   }
 }
 
-export function SearchResultMemberKeywordContainer({ keyword, detail }: { keyword: string; detail: string }) {
+export function SearchResultMemberKeywordContainer({
+  keyword,
+  detail,
+  exposeCode,
+}: {
+  keyword: string;
+  detail: string;
+  exposeCode?: boolean;
+}) {
   const { data, loading, error, refetch } = useQuery<MemberType[]>({
     queryURL: `mock/member/list?keyword=${keyword}&detail=${detail}`,
   });
@@ -120,7 +145,9 @@ export function SearchResultMemberKeywordContainer({ keyword, detail }: { keywor
     if (!data || !data.length) return <Text label="medium">검색된 유저가 없습니다.</Text>;
     return (
       <div className={clsx(cardGrid, styles.gridMargin)}>
-        {data?.slice(0, 4).map((member) => <SearchMemberCard key={member.memberId} member={member} />)}
+        {data
+          ?.slice(0, 4)
+          .map((member) => <SearchMemberCard key={member.memberId} member={member} exposeCode={exposeCode} />)}
       </div>
     );
   }

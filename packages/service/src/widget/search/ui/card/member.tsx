@@ -9,15 +9,17 @@ import {
   CardTitle,
   CardWrapper,
 } from '@moeasy/storybook/ui/card/compound-card';
+import { Text } from '@moeasy/storybook/ui/text';
 
 export type SearchMeetingCardProps = {
   member: MemberType;
+  exposeCode?: boolean;
 } & HTMLAttributes<HTMLDivElement>;
 
 /**
  * 키워드로 검색된 검색화면에서 볼 수 있는 유저 카드
  */
-export function SearchMemberCard({ className, member, ...props }: SearchMeetingCardProps) {
+export function SearchMemberCard({ className, member, exposeCode, ...props }: SearchMeetingCardProps) {
   const { memberId, username, explanation, thumbnail } = member;
   return (
     <CardWrapper data-member-index={memberId} {...props} hoverEffect>
@@ -25,6 +27,7 @@ export function SearchMemberCard({ className, member, ...props }: SearchMeetingC
       <CardHeader />
       <div>
         <CardTitle>{username}</CardTitle>
+        {exposeCode && <Text label="medium">{memberId}</Text>}
         <CardDescription>{explanation}</CardDescription>
       </div>
     </CardWrapper>
