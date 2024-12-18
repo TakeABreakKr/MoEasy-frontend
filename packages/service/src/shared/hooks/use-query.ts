@@ -23,7 +23,8 @@ const queryReducer = <T>(state: QueryState<T>, action: QueryAction<T>): QuerySta
     case 'FETCH_SUCCESS':
       return { ...state, loading: false, error: null, data: action.payload };
     case 'FETCH_FAILURE': {
-      if (state.data) {
+      // 정상적인 data가 있는 경우 error를 저장하지 않는다.
+      if (state.data && !state.loading) {
         return { ...state, loading: false, error: null };
       }
       return { ...state, loading: false, error: action.payload };

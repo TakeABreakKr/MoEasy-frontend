@@ -1,7 +1,9 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, useReducer } from 'react';
 
 import { MemberType } from '@/entities/member/api/index';
+import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
+import { Button } from '@moeasy/storybook/ui/button';
 import {
   CardDescription,
   CardHeader,
@@ -21,12 +23,24 @@ export type SearchMeetingCardProps = {
  */
 export function SearchMemberCard({ className, member, exposeCode, ...props }: SearchMeetingCardProps) {
   const { memberId, username, explanation, thumbnail } = member;
+  const [isFollow, toggle] = useReducer((e) => !e, false);
   return (
     <CardWrapper data-member-index={memberId} {...props} hoverEffect>
       <CardThumbnail src={thumbnail} alt={username} />
       <CardHeader />
       <div>
-        <CardTitle>{username}</CardTitle>
+        <div
+          className={sprinkles({
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          })}
+        >
+          <CardTitle>{username}</CardTitle>
+          <Button size="small" rounded="small" variant={isFollow ? 'primary' : 'dark'} onClick={toggle}>
+            {isFollow ? '팔로잉' : '팔로우'}
+          </Button>
+        </div>
         {exposeCode && <Text label="medium">{memberId}</Text>}
         <CardDescription>{explanation}</CardDescription>
       </div>

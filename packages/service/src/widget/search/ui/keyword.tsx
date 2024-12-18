@@ -20,13 +20,12 @@ export function SearchKeywordInput() {
   const searchParams = useSearchParams();
   const [isAutoSave] = useKeywordAutoSave();
   const [_, setRecentKeywords] = useRecentKeyword();
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState(() => searchParams.get('keyword') || '');
 
   const onSearch = (keyword: string) => {
     if (!keyword) return;
     isAutoSave && setRecentKeywords(addKeywordCallback(keyword));
     searchKeywordAction({ keyword }, searchParams);
-    setKeyword('');
   };
 
   return (
