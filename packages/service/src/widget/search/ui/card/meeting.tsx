@@ -3,7 +3,6 @@ import { useSearchParams } from 'next/navigation';
 
 import { MeetingType } from '@/entities/meeting/api';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
-import { createQueryString } from '@/shared/utils/search-param';
 
 import { Button } from '@moeasy/storybook/ui/button';
 import {
@@ -19,6 +18,8 @@ import { NameTag } from '@moeasy/storybook/ui/tag';
 import { Text } from '@moeasy/storybook/ui/text';
 import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
+import { searchKeywordAction } from '../../lib';
+
 export type SearchMeetingCardProps = {
   meeting: MeetingType;
   /** keyword를 props로 받으면 해당 키워드를 볼드체로 바꾸고 그렇지 않으면 키워드가 표시되지 않음. */
@@ -32,15 +33,12 @@ export type SearchMeetingCardProps = {
 export function SearchMeetingCard({ className, meeting, keyword, exposeCode, ...props }: SearchMeetingCardProps) {
   const { meetingId, name, explanation } = meeting;
   const [bookmark, setBookmark] = useState(false);
-  const searchParam = useSearchParams();
+  const searchParams = useSearchParams();
   const searchKeyword = (keyword: string) => {
-    const currentSearchParam = new URLSearchParams(searchParam);
-    currentSearchParam.delete('keyword');
-    window.history.replaceState(null, '', `?${createQueryString(currentSearchParam)}&keyword=${keyword}`);
+    searchKeywordAction({ keyword }, searchParams);
   };
   const moveToPopup = () => {
-    const currentSearchParam = new URLSearchParams(searchParam);
-    window.history.replaceState(null, '', `?${createQueryString(currentSearchParam)}&meetingId=${meetingId}`);
+    searchKeywordAction({ meetingId }, searchParams);
   };
   return (
     <CardWrapper data-meeting-index={meetingId} {...props} hoverEffect>

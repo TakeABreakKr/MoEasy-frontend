@@ -28,7 +28,7 @@ export function SearchResultByKeyword({ keyword }: { keyword: string }) {
       )}
       {filters.includes('meeting') && (
         <SearchListTemplate title="모임 이름" keyword={keyword} detail="meeting">
-          <SearchResultMeetingKeywordContainer keyword={keyword} detail="meeting" />
+          <SearchResultMeetingKeywordContainer name={keyword} detail="meeting" />
         </SearchListTemplate>
       )}
       {filters.includes('member') && (
@@ -61,17 +61,19 @@ export function SearchResultByCode({ keyword }: { keyword: string }) {
 
 export function SearchListTemplate({
   title,
-  keyword,
+  keyword = '',
+  name = '',
   detail,
   children,
-}: PropsWithChildren<{ title: string; keyword: string; detail: string }>) {
+}: PropsWithChildren<{ title: string; keyword?: string; name?: string; detail: string }>) {
+  const queryString = new URLSearchParams({ keyword, name }).toString();
   return (
     <div className={styles.template}>
       <div className={styles.header}>
         <Text asChild title="medium">
           <h2>{title}</h2>
         </Text>
-        <Link href={`/search?keyword=${keyword}&detail=${detail}`} className={plainLink}>
+        <Link href={`/search?keyword=${queryString}`} className={plainLink}>
           더보기 &gt;
         </Link>
       </div>
@@ -81,18 +83,21 @@ export function SearchListTemplate({
 }
 
 export function SearchResultMeetingKeywordContainer({
-  keyword,
+  keyword = '',
+  name = '',
   detail,
   expostKeywords,
   exposeCode,
 }: {
-  keyword: string;
+  keyword?: string;
+  name?: string;
   detail: string;
   expostKeywords?: boolean;
   exposeCode?: boolean;
 }) {
+  const queryString = new URLSearchParams({ keyword, name }).toString();
   const { data, loading, error, refetch } = useQuery<MeetingType[]>({
-    queryURL: `mock/meeting/list?keyword=${keyword}&detail=${detail}`,
+    queryURL: `mock/meeting/list?${queryString}`,
   });
 
   if (loading) return <Text label="medium">모임 데이터를 불러오는 중입니다.</Text>;
