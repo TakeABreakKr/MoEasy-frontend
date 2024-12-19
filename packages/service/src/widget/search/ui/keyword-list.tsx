@@ -42,7 +42,7 @@ export function SearchKeywordContainer() {
               <Tag
                 key={keyword}
                 variant="light"
-                onClick={() => searchKeywordAction({ keyword })}
+                onClick={() => searchKeywordAction({ keyword, filter: ['keyword', 'meeting', 'member'] })}
                 onDeleteClick={() => setRecentKeywords(removeKeywordCallback(keyword))}
                 isDelete
               >

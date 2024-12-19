@@ -22,18 +22,18 @@ export function SearchResultByKeyword({ keyword }: { keyword: string }) {
   return (
     <>
       {filters.includes('keyword') && (
-        <SearchListTemplate title="키워드" keyword={keyword} detail="keyword">
-          <SearchResultMeetingKeywordContainer keyword={keyword} expostKeywords detail="keyword" />
+        <SearchListTemplate title="키워드" keyword={keyword}>
+          <SearchResultMeetingKeywordContainer keyword={keyword} expostKeywords />
         </SearchListTemplate>
       )}
       {filters.includes('meeting') && (
-        <SearchListTemplate title="모임 이름" keyword={keyword} detail="meeting">
-          <SearchResultMeetingKeywordContainer keyword={keyword} detail="meeting" />
+        <SearchListTemplate title="모임 이름" keyword={keyword}>
+          <SearchResultMeetingKeywordContainer name={keyword} />
         </SearchListTemplate>
       )}
       {filters.includes('member') && (
-        <SearchListTemplate title="닉네임" keyword={keyword} detail="member">
-          <SearchResultMemberKeywordContainer keyword={keyword} detail="member" />
+        <SearchListTemplate title="닉네임" keyword={keyword}>
+          <SearchResultMemberKeywordContainer name={keyword} />
         </SearchListTemplate>
       )}
     </>
@@ -46,13 +46,13 @@ export function SearchResultByCode({ keyword }: { keyword: string }) {
   return (
     <>
       {filters.includes('meeting') && (
-        <SearchListTemplate title="모임 코드" keyword={keyword} detail="meeting_code">
-          <SearchResultMeetingKeywordContainer keyword={keyword} exposeCode detail="meeting_code" />
+        <SearchListTemplate title="모임 코드" keyword={keyword}>
+          <SearchResultMeetingKeywordContainer code={keyword} exposeCode />
         </SearchListTemplate>
       )}
       {filters.includes('member') && (
-        <SearchListTemplate title="유저 코드" keyword={keyword} detail="member_code">
-          <SearchResultMemberKeywordContainer keyword={keyword} exposeCode detail="member_code" />
+        <SearchListTemplate title="유저 코드" keyword={keyword}>
+          <SearchResultMemberKeywordContainer code={keyword} exposeCode />
         </SearchListTemplate>
       )}
     </>
@@ -61,17 +61,18 @@ export function SearchResultByCode({ keyword }: { keyword: string }) {
 
 export function SearchListTemplate({
   title,
-  keyword,
-  detail,
+  keyword = '',
+  name = '',
   children,
-}: PropsWithChildren<{ title: string; keyword: string; detail: string }>) {
+}: PropsWithChildren<{ title: string; keyword?: string; name?: string }>) {
+  const queryString = new URLSearchParams({ keyword, name }).toString();
   return (
     <div className={styles.template}>
       <div className={styles.header}>
         <Text asChild title="medium">
           <h2>{title}</h2>
         </Text>
-        <Link href={`/search?keyword=${keyword}&detail=${detail}`} className={plainLink}>
+        <Link href={`/search?keyword=${queryString}`} className={plainLink}>
           더보기 &gt;
         </Link>
       </div>
@@ -81,18 +82,21 @@ export function SearchListTemplate({
 }
 
 export function SearchResultMeetingKeywordContainer({
-  keyword,
-  detail,
+  keyword = '',
+  name = '',
+  code = '',
   expostKeywords,
   exposeCode,
 }: {
-  keyword: string;
-  detail: string;
+  keyword?: string;
+  name?: string;
+  code?: string;
   expostKeywords?: boolean;
   exposeCode?: boolean;
 }) {
+  const queryString = new URLSearchParams({ keyword, name, code }).toString();
   const { data, loading, error, refetch } = useQuery<MeetingType[]>({
-    queryURL: `mock/meeting/list?keyword=${keyword}&detail=${detail}`,
+    queryURL: `mock/meeting/list?${queryString}`,
   });
 
   if (loading) return <Text label="medium">모임 데이터를 불러오는 중입니다.</Text>;
@@ -122,16 +126,17 @@ export function SearchResultMeetingKeywordContainer({
 }
 
 export function SearchResultMemberKeywordContainer({
-  keyword,
-  detail,
+  name = '',
+  code = '',
   exposeCode,
 }: {
-  keyword: string;
-  detail: string;
+  name?: string;
+  code?: string;
   exposeCode?: boolean;
 }) {
+  const queryString = new URLSearchParams({ name, code }).toString();
   const { data, loading, error, refetch } = useQuery<MemberType[]>({
-    queryURL: `mock/member/list?keyword=${keyword}&detail=${detail}`,
+    queryURL: `mock/member/list?${queryString}`,
   });
 
   if (loading) return <Text label="medium">유저 데이터를 불러오는 중입니다.</Text>;

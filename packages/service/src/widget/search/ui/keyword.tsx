@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { isComposingOnEnter } from '@/shared/utils/event';
@@ -16,15 +17,15 @@ const addKeywordCallback = (newValue: string) => (keywords: string[] | null) =>
   keywords ? [...keywords.filter((keyword) => keyword !== newValue), newValue] : [newValue];
 
 export function SearchKeywordInput() {
+  const searchParams = useSearchParams();
   const [isAutoSave] = useKeywordAutoSave();
   const [_, setRecentKeywords] = useRecentKeyword();
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState(() => searchParams.get('keyword') || '');
 
   const onSearch = (keyword: string) => {
     if (!keyword) return;
     isAutoSave && setRecentKeywords(addKeywordCallback(keyword));
-    searchKeywordAction({ keyword });
-    setKeyword('');
+    searchKeywordAction({ keyword }, searchParams);
   };
 
   return (
