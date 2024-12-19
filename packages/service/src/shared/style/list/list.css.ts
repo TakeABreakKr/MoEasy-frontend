@@ -2,7 +2,7 @@ import { rem } from '@moeasy/storybook/utils/css';
 
 import { style } from '@vanilla-extract/css';
 
-export const teamgrid = style({
+export const cardGrid = style({
   display: 'grid',
   placeItems: 'center',
   gridTemplateColumns: `repeat(auto-fit, minmax(${rem(250)}, 1fr))`,

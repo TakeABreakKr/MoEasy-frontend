@@ -230,20 +230,22 @@ function 키워드입력({
         </label>
         <div className={styles.tagWrapper}>
           <div className={styles.tagList}>
-            {keywords.map((keyword) => (
-              <Tag
-                isDelete
-                key={keyword}
-                value={keyword}
-                data-testid="keyword-item"
-                onClick={() => setKeywords((prev) => prev.filter((item) => item !== keyword))}
-              >
-                <input readOnly hidden value={keyword} name="keywords" />
-                {keyword}
-              </Tag>
-            ))}
-            <div className={styles.tagListGradient} />
+            <div className={styles.tagFlexWrap}>
+              {keywords.map((keyword) => (
+                <Tag
+                  isDelete
+                  key={keyword}
+                  value={keyword}
+                  data-testid="keyword-item"
+                  onClick={() => setKeywords((prev) => prev.filter((item) => item !== keyword))}
+                >
+                  <input readOnly hidden value={keyword} name="keywords" />
+                  {keyword}
+                </Tag>
+              ))}
+            </div>
           </div>
+          <div className={styles.tagListGradient} />
         </div>
       </div>
       <CreateButtonCommon onPrevStep={onPrevStep} onNextStep={() => onNextStep({ keywords })} />

@@ -5,9 +5,13 @@ import { AlertProps, SimpleAlert } from '@moeasy/storybook/ui/alert';
 
 import { usePathnameChange } from '../hooks/use-pathname-change';
 
-export const alertCall = (param: AlertProps) =>
+export const alertCall = ({ close, ...param }: AlertProps) =>
   overlay.open(({ unmount }) => {
     usePathnameChange(unmount);
     useOnEscape(true, unmount);
-    return <SimpleAlert open close={unmount} {...param} />;
+    const closeCallback = () => {
+      close?.();
+      unmount();
+    };
+    return <SimpleAlert open close={closeCallback} {...param} />;
   });

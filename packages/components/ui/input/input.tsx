@@ -1,4 +1,7 @@
+'use client';
+
 import { ComponentProps, useRef } from 'react';
+import { RecipeVariants } from '@vanilla-extract/recipes';
 import clsx from 'clsx';
 
 import { useControlledState } from '../../hooks/use-controlled-state';
@@ -22,7 +25,8 @@ export type InputProps<T extends string | number> = {
   onValueChange?: (value: T) => void;
   isError?: boolean;
   dispatchError?: (isError: boolean) => void;
-} & Omit<ComponentProps<'input'>, 'value' | 'defaultValue'>;
+} & Omit<ComponentProps<'input'>, 'value' | 'defaultValue'> &
+  RecipeVariants<typeof inputVariants>;
 
 export type InputCtxType = {
   isError?: boolean;
@@ -75,6 +79,7 @@ export const Input = <T extends string | number>({
   value: valueProps,
   defaultValue,
   children,
+  plain,
   ...props
 }: InputProps<T>) => {
   const parsedDefault = defaultValue ?? ((props.type === 'number' ? (props.min ?? 0) : '') as T);
@@ -90,7 +95,7 @@ export const Input = <T extends string | number>({
     const { value, valueAsNumber } = e.target;
     const newValue = props.type === 'number' && !isNaN(valueAsNumber) ? valueAsNumber : value;
 
-    onValueChange?.(newValue as T);
+    setInnerValue?.(newValue as T);
     props.onChange?.(e);
 
     validateAndDispatchError(e.target);
@@ -115,10 +120,9 @@ export const Input = <T extends string | number>({
       <div className={clsx(inputWrapper, className)}>
         <input
           ref={inputRef}
-          className={clsx(inputVariants({ error: isError }), className)}
+          className={clsx(inputVariants({ error: isError, plain }), className)}
           onKeyUp={(e) => {
             onKeyUp?.(e);
-            if (!e.currentTarget.value) setInnerValue(parsedDefault);
             validateAndDispatchError(e.currentTarget);
           }}
           maxLength={maxLength}
