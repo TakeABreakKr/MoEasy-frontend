@@ -26,21 +26,21 @@ interface HeaderProps {
 export const Header = ({ onCreateAccount }: HeaderProps) => {
   const pathname = usePathname();
   return (
-    <header className={headerStyles.header}>
+    <header className={clsx(headerStyles.header, pathname === '/about' && headerStyles.headerOnAbout)}>
       <div className={headerStyles.headerWrapper}>
         <div className={headerStyles.leftHandSide}>
-          <Link href="/">
+          <Link className={headerStyles.logo} href="/">
             <LogoIconWithText />
           </Link>
           <ul className={headerStyles.linkWrapper}>
             <li className={clsx(pathname === '/meeting' && headerStyles.active)}>
-              <Link href={'/meeting'}>모임 둘러보기</Link>
+              <Link href="/meeting">모임 둘러보기</Link>
             </li>
             <li className={clsx(pathname === '/about' && headerStyles.active)}>
-              <Link href={'/about'}>ABOUT</Link>
+              <Link href="/about">ABOUT</Link>
             </li>
             <li className={clsx(pathname === '/notice' && headerStyles.active)}>
-              <Link href={'/notice'}>공지사항</Link>
+              <Link href="/notice">공지사항</Link>
             </li>
           </ul>
         </div>
