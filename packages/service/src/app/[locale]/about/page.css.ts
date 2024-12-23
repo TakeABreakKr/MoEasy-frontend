@@ -1,15 +1,38 @@
+import { scrollStyle } from '@moeasy/storybook/ui/scroll/scroll.css';
 import { rem } from '@moeasy/storybook/utils/css';
+import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
-import { style } from '@vanilla-extract/css';
+import { style, styleVariants } from '@vanilla-extract/css';
 
-export const header = style({
-  textAlign: 'center',
-  padding: `${rem(40)} 0`,
+export const aboutMain = style([
+  scrollStyle,
+  {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    color: globalVars.color.neutral.white,
+    backgroundColor: '#0f0f19',
+    scrollSnapType: 'y mandatory',
+    marginTop: 0,
+    overflowY: 'scroll',
+    height: `100vh`,
+  },
+]);
+
+export const sectionbg = style({
+  width: '100%',
+  minHeight: '100dvh',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  scrollSnapAlign: 'center' /* 스크롤 위치 맞춤 */,
 });
 
-export const heroImage = style({
-  maxWidth: '100%',
-  height: 'auto',
+export const sectionVariant = styleVariants({
+  first: [sectionbg, { background: 'radial-gradient( #142237, #0f0f19)' }],
+  second: [sectionbg, { background: 'linear-gradient( #0f0f19, #142237)' }],
+  third: [sectionbg, { background: 'linear-gradient( #142237, #0f0f19)' }],
 });
 
 export const section = style({
@@ -17,19 +40,6 @@ export const section = style({
   textAlign: 'center',
   display: 'flex',
   flexDirection: 'column',
-});
-
-export const bigImage = style({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-});
-
-export const hostGuest = style({
-  display: 'flex',
-  justifyContent: 'center',
-  gap: rem(40),
-  marginTop: rem(30),
 });
 
 export const role = style({
@@ -64,17 +74,29 @@ export const news = style({
 
 export const newsItem = style({
   flex: 1,
-});
-
-export const newsItemImage = style({
-  width: '100%',
-  height: '200px',
-  objectFit: 'cover',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
 });
 
 export const cta = style({
   textAlign: 'center',
   margin: '60px 0',
+});
+
+export const ctawrapper = style({
+  display: 'flex',
+  justifyContent: 'center',
+  padding: rem(20),
+  gap: '20px',
+});
+
+export const ctaLink = style({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  gap: '10px',
+  flex: 1,
 });
 
 export const ctaButton = style({
