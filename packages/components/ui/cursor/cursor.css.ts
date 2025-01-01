@@ -9,11 +9,17 @@ export const cursorCircle = style({
   backgroundColor: 'rgb(248, 200, 98)',
   position: 'fixed',
   pointerEvents: 'none',
-  mixBlendMode: 'difference',
-  border: '1px solid gray',
-  zIndex: 1,
+  zIndex: 2,
   cursor: 'unset',
-  boxShadow: '0px 0px 5px 5px rgba(0, 0, 0, 0.6)', // adjust values to change box shadow
+  boxShadow: '0px 0px 6px 6px rgba(248, 200, 98, 0.6)', // adjust values to change box shadow
+});
+
+export const cursorPopStyle = style({
+  position: 'fixed',
+  zIndex: 1,
+  mixBlendMode: 'lighten',
+  color: '#3A3A3A',
+  pointerEvents: 'none',
 });
 
 export const cursorTrail = style({
@@ -23,6 +29,7 @@ export const cursorTrail = style({
   left: 0,
   top: 0,
   pointerEvents: 'none',
+  zIndex: 1,
 });
 
 export const particle = style({
@@ -34,4 +41,5 @@ export const particle = style({
   borderRadius: '50%',
   backgroundColor: globalVars.color.blue[40],
   transition: 'opacity 0.1s ease-out',
+  zIndex: 1,
 });
