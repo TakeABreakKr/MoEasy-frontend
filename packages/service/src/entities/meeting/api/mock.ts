@@ -1,4 +1,4 @@
-import browserClient from '@/shared/api/browser-client';
+import { browserClient } from '@/shared/api/browser-client';
 
 import { mockmembers } from '../../member/api/mock';
 
