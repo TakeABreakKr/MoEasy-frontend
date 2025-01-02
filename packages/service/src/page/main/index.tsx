@@ -7,13 +7,13 @@ import { MainCategorySection } from '@/widget/main/section/category';
 import { MainLastSection } from '@/widget/main/section/last';
 import { MainUpcommingSchedule } from '@/widget/main/section/upcoming';
 
+import { MainFooter } from '@moeasy/storybook/ui/footer';
 import { ChevronDown } from '@moeasy/storybook/ui/icon';
 import { Separator } from '@moeasy/storybook/ui/separator';
-import { Text } from '@moeasy/storybook/ui/text';
 
 import * as styles from './main.css';
 
-export default async function MainPage() {
+export async function MainPage() {
   const t = await getI18n();
   return (
     <>
@@ -39,16 +39,7 @@ export default async function MainPage() {
         <MainLastSection />
       </main>
       <Separator direction="horizontal" />
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <Text title="large">
-            <p>MOEASY</p>
-          </Text>
-          <div>디스코드 연동 모임 및 활동의 만들기, 관리를 돕는 서비스.</div>
-          <div>Desinged by Team TAB</div>
-          <div>© 2024 Team TAB. All rights reserved.</div>
-        </div>
-      </footer>
+      <MainFooter />
     </>
   );
 }
