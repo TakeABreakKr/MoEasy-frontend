@@ -5,6 +5,7 @@ import { createFunnelSteps, useFunnel } from '@use-funnel/browser';
 
 import { CreateMeetingType } from '@/entities/meeting/api';
 import * as styles from '@/shared/style/create-form/index.css';
+import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { alertCall } from '@/shared/utils/alert-call';
 import { objectReducer } from '@/shared/utils/object-reducer';
 
@@ -257,7 +258,7 @@ function 인원제한입력({
   payload,
   onPrevStep,
 }: {
-  payload: Omit<CreateMeetingType, 'limit'> & { limit?: number };
+  payload: Omit<CreateMeetingType, 'limit' | 'canJoin'> & { limit?: number };
   onPrevStep: () => void;
 }) {
   const [limit, setLimit] = useState(payload.limit || 10);
@@ -268,7 +269,7 @@ function 인원제한입력({
       <div className={formStyles.formGroup}>
         <fieldset className={formStyles.labelWrapper}>
           <span className={formStyles.label}>모임 인원</span>
-          <div style={{ display: 'flex', gap: 10 }}>
+          <div className={sprinkles({ display: 'flex', gap: 'medium' })}>
             {limitDisabled ? (
               <Input
                 className={formStyles.input}

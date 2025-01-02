@@ -14,6 +14,7 @@ export const initializeMeeting = (index: number): MeetingType => {
     thumbnail: `https://via.placeholder.com/72/${index}`,
     limit: 10,
     members: mockmembers,
+    canJoin: false,
   };
 };
 
@@ -31,7 +32,7 @@ export const createMeeting = (body: CreateMeetingType) =>
             formData.append(key, value);
           }
         } else {
-          if (typeof values === 'number') {
+          if (typeof values === 'number' || typeof values === 'boolean') {
             formData.append(key, String(values));
           } else {
             formData.append(key, values);
