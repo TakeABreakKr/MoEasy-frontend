@@ -6,8 +6,7 @@ import { CategoryItemType, categoryList } from '@/shared/consts/category';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { pushSearchParams } from '@/shared/utils/search-param';
 
-import { Button } from '@moeasy/storybook/ui/button';
-import { ChevronDown } from '@moeasy/storybook/ui/icon';
+import { DirectionButton } from '@moeasy/storybook/ui/button';
 import { Text } from '@moeasy/storybook/ui/text';
 
 import { isValidGroupName } from './utils';
@@ -90,32 +89,15 @@ function MainCategorySectionContentPage({
 }) {
   return (
     <div className={sprinkles({ display: 'flex', gap: 'small', width: '100%', justifyContent: 'center' })}>
-      {currentPage !== 1 ? (
-        <Button
-          size="icon"
-          rounded="full"
-          onClick={() => pushSearchParams({ group, page: (currentPage - 1).toString() })}
-        >
-          <ChevronDown width={12} transform="rotate(90)" />
-        </Button>
-      ) : (
-        <Button size="icon" rounded="full" disabled>
-          <ChevronDown width={12} transform="rotate(90)" />
-        </Button>
-      )}
-      {currentPage + 1 <= categoryLength / 10 ? (
-        <Button
-          size="icon"
-          rounded="full"
-          onClick={() => pushSearchParams({ group, page: (currentPage + 1).toString() })}
-        >
-          <ChevronDown width={12} transform="rotate(270)" />
-        </Button>
-      ) : (
-        <Button size="icon" rounded="full" disabled>
-          <ChevronDown width={12} transform="rotate(270)" />
-        </Button>
-      )}
+      <DirectionButton
+        disabled={currentPage === 1}
+        onClick={() => pushSearchParams({ group, page: (currentPage - 1).toString() })}
+      />
+      <DirectionButton
+        direction="right"
+        disabled={currentPage + 1 > categoryLength / 10}
+        onClick={() => pushSearchParams({ group, page: (currentPage + 1).toString() })}
+      />
     </div>
   );
 }

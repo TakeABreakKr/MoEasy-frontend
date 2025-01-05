@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
-import { Button } from '@moeasy/storybook/ui/button';
+import { DirectionButton } from '@moeasy/storybook/ui/button';
 import { ChevronDown } from '@moeasy/storybook/ui/icon';
 import { Text } from '@moeasy/storybook/ui/text';
 
@@ -26,12 +26,8 @@ export function MainCardSectionHeader({ title = '', href = '', goToNextCard }: M
         </h1>
       </Text>
       <div className={sprinkles({ display: 'flex', gap: 'small' })}>
-        <Button size="icon" rounded="full" onClick={() => goToNextCard()}>
-          <ChevronDown width={12} transform="rotate(90)" />
-        </Button>
-        <Button size="icon" rounded="full" onClick={() => goToNextCard(true)}>
-          <ChevronDown width={12} transform="rotate(270)" />
-        </Button>
+        <DirectionButton direction="left" onClick={() => goToNextCard()} />
+        <DirectionButton direction="right" onClick={() => goToNextCard(true)} />
       </div>
     </div>
   );
