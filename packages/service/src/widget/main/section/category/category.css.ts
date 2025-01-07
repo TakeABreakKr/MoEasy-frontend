@@ -1,4 +1,5 @@
 import { rem } from '@moeasy/storybook/utils/css';
+import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 import { style } from '@vanilla-extract/css';
 
@@ -20,6 +21,28 @@ export const iconDiv = style({
   borderRadius: '50%',
   backgroundColor: '#212535',
   overflow: 'hidden',
+});
+
+export const categoryButton = style({
+  padding: rem(2, 14),
+  fontSize: rem(19),
+  fontWeight: 600,
+  color: globalVars.color.neutral[50],
+  display: 'flex',
+  justifyContent: 'center',
+  borderRadius: rem(50),
+  ':hover': {
+    backgroundColor: globalVars.color.neutral[3],
+  },
+  ':active': {
+    color: globalVars.color.neutral[95],
+    backgroundColor: globalVars.color.neutral[5],
+  },
+});
+
+export const activeCategory = style({
+  color: globalVars.color.neutral[95],
+  backgroundColor: globalVars.color.neutral[5],
 });
 
 export const iconMultiply = style({

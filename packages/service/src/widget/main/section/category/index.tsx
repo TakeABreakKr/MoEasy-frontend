@@ -1,6 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import clsx from 'clsx';
 
 import { CategoryItemType, categoryList } from '@/shared/consts/category';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
@@ -35,7 +36,11 @@ function MainCategorySectionTab() {
   return (
     <div className={sprinkles({ display: 'flex', gap: 'medium' })}>
       {categoryList.map(({ title }) => (
-        <button key={title} onClick={() => pushSearchParams({ group: title, page: null })}>
+        <button
+          className={clsx(categoryStyles.categoryButton, validatedGroup === title && categoryStyles.activeCategory)}
+          key={title}
+          onClick={() => pushSearchParams({ group: title, page: null })}
+        >
           <Text semibold={validatedGroup === title}>{title}</Text>
         </button>
       ))}
