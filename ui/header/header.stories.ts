@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 
 import { Header } from './header';
 
@@ -16,9 +15,7 @@ const meta = {
       },
     },
   },
-  args: {
-    onCreateAccount: fn(),
-  },
+  args: {},
 } satisfies Meta<typeof Header>;
 
 export default meta;
