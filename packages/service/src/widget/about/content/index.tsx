@@ -7,7 +7,6 @@ import AboutFirst from '@/../public/about-first.png';
 import AboutLast from '@/../public/about-last.png';
 import AboutManager from '@/../public/about-manager.png';
 import AboutMember from '@/../public/about-member.png';
-import { AboutToNextPage } from '@/widget/about/to-next-page';
 
 import { Cursor } from '@moeasy/storybook/ui/cursor';
 import { Text } from '@moeasy/storybook/ui/text';
@@ -43,15 +42,32 @@ const AboutFirework = (
   </svg>
 );
 
+const getRandomPosition = () => {
+  const circleSize = Math.random() * (100 - 20) + 20;
+  return {
+    top: `${Math.random() * 100}%`,
+    left: `${Math.random() * 100}%`,
+    width: `${circleSize}px`,
+    height: `${circleSize}px`,
+  };
+};
+
+const circles = Array.from({ length: 15 }, (_, i) => {
+  const variant = (['blue', 'purple', 'yellow'] as const)[Math.floor(Math.random() * 3)];
+  const position = getRandomPosition();
+
+  return <div key={i} className={styles.circleVariants[variant]} style={position} aria-hidden />;
+});
+
 export function AboutContents() {
   return (
     <>
       <Cursor length={30} />
-      <AboutToNextPage />
       <div className={styles.sectionVariant.first}>
+        {circles}
         <div className={styles.firstFireworkPosition}>{AboutFirework}</div>
         <section className={styles.section}>
-          <Text asChild title="large">
+          <Text asChild title="large" semibold>
             <h1 id="intro-heading">{"'모이다' + 'Easy' MOEASY!"}</h1>
           </Text>
           <p>
@@ -66,7 +82,9 @@ export function AboutContents() {
       <div className={styles.sectionVariant.second}>
         <section className={styles.section}>
           <Image width={600} height={400} src={AboutFirst} alt="모이지 서비스 소개 이미지" />
-          <Text title="large">모임 및 일정의 생성&관리를 돕는 서비스</Text>
+          <Text asChild title="large" semibold>
+            <h1>모임 및 일정의 생성&관리를 돕는 서비스</h1>
+          </Text>
           <p>
             MOEASY에서는 모임을 만들어 한눈에 모아볼 수 있고,
             <br />
@@ -79,25 +97,14 @@ export function AboutContents() {
       <div className={styles.sectionVariant.second}>
         <section className={styles.section}>
           <div className={styles.role} role="list">
-            <div className={styles.roleItem} role="listitem">
-              <header className={styles.roleItemHeader}>
-                <span className={styles.roleNum} aria-hidden>
-                  2
-                </span>
-                <h3>매니저</h3>
-              </header>
-              <Image width={400} height={300} src={AboutManager} alt="매니저 역할 소개 이미지" />
-              <p>
-                모임장으로부터 매니저 권한을 부여받을 수 있어요. <br />
-                모임장과 함께 일정 관리에 대한 권한을 가집니다.
-              </p>
-            </div>
-            <div className={styles.roleItem} role="listitem">
+            <div className={styles.roleItemVariant.first} role="listitem">
               <header className={styles.roleItemHeader}>
                 <span className={styles.roleNum} aria-hidden>
                   1
                 </span>
-                <h3>모임장</h3>
+                <Text asChild title="large" semibold>
+                  <h3>모임장</h3>
+                </Text>
               </header>
               <Image width={400} height={300} src={AboutAdmin} alt="모임장 역할 소개 이미지" />
               <p>
@@ -106,12 +113,29 @@ export function AboutContents() {
                 모임 관리에 대한 권한, 일정 관리에 대한 권한을 가집니다
               </p>
             </div>
-            <div className={styles.roleItem} role="listitem">
+            <div className={styles.roleItemVariant.second} role="listitem">
+              <header className={styles.roleItemHeader}>
+                <span className={styles.roleNum} aria-hidden>
+                  2
+                </span>
+                <Text asChild title="large" semibold>
+                  <h3>매니저</h3>
+                </Text>
+              </header>
+              <Image width={400} height={300} src={AboutManager} alt="매니저 역할 소개 이미지" />
+              <p>
+                모임장으로부터 매니저 권한을 부여받을 수 있어요. <br />
+                모임장과 함께 일정 관리에 대한 권한을 가집니다.
+              </p>
+            </div>
+            <div className={styles.roleItemVariant.third} role="listitem">
               <header className={styles.roleItemHeader}>
                 <span className={styles.roleNum} aria-hidden>
                   3
                 </span>
-                <h3>모임원</h3>
+                <Text asChild title="large" semibold>
+                  <h3>모임원</h3>
+                </Text>
               </header>
               <Image width={400} height={300} src={AboutMember} alt="모임원 역할 소개 이미지" />
               <p>

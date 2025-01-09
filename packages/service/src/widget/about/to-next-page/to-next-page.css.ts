@@ -1,6 +1,7 @@
 import { rem } from '@moeasy/storybook/utils/css';
 import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
+import { upAndDown } from '../about.css';
 import { style } from '@vanilla-extract/css';
 
 export const toNextSection = style({
@@ -11,4 +12,5 @@ export const toNextSection = style({
   alignItems: 'center',
   zIndex: 1,
   color: globalVars.color.neutral.white,
+  animation: `${upAndDown} 1.5s infinite ease-in-out`,
 });
