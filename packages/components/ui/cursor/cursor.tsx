@@ -17,8 +17,10 @@ export function Cursor({ length = 30 }: { length?: number }) {
   const gradientId = useId();
   const cursorRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
+  const restPathRef = useRef<SVGPathElement>(null);
   const trailRef = useRef<CursorTrail[]>([]);
   const linearGradientRef = useRef<SVGLinearGradientElement>(null);
+  const linearGradientRef2 = useRef<SVGLinearGradientElement>(null);
   const gradientDirectionRef = useRef({ x1: '0%', y1: '0%', x2: '100%', y2: '0%' });
   const [particles, setParticles] = useState<Record<'x' | 'y' | 'vx' | 'vy' | 'life' | 'id', number>[]>([]);
 
@@ -28,6 +30,7 @@ export function Cursor({ length = 30 }: { length?: number }) {
     let trailEraseInterval = setInterval(() => {
       trailRef.current = trailRef.current.filter((trail) => Date.now() - trail.time < 300);
       pathRef.current?.setAttribute('d', createSmoothPath(trailRef.current));
+      restPathRef.current?.setAttribute('d', createSmoothPath(trailRef.current));
       setParticles((prev) => {
         const newParticles = prev
           .map((p) => ({
@@ -48,12 +51,14 @@ export function Cursor({ length = 30 }: { length?: number }) {
       requestAnimationFrame(() => {
         trailRef.current = trailRef.current.concat({ x: clientX, y: clientY, time: Date.now() }).slice(-length);
         pathRef.current?.setAttribute('d', createSmoothPath(trailRef.current));
+        restPathRef.current?.setAttribute('d', createSmoothPath(trailRef.current));
         gradientDirectionRef.current =
           trailRef.current.length > 1 ? calculateGradientDirection(trailRef.current, e) : gradientDirectionRef.current;
-        linearGradientRef.current?.setAttribute('x1', gradientDirectionRef.current.x1);
-        linearGradientRef.current?.setAttribute('y1', gradientDirectionRef.current.y1);
-        linearGradientRef.current?.setAttribute('x2', gradientDirectionRef.current.x2);
-        linearGradientRef.current?.setAttribute('y2', gradientDirectionRef.current.y2);
+        if (!linearGradientRef.current || !linearGradientRef2.current) return;
+
+        setGradientDirection(linearGradientRef.current, gradientDirectionRef.current);
+        setGradientDirection(linearGradientRef2.current, gradientDirectionRef.current);
+
         if (Math.random() > 0.8) {
           const angle = Math.random() * Math.PI * 2;
           const speed = Math.random() * 2 + 1; // 속도 증가
@@ -103,6 +108,22 @@ export function Cursor({ length = 30 }: { length?: number }) {
           </linearGradient>
         </defs>
         <path ref={pathRef} stroke={`url(#${gradientId})`} strokeWidth="12" fill="none" strokeLinecap="round" />
+      </svg>
+      <svg className={styles.cursorTrail}>
+        <defs>
+          <linearGradient id={`${gradientId}-rest`} ref={linearGradientRef2}>
+            <stop offset="0%" stopColor="#8048F7" stopOpacity="1" />
+            <stop offset="100%" stopColor="#0a5" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path
+          ref={restPathRef}
+          stroke={`url(#${gradientId}-rest)`}
+          opacity={0.5}
+          strokeWidth="3"
+          fill="none"
+          strokeLinecap="round"
+        />
       </svg>
       {particles.map((particle) => (
         <div
@@ -161,4 +182,14 @@ function createSmoothPath(points: CursorTrail[]): string {
     path += ` Q ${controlPoint.x},${controlPoint.y} ${curr.x},${curr.y}`;
   }
   return path;
+}
+
+function setGradientDirection(
+  element: SVGLinearGradientElement,
+  gradientDirection: { x1: string; y1: string; x2: string; y2: string },
+) {
+  element.setAttribute('x1', gradientDirection.x1);
+  element.setAttribute('y1', gradientDirection.y1);
+  element.setAttribute('x2', gradientDirection.x2);
+  element.setAttribute('y2', gradientDirection.y2);
 }
