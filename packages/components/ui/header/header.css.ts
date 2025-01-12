@@ -6,7 +6,7 @@ import { globalStyle, style } from '@vanilla-extract/css';
 export const header = style({
   borderBottom: `1px solid rgba(0, 0, 0, 0.1)`,
   padding: `0 ${rem(60)}`, // 60px
-  backgroundColor: 'white',
+  backgroundColor: globalVars.color.neutral.white,
   position: 'fixed',
   top: 0,
   left: 0,
@@ -14,6 +14,17 @@ export const header = style({
   display: 'flex',
   justifyContent: 'center',
   zIndex: 1,
+});
+
+export const headerOnAbout = style({
+  backgroundColor: 'transparent',
+  color: globalVars.color.neutral.white,
+});
+
+export const logo = style({
+  display: 'flex',
+  alignItems: 'center',
+  color: 'currentcolor',
 });
 
 export const headerWrapper = style({
@@ -43,7 +54,6 @@ export const linkWrapper = style({
   gap: rem(30),
   listStyle: 'none',
   height: '100%',
-  color: globalVars.color.neutral.black,
   ...globalVars.text.label.small.regular,
 });
 
