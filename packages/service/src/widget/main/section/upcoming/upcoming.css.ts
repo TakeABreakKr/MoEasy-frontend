@@ -9,17 +9,22 @@ export const dateContainer = style({
   justifyContent: 'space-between',
 });
 export const dateButton = style({
-  width: rem(90),
-  height: rem(85),
+  width: rem(100),
+  height: rem(90),
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: globalVars.color.neutral[20],
-  borderRadius: rem(8),
+  backgroundColor: globalVars.color.neutral[5],
+  borderRadius: rem(10),
+  fontSize: rem(20),
+  fontWeight: 600,
 });
 
-export const dateButtonActive = style({ backgroundColor: globalVars.color.neutral[50] });
+export const dateButtonActive = style({
+  backgroundColor: globalVars.color.neutral[80],
+  color: globalVars.color.neutral.white,
+});
 
 export const scheduleContainer = style({
   display: 'flex',

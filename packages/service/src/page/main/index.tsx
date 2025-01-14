@@ -2,7 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { getI18n } from '@/locales/server';
-import { serverClient } from '@/shared/api/server-client';
+import { components } from '@/shared/api/my-schema';
+// import { serverClient } from '@/shared/api/server-client';
 import { MainCardActivitySection } from '@/widget/main/section/activity';
 import { MainCategorySection } from '@/widget/main/section/category';
 import { MainLastSection } from '@/widget/main/section/last';
@@ -19,7 +20,8 @@ import * as styles from './main.css';
 export async function MainPage() {
   const t = await getI18n();
   await delay(1000);
-  const { data } = await serverClient.GET('/home');
+  // const { data } = await serverClient.GET('/home');
+  const data = {} as components['schemas']['HomeResponse'];
   return (
     <>
       <main className={styles.main}>
