@@ -1,11 +1,15 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { dateRange } from '@/shared/utils/date';
+import { pushSearchParams } from '@/shared/utils/search-param';
+
+import { DirectionButton } from '@moeasy/storybook/ui/button';
 
 import 'dayjs/locale/ko';
 
@@ -21,8 +25,11 @@ export function MainUpcommingSchedule({ title }: { title: string }) {
     const currentDate = dayjs();
     return Array.from(dateRange(currentDate, currentDate.add(1, 'week'), 'd'));
   }, []);
-
-  const [currentDate, setCurrentDate] = useState(dayjs);
+  const searchParams = useSearchParams();
+  const currentDate = searchParams.get('date');
+  const parsedCurrentDate = dateArray.some((date) => date.format('YYYY-MM-DD') === currentDate)
+    ? dayjs(currentDate)
+    : dayjs();
 
   return (
     <section className={styles.section}>
@@ -32,10 +39,10 @@ export function MainUpcommingSchedule({ title }: { title: string }) {
           <button
             className={clsx(
               upcomingStyles.dateButton,
-              currentDate.isSame(date, 'date') && upcomingStyles.dateButtonActive,
+              parsedCurrentDate.isSame(date, 'date') && upcomingStyles.dateButtonActive,
             )}
             key={date.toISOString()}
-            onClick={() => setCurrentDate(date)}
+            onClick={() => pushSearchParams({ date: date.format('YYYY-MM-DD'), upComingPage: null }, searchParams)}
           >
             <span>{date.date()}</span>
             {index === 0 ? `오늘(${date.format('ddd')})` : date.format('ddd')}
@@ -58,6 +65,31 @@ export function MainUpcommingSchedule({ title }: { title: string }) {
           />
         ))}
       </div>
+      <MainUpcomingSectionPagination date={parsedCurrentDate.format('YYYY-MM-DD')} />
     </section>
+  );
+}
+
+function MainUpcomingSectionPagination({
+  currentPage = 1,
+  categoryLength = 0,
+  date,
+}: {
+  currentPage?: number;
+  categoryLength?: number;
+  date?: string | null;
+}) {
+  return (
+    <div className={sprinkles({ display: 'flex', gap: 'small', width: '100%', justifyContent: 'center' })}>
+      <DirectionButton
+        disabled={currentPage === 1}
+        onClick={() => pushSearchParams({ date, upComingPage: (currentPage - 1).toString() })}
+      />
+      <DirectionButton
+        direction="right"
+        disabled={currentPage + 1 > categoryLength / 10}
+        onClick={() => pushSearchParams({ date, upComingPage: (currentPage + 1).toString() })}
+      />
+    </div>
   );
 }

@@ -27,9 +27,8 @@ export const dateButtonActive = style({
 });
 
 export const scheduleContainer = style({
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
+  display: 'grid',
+  gridTemplateColumns: `repeat(auto-fill, minmax(${rem(300)}, 1fr))`,
+  gap: rem(12),
   width: '100%',
-  gap: rem(20),
 });

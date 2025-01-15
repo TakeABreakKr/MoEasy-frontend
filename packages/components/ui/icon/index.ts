@@ -1,6 +1,7 @@
 import AlarmIcon from './alarm';
 import BookMarkIcon from './bookmark';
 import CalendarIcon from './calendar';
+import CalendarHomeIcon from './calendar-home';
 import ChevronDown from './chevron-down';
 import ClockIcon from './clock';
 import CrossIcon from './cross';
@@ -20,6 +21,7 @@ import XIcon from './x';
 export {
   AlarmIcon,
   BookMarkIcon,
+  CalendarHomeIcon,
   CalendarIcon,
   ChevronDown,
   ClockIcon,

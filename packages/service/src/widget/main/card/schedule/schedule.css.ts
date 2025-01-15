@@ -7,7 +7,6 @@ export const scheduleCard = style({
   flexShrink: 0,
   position: 'relative',
   background: globalVars.color.neutral[3],
-  width: rem(300),
   borderRadius: rem(4),
   padding: rem(30, 22),
   color: globalVars.color.neutral[80],
@@ -20,6 +19,15 @@ export const scheduleCardHeader = style({
   position: 'relative',
   paddingBottom: rem(20),
   gap: rem(15),
+});
+
+export const scheduleTitle = style({
+  display: 'flex',
+  alignItems: 'center',
+  lineHeight: 0,
+  marginBlock: 0,
+  fontSize: rem(20),
+  fontWeight: '600',
 });
 
 export const scheduleCardThumbnail = style({
