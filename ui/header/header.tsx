@@ -4,7 +4,7 @@ import React from 'react';
 import clsx from 'clsx';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import { AlarmIcon, LogoIconWithText, PlusIcon, SearchIcon, UserIcon } from '../icon';
 
@@ -22,6 +22,10 @@ interface HeaderProps {
  */
 export const Header = ({}: HeaderProps) => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const loginSearchParams = new URLSearchParams(searchParams);
+  loginSearchParams.append('login', 'true');
+
   return (
     <header className={headerStyles.header}>
       <div className={headerStyles.headerWrapper}>
@@ -54,9 +58,14 @@ export const Header = ({}: HeaderProps) => {
           <Link href="/mypage" className={headerStyles.rightButton}>
             마이페이지
           </Link>
-          <button className={headerStyles.rightIcon}>
+          <Link
+            href={{
+              query: loginSearchParams.toString(),
+            }}
+            className={headerStyles.rightIcon}
+          >
             <UserIcon width={16} height={16} />
-          </button>
+          </Link>
         </div>
       </div>
     </header>
