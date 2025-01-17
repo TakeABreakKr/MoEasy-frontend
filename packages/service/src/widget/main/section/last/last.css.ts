@@ -41,3 +41,14 @@ export const currentText = style({
   fontWeight: 600,
   textAlign: 'center',
 });
+
+export const discordIcon = style({
+  backgroundColor: '#747DF7',
+  width: rem(90),
+  height: rem(90),
+  borderRadius: '50%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  color: globalVars.color.neutral.white,
+});

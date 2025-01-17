@@ -21,8 +21,8 @@ export function MainLastSection() {
         </div>
       </div>
       <div className={lastStyles.container}>
-        <Link href="/login">
-          <DiscordIcon color="#747DF7" width={90} height={90} />
+        <Link href="/login" className={lastStyles.discordIcon}>
+          <DiscordIcon width={90} height={90} />
         </Link>
         <div className={lastStyles.currentText}>
           디스코드로
