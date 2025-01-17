@@ -7,6 +7,7 @@ import MainCommonCard from '@/widget/main/card/common';
 import { MainMeetingDto } from '../../type';
 import { withMainCartHeader } from '..';
 
+import { commonCard } from '../../main.css';
 import * as styles from '../section.css';
 
 export const MainCardMeetingSectionContentBase = forwardRef<
@@ -19,9 +20,15 @@ export const MainCardMeetingSectionContentBase = forwardRef<
   if (loading) return <div>loading...</div>;
   return (
     <div className={styles.cardContainer}>
-      <div className={styles.cardWrapper} ref={ref}>
+      <div className={styles.cardWrapper.meeting} ref={ref}>
         {data?.map((meeting, idx) => (
-          <MainCommonCard key={idx} idx={idx + 1} title={meeting.name} description={meeting.description} />
+          <MainCommonCard
+            key={idx}
+            idx={idx + 1}
+            className={commonCard}
+            title={meeting.name}
+            description={meeting.description}
+          />
         ))}
       </div>
       <div className={styles.overlayNoPointer} />

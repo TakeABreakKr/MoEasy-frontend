@@ -2,11 +2,12 @@
 
 import { forwardRef } from 'react';
 
-import MainCommonCard from '../../card/common';
+import { MainScheduleCard } from '../../card/schedule';
 import { MainActivityDto } from '../../type';
 import { withMainCartHeader } from '..';
 
 import * as styles from '../section.css';
+import { activityCard } from './activity.css';
 
 export const MainCardActivitySectionContentBase = forwardRef<
   HTMLDivElement,
@@ -18,10 +19,8 @@ export const MainCardActivitySectionContentBase = forwardRef<
   if (loading) return <div>loading...</div>;
   return (
     <div className={styles.cardContainer}>
-      <div className={styles.cardWrapper} ref={ref}>
-        {data?.map((meeting, idx) => (
-          <MainCommonCard key={idx} idx={idx + 1} title={meeting.name} description={meeting.description} />
-        ))}
+      <div className={styles.cardWrapper.activity} ref={ref}>
+        {data?.map((activity, index) => <MainScheduleCard key={index} className={activityCard} schedule={activity} />)}
       </div>
       <div className={styles.overlayNoPointer} />
     </div>

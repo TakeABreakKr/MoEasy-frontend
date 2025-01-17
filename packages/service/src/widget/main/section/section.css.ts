@@ -1,7 +1,7 @@
 import { scrollStyle } from '@moeasy/storybook/ui/scroll/scroll.css';
 import { rem } from '@moeasy/storybook/utils/css';
 
-import { style } from '@vanilla-extract/css';
+import { style, styleVariants } from '@vanilla-extract/css';
 
 export const section = style({
   display: 'flex',
@@ -31,14 +31,15 @@ export const overlayNoPointer = style({
   background: 'linear-gradient(to right, transparent, transparent 80%, white 100%)',
 });
 
-export const cardWrapper = style([
-  scrollStyle,
-  {
-    display: 'flex',
-    alignItems: 'center',
-    gap: rem(32),
-    paddingTop: rem(80),
-    overflowX: 'auto',
-    overflowY: 'visible',
-  },
-]);
+const cardWrapperBase = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: rem(32),
+  overflowX: 'auto',
+  overflowY: 'visible',
+});
+
+export const cardWrapper = styleVariants({
+  meeting: [scrollStyle, cardWrapperBase, { paddingTop: rem(80) }],
+  activity: [scrollStyle, cardWrapperBase],
+});
