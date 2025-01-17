@@ -23,6 +23,7 @@ export const MainCardActivitySectionContentBase = forwardRef<
           <MainCommonCard key={idx} idx={idx + 1} title={meeting.name} description={meeting.description} />
         ))}
       </div>
+      <div className={styles.overlayNoPointer} />
     </div>
   );
 });

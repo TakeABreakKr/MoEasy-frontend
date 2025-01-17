@@ -13,7 +13,23 @@ export const section = style({
   maxWidth: rem(80 * 16),
 });
 
-export const cardContainer = style({ overflowX: 'auto', display: 'flex', gap: 16 });
+export const cardContainer = style({
+  position: 'relative',
+  overflowX: 'auto',
+  display: 'flex',
+  gap: 16,
+  width: '100%',
+});
+
+export const overlayNoPointer = style({
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  width: '100%',
+  height: '100%',
+  pointerEvents: 'none',
+  background: 'linear-gradient(to right, transparent, transparent 80%, white 100%)',
+});
 
 export const cardWrapper = style([
   scrollStyle,
