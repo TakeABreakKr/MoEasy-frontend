@@ -1,10 +1,11 @@
 import { rem } from '../../utils/css';
-import { style } from '@vanilla-extract/css';
 import { globalVars } from '../../utils/styles/global.css';
+import { style } from '@vanilla-extract/css';
 
 export const scrollStyle = style({
   '::-webkit-scrollbar': {
     width: rem(7),
+    height: rem(7),
   },
   '::-webkit-scrollbar-track': {
     backgroundColor: 'transparent',

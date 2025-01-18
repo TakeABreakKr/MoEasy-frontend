@@ -13,6 +13,7 @@ import React, {
 import { createPortal } from 'react-dom';
 import { Slot } from '@radix-ui/react-slot';
 
+import { useBodyScrollLock } from '../../hooks/use-body-scroll-lock';
 import { useControlledState } from '../../hooks/use-controlled-state';
 import { useMovablePopup } from '../../hooks/use-movable';
 import { useOnEscape } from '../../hooks/use-on-escape';
@@ -23,6 +24,7 @@ type ModalProps = {
   onOpenChange?: (openState: boolean) => void;
   closeDisabled?: boolean;
   onCloseDisabledChange?: (disableCloseState: boolean) => void;
+  scrollLock?: boolean;
 };
 
 type ModalContextProps = {
@@ -51,6 +53,7 @@ function Modal({
   onOpenChange,
   closeDisabled: closeDisabledProp = false,
   onCloseDisabledChange,
+  scrollLock = true,
   ...props
 }: PropsWithChildren<ModalProps>) {
   const parentModal = useContext(ModalContext);
@@ -74,6 +77,8 @@ function Modal({
 
   // 자식이 열려있을 때 close 제거
   useOnEscape(!childModalOpen && open, () => setOpen(false));
+  // 팝업이 mount 될 때 body scroll 막기
+  useBodyScrollLock(scrollLock);
 
   // 부모 모달에게 자식 모달이 열렸음을 알림
   useEffect(() => {
