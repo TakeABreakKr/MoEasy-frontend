@@ -9,11 +9,20 @@ import * as tagStyle from './tag.css';
 export type TagProps = Omit<ComponentPropsWithoutRef<typeof Button>, 'size' | 'rounded' | 'asChild'> & {
   variant?: 'dark' | 'light';
   isDelete?: boolean;
+  onDeleteClick?: () => void;
 };
 
-export const Tag = ({ variant = 'light', className, isDelete, children, ...props }: TagProps) => {
+export const Tag = ({
+  variant = 'light',
+  type = 'button',
+  className,
+  isDelete,
+  children,
+  onDeleteClick,
+  ...props
+}: TagProps) => {
   return (
-    <button className={clsx(tagStyle.tagVariant({ variant, isDelete }), className)} {...props}>
+    <button className={clsx(tagStyle.tagVariant({ variant, isDelete }), className)} type={type} {...props}>
       {children}
       {isDelete && (
         <Button
@@ -22,6 +31,12 @@ export const Tag = ({ variant = 'light', className, isDelete, children, ...props
           variant={variant === 'dark' ? 'light' : 'dark'}
           className={tagStyle.deleteButton}
           rounded="full"
+          onClick={(e) => {
+            if (onDeleteClick) {
+              e.stopPropagation();
+              onDeleteClick();
+            }
+          }}
         >
           <span>
             <XIcon width={8} height={8} />

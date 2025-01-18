@@ -153,3 +153,44 @@ export const searchButtonStyle = style({
 export const searchButtonPlaceHolder = style({
   color: globalVars.color.neutral[20],
 });
+
+export const directionButton = style({
+  position: 'relative',
+  color: globalVars.color.neutral[95],
+  width: rem(48),
+  height: rem(35),
+  overflow: 'hidden',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: rem(30),
+  ':disabled': {
+    color: globalVars.color.neutral[95],
+  },
+});
+
+export const directionButtonText = style({
+  selectors: {
+    [`${directionButton}:disabled &`]: {
+      opacity: 0.15,
+    },
+  },
+});
+
+export const directionButtonBackground = style({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: globalVars.color.blue[99],
+  opacity: 0.08,
+  selectors: {
+    [`${directionButton}:hover:not(:disabled) &`]: {
+      opacity: 0.15,
+    },
+    [`${directionButton}:active:not(:disabled) &`]: {
+      opacity: 0.3,
+    },
+  },
+});

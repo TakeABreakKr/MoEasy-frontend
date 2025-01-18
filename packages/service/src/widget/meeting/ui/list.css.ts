@@ -10,16 +10,3 @@ export const teamgrid = style({
   gap: rem(32),
   maxWidth: rem(664),
 });
-
-export const teamgridItem = style({
-  aspectRatio: 16 / 9,
-});
-
-export const teamItemImage = style({
-  selectors: {
-    [`${teamgridItem} &`]: {
-      objectFit: 'cover',
-      borderRadius: rem(16),
-    },
-  },
-});

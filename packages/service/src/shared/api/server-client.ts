@@ -19,4 +19,4 @@ const serverActionMiddleware: Middleware = {
 
 serverClient.use(serverActionMiddleware);
 
-export default serverClient;
+export { serverClient };

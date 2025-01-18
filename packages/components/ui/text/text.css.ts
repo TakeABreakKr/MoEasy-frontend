@@ -3,6 +3,9 @@ import { recipe } from '@vanilla-extract/recipes';
 import { globalVars } from '../../utils/styles/global.css';
 
 export const textRecipe = recipe({
+  base: {
+    marginBlock: 0,
+  },
   variants: {
     display: globalVars.text.display,
     headline: globalVars.text.headline,
