@@ -1,7 +1,7 @@
-import React from 'react';
+import { forwardRef, SVGProps } from 'react';
 
-const Sports: React.FC = () => (
-  <svg width="90" height="90" viewBox="0 0 236 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+const SportsIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg width="90" height="90" viewBox="0 0 236 100" fill="none" xmlns="http://www.w3.org/2000/svg" ref={ref} {...props}>
     <path d="M162.43 33.8281H73.5703V66.1681H162.43V33.8281Z" fill="#C1E5FF" />
     <path
       d="M5.26172 33.8281H11.3717V66.1681H5.26172C2.50172 66.1681 0.261719 63.9281 0.261719 61.1681V38.8281C0.261719 36.0681 2.50172 33.8281 5.26172 33.8281Z"
@@ -28,6 +28,7 @@ const Sports: React.FC = () => (
       fill="#67A9FF"
     />
   </svg>
-);
+));
+SportsIcon.displayName = 'SportsIcon';
 
-export default Sports;
+export default SportsIcon;

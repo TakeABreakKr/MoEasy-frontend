@@ -1,7 +1,15 @@
-import React from 'react';
+import { forwardRef, SVGProps } from 'react';
 
-const Health: React.FC = () => (
-  <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+const HealthIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    width="100"
+    height="100"
+    viewBox="0 0 300 300"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    ref={ref}
+    {...props}
+  >
     <path
       d="M171.37 66.3906H128.62C118.24 66.3906 109.82 74.8006 109.82 85.1906V105.391H122.35V86.9606C122.35 81.9906 126.38 77.9606 131.35 77.9606H168.62C173.59 77.9606 177.62 81.9906 177.62 86.9606V105.391H190.15V85.1906C190.15 74.8106 181.74 66.3906 171.35 66.3906H171.37Z"
       fill="#FF8B00"
@@ -15,6 +23,7 @@ const Health: React.FC = () => (
     <path d="M160.5 118.5H139.5V193.5H160.5V118.5Z" fill="#FF8B00" />
     <path d="M112.5 145.5V166.5H187.5V145.5H112.5Z" fill="#FF8B00" />
   </svg>
-);
+));
+HealthIcon.displayName = 'HealthIcon';
 
-export default Health;
+export default HealthIcon;

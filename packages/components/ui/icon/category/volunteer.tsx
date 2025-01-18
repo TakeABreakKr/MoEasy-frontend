@@ -1,7 +1,15 @@
-import React from 'react';
+import { forwardRef, SVGProps } from 'react';
 
-const Volunteer: React.FC = () => (
-  <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+const VolunteerIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    width="100"
+    height="100"
+    viewBox="0 0 300 300"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    ref={ref}
+    {...props}
+  >
     <path
       d="M179.801 168.002L155.801 162.002L84.3108 157.272C78.5108 156.502 72.7908 159.172 69.6608 164.112L62.8008 174.012L128.801 215.782L161.801 192.012L179.801 168.012V168.002Z"
       fill="#F9BB1E"
@@ -36,6 +44,7 @@ const Volunteer: React.FC = () => (
       fill="#EF7100"
     />
   </svg>
-);
+));
+VolunteerIcon.displayName = 'VolunteerIcon';
 
-export default Volunteer;
+export default VolunteerIcon;

@@ -1,7 +1,7 @@
-import React from 'react';
+import { forwardRef, SVGProps } from 'react';
 
-const Car: React.FC = () => (
-  <svg width="80" height="80" viewBox="0 0 228 138" fill="none" xmlns="http://www.w3.org/2000/svg">
+const CarIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg width="80" height="80" viewBox="0 0 228 138" fill="none" xmlns="http://www.w3.org/2000/svg" ref={ref} {...props}>
     <path
       d="M17.5 52.9492H196C207.04 52.9492 216 61.9092 216 72.9492V109.359C216 110.739 214.88 111.859 213.5 111.859H2.5C1.12 111.859 0 110.739 0 109.359V70.4492C0 60.7892 7.84 52.9492 17.5 52.9492Z"
       fill="#0071FE"
@@ -36,6 +36,7 @@ const Car: React.FC = () => (
     />
     <path d="M101.45 7.12891H85.0898V62.7689H101.45V7.12891Z" fill="#0071FE" />
   </svg>
-);
+));
+CarIcon.displayName = 'CarIcon';
 
-export default Car;
+export default CarIcon;

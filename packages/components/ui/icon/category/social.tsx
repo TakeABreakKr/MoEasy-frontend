@@ -1,7 +1,7 @@
-import React from 'react';
+import { forwardRef, SVGProps } from 'react';
 
-const Social: React.FC = () => (
-  <svg width="80" height="80" viewBox="0 0 212 219" fill="none" xmlns="http://www.w3.org/2000/svg">
+const SocialIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg width="80" height="80" viewBox="0 0 212 219" fill="none" xmlns="http://www.w3.org/2000/svg" ref={ref} {...props}>
     <path
       d="M55.6673 218.671C80.7355 218.671 101.057 198.349 101.057 173.281C101.057 148.212 80.7355 127.891 55.6673 127.891C30.5991 127.891 10.2773 148.212 10.2773 173.281C10.2773 198.349 30.5991 218.671 55.6673 218.671Z"
       fill="#C1E5FF"
@@ -56,6 +56,8 @@ const Social: React.FC = () => (
     />
     <path d="M47.3398 93.8203V119.16L78.8598 100.49L47.3398 93.8203Z" fill="#00BEFC" />
   </svg>
-);
+));
 
-export default Social;
+SocialIcon.displayName = 'SocialIcon';
+
+export default SocialIcon;
