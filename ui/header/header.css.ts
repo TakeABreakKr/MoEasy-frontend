@@ -16,6 +16,17 @@ export const header = style({
   zIndex: 1,
 });
 
+export const headerOnAbout = style({
+  backgroundColor: 'transparent',
+  color: globalVars.color.neutral.white,
+});
+
+export const logo = style({
+  display: 'flex',
+  alignItems: 'center',
+  color: 'currentcolor',
+});
+
 export const headerWrapper = style({
   display: 'flex',
   alignItems: 'center',
