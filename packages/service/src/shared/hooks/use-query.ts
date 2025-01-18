@@ -39,7 +39,7 @@ const queryReducer = <T>(state: QueryState<T>, action: QueryAction<T>): QuerySta
 
 const reducerInitializer = <T>(initialData?: T) => ({
   data: initialData,
-  loading: false,
+  loading: true,
   error: null,
   activateRefetch: false,
 });

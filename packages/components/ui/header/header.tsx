@@ -27,10 +27,10 @@ export const Header = ({}: HeaderProps) => {
   loginSearchParams.append('login', 'true');
 
   return (
-    <header className={headerStyles.header}>
+    <header className={clsx(headerStyles.header, pathname === '/about' && headerStyles.headerOnAbout)}>
       <div className={headerStyles.headerWrapper}>
         <div className={headerStyles.leftHandSide}>
-          <Link href="/">
+          <Link className={headerStyles.logo} href="/">
             <LogoIconWithText />
           </Link>
           <ul className={headerStyles.linkWrapper}>
