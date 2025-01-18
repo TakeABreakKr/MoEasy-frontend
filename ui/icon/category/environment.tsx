@@ -1,7 +1,15 @@
-import React from 'react';
+import { forwardRef, SVGProps } from 'react';
 
-const Environment: React.FC = () => (
-  <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+const EnvironmentIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    width="100"
+    height="100"
+    viewBox="0 0 300 300"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    ref={ref}
+    {...props}
+  >
     <path
       d="M149.721 96.0898L148.481 96.7698L147.241 96.0898L144.281 144.73H148.021H148.941H152.681L149.721 96.0898Z"
       fill="#B26900"
@@ -20,6 +28,7 @@ const Environment: React.FC = () => (
     />
     <path d="M203.091 239.84H96.9109L79.2109 170.27H220.791L203.091 239.84Z" fill="#FFCB27" />
   </svg>
-);
+));
+EnvironmentIcon.displayName = 'EnvironmentIcon';
 
-export default Environment;
+export default EnvironmentIcon;

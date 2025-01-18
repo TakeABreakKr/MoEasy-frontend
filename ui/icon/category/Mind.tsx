@@ -1,7 +1,7 @@
-import React from 'react';
+import { forwardRef, SVGProps } from 'react';
 
-const Mind: React.FC = () => (
-  <svg width="80" height="80" viewBox="0 0 174 146" fill="none" xmlns="http://www.w3.org/2000/svg">
+const MindIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg width="80" height="80" viewBox="0 0 174 146" fill="none" xmlns="http://www.w3.org/2000/svg" ref={ref} {...props}>
     <path
       d="M173.95 47.1184C173.95 21.5884 153.26 0.898438 127.73 0.898438C110.32 0.898438 95.18 10.5284 87.29 24.7384C87.2 24.9084 87.1 25.0684 87 25.2484C86.91 25.0784 86.81 24.9084 86.71 24.7384C78.83 10.5284 63.68 0.898438 46.27 0.898438C20.74 0.898438 0.0499992 21.5984 0.0499992 47.1184H0C0 47.1184 0 48.4984 0.25 50.9384C0.35 51.9384 0.499999 53.1284 0.689999 54.4584C0.719999 54.6684 0.749999 54.8684 0.779999 55.0784C0.859999 55.5884 0.950003 56.1184 1.05 56.6684C4.58 76.5784 19.96 122.558 87 145.098C154.03 122.548 169.42 76.5784 172.95 56.6684C173.05 56.1184 173.14 55.5884 173.22 55.0784C173.26 54.8784 173.28 54.6684 173.31 54.4584C173.51 53.1184 173.65 51.9384 173.75 50.9384C174 48.4884 174 47.1184 174 47.1184H173.95Z"
       fill="#0071FE"
@@ -19,6 +19,7 @@ const Mind: React.FC = () => (
       fill="#9CD5FF"
     />
   </svg>
-);
+));
+MindIcon.displayName = 'MindIcon';
 
-export default Mind;
+export default MindIcon;

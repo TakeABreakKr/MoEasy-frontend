@@ -1,7 +1,15 @@
-import React from 'react';
+import { forwardRef, SVGProps } from 'react';
 
-const Food: React.FC = () => (
-  <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+const FoodIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    width="100"
+    height="100"
+    viewBox="0 0 300 300"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    ref={ref}
+    {...props}
+  >
     <path
       d="M197.29 226.01H101.91C95.0503 226.01 89.0603 221.35 87.3703 214.71L66.7103 133.41C65.7503 129.62 68.6103 125.93 72.5303 125.93H226.69C230.6 125.93 233.47 129.62 232.51 133.41L211.85 214.71C210.16 221.36 204.17 226.01 197.31 226.01H197.29Z"
       fill="#FFCB27"
@@ -20,6 +28,8 @@ const Food: React.FC = () => (
       fill="#FF8B00"
     />
   </svg>
-);
+));
 
-export default Food;
+FoodIcon.displayName = 'FoodIcon';
+
+export default FoodIcon;

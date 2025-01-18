@@ -1,7 +1,15 @@
-import React from 'react';
+import { forwardRef, SVGProps } from 'react';
 
-const Drink: React.FC = () => (
-  <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+const DrinkIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    width="100"
+    height="100"
+    viewBox="0 0 300 300"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    ref={ref}
+    {...props}
+  >
     <path
       d="M197.73 116.639H217.8C225.09 116.639 231 122.559 231 129.839V198.489C231 205.779 225.08 211.689 217.8 211.689H197.73V116.629V116.639Z"
       fill="#FFCB27"
@@ -44,6 +52,7 @@ const Drink: React.FC = () => (
       fill="#FFE2A1"
     />
   </svg>
-);
+));
+DrinkIcon.displayName = 'DrinkIcon';
 
-export default Drink;
+export default DrinkIcon;

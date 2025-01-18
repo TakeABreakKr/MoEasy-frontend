@@ -1,7 +1,15 @@
-import React from 'react';
+import { forwardRef, SVGProps } from 'react';
 
-const Love: React.FC = () => (
-  <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+const LoveIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    width="100"
+    height="100"
+    viewBox="0 0 300 300"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    ref={ref}
+    {...props}
+  >
     <path
       d="M58.3195 95.9805C58.2095 96.0905 58.1295 96.2305 58.0195 96.3405L60.5395 97.8105L58.3195 95.9805Z"
       fill="#AAAAAA"
@@ -27,6 +35,7 @@ const Love: React.FC = () => (
       fill="#FFB624"
     />
   </svg>
-);
+));
+LoveIcon.displayName = 'LoveIcon';
 
-export default Love;
+export default LoveIcon;
