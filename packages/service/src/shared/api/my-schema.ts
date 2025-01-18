@@ -175,55 +175,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/member/search': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations['MemberController_search'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/member/get': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations['MemberController_getMember'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/member/withdraw': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations['MemberController_withdraw'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/member/authority/modify': {
+  '/schedule/create': {
     parameters: {
       query?: never;
       header?: never;
@@ -232,14 +184,14 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    post: operations['MemberController_modify'];
+    post: operations['ScheduleController_createSchedule'];
     delete?: never;
     options?: never;
     head?: never;
     patch?: never;
     trace?: never;
   };
-  '/member/delete': {
+  '/schedule/update': {
     parameters: {
       query?: never;
       header?: never;
@@ -248,37 +200,21 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    post: operations['MemberController_delete'];
+    post: operations['ScheduleController_updateSchedule'];
     delete?: never;
     options?: never;
     head?: never;
     patch?: never;
     trace?: never;
   };
-  '/member/apply': {
+  '/schedule/get': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get?: never;
-    put?: never;
-    post: operations['MemberController_apply'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/member/waiting/get': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations['MemberController_getWaiting'];
+    get: operations['ScheduleController_getSchedule'];
     put?: never;
     post?: never;
     delete?: never;
@@ -287,7 +223,23 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/member/waiting/manage': {
+  '/schedule/get/list': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ScheduleController_getScheduleList'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/schedule/withdraw': {
     parameters: {
       query?: never;
       header?: never;
@@ -296,7 +248,23 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    post: operations['MemberController_manageMember'];
+    post: operations['ScheduleController_withdraw'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/schedule/delete': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ScheduleController_delete'];
     delete?: never;
     options?: never;
     head?: never;
@@ -335,46 +303,14 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/schedule/create': {
+  '/home': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get?: never;
-    put?: never;
-    post: operations['ScheduleController_createSchedule'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/schedule/update': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post: operations['ScheduleController_updateSchedule'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/schedule/get/list': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations['ScheduleController_getScheduleList'];
+    get: operations['HomeController_getHome'];
     put?: never;
     post?: never;
     delete?: never;
@@ -396,12 +332,14 @@ export interface components {
       keywords: string[];
       limit: number;
       members: string[];
+      canJoin: boolean;
     };
     MeetingUpdateRequest: {
       meeting_id: string;
       name: string;
       explanation: string;
       limit: number;
+      canJoin: boolean;
     };
     MeetingThumbnailUpdateRequest: {
       meetingId: string;
@@ -419,6 +357,7 @@ export interface components {
       limit: number;
       members: components['schemas']['MeetingMemberDto'][];
       thumbnail: string;
+      canJoin: boolean;
     };
     MeetingListMeetingDto: {
       meetingId: string;
@@ -426,45 +365,10 @@ export interface components {
       explanation: string;
       /** @enum {string} */
       authority: 'WAITING' | 'MEMBER' | 'MANAGER' | 'OWNER';
+      canJoin: boolean;
     };
     MeetingListResponse: {
       meetingList: components['schemas']['MeetingListMeetingDto'][];
-    };
-    MemberSearchDto: {
-      userId: number;
-      nickname: string;
-    };
-    MemberSearchResponse: {
-      memberList: components['schemas']['MemberSearchDto'][];
-    };
-    MemberResponse: {
-      username: string;
-      explanation: string;
-      authority: string;
-    };
-    MemberAuthorityModifyRequest: {
-      usersId: number;
-      meetingId: string;
-      manager: boolean;
-    };
-    MemberDeleteRequest: {
-      deletedMemberId: number;
-      meetingId: string;
-    };
-    MemberApplyRequest: {
-      meetingId: string;
-      applicationMessage: string;
-    };
-    MemberManageRequest: {
-      meetingId: string;
-      memberId: number;
-      isAccepted: boolean;
-    };
-    NotificationResponse: {
-      notificationList: string[];
-    };
-    NotificationCheckRequest: {
-      notificationIdList: string[];
     };
     AddressDto: {
       zonecode: string;
@@ -516,6 +420,7 @@ export interface components {
       onlineYn: boolean;
       address: components['schemas']['AddressDto'];
       detailAddress: string;
+      participants: string[];
     };
     ScheduleUpdateRequest: {
       meeting_id: string;
@@ -530,7 +435,19 @@ export interface components {
       onlineYn: boolean;
       address: components['schemas']['AddressDto'];
       detailAddress: string;
+      participants: string[];
       schedule_id: number;
+    };
+    ScheduleResponse: {
+      name: string;
+      explanation: string;
+      /** Format: date-time */
+      startDate: string;
+      /** Format: date-time */
+      endDate: string;
+      announcement: string;
+      onlineYn: boolean;
+      address: components['schemas']['AddressDto'];
     };
     ScheduleListDto: {
       meetingId: string;
@@ -545,8 +462,80 @@ export interface components {
       announcement: string;
       detailAddress: string;
     };
+    ScheduleListMeetingListDto: {
+      name: string;
+      thumbnail: string;
+    };
     ScheduleListResponse: {
       scheduleList: components['schemas']['ScheduleListDto'][];
+      meetings: components['schemas']['ScheduleListMeetingListDto'][];
+    };
+    ScheduleWithdrawRequest: {
+      meeting_id: string;
+      schedule_id: number;
+    };
+    ScheduleDeleteRequest: {
+      meeting_id: string;
+      schedule_id: number;
+    };
+    NotificationResponse: {
+      notificationList: string[];
+    };
+    NotificationCheckRequest: {
+      notificationIdList: string[];
+    };
+    HomeCategoryDto: {
+      name: string;
+      order: number;
+    };
+    HomeCategoryGroupDto: {
+      name: string;
+      homeCategoryList: components['schemas']['HomeCategoryDto'][];
+    };
+    HomePopularMeetingDto: {
+      name: string;
+      description: string;
+      memberCount: number;
+      isLikedYn: boolean;
+    };
+    HomeNewMeetingDto: {
+      name: string;
+      description: string;
+      memberCount: number;
+      isLikedYn: boolean;
+    };
+    HomeClosingTimeActivityDto: {
+      name: string;
+      isOnlineYn: boolean;
+      description: string;
+      location: string;
+      /** Format: date-time */
+      time: string;
+      memberCount: number;
+      isLiked: boolean;
+    };
+    HomeUpcomingActivityDto: {
+      name: string;
+      isOnlineYn: boolean;
+      description: string;
+      location: string;
+      /** Format: date-time */
+      time: string;
+      memberCount: number;
+      isLiked: boolean;
+    };
+    HomeMostActivatedRegionDto: {
+      name: string;
+      activityCount: number;
+      order: number;
+    };
+    HomeResponse: {
+      categories: components['schemas']['HomeCategoryGroupDto'][];
+      popularMeetings: components['schemas']['HomePopularMeetingDto'][];
+      newMeetings: components['schemas']['HomeNewMeetingDto'][];
+      closingTimeActivities: components['schemas']['HomeClosingTimeActivityDto'][];
+      upcomingActivities: components['schemas']['HomeUpcomingActivityDto'][];
+      mostActivatedRegions: components['schemas']['HomeMostActivatedRegionDto'][];
     };
   };
   responses: never;
@@ -654,6 +643,13 @@ export interface operations {
         };
         content?: never;
       };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
     };
   };
   MeetingController_updateMeeting: {
@@ -684,6 +680,13 @@ export interface operations {
         };
         content?: never;
       };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
     };
   };
   MeetingController_updateMeetingThumbnail: {
@@ -702,6 +705,20 @@ export interface operations {
     responses: {
       /** @description Meeting Entity has been successfully modified. */
       200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 해당 모임을 찾을 수 없습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
         headers: {
           [name: string]: unknown;
         };
@@ -729,6 +746,13 @@ export interface operations {
       };
       /** @description 해당 모임을 찾을 수 없습니다. */
       400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
         headers: {
           [name: string]: unknown;
         };
@@ -818,70 +842,21 @@ export interface operations {
       };
     };
   };
-  MemberController_search: {
+  ScheduleController_createSchedule: {
     parameters: {
-      query: {
-        keyword: string;
-      };
+      query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    requestBody?: never;
+    /** @description info for creating a new schedule. */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ScheduleCreateRequest'];
+      };
+    };
     responses: {
-      /** @description withdraw succeed */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['MemberSearchResponse'];
-        };
-      };
-    };
-  };
-  MemberController_getMember: {
-    parameters: {
-      query: {
-        meetingId: string;
-        userId: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Member retrieved successfully */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['MemberResponse'];
-        };
-      };
-      /** @description 해당 멤버를 찾을 수 없습니다. */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  MemberController_withdraw: {
-    parameters: {
-      query: {
-        meetingId: string;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description withdraw succeed */
+      /** @description Schedule Entity has been created. */
       200: {
         headers: {
           [name: string]: unknown;
@@ -897,88 +872,28 @@ export interface operations {
       };
     };
   };
-  MemberController_modify: {
+  ScheduleController_updateSchedule: {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    /** @description data for modifying member authority */
+    /** @description data to modify schedule. */
     requestBody: {
       content: {
-        'application/json': components['schemas']['MemberAuthorityModifyRequest'];
+        'application/json': components['schemas']['ScheduleUpdateRequest'];
       };
     };
     responses: {
-      /** @description authority modified succeed */
+      /** @description Schedule has been updated. */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content?: never;
       };
-      /** @description 존재하지 않는 요청자입니다. */
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  MemberController_delete: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** @description info for deleting a member */
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['MemberDeleteRequest'];
-      };
-    };
-    responses: {
-      /** @description member deleted successfully */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description 존재하지 않는 요청자입니다. */
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  MemberController_apply: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** @description data required for applying to become a meeting member. */
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['MemberApplyRequest'];
-      };
-    };
-    responses: {
-      /** @description The application has been successfully submitted and is awaiting approval. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description 해당 모임을 찾을 수 없습니다. */
+      /** @description 해당 일정을 찾을 수 없습니다. */
       400: {
         headers: {
           [name: string]: unknown;
@@ -994,10 +909,10 @@ export interface operations {
       };
     };
   };
-  MemberController_getWaiting: {
+  ScheduleController_getSchedule: {
     parameters: {
       query: {
-        meetingId: string;
+        scheduleId: number;
       };
       header?: never;
       path?: never;
@@ -1005,8 +920,17 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description waiting list retrieved successfully */
+      /** @description schedule entity retrieved successfully */
       200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ScheduleResponse'];
+        };
+      };
+      /** @description 해당 일정을 찾을 수 없습니다. */
+      400: {
         headers: {
           [name: string]: unknown;
         };
@@ -1021,22 +945,106 @@ export interface operations {
       };
     };
   };
-  MemberController_manageMember: {
+  ScheduleController_getScheduleList: {
+    parameters: {
+      query: {
+        /** @description schedule status: in_progress, upcoming, completed. */
+        status: string[];
+        /** @description Option to sort scheduleList (LATEST for latest registered, NAME for alphabetical). */
+        options: 'LATEST' | 'NAME' | 'OLDEST';
+        meetingId?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Schedule list retrieved */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ScheduleListResponse'];
+        };
+      };
+      /** @description 해당 일정을 찾을 수 없습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  ScheduleController_withdraw: {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    /** @description data required for member approval or denial */
+    /** @description data to withdraw schedule. */
     requestBody: {
       content: {
-        'application/json': components['schemas']['MemberManageRequest'];
+        'application/json': components['schemas']['ScheduleWithdrawRequest'];
       };
     };
     responses: {
-      /** @description member approved successfully */
+      /** @description withdraw successfully */
       200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 해당 일정을 찾을 수 없습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  ScheduleController_delete: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description data to delete schedule */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ScheduleDeleteRequest'];
+      };
+    };
+    responses: {
+      /** @description schedule deleted successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 해당 일정을 찾을 수 없습니다. */
+      400: {
         headers: {
           [name: string]: unknown;
         };
@@ -1114,89 +1122,23 @@ export interface operations {
       };
     };
   };
-  ScheduleController_createSchedule: {
+  HomeController_getHome: {
     parameters: {
       query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** @description info for creating a new schedule. */
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ScheduleCreateRequest'];
-      };
-    };
-    responses: {
-      /** @description Schedule Entity has been created. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  ScheduleController_updateSchedule: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** @description data to modify schedule. */
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ScheduleUpdateRequest'];
-      };
-    };
-    responses: {
-      /** @description Schedule has been updated. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description 해당 일정을 찾을 수 없습니다. */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  ScheduleController_getScheduleList: {
-    parameters: {
-      query: {
-        meetingId: string;
-        /** @description schedule status: in_progress, upcoming, completed. */
-        status: string[];
-        /** @description Option to sort scheduleList (LATEST for latest registered, NAME for alphabetical). */
-        options: 'LATEST' | 'NAME';
-      };
       header?: never;
       path?: never;
       cookie?: never;
     };
     requestBody?: never;
     responses: {
-      /** @description Schedule list retrieved */
+      /** @description get home data successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['ScheduleListResponse'];
+          'application/json': components['schemas']['HomeResponse'];
         };
-      };
-      /** @description 해당 일정을 찾을 수 없습니다. */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
       };
     };
   };

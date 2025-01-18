@@ -44,6 +44,7 @@ export const scheduleCreateReducer = (state: CreateScheduleTypeDateMutated, acti
 export const scheduleCreateInitializer = ({
   startDate,
   endDate,
+  participants = [],
   ...value
 }: Partial<CreateScheduleType> = {}): CreateScheduleTypeDateMutated => ({
   meeting_id: '',
@@ -55,6 +56,7 @@ export const scheduleCreateInitializer = ({
   announcement: '',
   detailAddress: '',
   onlineYn: true,
+  participants,
   ...value,
 });
 

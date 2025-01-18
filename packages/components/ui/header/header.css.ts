@@ -5,7 +5,7 @@ import { globalStyle, style } from '@vanilla-extract/css';
 
 export const header = style({
   borderBottom: `1px solid rgba(0, 0, 0, 0.1)`,
-  padding: `0 ${rem(60)}`, // 60px
+  padding: rem(0, 60), // 60px
   backgroundColor: globalVars.color.neutral.white,
   position: 'fixed',
   top: 0,
@@ -41,12 +41,12 @@ const commonSideStyles = {
   alignItems: 'center',
   gap: rem(16), // 1rem
   height: '100%',
-  fontSize: rem(20), // 1.25rem
+  ...globalVars.text.label.medium.regular,
 };
 
 export const leftHandSide = style(commonSideStyles);
 
-export const rightHandSide = style({ ...commonSideStyles, gap: rem(5) });
+export const rightHandSide = style({ ...commonSideStyles, fontSize: rem(12), gap: rem(5) });
 
 export const linkWrapper = style({
   display: 'flex',
@@ -54,10 +54,10 @@ export const linkWrapper = style({
   gap: rem(30),
   listStyle: 'none',
   height: '100%',
-  ...globalVars.text.label.small.regular,
+  color: globalVars.color.neutral.black,
 });
 
-globalStyle(`${linkWrapper} li`, {
+export const linkText = style({
   display: 'flex',
   alignItems: 'center',
   height: '100%',
@@ -66,6 +66,7 @@ globalStyle(`${linkWrapper} li`, {
 export const active = style({
   selectors: {
     [`${linkWrapper} &`]: {
+      ...globalVars.text.label.medium.semibold,
       borderBottom: `1px solid ${globalVars.color.neutral.white}`,
       borderTop: '1px solid transparent',
     },
@@ -81,39 +82,29 @@ export const welcome = style({
   marginRight: rem(10), // 10px
 });
 
-export const icon = style({
+export const rightButton = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  borderRadius: '50%',
-  gap: rem(16), // 1rem
+  borderRadius: rem(30),
+  padding: rem(8),
   transition: 'background-color 200ms ease-in-out, color 200ms ease-in-out',
-});
-
-export const searchIcon = style({
-  width: rem(34), // 34px
-  height: rem(34), // 34px
   color: globalVars.color.neutral[95],
   backgroundColor: globalVars.color.neutral[5],
   ':hover': {
     backgroundColor: globalVars.color.neutral[20],
   },
   ':active': {
-    backgroundColor: globalVars.color.neutral[40],
+    color: globalVars.color.neutral.white,
+    backgroundColor: globalVars.color.blue[60],
   },
 });
 
-export const userIcon = style({
-  width: rem(34), // 34px
-  height: rem(34), // 34px
-  backgroundColor: globalVars.color.neutral[5],
-  color: globalVars.color.neutral.white,
-  ':hover': {
-    backgroundColor: globalVars.color.neutral[20],
-    color: globalVars.color.neutral[3],
+export const rightIcon = style([
+  rightButton,
+  {
+    borderRadius: '50%',
+    width: rem(34), // 34px
+    height: rem(34), // 34px
   },
-  ':active': {
-    backgroundColor: globalVars.color.neutral[40],
-    color: globalVars.color.neutral[10],
-  },
-});
+]);
