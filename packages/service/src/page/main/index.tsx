@@ -1,28 +1,21 @@
+import { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { getScopedI18n } from '@/locales/server';
-import { components } from '@/shared/api/my-schema';
+import { MainContent } from '@/widget/main/content';
+import { MainContentLoadingFallback } from '@/widget/main/content/loading';
 import { LoginPopup } from '@/widget/main/popup/login';
-// import { serverClient } from '@/shared/api/server-client';
-import { MainCardActivitySection } from '@/widget/main/section/activity';
-import { MainCategorySection } from '@/widget/main/section/category';
-import { MainLastSection } from '@/widget/main/section/last';
-import { MainCardMeetingSection } from '@/widget/main/section/meeting';
-import { MainUpcommingSchedule } from '@/widget/main/section/upcoming';
 
+// import { serverClient } from '@/shared/api/server-client';
 import { MainFooter } from '@moeasy/storybook/ui/footer';
 import { ChevronDown } from '@moeasy/storybook/ui/icon';
 import { Separator } from '@moeasy/storybook/ui/separator';
-import { delay } from '@moeasy/storybook/utils/lib/delay';
 
 import * as styles from './main.css';
 
 export async function MainPage() {
   const t = await getScopedI18n('main');
-  await delay(1000);
-  // const { data } = await serverClient.GET('/home');
-  const data = {} as components['schemas']['HomeResponse'];
   return (
     <>
       <LoginPopup />
@@ -40,12 +33,9 @@ export async function MainPage() {
             <Image src={'https://via.placeholder.com/300/1'} width={300} height={300} alt="sample" />
           </div>
         </section>
-        <MainCategorySection title={t('카테고리.어떤 모임을 찾으세요?')} />
-        <MainCardMeetingSection title={t('this-week-pop-team')} href="#" data={data?.popularMeetings} />
-        <MainCardMeetingSection title={t('새로 생겼어요')} href="#" data={data?.newMeetings} />
-        <MainCardActivitySection title={t('마감임박 활동')} href="#" data={data?.closingTimeActivities} />
-        <MainUpcommingSchedule title={t('다가오는 활동')} />
-        <MainLastSection />
+        <Suspense fallback={<MainContentLoadingFallback />}>
+          <MainContent />
+        </Suspense>
       </main>
       <Separator direction="horizontal" />
       <MainFooter />
