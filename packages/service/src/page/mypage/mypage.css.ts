@@ -39,28 +39,6 @@ export const tabItemActive = style({
   borderBottom: `2px solid ${globalVars.color.neutral[95]}`,
 });
 
-export const filterButton = style({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: rem(5),
-  border: `1px solid ${globalVars.color.neutral[40]}`,
-  borderRadius: rem(23),
-  padding: rem(4.25, 10),
-  fontSize: rem(13),
-  ':hover': {
-    backgroundColor: globalVars.color.neutral[3],
-  },
-  ':active': {
-    backgroundColor: globalVars.color.neutral[10],
-  },
-});
-
-export const filterButtonActive = style({
-  border: `1px solid ${globalVars.color.blue[50]}`,
-  color: globalVars.color.blue[50],
-});
-
 export const meetingList = style([
   sectionDefaultWidth,
   {
