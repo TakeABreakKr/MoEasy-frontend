@@ -19,8 +19,8 @@ type TimeProps = {
 
 export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: TimeProps) {
   const [state, dispatch] = useReducer(timeReducer, { value, min, max }, timeInitializer);
-  const timer = useRef<NodeJS.Timeout>();
-  const clearTimeout = () => clearInterval(timer.current);
+  const timer = useRef<NodeJS.Timeout>(null);
+  const clearTimeout = () => timer.current && clearInterval(timer.current);
   const addHour = () => dispatch({ type: 'ADD_HOUR', min, max });
   const minusHour = () => dispatch({ type: 'MINUS_HOUR', min, max });
   const addMinute = () => dispatch({ type: 'ADD_MINUTE', min, max });

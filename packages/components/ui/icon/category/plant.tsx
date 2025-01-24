@@ -1,29 +1,22 @@
-import { forwardRef, SVGProps } from 'react';
+import { SVGProps } from 'react';
 
-const PlantIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
-  <svg
-    width="100"
-    height="100"
-    viewBox="0 0 300 300"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    ref={ref}
-    {...props}
-  >
-    <path
-      d="M147.381 70.1091L77.6914 199.499H230.271L160.581 70.1091C157.751 64.8491 150.211 64.8491 147.371 70.1091H147.381Z"
-      fill="#9CD5FF"
-    />
-    <path
-      d="M209.968 132.242L173.738 199.502H259.398L223.168 132.242C220.338 126.982 212.798 126.982 209.958 132.242H209.968Z"
-      fill="#67A9FF"
-    />
-    <path
-      d="M98.2416 93.7219L40.6016 199.502H200.342L110.252 93.7219C105.302 87.6719 100.922 88.7919 98.2416 93.7219Z"
-      fill="#0071FE"
-    />
-  </svg>
-));
-PlantIcon.displayName = 'PlantIcon';
+function PlantIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path
+        d="M147.381 70.1091L77.6914 199.499H230.271L160.581 70.1091C157.751 64.8491 150.211 64.8491 147.371 70.1091H147.381Z"
+        fill="#9CD5FF"
+      />
+      <path
+        d="M209.968 132.242L173.738 199.502H259.398L223.168 132.242C220.338 126.982 212.798 126.982 209.958 132.242H209.968Z"
+        fill="#67A9FF"
+      />
+      <path
+        d="M98.2416 93.7219L40.6016 199.502H200.342L110.252 93.7219C105.302 87.6719 100.922 88.7919 98.2416 93.7219Z"
+        fill="#0071FE"
+      />
+    </svg>
+  );
+}
 
 export default PlantIcon;

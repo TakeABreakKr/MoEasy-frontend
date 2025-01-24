@@ -9,7 +9,7 @@ const serverClient = createClient<paths>({ baseUrl: 'http:localhost:5000' });
 
 const serverActionMiddleware: Middleware = {
   async onRequest({ request, options }) {
-    const cookie = cookies().get('tokens');
+    const cookie = (await cookies()).get('tokens');
     if (cookie) {
       request.headers.set('tokens', cookie.value);
     }
