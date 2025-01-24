@@ -4,7 +4,7 @@ import { ChevronDown } from '@moeasy/storybook/ui/icon';
 
 import { toNextSection } from './to-next-page.css';
 
-export function AboutToNextPage({ parentRef }: { parentRef?: React.RefObject<HTMLElement> }) {
+export function AboutToNextPage({ parentRef }: { parentRef?: React.RefObject<HTMLElement | null> }) {
   return (
     <button
       className={toNextSection}

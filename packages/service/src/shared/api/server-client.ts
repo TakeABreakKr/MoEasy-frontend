@@ -3,13 +3,13 @@ import 'server-only';
 import createClient, { Middleware } from 'openapi-fetch';
 
 import { paths } from './my-schema';
-import { cookies } from 'next/headers';
+import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
 
 const serverClient = createClient<paths>({ baseUrl: 'http:localhost:5000' });
 
 const serverActionMiddleware: Middleware = {
   async onRequest({ request, options }) {
-    const cookie = cookies().get('tokens');
+    const cookie = (await cookies()).get('tokens');
     if (cookie) {
       request.headers.set('tokens', cookie.value);
     }
