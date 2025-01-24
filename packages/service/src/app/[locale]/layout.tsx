@@ -7,6 +7,7 @@ import { Header } from '@moeasy/storybook/ui/header';
 import './mock';
 
 import RootProvider from './_provider';
+import { MSWWrapper } from './msw-wrapper';
 
 import '@moeasy/storybook/utils/styles/global.css';
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className={clsx(pretendard.className, pretendard.variable)}>
         <Header />
+        <MSWWrapper />
         <RootProvider locale={locale}>{children}</RootProvider>
       </body>
     </html>
