@@ -7,7 +7,6 @@ import { MainContent } from '@/widget/main/content';
 import { MainContentLoadingFallback } from '@/widget/main/content/loading';
 import { LoginPopup } from '@/widget/main/popup/login';
 
-// import { serverClient } from '@/shared/api/server-client';
 import { MainFooter } from '@moeasy/storybook/ui/footer';
 import { ChevronDown } from '@moeasy/storybook/ui/icon';
 import { Separator } from '@moeasy/storybook/ui/separator';

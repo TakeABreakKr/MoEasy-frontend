@@ -14,13 +14,14 @@ import { DirectionButton } from '@moeasy/storybook/ui/button';
 import 'dayjs/locale/ko';
 
 import { MainScheduleCard } from '../../card/schedule';
+import { MainActivityDto } from '../../type';
 
 import * as styles from '../section.css';
 import * as upcomingStyles from './upcoming.css';
 
 dayjs.locale('ko');
 
-export function MainUpcommingSchedule({ title }: { title: string }) {
+export function MainUpcommingSchedule({ title, data }: { title: string; data?: MainActivityDto[] }) {
   const dateArray = useMemo(() => {
     const currentDate = dayjs();
     return Array.from(dateRange(currentDate, currentDate.add(1, 'week'), 'd'));
@@ -50,20 +51,7 @@ export function MainUpcommingSchedule({ title }: { title: string }) {
         ))}
       </div>
       <div className={upcomingStyles.scheduleContainer}>
-        {[1, 2, 3, 4, 5].map((_, index) => (
-          <MainScheduleCard
-            schedule={{
-              name: '배드민턴',
-              isOnlineYn: !Math.floor(index % 2),
-              description: '배드민턴',
-              isLiked: false,
-              location: '성남시',
-              memberCount: 20,
-              time: '오후 2:00',
-            }}
-            key={index}
-          />
-        ))}
+        {data?.map((schedule, index) => <MainScheduleCard schedule={schedule} key={index} />)}
       </div>
       <MainUpcomingSectionPagination date={parsedCurrentDate.format('YYYY-MM-DD')} />
     </section>
