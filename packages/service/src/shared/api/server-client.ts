@@ -3,7 +3,7 @@ import 'server-only';
 import createClient, { Middleware } from 'openapi-fetch';
 
 import { paths } from './my-schema';
-import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
+import { cookies } from 'next/headers';
 
 const serverClient = createClient<paths>({ baseUrl: 'http:localhost:5000' });
 

@@ -1,22 +1,23 @@
-import { forwardRef, SVGProps } from 'react';
+import { SVGProps } from 'react';
 
-const CareerIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
-  <svg width="70" height="70" viewBox="0 0 188 164" fill="none" xmlns="http://www.w3.org/2000/svg" ref={ref} {...props}>
-    <path
-      d="M15.0016 0.539062H173.202C181.152 0.539062 187.602 6.98906 187.602 14.9391V97.0391H0.601562V14.9391C0.601562 6.98906 7.05156 0.539062 15.0016 0.539062Z"
-      fill="#0071FE"
-    />
-    <path
-      d="M0.601562 97.0391H187.602V115.409C187.602 122.499 181.842 128.259 174.752 128.259H13.4516C6.36156 128.259 0.601562 122.499 0.601562 115.409V97.0391Z"
-      fill="#9CD5FF"
-    />
-    <path d="M104.771 121.391H82.1211V157.001H104.771V121.391Z" fill="#9CD5FF" />
-    <path
-      d="M130.602 156.648V163.458H56.2916V156.648C56.2916 152.368 59.7616 148.898 64.0416 148.898H122.842C127.122 148.898 130.592 152.368 130.592 156.648H130.602Z"
-      fill="#9CD5FF"
-    />
-  </svg>
-));
-CareerIcon.displayName = 'CareerIcon';
+function CareerIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg width="70" height="70" viewBox="0 0 188 164" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path
+        d="M15.0016 0.539062H173.202C181.152 0.539062 187.602 6.98906 187.602 14.9391V97.0391H0.601562V14.9391C0.601562 6.98906 7.05156 0.539062 15.0016 0.539062Z"
+        fill="#0071FE"
+      />
+      <path
+        d="M0.601562 97.0391H187.602V115.409C187.602 122.499 181.842 128.259 174.752 128.259H13.4516C6.36156 128.259 0.601562 122.499 0.601562 115.409V97.0391Z"
+        fill="#9CD5FF"
+      />
+      <path d="M104.771 121.391H82.1211V157.001H104.771V121.391Z" fill="#9CD5FF" />
+      <path
+        d="M130.602 156.648V163.458H56.2916V156.648C56.2916 152.368 59.7616 148.898 64.0416 148.898H122.842C127.122 148.898 130.592 152.368 130.592 156.648H130.602Z"
+        fill="#9CD5FF"
+      />
+    </svg>
+  );
+}
 
 export default CareerIcon;
