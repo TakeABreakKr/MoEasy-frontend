@@ -4,6 +4,8 @@ import clsx from 'clsx';
 import { pretendard } from '@moeasy/storybook/font';
 import { Header } from '@moeasy/storybook/ui/header';
 
+import './mock';
+
 import RootProvider from './_provider';
 
 import '@moeasy/storybook/utils/styles/global.css';
