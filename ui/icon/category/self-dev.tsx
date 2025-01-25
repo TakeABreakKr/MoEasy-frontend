@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function SelfDevIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Self Development"
+      {...props}
+    >
       <path d="M132.541 97.9883H104.281V219.488H132.541V97.9883Z" fill="#FFCB27" />
       <path d="M197.53 97.9883H169.27V219.488H197.53V97.9883Z" fill="#FFCB27" />
       <path d="M169.269 97.9883H132.539V219.488H169.269V97.9883Z" fill="#F9BB1E" />

@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function CraftIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="80" height="80" viewBox="0 0 222 222" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="80"
+      height="80"
+      viewBox="0 0 222 222"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Craft"
+      {...props}
+    >
       <path
         d="M168.189 168.189V110.999H110.999L168.189 53.8086H110.999V110.999L53.8086 53.8086V110.999H110.999L53.8086 168.189H110.999V110.999L168.189 168.189Z"
         fill="#83BEFF"

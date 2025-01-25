@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function FamilyIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Family"
+      {...props}
+    >
       <path d="M197.1 228.285L110.379 180.531L105.878 188.704L192.599 236.458L197.1 228.285Z" fill="#B26900" />
       <path d="M110.388 236.485L197.109 188.73L192.609 180.558L105.888 228.312L110.388 236.485Z" fill="#B26900" />
       <path

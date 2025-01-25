@@ -2,7 +2,15 @@ import { SVGProps } from 'react';
 
 function SearchIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" {...props}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="15"
+      height="14"
+      viewBox="0 0 15 14"
+      role="img"
+      aria-label="Search"
+      {...props}
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"

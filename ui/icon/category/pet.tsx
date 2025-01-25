@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function PetIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Pet"
+      {...props}
+    >
       <path d="M229.648 225H70.6484V121.08L150.148 57L229.648 121.08V225Z" fill="#0071FE" />
       <path
         d="M142.271 117H158.021C179.751 117 197.391 134.64 197.391 156.37V225H102.891V156.37C102.891 134.64 120.531 117 142.261 117H142.271Z"

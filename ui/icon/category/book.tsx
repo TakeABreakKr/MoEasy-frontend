@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function BookIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Book"
+      {...props}
+    >
       <path
         d="M150.859 183.589V149.729C150.859 149.729 206.389 94.4487 275.209 136.119V183.589C275.209 183.589 212.939 139.309 150.859 183.589Z"
         fill="#FFCE61"

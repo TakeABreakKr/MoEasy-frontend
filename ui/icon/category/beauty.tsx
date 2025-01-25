@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function BeautyIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Beauty"
+      {...props}
+    >
       <path
         d="M221.83 214.289H111.85C104.902 214.289 99.2695 219.921 99.2695 226.869V237.599C99.2695 244.547 104.902 250.179 111.85 250.179H221.83C228.777 250.179 234.41 244.547 234.41 237.599V226.869C234.41 219.921 228.777 214.289 221.83 214.289Z"
         fill="#EF7100"

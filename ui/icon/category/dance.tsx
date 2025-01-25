@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function DanceIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Dance"
+      {...props}
+    >
       <path
         d="M88.8708 125.701H66.5108C64.7008 125.701 63.2008 127.101 62.9908 128.921C56.9508 182.851 40.1508 218.741 39.8008 219.471C39.8108 219.471 39.8208 219.461 39.8308 219.451C69.5408 189.271 83.2708 147.961 88.8608 125.691L88.8708 125.701Z"
         fill="#83BEFF"

@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function OutdoorIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Outdoor"
+      {...props}
+    >
       <path
         d="M145.351 105.6C163.742 105.6 178.651 90.6911 178.651 72.3C178.651 53.9089 163.742 39 145.351 39C126.96 39 112.051 53.9089 112.051 72.3C112.051 90.6911 126.96 105.6 145.351 105.6Z"
         fill="#FFCB27"

@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function CalendarHomeIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Calendar home"
+      {...props}
+    >
       <rect x="1.1" y="4.1" width="15.8" height="12.8" stroke="currentColor" strokeWidth="3" />
       <path
         d="M16.5494 1.9C16.205 1.41583 15.6394 1.1 15 1.1H3C2.36061 1.1 1.79498 1.41583 1.45062 1.9H16.5494Z"

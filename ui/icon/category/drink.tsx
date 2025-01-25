@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function DrinkIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Drink"
+      {...props}
+    >
       <path
         d="M197.73 116.639H217.8C225.09 116.639 231 122.559 231 129.839V198.489C231 205.779 225.08 211.689 217.8 211.689H197.73V116.629V116.639Z"
         fill="#FFCB27"

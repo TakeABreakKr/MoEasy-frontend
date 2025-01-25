@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function GameIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="75" height="100" viewBox="0 0 202 163" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="75"
+      height="100"
+      viewBox="0 0 202 163"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Game"
+      {...props}
+    >
       <path
         d="M149.18 102.816H3C1.61929 102.816 0.5 103.936 0.5 105.316V160.446C0.5 161.827 1.61929 162.946 3 162.946H149.18C150.561 162.946 151.68 161.827 151.68 160.446V105.316C151.68 103.936 150.561 102.816 149.18 102.816Z"
         fill="#0071FE"

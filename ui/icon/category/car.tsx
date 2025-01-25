@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function CarIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="80" height="80" viewBox="0 0 228 138" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="80"
+      height="80"
+      viewBox="0 0 228 138"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Car"
+      {...props}
+    >
       <path
         d="M17.5 52.9492H196C207.04 52.9492 216 61.9092 216 72.9492V109.359C216 110.739 214.88 111.859 213.5 111.859H2.5C1.12 111.859 0 110.739 0 109.359V70.4492C0 60.7892 7.84 52.9492 17.5 52.9492Z"
         fill="#0071FE"

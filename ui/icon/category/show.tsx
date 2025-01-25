@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function ShowIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="80" height="100" viewBox="0 0 214 104" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="80"
+      height="100"
+      viewBox="0 0 214 104"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Show"
+      {...props}
+    >
       <path
         d="M0.59203 101.471L0.582031 101.501C0.592031 101.491 0.612028 101.471 0.622028 101.461C0.622028 101.461 0.60203 101.461 0.59203 101.471Z"
         fill="#606060"

@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function PlantIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Plant"
+      {...props}
+    >
       <path
         d="M147.381 70.1091L77.6914 199.499H230.271L160.581 70.1091C157.751 64.8491 150.211 64.8491 147.371 70.1091H147.381Z"
         fill="#9CD5FF"
