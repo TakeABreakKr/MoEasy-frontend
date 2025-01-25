@@ -1,5 +1,6 @@
-import { useEffect, useReducer, useRef } from 'react';
+import { useEffect, useReducer } from 'react';
 
+import { useIntervalCallback } from '../../hooks/use-interval-callback';
 import { DateInput } from '../../type/date';
 import { Button } from '../button';
 import { ChevronDown } from '../icon';
@@ -19,12 +20,10 @@ type TimeProps = {
 
 export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: TimeProps) {
   const [state, dispatch] = useReducer(timeReducer, { value, min, max }, timeInitializer);
-  const timer = useRef<NodeJS.Timeout>(null);
-  const clearTimeout = () => timer.current && clearInterval(timer.current);
-  const addHour = () => dispatch({ type: 'ADD_HOUR', min, max });
-  const minusHour = () => dispatch({ type: 'MINUS_HOUR', min, max });
-  const addMinute = () => dispatch({ type: 'ADD_MINUTE', min, max });
-  const minusMinute = () => dispatch({ type: 'MINUS_MINUTE', min, max });
+  const addHour = () => !disabled && dispatch({ type: 'ADD_HOUR', min, max });
+  const minusHour = () => !disabled && dispatch({ type: 'MINUS_HOUR', min, max });
+  const addMinute = () => !disabled && dispatch({ type: 'ADD_MINUTE', min, max });
+  const minusMinute = () => !disabled && dispatch({ type: 'MINUS_MINUTE', min, max });
   const setTime = ({ hour = state.hour, minute = state.minute }) => {
     dispatch({
       type: 'SET',
@@ -33,12 +32,10 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
       max,
     });
   };
-  const setTimer = (cb: () => void) => {
-    if (!disabled)
-      return () => {
-        timer.current = setInterval(cb, delay);
-      };
-  };
+  const [addInterval, clearAddInterval] = useIntervalCallback(addHour, delay);
+  const [minusInterval, clearMinusInterval] = useIntervalCallback(minusHour, delay);
+  const [addMinuteInterval, clearAddMinuteInterval] = useIntervalCallback(addMinute, delay);
+  const [minusMinuteInterval, clearMinusMinuteInterval] = useIntervalCallback(minusMinute, delay);
 
   useEffect(() => {
     dispatchTime?.(state);
@@ -52,9 +49,9 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
           size="small"
           rounded="small"
           onClick={addHour}
-          onPointerDown={setTimer(addHour)}
-          onPointerUp={clearTimeout}
-          onPointerLeave={clearTimeout}
+          onPointerDown={addInterval}
+          onPointerUp={clearAddInterval}
+          onPointerLeave={clearAddInterval}
           className={styles.button}
           aria-label="Increase hours"
           disabled={disabled}
@@ -74,9 +71,9 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
           size="small"
           rounded="small"
           onClick={minusHour}
-          onPointerDown={setTimer(minusHour)}
-          onPointerUp={clearTimeout}
-          onPointerLeave={clearTimeout}
+          onPointerDown={minusInterval}
+          onPointerUp={clearMinusInterval}
+          onPointerLeave={clearMinusInterval}
           className={styles.button}
           aria-label="Decrease hours"
           disabled={disabled}
@@ -91,10 +88,10 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
           size="small"
           rounded="small"
           onClick={addMinute}
-          onPointerDown={setTimer(addMinute)}
+          onPointerDown={addMinuteInterval}
           className={styles.button}
-          onPointerUp={clearTimeout}
-          onPointerLeave={clearTimeout}
+          onPointerUp={clearAddMinuteInterval}
+          onPointerLeave={clearAddMinuteInterval}
           aria-label="Increase minutes"
           disabled={disabled}
         >
@@ -113,10 +110,10 @@ export function Time({ value, dispatchTime, delay = 100, min, max, disabled }: T
           size="small"
           rounded="small"
           onClick={minusMinute}
-          onPointerDown={setTimer(minusMinute)}
+          onPointerDown={minusMinuteInterval}
           className={styles.button}
-          onPointerUp={clearTimeout}
-          onPointerLeave={clearTimeout}
+          onPointerUp={clearMinusMinuteInterval}
+          onPointerLeave={clearMinusMinuteInterval}
           aria-label="Decrease minutes"
           disabled={disabled}
         >
