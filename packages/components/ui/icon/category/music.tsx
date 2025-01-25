@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function MusicIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Music"
+      {...props}
+    >
       <path
         d="M54.3906 191.859V176.869C54.3906 171.349 58.8706 166.869 64.3906 166.869H66.8006V201.859H64.3906C58.8706 201.859 54.3906 197.379 54.3906 191.859Z"
         fill="#EF7100"

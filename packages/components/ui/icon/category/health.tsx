@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function HealthIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Health"
+      {...props}
+    >
       <path
         d="M171.37 66.3906H128.62C118.24 66.3906 109.82 74.8006 109.82 85.1906V105.391H122.35V86.9606C122.35 81.9906 126.38 77.9606 131.35 77.9606H168.62C173.59 77.9606 177.62 81.9906 177.62 86.9606V105.391H190.15V85.1906C190.15 74.8106 181.74 66.3906 171.35 66.3906H171.37Z"
         fill="#FF8B00"

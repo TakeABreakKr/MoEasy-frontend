@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function LogoIcon({ color = 'currentColor', ...props }: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="191" height="40" viewBox="0 0 191 40" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="191"
+      height="40"
+      viewBox="0 0 191 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Logo"
+      {...props}
+    >
       <path
         d="M4.19058 24.2955C6.50497 24.2955 8.38116 22.4193 8.38116 20.1049C8.38116 17.7905 6.50497 15.9143 4.19058 15.9143C1.87619 15.9143 0 17.7905 0 20.1049C0 22.4193 1.87619 24.2955 4.19058 24.2955Z"
         fill="#FFD814"

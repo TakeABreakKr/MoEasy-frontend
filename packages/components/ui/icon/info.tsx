@@ -9,6 +9,8 @@ function InfoIcon(props: SVGProps<SVGSVGElement>) {
       viewBox="0 0 24 24"
       fill="none"
       strokeWidth="2"
+      role="img"
+      aria-label="Info"
       {...props}
     >
       <path d="M12 18v-6" stroke="currentColor" />

@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function CareerIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="70" height="70" viewBox="0 0 188 164" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="70"
+      height="70"
+      viewBox="0 0 188 164"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Career"
+      {...props}
+    >
       <path
         d="M15.0016 0.539062H173.202C181.152 0.539062 187.602 6.98906 187.602 14.9391V97.0391H0.601562V14.9391C0.601562 6.98906 7.05156 0.539062 15.0016 0.539062Z"
         fill="#0071FE"

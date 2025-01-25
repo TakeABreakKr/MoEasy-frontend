@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function LoveIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Love"
+      {...props}
+    >
       <path
         d="M58.3195 95.9805C58.2095 96.0905 58.1295 96.2305 58.0195 96.3405L60.5395 97.8105L58.3195 95.9805Z"
         fill="#AAAAAA"

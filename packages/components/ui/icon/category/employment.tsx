@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function EmploymentIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Employment"
+      {...props}
+    >
       <path
         d="M197.398 64.6406H85.2383C79.8483 64.6406 75.4883 69.1406 75.4883 74.7006V218.031C75.4883 223.591 79.8583 228.091 85.2383 228.091H197.398C202.788 228.091 207.148 223.591 207.148 218.031V74.7006C207.148 69.1406 202.778 64.6406 197.398 64.6406Z"
         fill="#FF8B00"

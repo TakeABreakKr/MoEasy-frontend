@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function EnvironmentIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Environment"
+      {...props}
+    >
       <path
         d="M149.721 96.0898L148.481 96.7698L147.241 96.0898L144.281 144.73H148.021H148.941H152.681L149.721 96.0898Z"
         fill="#B26900"

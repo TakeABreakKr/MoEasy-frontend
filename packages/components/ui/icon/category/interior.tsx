@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function InteriorIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="70" height="70" viewBox="0 0 157 183" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="70"
+      height="70"
+      viewBox="0 0 157 183"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Interior"
+      {...props}
+    >
       <path
         d="M153.11 122.082H2.89C1.29 122.082 0 120.842 0 119.312V94.862C0 90.012 4.1 86.082 9.16 86.082H146.85C151.91 86.082 156.01 90.012 156.01 94.862V119.312C156.01 120.842 154.72 122.082 153.12 122.082H153.11Z"
         fill="#FFA300"

@@ -2,7 +2,16 @@ import { SVGProps } from 'react';
 
 function MediaIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="100" height="100" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 300 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Media"
+      {...props}
+    >
       <path
         d="M102.102 82.8008H86.1016C84.7209 82.8008 83.6016 83.9201 83.6016 85.3008V92.3008C83.6016 93.6815 84.7209 94.8008 86.1016 94.8008H102.102C103.482 94.8008 104.602 93.6815 104.602 92.3008V85.3008C104.602 83.9201 103.482 82.8008 102.102 82.8008Z"
         fill="#FF8B00"
