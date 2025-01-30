@@ -59,16 +59,17 @@ function MainCategorySectionContent() {
       ? categoryList.reduce<CategoryItemType[]>((acc, { category }) => [...acc, ...category], [])
       : categoryList.find((item) => item.title === validatedGroup)?.category || [];
   const showingCategories = selectedCategory.slice((validCurrentPage - 1) * 10, validCurrentPage * 10);
+
   return (
     <>
       <div className={categoryStyles.content}>
-        {showingCategories?.map(({ key, icon }) => (
+        {showingCategories?.map(({ key, Icon }) => (
           <button
             key={key}
             className={sprinkles({ display: 'flex', flexDirection: 'column', gap: 'small', alignItems: 'center' })}
           >
             <div className={categoryStyles.iconDiv}>
-              {icon}
+              <Icon />
               <div className={categoryStyles.iconMultiply} />
             </div>
             <Text>{key}</Text>
