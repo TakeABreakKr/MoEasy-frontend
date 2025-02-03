@@ -1,3 +1,5 @@
+/* eslint-ignore react-hooks/rules-of-hooks */
+
 'use client';
 
 import { useEffect, useReducer, useState } from 'react';
@@ -74,14 +76,14 @@ export function ScheduleCreateForm() {
           <div className={formStyles.formWrapper}>
             <funnel.Render
               name={({ history, context }) => (
-                <스케쥴이름및소개
+                <C스케쥴이름및소개
                   name={context.name}
                   explanation={context.explanation}
                   onNextStep={(param) => history.push('date', param)}
                 />
               )}
               date={({ history, context }) => (
-                <스케쥴시간입력
+                <C스케쥴시간입력
                   startDate={context.startDate}
                   endDate={context.endDate}
                   onPrevStep={() => history.back()}
@@ -95,14 +97,14 @@ export function ScheduleCreateForm() {
                 />
               )}
               reminder={({ history, context }) => (
-                <스케쥴리마인더입력
+                <C스케쥴리마인더입력
                   reminder={context.reminder}
                   onPrevStep={() => history.back()}
                   onNextStep={({ reminder }) => history.push('announcement', { ...context, reminder })}
                 />
               )}
               announcement={({ history, context }) => (
-                <스케쥴공지입력
+                <C스케쥴공지입력
                   onlineYn={context.onlineYn}
                   announcement={context.announcement}
                   address={context.address}
@@ -132,17 +134,17 @@ export function ScheduleCreateForm() {
   );
 }
 
-type 스케쥴이름및소개값 = Pick<CreateScheduleType, 'name' | 'explanation'>;
-type 스케쥴이름및소개값Props = Partial<스케쥴이름및소개값>;
+type C스케쥴이름및소개값 = Pick<CreateScheduleType, 'name' | 'explanation'>;
+type C스케쥴이름및소개값Props = Partial<C스케쥴이름및소개값>;
 
-function 스케쥴이름및소개({
+function C스케쥴이름및소개({
   name = '',
   explanation = '',
   onNextStep,
-}: 스케쥴이름및소개값Props & {
-  onNextStep: (param: 스케쥴이름및소개값) => void;
+}: C스케쥴이름및소개값Props & {
+  onNextStep: (param: C스케쥴이름및소개값) => void;
 }) {
-  const [state, dispatch] = useReducer(objectReducer<스케쥴이름및소개값>, {
+  const [state, dispatch] = useReducer(objectReducer<C스케쥴이름및소개값>, {
     name,
     explanation,
   });
@@ -179,15 +181,15 @@ function 스케쥴이름및소개({
   );
 }
 
-type 스케쥴시간입력값 = Pick<CreateScheduleType, 'startDate' | 'endDate'>;
-type 스케쥴시간입력값Props = Partial<스케쥴시간입력값>;
+type C스케쥴시간입력값 = Pick<CreateScheduleType, 'startDate' | 'endDate'>;
+type C스케쥴시간입력값Props = Partial<C스케쥴시간입력값>;
 
-function 스케쥴시간입력({
+function C스케쥴시간입력({
   startDate,
   endDate,
   onPrevStep,
   onNextStep,
-}: 스케쥴시간입력값Props & {
+}: C스케쥴시간입력값Props & {
   onPrevStep: () => void;
   onNextStep: (param: { startDate: Date; endDate?: Date }) => void;
 }) {
@@ -247,14 +249,14 @@ function 스케쥴시간입력({
   );
 }
 
-type 스케쥴리마인더입력값 = Pick<CreateScheduleType, 'reminder'>;
-type 스케쥴리마인더입력값Props = Partial<스케쥴리마인더입력값>;
+type C스케쥴리마인더입력값 = Pick<CreateScheduleType, 'reminder'>;
+type C스케쥴리마인더입력값Props = Partial<C스케쥴리마인더입력값>;
 
-function 스케쥴리마인더입력({
+function C스케쥴리마인더입력({
   reminder: reminderProp = [],
   onPrevStep,
   onNextStep,
-}: 스케쥴리마인더입력값Props & {
+}: C스케쥴리마인더입력값Props & {
   onPrevStep: () => void;
   onNextStep: (param: { reminder: string[] }) => void;
 }) {
@@ -296,22 +298,22 @@ function 스케쥴리마인더입력({
   );
 }
 
-type 스케쥴공지입력값 = Pick<CreateScheduleType, 'announcement' | 'onlineYn' | 'address' | 'detailAddress'>;
-type 스케쥴공지입력값Props = Partial<스케쥴공지입력값>;
-type 스케쥴공지입력State = Omit<스케쥴공지입력값, 'address'> & { address?: CreateScheduleType['address'] };
+type C스케쥴공지입력값 = Pick<CreateScheduleType, 'announcement' | 'onlineYn' | 'address' | 'detailAddress'>;
+type C스케쥴공지입력값Props = Partial<C스케쥴공지입력값>;
+type C스케쥴공지입력State = Omit<C스케쥴공지입력값, 'address'> & { address?: CreateScheduleType['address'] };
 
-function 스케쥴공지입력({
+function C스케쥴공지입력({
   address,
   announcement = '',
   onlineYn = false,
   detailAddress = '',
   onPrevStep,
   // onNextStep,
-}: 스케쥴공지입력값Props & {
+}: C스케쥴공지입력값Props & {
   onPrevStep: () => void;
-  // onNextStep: (param: 스케쥴공지입력State) => void;
+  // onNextStep: (param: C스케쥴공지입력State) => void;
 }) {
-  const [state, dispatch] = useReducer(objectReducer<스케쥴공지입력State>, {
+  const [state, dispatch] = useReducer(objectReducer<C스케쥴공지입력State>, {
     announcement,
     onlineYn,
     address,
@@ -410,3 +412,4 @@ function 스케쥴공지입력({
 //     </Alert>
 //   );
 // }
+/* eslint-ignore react-hooks/rules-of-hooks */

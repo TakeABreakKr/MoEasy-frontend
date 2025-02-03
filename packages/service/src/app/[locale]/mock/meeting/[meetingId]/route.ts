@@ -6,7 +6,8 @@ import { isIdValid } from '@/widget/meeting/utils';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export async function GET(_: NextRequest, { params }: { params: { meetingId: string } }) {
+export async function GET(_: NextRequest, props: { params: Promise<{ meetingId: string }> }) {
+  const params = await props.params;
   const meetingId = params.meetingId;
   const ramdom = Math.random();
   if (ramdom < 0.5) return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

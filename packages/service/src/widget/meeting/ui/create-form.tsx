@@ -66,7 +66,7 @@ function CreateForm() {
           <div className={formStyles.formWrapper}>
             <funnel.Render
               greeting={({ history, context }) => (
-                <모임명및소개
+                <C모임명및소개
                   name={context.name}
                   explanation={context.explanation}
                   onNextStep={(param) => history.push('thumbnail', { name: param.name })}
@@ -84,14 +84,14 @@ function CreateForm() {
                 />
               )}
               keywords={({ history, context }) => (
-                <키워드입력
+                <C키워드입력
                   keywords={context.keywords}
                   onPrevStep={() => history.back()}
                   onNextStep={(param) => history.push('limit', { ...context, ...param })}
                 />
               )}
               limit={({ history, context }) => (
-                <인원제한입력
+                <C인원제한입력
                   payload={{
                     name: '',
                     explanation: '',
@@ -112,13 +112,13 @@ function CreateForm() {
   );
 }
 
-type 모임명및소개입력값 = Pick<CreateMeetingData, 'name' | 'explanation'>;
+type C모임명및소개입력값 = Pick<CreateMeetingData, 'name' | 'explanation'>;
 
-function 모임명및소개({
+function C모임명및소개({
   name = '',
   explanation = '',
   onNextStep,
-}: 모임명및소개입력값 & { onNextStep: (param: { name: string; explanation?: string }) => void }) {
+}: C모임명및소개입력값 & { onNextStep: (param: { name: string; explanation?: string }) => void }) {
   const [state, dispatch] = useReducer(objectReducer<{ name: string; explanation: string }>, {
     name,
     explanation,
@@ -183,13 +183,13 @@ function ThumbnailInputForm({
   );
 }
 
-type 키워드입력값 = Pick<CreateMeetingData, 'keywords'>;
+type C키워드입력값 = Pick<CreateMeetingData, 'keywords'>;
 
-function 키워드입력({
+function C키워드입력({
   keywords: keywordsProp = [],
   onPrevStep,
   onNextStep,
-}: 키워드입력값 & { onPrevStep: () => void; onNextStep: (param: 키워드입력값) => void }) {
+}: C키워드입력값 & { onPrevStep: () => void; onNextStep: (param: C키워드입력값) => void }) {
   const [keywords, setKeywords] = useState<string[]>(keywordsProp);
   const [innerKeyword, setKeyword] = useState('');
   const keywordAddDisabled = keywords.length >= 10;
@@ -254,7 +254,7 @@ function 키워드입력({
   );
 }
 
-function 인원제한입력({
+function C인원제한입력({
   payload,
   onPrevStep,
 }: {
