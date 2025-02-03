@@ -39,7 +39,7 @@ export const ListItem = ({ item, disabled, checked, toggleItemSelection }: ListI
       <div className={styles.itemInfo}>
         <span className={styles.itemAvatar}>
           <Image
-            src={item.avatar || `https://via.placeholder.com/30/${item.id}`}
+            src={item.avatar || `https://placehold.co/30/png`}
             width={30}
             height={30}
             alt={item.name || 'avatar'}
