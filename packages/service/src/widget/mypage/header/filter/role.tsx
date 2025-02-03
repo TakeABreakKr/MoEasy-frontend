@@ -43,7 +43,7 @@ export function MyPageFilterLole({ active }: { active?: boolean }) {
             <li className={clsx(styles.filterFontStyle, styles.filterRoleItem)}>
               <Checkbox
                 rounded={false}
-                defaultChecked={selectedRoles.includes(item.key)}
+                checked={selectedRoles.includes(item.key)}
                 onCheckedChange={onCheckedChange(item.key)}
               />
               {t(item.value)}
