@@ -89,7 +89,10 @@ function MyPageCategoryContent({
   const validatedGroup = isValidGroupName(group) ? group : '전체';
   const selectedCategory =
     validatedGroup === '전체'
-      ? categoryList.reduce<CategoryItemType[]>((acc, { category }) => [...acc, ...category], [])
+      ? categoryList.reduce<CategoryItemType[]>((acc, { category }) => {
+          acc.push(...category);
+          return acc;
+        }, [])
       : categoryList.find((item) => item.title === validatedGroup)?.category || [];
 
   return (
