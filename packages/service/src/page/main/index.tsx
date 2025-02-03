@@ -29,7 +29,7 @@ export async function MainPage() {
             </Link>
           </div>
           <div style={{ background: 'gray', minHeight: 300, maxHeight: 300, width: 300 }}>
-            <Image src={'https://via.placeholder.com/300/1'} width={300} height={300} alt="sample" />
+            <Image src={'https://placehold.co/300'} unoptimized width={300} height={300} alt="sample" />
           </div>
         </section>
         <Suspense fallback={<MainContentLoadingFallback />}>

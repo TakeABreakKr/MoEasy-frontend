@@ -15,12 +15,12 @@ export type MainScheduleCardProps = ComponentPropsWithoutRef<'div'> & {
 };
 
 const dummyMemberThumbnails = [
-  { role: 'owner', src: 'https://via.placeholder.com/30' },
-  { role: 'manager', src: 'https://via.placeholder.com/30' },
-  { role: 'common', src: 'https://via.placeholder.com/30' },
-  { role: 'common', src: 'https://via.placeholder.com/30' },
-  { role: 'common', src: 'https://via.placeholder.com/30' },
-  { role: 'common', src: 'https://via.placeholder.com/30' },
+  { role: 'owner', src: 'https://placehold.co/30/png' },
+  { role: 'manager', src: 'https://placehold.co/30/png' },
+  { role: 'common', src: 'https://placehold.co/30/png' },
+  { role: 'common', src: 'https://placehold.co/30/png' },
+  { role: 'common', src: 'https://placehold.co/30/png' },
+  { role: 'common', src: 'https://placehold.co/30/png' },
 ] as const;
 
 export function MainScheduleCard({ className, schedule, ...props }: MainScheduleCardProps) {

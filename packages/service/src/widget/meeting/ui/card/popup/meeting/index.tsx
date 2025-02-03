@@ -68,7 +68,7 @@ export function MeetingPopupCardContent({
 
   return (
     <CardWrapper>
-      <CardThumbnail src={`https://via.placeholder.com/72/${meetingId}`} alt={name} />
+      <CardThumbnail src={`https://placehold.co/72/${meetingId}`} alt={name} />
       <CardHeader>
         <MeetingCardDropDown meetingId={meetingId} authority={authority} onEscape={onEscape} />
         <Button variant="dark" size="icon" rounded="full" onClick={escapePopup}>
@@ -117,7 +117,7 @@ export function MeetingPopupCardContent({
             key={member.memberId}
             name={member.username}
             userRole={getUserRoleForTags(member.authority)}
-            src={member.thumbnail || `https://via.placeholder.com/30/${index + 1}`}
+            src={member.thumbnail || `https://placehold.co/30/png`}
             onClick={() => toMemberCard(member.memberId)}
           >
             {member.username}
