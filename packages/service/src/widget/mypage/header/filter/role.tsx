@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
+import { useScopedI18n } from '@/locales/clients';
 import { pushSearchParams } from '@/shared/utils/search-param';
 
 import { Checkbox } from '@moeasy/storybook/ui/checkbox';
@@ -20,7 +21,7 @@ const popoverWidthStyle = {
 export function MyPageFilterLole({ active }: { active?: boolean }) {
   const searchParams = useSearchParams();
   const selectedRoles = searchParams.getAll('role');
-
+  const t = useScopedI18n('mypage.filter.role');
   const onOpen = () => pushSearchParams({ filter: 'role' }, searchParams);
   const onCheckedChange = (role: string) => () => {
     const newRoles = selectedRoles.includes(role)
@@ -32,7 +33,7 @@ export function MyPageFilterLole({ active }: { active?: boolean }) {
   return (
     <Popover>
       <PopoverTrigger className={clsx(styles.filterButton, active && styles.filterButtonActive)} onClick={onOpen}>
-        모임 역할
+        {t('모임 역할')}
         <ChevronDown height={6} aria-hidden />
       </PopoverTrigger>
       <PopoverContent align="end" style={popoverWidthStyle}>
@@ -45,7 +46,7 @@ export function MyPageFilterLole({ active }: { active?: boolean }) {
                 defaultChecked={selectedRoles.includes(item.key)}
                 onCheckedChange={onCheckedChange(item.key)}
               />
-              {item.value}
+              {t(item.value)}
             </li>
           </Fragment>
         ))}

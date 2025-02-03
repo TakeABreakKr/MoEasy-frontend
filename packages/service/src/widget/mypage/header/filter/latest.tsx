@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
+import { useScopedI18n } from '@/locales/clients';
 import { pushSearchParams } from '@/shared/utils/search-param';
 
 import {
@@ -13,16 +14,13 @@ import {
 } from '@moeasy/storybook/ui/dropdown-menu/dropdown-menu';
 import { ChevronDown } from '@moeasy/storybook/ui/icon';
 
-import * as styles from './filter.css';
+import { filterLatestItems } from './const';
 
-const filterLatestItems = [
-  { key: 'join', value: '최신 가입순' },
-  { key: 'activity', value: '최신 활동순' },
-  { key: 'count', value: '많은 인원순' },
-];
+import * as styles from './filter.css';
 
 export function MyPageFilterLatest({ active }: { active?: boolean }) {
   const searchParams = useSearchParams();
+  const t = useScopedI18n('mypage.filter.latest');
   const selected = searchParams.get('latest');
   const selectedIndex = selected ? filterLatestItems.findIndex((item) => item.key === selected) : 0;
 
@@ -52,7 +50,7 @@ export function MyPageFilterLatest({ active }: { active?: boolean }) {
               className={styles.filterFontStyle}
               onSelect={() => pushSearchParams({ latest: item.key }, searchParams)}
             >
-              {item.value}
+              {t(item.value)}
             </DropdownMenuItem>
           </Fragment>
         ))}

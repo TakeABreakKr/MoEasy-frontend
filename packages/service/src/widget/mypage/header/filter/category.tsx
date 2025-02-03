@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
+import { useScopedI18n } from '@/locales/clients';
 import { CategoryItemType, categoryList } from '@/shared/consts/category';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { pushSearchParams } from '@/shared/utils/search-param';
@@ -22,6 +23,7 @@ export function MyPageFilterCategory({ active }: { active?: boolean }) {
   const group = searchParams.get('group');
   const validatedGroup = isValidGroupName(group) ? group || '전체' : '전체';
   const selectedCategories = searchParams.getAll('category');
+  const t = useScopedI18n('mypage.filter');
 
   const onOpen = () => pushSearchParams({ filter: 'category' }, searchParams);
   const onGroupToggle = (group: string) => () => {
@@ -41,7 +43,7 @@ export function MyPageFilterCategory({ active }: { active?: boolean }) {
   return (
     <Popover>
       <PopoverTrigger className={clsx(styles.filterButton, active && styles.filterButtonActive)} onClick={onOpen}>
-        전체 카테고리
+        {t('전체 카테고리')}
         <ChevronDown height={6} aria-hidden />
       </PopoverTrigger>
       <PopoverContent align="start" className={styles.categoryContainer}>
@@ -117,6 +119,7 @@ function MyPageSelectedCategory({
   onCategoryToggle: (category: string) => () => void;
   onReset: () => void;
 }) {
+  const t = useScopedI18n('mypage.filter');
   return (
     <ul className={styles.selectedCategoryList}>
       {selected.map((item) => (
@@ -130,7 +133,7 @@ function MyPageSelectedCategory({
       <li key="reset" className={styles.selectedItemBase}>
         <button onClick={onReset} className={sprinkles({ display: 'flex', alignItems: 'center', gap: 'xsmall' })}>
           <ResetIcon />
-          초기화
+          {t('초기화')}
         </button>
       </li>
     </ul>
