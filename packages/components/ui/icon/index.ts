@@ -14,6 +14,7 @@ import LocationIcon from './location';
 import LogoIconWithText from './logo';
 import LogoIcon from './logo-icon';
 import PlusIcon from './plus';
+import ResetIcon from './reset';
 import SearchIcon from './search';
 import UserIcon from './user';
 import XIcon from './x';
@@ -35,6 +36,7 @@ export {
   LogoIcon,
   LogoIconWithText,
   PlusIcon,
+  ResetIcon,
   SearchIcon,
   UserIcon,
   XIcon,

@@ -2,6 +2,7 @@
 import React from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { RecipeVariants } from '@vanilla-extract/recipes';
+import clsx from 'clsx';
 
 import {
   dropdownMenuContent,
@@ -22,7 +23,7 @@ const DropdownMenuSubContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
 >(({ className, ...props }, ref) => (
-  <DropdownMenuPrimitive.SubContent ref={ref} className={dropdownMenuContent} {...props} />
+  <DropdownMenuPrimitive.SubContent ref={ref} className={clsx(dropdownMenuContent, className)} {...props} />
 ));
 DropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayName;
 
@@ -33,10 +34,22 @@ const DropdownMenuContent = React.forwardRef<
   if (isPortal)
     return (
       <DropdownMenuPrimitive.Portal>
-        <DropdownMenuPrimitive.Content ref={ref} sideOffset={sideOffset} className={dropdownMenuContent} {...props} />
+        <DropdownMenuPrimitive.Content
+          ref={ref}
+          sideOffset={sideOffset}
+          className={clsx(dropdownMenuContent, className)}
+          {...props}
+        />
       </DropdownMenuPrimitive.Portal>
     );
-  return <DropdownMenuPrimitive.Content ref={ref} sideOffset={sideOffset} className={dropdownMenuContent} {...props} />;
+  return (
+    <DropdownMenuPrimitive.Content
+      ref={ref}
+      sideOffset={sideOffset}
+      className={clsx(dropdownMenuContent, className)}
+      {...props}
+    />
+  );
 });
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
@@ -44,7 +57,11 @@ const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & RecipeVariants<typeof dropdownMenuItem>
 >(({ className, inset, notice, align = 'left', padding, ...props }, ref) => (
-  <DropdownMenuPrimitive.Item ref={ref} className={dropdownMenuItem({ inset, notice, align, padding })} {...props} />
+  <DropdownMenuPrimitive.Item
+    ref={ref}
+    className={clsx(dropdownMenuItem({ inset, notice, align, padding }), className)}
+    {...props}
+  />
 ));
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 
@@ -54,7 +71,7 @@ const DropdownMenuLabel = React.forwardRef<
     inset?: boolean;
   }
 >(({ className, inset, ...props }, ref) => (
-  <DropdownMenuPrimitive.Label ref={ref} className={dropdownMenuLabel} {...props} />
+  <DropdownMenuPrimitive.Label ref={ref} className={clsx(dropdownMenuLabel, className)} {...props} />
 ));
 DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
 
@@ -62,7 +79,7 @@ const DropdownMenuSeparator = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
 >(({ className, ...props }, ref) => (
-  <DropdownMenuPrimitive.Separator ref={ref} className={dropdownMenuSeparator} {...props} />
+  <DropdownMenuPrimitive.Separator ref={ref} className={clsx(dropdownMenuSeparator, className)} {...props} />
 ));
 DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
 
