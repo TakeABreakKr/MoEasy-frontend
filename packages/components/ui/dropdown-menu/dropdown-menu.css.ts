@@ -105,7 +105,6 @@ export const dropdownMenuLabel = style({
 
 export const dropdownMenuSeparator = style({
   height: '1px',
-  margin: rem(4),
   backgroundColor: dropdownBorderColor,
 });
 
