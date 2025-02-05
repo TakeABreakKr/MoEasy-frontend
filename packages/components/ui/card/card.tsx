@@ -32,7 +32,7 @@ export default function Card({
 }: CardProps) {
   return (
     <CardWrapper data-meeting-index={idx} {...props}>
-      <CardThumbnail src={`https://via.placeholder.com/72/${idx}`} alt={title} />
+      <CardThumbnail src={`https://placehold.co/72/png`} alt={title} />
       <CardHeader />
       <CardTrigger>
         <CardTriggerItem padding align="center">

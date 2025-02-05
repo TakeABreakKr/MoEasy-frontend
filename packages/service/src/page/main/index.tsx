@@ -7,7 +7,6 @@ import { MainContent } from '@/widget/main/content';
 import { MainContentLoadingFallback } from '@/widget/main/content/loading';
 import { LoginPopup } from '@/widget/main/popup/login';
 
-// import { serverClient } from '@/shared/api/server-client';
 import { MainFooter } from '@moeasy/storybook/ui/footer';
 import { ChevronDown } from '@moeasy/storybook/ui/icon';
 import { Separator } from '@moeasy/storybook/ui/separator';
@@ -30,7 +29,7 @@ export async function MainPage() {
             </Link>
           </div>
           <div style={{ background: 'gray', minHeight: 300, maxHeight: 300, width: 300 }}>
-            <Image src={'https://via.placeholder.com/300/1'} width={300} height={300} alt="sample" />
+            <Image src={'https://placehold.co/300'} unoptimized width={300} height={300} alt="sample" />
           </div>
         </section>
         <Suspense fallback={<MainContentLoadingFallback />}>

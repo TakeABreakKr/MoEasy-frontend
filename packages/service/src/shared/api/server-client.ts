@@ -9,9 +9,13 @@ const serverClient = createClient<paths>({ baseUrl: 'http:localhost:5000' });
 
 const serverActionMiddleware: Middleware = {
   async onRequest({ request, options }) {
-    const cookie = cookies().get('tokens');
-    if (cookie) {
-      request.headers.set('tokens', cookie.value);
+    try {
+      const cookie = (await cookies()).get('tokens');
+      if (cookie) {
+        request.headers.set('tokens', cookie.value);
+      }
+    } catch (error) {
+      console.error('토큰 쿠키 조회 실패:', error);
     }
     return request;
   },

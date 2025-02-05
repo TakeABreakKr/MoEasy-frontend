@@ -43,7 +43,7 @@ const meta = {
     list: Array.from({ length: 20 }, (_, idx) => ({
       id: String(idx),
       name: 'Alex',
-      avatar: 'https://via.placeholder.com/30',
+      avatar: 'https://placehold.co/30',
     })),
   },
   tags: ['autodocs'],

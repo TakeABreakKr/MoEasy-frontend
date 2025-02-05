@@ -224,7 +224,7 @@ function MeetingWaitingUserInfo({ userName, explanation }: { userName: string; e
   return (
     <CardWrapper data-user-index={userName} asChild>
       <ModalContent>
-        <CardThumbnail src={`https://via.placeholder.com/72/${userName}`} alt={userName} />
+        <CardThumbnail src={`https://placehold.co/72`} alt={userName} />
         <CardHeader>
           <Button variant="dark" size="icon" rounded="full" asChild>
             <ModalClose>
