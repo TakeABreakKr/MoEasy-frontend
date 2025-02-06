@@ -58,14 +58,14 @@ export const Header = ({}: HeaderProps) => {
           <Link href="/mypage" className={headerStyles.rightButton}>
             마이페이지
           </Link>
-          <Link
-            href={{
-              query: loginSearchParams.toString(),
+          <button
+            onClick={() => {
+              window.history.pushState({}, '', `${pathname}?${loginSearchParams.toString()}`);
             }}
             className={headerStyles.rightIcon}
           >
             <UserIcon width={16} height={16} />
-          </Link>
+          </button>
         </div>
       </div>
     </header>
