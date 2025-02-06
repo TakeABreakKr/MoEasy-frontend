@@ -41,5 +41,5 @@ const cardWrapperBase = style({
 
 export const cardWrapper = styleVariants({
   meeting: [scrollStyle, cardWrapperBase, { paddingTop: rem(80) }],
-  activity: [scrollStyle, cardWrapperBase],
+  activity: [scrollStyle, cardWrapperBase, { alignItems: 'stretch' }],
 });
