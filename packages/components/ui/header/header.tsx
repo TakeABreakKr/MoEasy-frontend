@@ -31,7 +31,7 @@ export const Header = ({}: HeaderProps) => {
       <div className={headerStyles.headerWrapper}>
         <div className={headerStyles.leftHandSide}>
           <Link className={headerStyles.logo} href="/">
-            <LogoIconWithText />
+            <LogoIconWithText color="#0071FE" />
           </Link>
           <ul className={headerStyles.linkWrapper}>
             <li className={clsx(headerStyles.linkText, pathname === '/meeting' && headerStyles.active)}>

@@ -37,7 +37,7 @@ export function LoginPopup() {
             </Button>
           </div>
           <div className={textContainer}>
-            <LogoIconWithText />
+            <LogoIconWithText color="#0071FE" />
             <Text title="large">모이지에 오신 것을 환영해요!</Text>
             <span className={desc}>
               취향이 모여 특별한
