@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import clsx from 'clsx';
 
+import { LoginPopup } from '@/widget/main/popup/login';
+
 import { pretendard } from '@moeasy/storybook/font';
 import { Header } from '@moeasy/storybook/ui/header';
 
@@ -29,7 +31,10 @@ export default async function RootLayout({
       <body className={clsx(pretendard.className, pretendard.variable)}>
         <Header />
         <MSWWrapper />
-        <RootProvider locale={locale}>{children}</RootProvider>
+        <RootProvider locale={locale}>
+          <LoginPopup />
+          {children}
+        </RootProvider>
       </body>
     </html>
   );
