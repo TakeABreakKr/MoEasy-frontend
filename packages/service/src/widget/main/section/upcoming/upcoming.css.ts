@@ -22,7 +22,7 @@ export const dateButton = style({
 });
 
 export const dateButtonActive = style({
-  backgroundColor: globalVars.color.neutral[80],
+  backgroundColor: globalVars.color.blue[50],
   color: globalVars.color.neutral.white,
 });
 

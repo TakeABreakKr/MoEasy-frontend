@@ -4,7 +4,6 @@ import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 import { style, styleVariants } from '@vanilla-extract/css';
 
 export const scheduleCard = style({
-  flexShrink: 0,
   position: 'relative',
   background: globalVars.color.neutral[3],
   borderRadius: rem(4),
