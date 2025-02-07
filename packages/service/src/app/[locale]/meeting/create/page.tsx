@@ -14,16 +14,47 @@ import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 
 export default function TeamCreatePage() {
   const [step, setStep] = useState(1);
-  // TODO: useState 대신 useReducer를 사용하면 useState의 개수를 줄일 수 있음?!!...
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
-  const [keywords, setKeywords] = useState('');
-  //  TODO: 키워드는 여러 개 받을 수 있으니 배열 형태로, 카테고리는 카테고리 리스트가 보여질 수 있게끔
-  const [limit, setLimit] = useState(10);
-  const [limitDisabled, setLimitDisabled] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    category: '',
+    keywords: '',
+    limit: 10,
+    limitDisabled: false,
+    thumbnail: null as File | null,
+  });
 
-  const [thumbnail, setThumbnail] = useState<File | null>(null);
+  // TODO: e 등 매개변수에 타입 명시해서 any 오류 없애기
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleNumberChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value === '' ? 0 : Number(value),
+    }));
+  };
+
+  const toggleLimitDisabled = () => {
+    setFormData((prev) => ({
+      ...prev,
+      limitDisabled: !prev.limitDisabled,
+      limit: prev.limitDisabled ? prev.limit : Infinity,
+    }));
+  };
+
+  const handleImageUpload = (file) => {
+    setFormData((prev) => ({
+      ...prev,
+      thumbnail: file,
+    }));
+  };
 
   const goToNextStep = () => {
     if (step < 4) setStep(step + 1);
@@ -31,7 +62,7 @@ export default function TeamCreatePage() {
   const goToPrevStep = () => {
     if (step > 1) setStep(step - 1);
   };
-
+  // FIXME: input 창에서 x 버튼 클릭 시, 페이지 새로고침 되는 오류 수정
   return (
     <div className={styles.container}>
       <form className={formStyles.formStyle}>
@@ -51,51 +82,54 @@ export default function TeamCreatePage() {
                 <label className={formStyles.label}>
                   <span>모임 이름</span>
                   <Input
+                    name="name"
                     type="text"
                     className={formStyles.input}
                     placeholder="모임 이름을 입력해주세요"
-                    value={name}
+                    value={formData.name}
                     maxLength={30}
-                    onValueChange={(name) => setName(name)}
+                    onChange={handleInputChange}
                   />
                 </label>
                 <label className={formStyles.label}>
                   <span>모임 소개</span>
                   <Textarea
+                    name="description"
                     className={formStyles.input}
                     placeholder="모임 소개를 입력해주세요"
-                    value={description}
+                    value={formData.description}
                     minLength={10}
                     maxLength={100}
-                    onValueChange={(description) => setDescription(description)}
+                    onChange={handleInputChange}
                   />
                 </label>
               </div>
             </div>
           )}
-          {/* FIXME: 카테고리 리스트랑 키워드 처리를 위한 로직으로 바꿔야 함 */}
           {step === 2 && (
             <div className={formStyles.formWrapper}>
               <div className={formStyles.formGroup}>
                 <label className={formStyles.label}>
                   <span>카테고리</span>
                   <Input
+                    name="category"
                     type="text"
                     className={formStyles.input}
                     placeholder="모임의 성격을 가장 잘 나타내는 카테고리를 선택해주세요"
-                    value={category}
-                    onValueChange={(category) => setCategory(category)}
+                    value={formData.category}
+                    onChange={handleInputChange}
                   />
                 </label>
                 <label className={formStyles.label}>
                   <span>키워드</span>
                   <Input
+                    name="keywords"
                     type="text"
                     className={formStyles.input}
                     placeholder="검색창에 키워드를 검색하면 나의 모임이 보여요"
-                    value={keywords}
+                    value={formData.keywords}
                     maxLength={10}
-                    onValueChange={(keywords) => setKeywords(keywords)}
+                    onChange={handleInputChange}
                   />
                 </label>
               </div>
@@ -106,10 +140,10 @@ export default function TeamCreatePage() {
               <div className={formStyles.formGroup}>
                 <label className={formStyles.label}>
                   <span>몇 명까지 참여할 수 있나요?</span>
-                  {limitDisabled ? (
+                  {formData.limitDisabled ? (
                     <Input
                       className={formStyles.input}
-                      disabled={limitDisabled}
+                      disabled={formData.limitDisabled}
                       placeholder="∞"
                       name="limit"
                       readOnly
@@ -122,16 +156,16 @@ export default function TeamCreatePage() {
                       placeholder="모임 인원을 입력해주세요"
                       name="limit"
                       min={1}
-                      value={limit}
-                      onValueChange={(limit) => setLimit(limit)}
+                      value={formData.limit}
+                      onChange={handleNumberChange}
                     />
                   )}
                   <Button
                     type="button"
-                    variant={limitDisabled ? 'primary' : 'secondary'}
+                    variant={formData.limitDisabled ? 'primary' : 'secondary'}
                     size="small"
                     rounded="medium"
-                    onClick={() => setLimitDisabled(!limitDisabled)}
+                    onClick={toggleLimitDisabled}
                   >
                     제한 없음
                   </Button>
@@ -146,9 +180,9 @@ export default function TeamCreatePage() {
                   <span>썸네일 설정</span>
                 </label>
                 <ImageUpload
-                  selectedFile={thumbnail}
-                  onImageUpload={setThumbnail}
-                  initialPreview={thumbnail ? URL.createObjectURL(thumbnail) : undefined}
+                  selectedFile={formData.thumbnail}
+                  onImageUpload={handleImageUpload}
+                  initialPreview={formData.thumbnail ? URL.createObjectURL(formData.thumbnail) : undefined}
                 />
                 <div>
                   <p>
