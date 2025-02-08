@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
@@ -46,10 +47,13 @@ export function LoginPopup() {
             </span>
           </div>
           <div className={modalStyles.footer}>
-            <button className={discordLogin}>
-              <DiscordIcon width={32} />
+            <Link
+              href={`https://discord.com/oauth2/authorize?client_id=1248807669335330847&response_type=code&redirect_uri=http://localhost:5000/auth/callback&scope=identify%20email%20connections`}
+              className={discordLogin}
+            >
+              <DiscordIcon width={32} height={32} />
               Discord 로그인
-            </button>
+            </Link>
           </div>
         </ModalContent>
       </ModalOverlay>

@@ -19,6 +19,7 @@ export const discordLogin = style({
   fontSize: rem(17),
   fontWeight: 600,
   backgroundColor: '#747DF7',
+  textDecorationLine: 'none',
   color: globalVars.color.neutral.white,
   ':hover': {
     backgroundColor: '#5E67E0',
