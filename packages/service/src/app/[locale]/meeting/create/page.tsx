@@ -12,6 +12,17 @@ import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
 import * as styles from '@/shared/style/create-form/index.css';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 
+type FormDataType = {
+  name: string;
+  description: string;
+  category: string;
+  keywords: string;
+  limit: number | '';
+  limitDisabled: boolean;
+  thumbnail: File | null;
+  member: string;
+};
+
 export default function TeamCreatePage() {
   return (
     <div className={styles.container}>
@@ -21,15 +32,16 @@ export default function TeamCreatePage() {
 }
 
 function CreateMeetingPage() {
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
+  const [step, setStep] = useState<number>(1);
+  const [formData, setFormData] = useState<FormDataType>({
     name: '',
     description: '',
     category: '',
     keywords: '',
     limit: 10,
     limitDisabled: false,
-    thumbnail: null as File | null,
+    thumbnail: null,
+    member: '',
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,6 +116,7 @@ function CreatingStepProcess({ step }: { step: number }) {
 }
 // TODO: any 해결을 위해 타입 명시하기
 // FIXME: input 창에서 x 버튼 클릭 시, 페이지 새로고침 되는 오류 수정
+
 function CreatingStepForm({
   step,
   formData,
@@ -157,7 +170,8 @@ function MeetingInfoStep({ formData, handleInputChange }: any) {
     </div>
   );
 }
-
+// TODO: 카테고리 선택 창
+// TODO: 키워드 입력하여 저장되는 기능
 function CategoryKeywordStep({ formData, handleInputChange }: any) {
   return (
     <div className={formStyles.formGroup}>
@@ -186,28 +200,42 @@ function CategoryKeywordStep({ formData, handleInputChange }: any) {
   );
 }
 
-function MemberLimitStep({ formData, handleNumberChange, toggleLimitDisabled }: any) {
+function MemberLimitStep({ formData, handleInputChange, handleNumberChange, toggleLimitDisabled }: any) {
   return (
     <div className={formStyles.formGroup}>
       <label className={formStyles.label}>
         <span>몇 명까지 참여할 수 있나요?</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <Input
+            name="limit"
+            className={formStyles.input}
+            placeholder="모임 인원을 입력해주세요"
+            value={formData.limit}
+            onChange={handleNumberChange}
+            disabled={formData.limitDisabled}
+            style={{ flexGrow: 1, minWidth: '300px' }}
+          />
+          <Button
+            type="button"
+            variant={formData.limitDisabled ? 'primary' : 'secondary'}
+            size="small"
+            rounded="medium"
+            onClick={toggleLimitDisabled}
+          >
+            제한 없음
+          </Button>
+        </div>
+      </label>
+      {/* TODO: 모임원 추가 모달 생성 */}
+      <label className={formStyles.label}>
+        <span>모임원 추가</span>
         <Input
-          name="limit"
+          name="member"
           className={formStyles.input}
-          placeholder="모임 인원을 입력해주세요"
-          value={formData.limit}
-          onChange={handleNumberChange}
-          disabled={formData.limitDisabled}
+          placeholder="모임원을 선택해주세요"
+          value={formData.member}
+          onChange={handleInputChange}
         />
-        <Button
-          type="button"
-          variant={formData.limitDisabled ? 'primary' : 'secondary'}
-          size="small"
-          rounded="medium"
-          onClick={toggleLimitDisabled}
-        >
-          제한 없음
-        </Button>
       </label>
     </div>
   );
