@@ -23,6 +23,16 @@ type FormDataType = {
   member: string;
 };
 
+type StepProps = {
+  formData: FormDataType;
+  handleInputChange: <K extends keyof FormDataType>(
+    key: K,
+  ) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleNumberChange: (key: 'limit') => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  toggleLimitDisabled: () => void;
+  handleImageUpload: (key: 'thumbnail') => (file: File | null) => void;
+};
+
 export default function TeamCreatePage() {
   return (
     <div className={styles.container}>
@@ -46,7 +56,7 @@ function CreateMeetingPage() {
 
   const handleInputChange =
     <K extends keyof FormDataType>(key: K) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setFormData((prev) => ({
         ...prev,
         [key]: e.target.value,
@@ -58,6 +68,7 @@ function CreateMeetingPage() {
       ...prev,
       [key]: e.target.value === '' ? 0 : Number(e.target.value),
     }));
+    // TODO: NaN방지 추가
   };
   const toggleLimitDisabled = () => {
     setFormData((prev) => ({
@@ -113,8 +124,6 @@ function CreatingStepProcess({ step }: { step: number }) {
     />
   );
 }
-// TODO: any 해결을 위해 타입 명시하기
-// FIXME: input 창에서 x 버튼 클릭 시, 페이지 새로고침 되는 오류 수정
 
 function CreatingStepForm({
   step,
@@ -123,7 +132,7 @@ function CreatingStepForm({
   handleNumberChange,
   toggleLimitDisabled,
   handleImageUpload,
-}: any) {
+}: StepProps & { step: number }) {
   return (
     <div className={formStyles.formWrapper}>
       {step === 1 && <MeetingInfoStep formData={formData} handleInputChange={handleInputChange} />}
@@ -141,7 +150,7 @@ function CreatingStepForm({
   );
 }
 
-function MeetingInfoStep({ formData, handleInputChange }: any) {
+function MeetingInfoStep({ formData, handleInputChange }: Pick<StepProps, 'formData' | 'handleInputChange'>) {
   return (
     <div className={formStyles.formGroup}>
       <label className={formStyles.label}>
@@ -172,7 +181,7 @@ function MeetingInfoStep({ formData, handleInputChange }: any) {
 }
 // TODO: 카테고리 선택 창
 // TODO: 키워드 입력하여 저장되는 기능
-function CategoryKeywordStep({ formData, handleInputChange }: any) {
+function CategoryKeywordStep({ formData, handleInputChange }: Pick<StepProps, 'formData' | 'handleInputChange'>) {
   return (
     <div className={formStyles.formGroup}>
       <label className={formStyles.label}>
@@ -200,7 +209,12 @@ function CategoryKeywordStep({ formData, handleInputChange }: any) {
   );
 }
 
-function MemberLimitStep({ formData, handleInputChange, handleNumberChange, toggleLimitDisabled }: any) {
+function MemberLimitStep({
+  formData,
+  handleInputChange,
+  handleNumberChange,
+  toggleLimitDisabled,
+}: Pick<StepProps, 'formData' | 'handleInputChange' | 'handleNumberChange' | 'toggleLimitDisabled'>) {
   return (
     <div className={formStyles.formGroup}>
       <label className={formStyles.label}>
@@ -242,7 +256,7 @@ function MemberLimitStep({ formData, handleInputChange, handleNumberChange, togg
   );
 }
 
-function ThumbnailStep({ formData, handleImageUpload }: any) {
+function ThumbnailStep({ formData, handleImageUpload }: Pick<StepProps, 'formData' | 'handleImageUpload'>) {
   return (
     <div className={formStyles.formGroup}>
       <ImageUpload selectedFile={formData.thumbnail} onImageUpload={handleImageUpload('thumbnail')} />
@@ -257,7 +271,15 @@ function ThumbnailStep({ formData, handleImageUpload }: any) {
   );
 }
 
-function CreatingStepNavigation({ step, goToPrevStep, goToNextStep }: any) {
+function CreatingStepNavigation({
+  step,
+  goToPrevStep,
+  goToNextStep,
+}: {
+  step: number;
+  goToPrevStep: () => void;
+  goToNextStep: () => void;
+}) {
   return (
     <CreateButtonCommon
       prevText="이전"
