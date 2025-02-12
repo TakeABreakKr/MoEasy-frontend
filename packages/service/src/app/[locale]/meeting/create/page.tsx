@@ -44,22 +44,21 @@ function CreateMeetingPage() {
     member: '',
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleInputChange =
+    <K extends keyof FormDataType>(key: K) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({
+        ...prev,
+        [key]: e.target.value,
+      }));
+    };
+
+  const handleNumberChange = (key: 'limit') => (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [key]: e.target.value === '' ? 0 : Number(e.target.value),
     }));
   };
-
-  const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value === '' ? 0 : Number(value),
-    }));
-  };
-
   const toggleLimitDisabled = () => {
     setFormData((prev) => ({
       ...prev,
@@ -68,10 +67,10 @@ function CreateMeetingPage() {
     }));
   };
 
-  const handleImageUpload = (file: File | null) => {
+  const handleImageUpload = (key: 'thumbnail') => (file: File | null) => {
     setFormData((prev) => ({
       ...prev,
-      thumbnail: file,
+      [key]: file,
     }));
   };
 
@@ -152,7 +151,7 @@ function MeetingInfoStep({ formData, handleInputChange }: any) {
           placeholder="모임 이름을 입력해주세요"
           value={formData.name}
           maxLength={30}
-          onChange={handleInputChange}
+          onChange={handleInputChange('name')}
         />
       </label>
       <label className={formStyles.label}>
@@ -164,7 +163,7 @@ function MeetingInfoStep({ formData, handleInputChange }: any) {
           value={formData.description}
           minLength={10}
           maxLength={100}
-          onChange={handleInputChange}
+          onChange={handleInputChange('description')}
         />
       </label>
     </div>
@@ -182,7 +181,7 @@ function CategoryKeywordStep({ formData, handleInputChange }: any) {
           className={formStyles.input}
           placeholder="카테고리를 입력해주세요"
           value={formData.category}
-          onChange={handleInputChange}
+          onChange={handleInputChange('category')}
         />
       </label>
       <label className={formStyles.label}>
@@ -193,7 +192,7 @@ function CategoryKeywordStep({ formData, handleInputChange }: any) {
           placeholder="키워드를 입력해주세요"
           value={formData.keywords}
           maxLength={10}
-          onChange={handleInputChange}
+          onChange={handleInputChange('keywords')}
         />
       </label>
     </div>
@@ -211,10 +210,11 @@ function MemberLimitStep({ formData, handleInputChange, handleNumberChange, togg
             className={formStyles.input}
             placeholder="모임 인원을 입력해주세요"
             value={formData.limit}
-            onChange={handleNumberChange}
+            onChange={handleNumberChange('limit')}
             disabled={formData.limitDisabled}
             style={{ flexGrow: 1, minWidth: '300px' }}
           />
+          {/* value속성이 고정값이 아니라서 나는 오류?! readOnly? */}
           <Button
             type="button"
             variant={formData.limitDisabled ? 'primary' : 'secondary'}
@@ -234,7 +234,7 @@ function MemberLimitStep({ formData, handleInputChange, handleNumberChange, togg
           className={formStyles.input}
           placeholder="모임원을 선택해주세요"
           value={formData.member}
-          onChange={handleInputChange}
+          onChange={handleInputChange('member')}
         />
       </label>
     </div>
@@ -244,7 +244,7 @@ function MemberLimitStep({ formData, handleInputChange, handleNumberChange, togg
 function ThumbnailStep({ formData, handleImageUpload }: any) {
   return (
     <div className={formStyles.formGroup}>
-      <ImageUpload selectedFile={formData.thumbnail} onImageUpload={handleImageUpload} />
+      <ImageUpload selectedFile={formData.thumbnail} onImageUpload={handleImageUpload('thumbnail')} />
       <div>
         <p>
           📌 <strong>1:1 비율 (500×500px) 권장</strong>
