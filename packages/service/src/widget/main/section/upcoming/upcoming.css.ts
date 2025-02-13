@@ -28,7 +28,7 @@ export const dateButtonActive = style({
 
 export const scheduleContainer = style({
   display: 'grid',
-  gridTemplateColumns: `repeat(auto-fill, minmax(${rem(300)}, 1fr))`,
+  gridTemplateColumns: `repeat(auto-fit, minmax(${rem(400)}, 1fr))`,
   gap: rem(12),
   width: '100%',
 });
