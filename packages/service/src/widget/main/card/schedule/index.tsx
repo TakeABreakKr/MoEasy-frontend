@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithRef } from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
 
@@ -10,7 +10,7 @@ import { Text } from '@moeasy/storybook/ui/text';
 
 import * as styles from './schedule.css';
 
-export type MainScheduleCardProps = ComponentPropsWithoutRef<'div'> & {
+export type MainScheduleCardProps = ComponentPropsWithRef<'div'> & {
   schedule: HomeUpcomingActivityDto;
 };
 
@@ -26,18 +26,23 @@ const dummyMemberThumbnails = [
 export function MainScheduleCard({ className, schedule, ...props }: MainScheduleCardProps) {
   return (
     <div className={clsx(styles.scheduleCard, className)} {...props}>
-      <div className={styles.scheduleCardHeader}>
-        <div className={styles.scheduleCardThumbnail}></div>
-        <div className={sprinkles({ flex: 1 })}>
-          <h2 className={styles.scheduleTitle}>
-            {schedule.name}
-            <div className={styles.heart}>
-              <HeartIcon color="red" />
+      <div>
+        <div className={sprinkles({ display: 'flex', gap: 'medium', alignItems: 'stretch' })}>
+          <div className={styles.scheduleCardThumbnail} />
+          <div className={styles.scheduleTitleWrapper}>
+            <div className={sprinkles({ display: 'flex', gap: 'small', alignItems: 'center' })}>
+              <span className={styles.scheduleOnlineOrOffline[schedule.isOnlineYn ? 'online' : 'offline']}>
+                {schedule.isOnlineYn ? '온라인' : '오프라인'}
+              </span>
+              <Text asChild ellipsis title="large">
+                <h2>{schedule.name}</h2>
+              </Text>
             </div>
-          </h2>
-          <span className={styles.scheduleOnlineOrOffline[schedule.isOnlineYn ? 'online' : 'offline']}>
-            {schedule.isOnlineYn ? '온라인' : '오프라인'}
-          </span>
+            <Text body="medium">안녕하세요..!</Text>
+          </div>
+          <div className={styles.heart}>
+            <HeartIcon color="red" />
+          </div>
         </div>
       </div>
       <div className={styles.content}>

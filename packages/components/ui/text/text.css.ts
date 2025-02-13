@@ -21,5 +21,12 @@ export const textRecipe = recipe({
         fontWeight: '600',
       },
     },
+    ellipsis: {
+      true: {
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+      },
+    },
   },
 });

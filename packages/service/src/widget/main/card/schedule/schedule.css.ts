@@ -9,6 +9,9 @@ export const scheduleCard = style({
   borderRadius: rem(4),
   padding: rem(30, 22),
   color: globalVars.color.neutral[80],
+  display: 'flex',
+  flexDirection: 'column',
+  gap: rem(25),
 });
 
 export const scheduleCardHeader = style({
@@ -20,13 +23,12 @@ export const scheduleCardHeader = style({
   gap: rem(15),
 });
 
-export const scheduleTitle = style({
+export const scheduleTitleWrapper = style({
+  flex: 1,
+  overflow: 'hidden',
   display: 'flex',
-  alignItems: 'center',
-  lineHeight: 0,
-  marginBlock: 0,
-  fontSize: rem(20),
-  fontWeight: '600',
+  flexDirection: 'column',
+  gap: rem(3),
 });
 
 export const scheduleCardThumbnail = style({
@@ -50,10 +52,12 @@ export const scheduleCardTitle = style({
 
 export const scheduleIsOnline = style({
   borderRadius: rem(16),
-  padding: rem(4),
+  padding: rem(2, 4),
+  display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   position: 'relative',
+  flexShrink: 0,
   color: globalVars.color.neutral.white,
   ...globalVars.text.label.small.regular,
 });
@@ -68,7 +72,7 @@ export const heart = style({
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'flex-end',
-  flex: 1,
+  paddingTop: rem(6),
 });
 
 export const content = style({
