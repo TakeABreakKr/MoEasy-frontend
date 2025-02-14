@@ -39,7 +39,7 @@ export default function CreatingStepForm() {
     member: '',
   });
 
-  const dispatch = (payload: Partial<Omit<FormDataType, 'limitDisabled'>>) => {
+  const dispatch = (payload: Partial<FormDataType>) => {
     setFormData((prev) => ({
       ...prev,
       ...payload,
