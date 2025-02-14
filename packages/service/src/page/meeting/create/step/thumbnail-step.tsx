@@ -1,5 +1,5 @@
 import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
-import { StepProps } from '../CreatingStepForm';
+import { StepProps } from '../creating-step-form';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 
 export default function ThumbnailStep({ formData, dispatch }: StepProps) {

@@ -1,6 +1,6 @@
 import { Input } from '@moeasy/storybook/ui/input';
 import { Textarea } from '@moeasy/storybook/ui/textarea';
-import { StepProps } from '../CreatingStepForm';
+import { StepProps } from '../creating-step-form';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 
 export default function MeetingInfoStep({ formData, dispatch }: StepProps) {

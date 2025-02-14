@@ -1,6 +1,6 @@
 import { Input } from '@moeasy/storybook/ui/input';
 import { Button } from '@moeasy/storybook/ui/button';
-import { StepProps } from '../CreatingStepForm';
+import { StepProps } from '../creating-step-form';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 
 type MemberStepProps = StepProps & {

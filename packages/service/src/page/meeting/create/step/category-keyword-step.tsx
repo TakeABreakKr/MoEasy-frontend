@@ -1,5 +1,5 @@
 import { Input } from '@moeasy/storybook/ui/input';
-import { StepProps } from '../CreatingStepForm';
+import { StepProps } from '../creating-step-form';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 
 // TODO: 카테고리 선택 창

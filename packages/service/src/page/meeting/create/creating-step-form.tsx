@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import CreatingStepProcess from './CreatingStepProcess';
-import CreatingStepNavigation from './CreatingStepNavigation';
-import MeetingInfoStep from './step/MeetingInfoStep';
-import CategoryKeywordStep from './step/CategoryKeywordStep';
-import MemberInfoStep from './step/MemberInfoStep';
-import ThumbnailStep from './step/ThumbnailStep';
+import CreatingStepProcess from './creating-step-process';
+import CreatingStepNavigation from './creating-step-navigation';
+import MeetingInfoStep from './step/meeting-info-step';
+import CategoryKeywordStep from './step/category-keyword-step';
+import MemberInfoStep from './step/member-info-step';
+import ThumbnailStep from './step/thumbnail-step';
 
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 
