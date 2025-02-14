@@ -1,6 +1,6 @@
 import { CreateStepList } from '@moeasy/storybook/ui/create/step-list';
 
-export default function CreatingStepProcess({ step }: { step: number }) {
+export function CreatingStepProcess({ step }: { step: number }) {
   return (
     <CreateStepList
       steps={[

@@ -1,6 +1,6 @@
 import { CreateButtonCommon } from '@moeasy/storybook/ui/create/step-button';
 
-export default function CreatingStepNavigation({
+export function CreatingStepNavigation({
   step,
   goToPrevStep,
   goToNextStep,

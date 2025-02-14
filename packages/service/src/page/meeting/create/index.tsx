@@ -1,7 +1,7 @@
 'use client';
 
 import * as styles from '@/shared/style/create-form/index.css';
-import CreatingStepForm from './creating-step-form';
+import { CreatingStepForm } from './creating-step-form';
 
 export default function TeamCreatePage() {
   return (

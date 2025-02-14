@@ -7,7 +7,7 @@ type MemberStepProps = StepProps & {
   toggleLimitDisabled: () => void;
 };
 
-export default function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: MemberStepProps) {
+export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: MemberStepProps) {
   return (
     <div className={formStyles.formGroup}>
       <label className={formStyles.label}>

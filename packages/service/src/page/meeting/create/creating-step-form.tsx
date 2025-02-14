@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import CreatingStepProcess from './creating-step-process';
-import CreatingStepNavigation from './creating-step-navigation';
-import MeetingInfoStep from './step/meeting-info-step';
-import CategoryKeywordStep from './step/category-keyword-step';
-import MemberInfoStep from './step/member-info-step';
-import ThumbnailStep from './step/thumbnail-step';
+import { CreatingStepProcess } from './creating-step-process';
+import { CreatingStepNavigation } from './creating-step-navigation';
+import { MeetingInfoStep } from './step/meeting-info-step';
+import { CategoryKeywordStep } from './step/category-keyword-step';
+import { MemberInfoStep } from './step/member-info-step';
+import { ThumbnailStep } from './step/thumbnail-step';
 
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 
@@ -26,7 +26,7 @@ export type StepProps = {
   dispatch: (payload: Partial<FormDataType>) => void;
 };
 
-export default function CreatingStepForm() {
+export function CreatingStepForm() {
   const [step, setStep] = useState<number>(1);
   const [formData, setFormData] = useState<FormDataType>({
     name: '',

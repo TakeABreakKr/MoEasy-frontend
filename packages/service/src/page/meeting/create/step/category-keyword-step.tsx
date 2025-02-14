@@ -4,7 +4,7 @@ import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 
 // TODO: 카테고리 선택 창
 // TODO: 키워드 입력하여 저장되는 기능
-export default function CategoryKeywordStep({ formData, dispatch }: StepProps) {
+export function CategoryKeywordStep({ formData, dispatch }: StepProps) {
   return (
     <div className={formStyles.formGroup}>
       <label className={formStyles.label}>

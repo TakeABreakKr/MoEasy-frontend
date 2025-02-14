@@ -2,7 +2,7 @@ import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
 import { StepProps } from '../creating-step-form';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 
-export default function ThumbnailStep({ formData, dispatch }: StepProps) {
+export function ThumbnailStep({ formData, dispatch }: StepProps) {
   return (
     <div className={formStyles.formGroup}>
       <ImageUpload selectedFile={formData.thumbnail} onImageUpload={(thumbnail) => dispatch({ thumbnail })} />
