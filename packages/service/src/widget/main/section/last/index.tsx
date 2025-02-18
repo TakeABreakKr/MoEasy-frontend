@@ -1,3 +1,5 @@
+import { EllipsisIcon } from '@moeasy/storybook/ui/icon';
+
 import { MainLastSectionLoginButton } from './login-button';
 
 import * as styles from '../section.css';
@@ -8,9 +10,7 @@ export function MainLastSection() {
     <section className={styles.section}>
       <div className={lastStyles.container}>
         <div className={lastStyles.currentIcon}>
-          {[1, 2, 3].map((idx) => (
-            <div key={idx} className={lastStyles.currentIconItem} />
-          ))}
+          <EllipsisIcon />
         </div>
         <div className={lastStyles.currentText}>
           지금 우리 동네는?

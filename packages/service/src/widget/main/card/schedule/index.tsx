@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { HomeUpcomingActivityDto } from '@/entities/main/api';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
-import { CalendarHomeIcon, DoorIcon, EllipsisIcon, HeartIcon, LocationIcon, UserIcon } from '@moeasy/storybook/ui/icon';
+import { CalendarHomeIcon, EllipsisIcon, HeartIcon, LocationIcon, UserIcon } from '@moeasy/storybook/ui/icon';
 import { Text } from '@moeasy/storybook/ui/text';
 
 import * as styles from './schedule.css';
@@ -45,13 +45,7 @@ export function MainScheduleCard({ className, schedule, ...props }: MainSchedule
           </div>
         </div>
       </div>
-      <div className={styles.content}>
-        <Text label="large" semibold className={styles.contentText}>
-          <div className={styles.iconContainer}>
-            <DoorIcon />
-          </div>
-          {schedule.description}
-        </Text>
+      <div className={clsx(styles.content, sprinkles({ gap: 'small' }))}>
         <Text label="large" semibold className={styles.contentText}>
           <div className={styles.iconContainer}>
             <LocationIcon />

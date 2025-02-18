@@ -19,7 +19,7 @@ export function MainCategorySection({ title }: { title: string }) {
   return (
     <section className={styles.section}>
       <Text asChild title="large">
-        <h1 className={sprinkles({ display: 'flex', alignItems: 'center', gap: 'small' })}>{title}</h1>
+        <h1 className={categoryStyles.titleWrapper}>{title}</h1>
       </Text>
       <div className={sprinkles({ display: 'flex', flexDirection: 'column', gap: 'large', width: '100%' })}>
         <MainCategorySectionTab />

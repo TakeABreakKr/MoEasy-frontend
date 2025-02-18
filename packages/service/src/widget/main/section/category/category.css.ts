@@ -11,7 +11,21 @@ export const content = style({
   height: rem(280),
 });
 
-export const iconDiv = style({
+export const titleWrapper = style({
+  display: 'flex',
+  alignItems: 'center',
+  padding: rem(3.5, 0),
+});
+
+export const tabFallback = style({
+  width: '100%',
+  maxWidth: rem(627),
+  height: rem(32.5),
+  borderRadius: rem(4),
+  backgroundColor: globalVars.color.neutral[5],
+});
+
+export const iconBase = style({
   position: 'relative',
   display: 'flex',
   justifyContent: 'center',
@@ -19,8 +33,18 @@ export const iconDiv = style({
   width: rem(100),
   height: rem(100),
   borderRadius: '50%',
-  backgroundColor: '#212535',
   overflow: 'hidden',
+});
+
+export const iconDiv = style([iconBase, { backgroundColor: '#212535', overflow: 'hidden' }]);
+
+export const iconFallback = style([iconBase, { backgroundColor: globalVars.color.neutral[5] }]);
+
+export const categoryFallback = style({
+  width: rem(38),
+  height: rem(16),
+  borderRadius: rem(2),
+  backgroundColor: globalVars.color.neutral[5],
 });
 
 export const categoryButton = style({

@@ -26,13 +26,6 @@ export const currentIcon = style({
   gap: rem(5),
 });
 
-export const currentIconItem = style({
-  width: rem(9),
-  height: rem(9),
-  borderRadius: '50%',
-  backgroundColor: globalVars.color.neutral.white,
-});
-
 export const currentText = style({
   gap: rem(5),
   flex: 1,

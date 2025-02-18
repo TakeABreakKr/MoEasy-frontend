@@ -1,6 +1,7 @@
 import { rem } from '@moeasy/storybook/utils/css';
 import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
+import { cardComponentBase } from '../card.css';
 import { style, styleVariants } from '@vanilla-extract/css';
 
 export const scheduleCard = style({
@@ -32,7 +33,7 @@ export const scheduleTitleWrapper = style({
 });
 
 export const scheduleCardThumbnail = style({
-  background: globalVars.color.neutral[40],
+  background: globalVars.color.neutral[5],
   borderRadius: '50%',
   width: rem(55),
   height: rem(55),
@@ -81,7 +82,6 @@ export const content = style({
   alignItems: 'flex-start',
   justifyContent: 'flex-start',
   position: 'relative',
-  gap: rem(10),
 });
 
 export const contentText = style({
@@ -138,4 +138,19 @@ export const memberIconDepth = styleVariants({
   4: { zIndex: 3, top: rem(0), left: rem(48) },
   5: { zIndex: 2, top: rem(0), left: rem(64) },
   6: { zIndex: 1, top: rem(0), left: rem(80) },
+});
+
+// fallback
+export const scheduleTitleFallback = style({
+  display: 'flex',
+  flex: 1,
+  flexDirection: 'column',
+  gap: rem(4),
+  justifyContent: 'center',
+});
+
+export const contentFallbackVariants = styleVariants({
+  region: [cardComponentBase, { width: '25%', height: rem(24) }],
+  date: [cardComponentBase, { width: '40%', height: rem(24) }],
+  limit: [cardComponentBase, { width: '100%', height: rem(37) }],
 });
