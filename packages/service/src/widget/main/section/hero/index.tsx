@@ -9,7 +9,7 @@ import mainImage from '../../../../../public/about-first.png';
 
 import * as styles from './first.css';
 
-export async function MainFirstSection() {
+export async function MainHeroSection() {
   const t = await getScopedI18n('main');
   return (
     <section className={styles.firstSection}>

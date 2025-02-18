@@ -4,14 +4,14 @@ import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
 import { DirectionButton } from '@moeasy/storybook/ui/button';
 
-import { sectionHeaderFallaback } from '../../fallback.css';
+import { sectionHeaderFallback } from '../../fallback.css';
 import * as styles from '../section.css';
 import * as categoryStyles from './category.css';
 
 export function MainCategorySectionFallback({ title }: { title: string }) {
   return (
     <section className={styles.section}>
-      <div className={sectionHeaderFallaback} />
+      <div className={sectionHeaderFallback} />
       <div className={sprinkles({ display: 'flex', flexDirection: 'column', gap: 'large', width: '100%' })}>
         <MainCategorySectionTabFallback />
         <MainCategorySectionContentFallback />

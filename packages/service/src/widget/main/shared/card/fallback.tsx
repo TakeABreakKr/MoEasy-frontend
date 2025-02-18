@@ -2,7 +2,7 @@ import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
 import { CardHeader, CardThumbnail, CardWrapper } from '@moeasy/storybook/ui/card/compound-card';
 
-import { commonCard } from '../main.css';
+import { commonCard } from '../../main.css';
 import * as styles from './card.css';
 
 export function MainCommonCardFallback() {

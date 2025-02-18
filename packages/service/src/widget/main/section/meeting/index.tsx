@@ -2,8 +2,7 @@
 
 import { forwardRef } from 'react';
 
-import MainCommonCard from '@/widget/main/card/common';
-
+import MainCommonCard from '../../shared/card/common';
 import { MainMeetingDto } from '../../type';
 import { withMainCartHeader } from '..';
 

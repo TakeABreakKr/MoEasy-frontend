@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import { MainContentLoadingFallback } from './content/loading';
-import { MainFirstSection } from './section/first';
+import { MainHeroSection } from './section/hero';
 import { MainContent } from './content';
 
 import * as styles from './main.css';
@@ -9,7 +9,7 @@ import * as styles from './main.css';
 export function MainBody() {
   return (
     <main className={styles.main}>
-      <MainFirstSection />
+      <MainHeroSection />
       <Suspense fallback={<MainContentLoadingFallback />}>
         <MainContent />
       </Suspense>

@@ -24,9 +24,6 @@ export function MyPageHeader() {
 
   return (
     <section className={styles.tabSection}>
-      <Text label="large" asChild semibold>
-        <h1>마이페이지</h1>
-      </Text>
       <ul className={styles.tabList}>
         {tabMenus.map(({ key, value }) => (
           <li key={key}>

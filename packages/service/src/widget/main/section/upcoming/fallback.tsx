@@ -4,16 +4,16 @@ import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
 import { DirectionButton } from '@moeasy/storybook/ui/button';
 
-import { MainScheduleCardFallback } from '../../card/schedule/fallback';
+import { MainScheduleCardFallback } from '../../shared/card/schedule/fallback';
 
-import { sectionHeaderFallaback } from '../../fallback.css';
+import { sectionHeaderFallback } from '../../fallback.css';
 import * as styles from '../section.css';
 import * as upcomingStyles from './upcoming.css';
 
 export function MainUpcommingScheduleFallback() {
   return (
     <section className={styles.section}>
-      <div className={sectionHeaderFallaback} />
+      <div className={sectionHeaderFallback} />
       <div className={upcomingStyles.dateContainer}>
         {Array.from({ length: 7 }).map((_, index) => (
           <button key={index} className={upcomingStyles.dateButton} disabled />

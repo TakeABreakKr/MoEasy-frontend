@@ -1,5 +1,5 @@
 import { getScopedI18n } from '@/locales/server';
-import { MainLastSection } from '@/widget/main/section/last';
+import { MainLastSection } from '@/widget/main/section/neighborhood';
 
 import { MainCategorySectionFallback } from '../section/category/fallback';
 import { MainCardSectionFallback } from '../section/fallback';

@@ -2,10 +2,10 @@ import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
 import { DirectionButton } from '@moeasy/storybook/ui/button';
 
-import { MainCommonCardFallback } from '../card/fallback';
-import { MainScheduleCardFallback } from '../card/schedule/fallback';
+import { MainCommonCardFallback } from '../shared/card/fallback';
+import { MainScheduleCardFallback } from '../shared/card/schedule/fallback';
 
-import { sectionHeaderFallaback } from '../fallback.css';
+import { sectionHeaderFallback } from '../fallback.css';
 import { activityCard } from './activity/activity.css';
 import * as styles from './section.css';
 
@@ -37,7 +37,7 @@ export function MainCardSectionHeaderFallback() {
     <div
       className={sprinkles({ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}
     >
-      <div className={sectionHeaderFallaback} />
+      <div className={sectionHeaderFallback} />
       <div className={sprinkles({ display: 'flex', gap: 'small' })}>
         <DirectionButton direction="left" disabled />
         <DirectionButton direction="right" disabled />

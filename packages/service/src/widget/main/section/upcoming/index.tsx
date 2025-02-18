@@ -13,7 +13,7 @@ import { DirectionButton } from '@moeasy/storybook/ui/button';
 
 import 'dayjs/locale/ko';
 
-import { MainScheduleCard } from '../../card/schedule';
+import { MainScheduleCard } from '../../shared/card/schedule';
 import { MainActivityDto } from '../../type';
 
 import * as styles from '../section.css';

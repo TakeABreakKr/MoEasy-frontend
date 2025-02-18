@@ -1,7 +1,7 @@
 import { scrollStyle } from '@moeasy/storybook/ui/scroll/scroll.css';
 import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
-import { style } from '@vanilla-extract/css';
+import { keyframes, style } from '@vanilla-extract/css';
 
 export const aboutMain = style([
   scrollStyle,
@@ -17,3 +17,15 @@ export const aboutMain = style([
     height: `100vh`,
   },
 ]);
+
+export const upAndDown = keyframes({
+  '0%': {
+    transform: 'translateY(0)',
+  },
+  '50%': {
+    transform: 'translateY(10px)',
+  },
+  '100%': {
+    transform: 'translateY(0)',
+  },
+});

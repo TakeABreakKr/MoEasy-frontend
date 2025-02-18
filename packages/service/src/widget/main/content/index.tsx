@@ -1,10 +1,11 @@
 import { getScopedI18n } from '@/locales/server';
 import { serverClient } from '@/shared/api/server-client';
-import { MainCardActivitySection } from '@/widget/main/section/activity';
-import { MainCategorySection } from '@/widget/main/section/category';
-import { MainLastSection } from '@/widget/main/section/last';
-import { MainCardMeetingSection } from '@/widget/main/section/meeting';
-import { MainUpcommingSchedule } from '@/widget/main/section/upcoming';
+
+import { MainCardActivitySection } from '../section/activity';
+import { MainCategorySection } from '../section/category';
+import { MainCardMeetingSection } from '../section/meeting';
+import { MainLastSection } from '../section/neighborhood';
+import { MainUpcommingSchedule } from '../section/upcoming';
 
 export async function MainContent() {
   const t = await getScopedI18n('main');
