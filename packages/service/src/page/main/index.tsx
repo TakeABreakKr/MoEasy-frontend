@@ -1,7 +1,7 @@
-import { MainBody } from '@/widget/main/body';
-
 import { MainFooter } from '@moeasy/storybook/ui/footer';
 import { Separator } from '@moeasy/storybook/ui/separator';
+
+import { MainBody } from './body';
 
 export async function MainPage() {
   return (

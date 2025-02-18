@@ -7,14 +7,7 @@ import {
   CardWrapper,
 } from '@moeasy/storybook/ui/card/compound-card';
 
-export default function MainCommonCard({
-  idx,
-  title,
-  description = '',
-  count = 0,
-  maxCount = 10,
-  ...props
-}: CardProps) {
+export function MainCommonCard({ idx, title, description = '', count = 0, maxCount = 10, ...props }: CardProps) {
   return (
     <CardWrapper data-meeting-index={idx} {...props}>
       <CardThumbnail src={`https://placehold.co/72/png`} alt={title} />

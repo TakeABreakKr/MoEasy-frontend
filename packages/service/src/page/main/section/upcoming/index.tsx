@@ -8,12 +8,12 @@ import dayjs from 'dayjs';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { dateRange } from '@/shared/utils/date';
 import { pushSearchParams } from '@/shared/utils/search-param';
+import { MainScheduleCard } from '@/widget/card/schedule';
 
 import { DirectionButton } from '@moeasy/storybook/ui/button';
 
 import 'dayjs/locale/ko';
 
-import { MainScheduleCard } from '../../shared/card/schedule';
 import { MainActivityDto } from '../../type';
 
 import * as styles from '../section.css';

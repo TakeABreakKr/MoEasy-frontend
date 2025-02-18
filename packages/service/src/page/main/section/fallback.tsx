@@ -1,9 +1,8 @@
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
+import { MainCommonCardFallback } from '@/widget/card/fallback';
+import { MainScheduleCardFallback } from '@/widget/card/schedule/fallback';
 
 import { DirectionButton } from '@moeasy/storybook/ui/button';
-
-import { MainCommonCardFallback } from '../shared/card/fallback';
-import { MainScheduleCardFallback } from '../shared/card/schedule/fallback';
 
 import { sectionHeaderFallback } from '../fallback.css';
 import { activityCard } from './activity/activity.css';

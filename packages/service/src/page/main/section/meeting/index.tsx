@@ -2,11 +2,12 @@
 
 import { forwardRef } from 'react';
 
-import MainCommonCard from '../../shared/card/common';
+import { commonCard } from '@/widget/card/card.css';
+import { MainCommonCard } from '@/widget/card/common';
+
 import { MainMeetingDto } from '../../type';
 import { withMainCartHeader } from '..';
 
-import { commonCard } from '../../main.css';
 import * as styles from '../section.css';
 
 export const MainCardMeetingSectionContentBase = forwardRef<

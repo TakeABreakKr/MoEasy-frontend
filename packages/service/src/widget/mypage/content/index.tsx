@@ -1,4 +1,4 @@
-import MainCommonCard from '@/widget/main/shared/card/common';
+import { MainCommonCard } from '@/widget/card/common';
 
 import * as styles from './list.css';
 

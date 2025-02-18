@@ -3,6 +3,11 @@ import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 import { style } from '@vanilla-extract/css';
 
+export const commonCard = style({
+  minWidth: rem(327),
+  height: rem(171),
+});
+
 export const cardInfo = style({
   display: 'flex',
   flexDirection: 'column',

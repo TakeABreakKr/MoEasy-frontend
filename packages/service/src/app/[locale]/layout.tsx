@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import clsx from 'clsx';
 
-import { LoginPopup } from '@/widget/main/popup/login';
+import { LoginPopup } from '@/widget/popup/login';
 
 import { pretendard } from '@moeasy/storybook/font';
 import { Header } from '@moeasy/storybook/ui/header';

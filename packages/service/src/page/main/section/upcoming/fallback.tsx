@@ -1,10 +1,9 @@
 'use client';
 
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
+import { MainScheduleCardFallback } from '@/widget/card/schedule/fallback';
 
 import { DirectionButton } from '@moeasy/storybook/ui/button';
-
-import { MainScheduleCardFallback } from '../../shared/card/schedule/fallback';
 
 import { sectionHeaderFallback } from '../../fallback.css';
 import * as styles from '../section.css';
