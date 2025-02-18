@@ -10,17 +10,15 @@ import { AlarmIcon, LogoIconWithText, PlusIcon, SearchIcon, UserIcon } from '../
 
 import * as headerStyles from './header.css';
 
-type User = {
-  name: string;
-};
-
 interface HeaderProps {
-  user?: User;
+  // user?: User;
+  // TODO: user 정보 API 개발 후 유저 정보로 변경
+  isLogin?: boolean;
 }
 /**
  * 공통 헤더 컴포넌트
  */
-export const Header = ({}: HeaderProps) => {
+export const Header = ({ isLogin = false }: HeaderProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const loginSearchParams = new URLSearchParams(searchParams);
@@ -31,7 +29,7 @@ export const Header = ({}: HeaderProps) => {
       <div className={headerStyles.headerWrapper}>
         <div className={headerStyles.leftHandSide}>
           <Link className={headerStyles.logo} href="/">
-            <LogoIconWithText />
+            <LogoIconWithText color="#0071FE" />
           </Link>
           <ul className={headerStyles.linkWrapper}>
             <li className={clsx(headerStyles.linkText, pathname === '/meeting' && headerStyles.active)}>
@@ -49,23 +47,33 @@ export const Header = ({}: HeaderProps) => {
           <button className={headerStyles.rightIcon}>
             <SearchIcon width={16} height={16} />
           </button>
-          <button className={headerStyles.rightIcon}>
-            <AlarmIcon width={16} height={16} />
-          </button>
-          <button className={headerStyles.rightIcon}>
-            <PlusIcon width={16} height={16} />
-          </button>
-          <Link href="/mypage" className={headerStyles.rightButton}>
-            마이페이지
-          </Link>
-          <Link
-            href={{
-              query: loginSearchParams.toString(),
-            }}
-            className={headerStyles.rightIcon}
-          >
-            <UserIcon width={16} height={16} />
-          </Link>
+          {isLogin && (
+            <>
+              <button className={headerStyles.rightIcon}>
+                <AlarmIcon width={16} height={16} />
+              </button>
+              <button className={headerStyles.rightIcon}>
+                <PlusIcon width={16} height={16} />
+              </button>
+              <Link href="/mypage" className={headerStyles.rightButton}>
+                마이페이지
+              </Link>
+            </>
+          )}
+          {isLogin ? (
+            <button className={headerStyles.rightIcon}>
+              <UserIcon width={16} height={16} />
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                window.history.pushState({}, '', `${pathname}?${loginSearchParams.toString()}`);
+              }}
+              className={headerStyles.rightButton}
+            >
+              로그인
+            </button>
+          )}
         </div>
       </div>
     </header>

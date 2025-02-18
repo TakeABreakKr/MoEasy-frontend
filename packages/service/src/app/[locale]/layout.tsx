@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import clsx from 'clsx';
+
+import { LoginPopup } from '@/widget/popup/login';
 
 import { pretendard } from '@moeasy/storybook/font';
 import { Header } from '@moeasy/storybook/ui/header';
@@ -23,13 +26,18 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('AccessToken')?.value;
 
   return (
     <html lang={locale}>
       <body className={clsx(pretendard.className, pretendard.variable)}>
-        <Header />
+        <Header isLogin={!!accessToken} />
         <MSWWrapper />
-        <RootProvider locale={locale}>{children}</RootProvider>
+        <RootProvider locale={locale}>
+          <LoginPopup />
+          {children}
+        </RootProvider>
       </body>
     </html>
   );

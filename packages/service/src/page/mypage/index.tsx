@@ -1,5 +1,5 @@
-import { MyPageMeetingList } from '@/widget/mypage/content';
-import { MyPageHeader } from '@/widget/mypage/header';
+import { MyPageMeetingList } from './content';
+import { MyPageHeader } from './header';
 
 export function MyPage() {
   return (

@@ -13,7 +13,7 @@ export const header = style({
   width: '100%',
   display: 'flex',
   justifyContent: 'center',
-  zIndex: 1,
+  zIndex: 51,
 });
 
 export const headerOnAbout = style({
@@ -54,7 +54,6 @@ export const linkWrapper = style({
   gap: rem(30),
   listStyle: 'none',
   height: '100%',
-  color: globalVars.color.neutral.black,
 });
 
 export const linkText = style({

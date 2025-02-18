@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, forwardRef } from 'react';
+import React, { ComponentPropsWithRef, forwardRef } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import clsx from 'clsx';
 
@@ -15,7 +15,7 @@ import { EllipsisIcon } from '../icon';
 import { magic } from '../../utils/styles/index.css';
 import * as cardStyle from './card.css';
 
-type CardWrapperProps = ComponentPropsWithoutRef<'div'> & {
+type CardWrapperProps = ComponentPropsWithRef<'div'> & {
   asChild?: boolean;
   /** 마우스 호버시 배경색 변경 여부 */
   hoverEffect?: boolean;
@@ -55,14 +55,10 @@ function CardThumbnail({
   );
 }
 
-const CardHeader = forwardRef<HTMLDivElement, CardWrapperProps>(function (
-  { className, asChild, ...props },
-  forwardedRef,
-) {
+const CardHeader = function ({ className, asChild, ...props }: CardWrapperProps) {
   const Comp = asChild ? Slot : 'div';
-  return <Comp ref={forwardedRef} className={cardStyle.interact} {...props} />;
-});
-CardHeader.displayName = 'CardHeader';
+  return <Comp className={cardStyle.interact} {...props} />;
+};
 
 /**
  * dropdown menu를 포함할 수 있는 Card의 Trigger
@@ -82,8 +78,12 @@ function CardTrigger({ children }: { children?: React.ReactNode }) {
   );
 }
 
-function CardTitle({ children }: { children?: React.ReactNode }) {
-  return <h2 className={cardStyle.title}>{children ?? 'Card Title'}</h2>;
+function CardTitle({ children, className, ...props }: ComponentPropsWithRef<'h2'>) {
+  return (
+    <h2 className={clsx(cardStyle.title, className)} {...props}>
+      {children ?? 'Card Title'}
+    </h2>
+  );
 }
 
 function CardDescription({ children }: { children?: React.ReactNode }) {
