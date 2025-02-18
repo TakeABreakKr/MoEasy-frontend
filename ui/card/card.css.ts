@@ -8,7 +8,7 @@ export const card = style({
   maxWidth: rem(450),
   position: 'relative',
   padding: rem(0, 15), // 2.1875rem
-  backgroundColor: '#f0f0f0',
+  backgroundColor: globalVars.color.neutral[3],
   borderRadius: rem(4), // 1rem
   display: 'flex',
   flexDirection: 'column',
@@ -29,7 +29,8 @@ export const thumbnailWrapper = style({
   borderRadius: '50%',
   position: 'absolute',
   top: rem(-30),
-  background: 'linear-gradient(to bottom, #ffd953, #7fb2ff)',
+  // background: 'linear-gradient(to bottom, #ffd953, #7fb2ff)',
+  backgroundColor: globalVars.color.neutral[10],
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

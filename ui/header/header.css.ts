@@ -13,7 +13,7 @@ export const header = style({
   width: '100%',
   display: 'flex',
   justifyContent: 'center',
-  zIndex: 1,
+  zIndex: 10,
 });
 
 export const headerOnAbout = style({
