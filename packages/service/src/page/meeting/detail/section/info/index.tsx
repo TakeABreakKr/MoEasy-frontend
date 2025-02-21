@@ -1,13 +1,17 @@
+import Image from 'next/image';
+
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
 import { HeartIcon, OutIcon, ShareIcon, UserIcon } from '@moeasy/storybook/ui/icon';
 import { Tag } from '@moeasy/storybook/ui/tag';
 import { Text } from '@moeasy/storybook/ui/text';
 
+import { MeetingType } from '../../type';
+
 import * as styles from '../../meeting-detail.css';
 import { buttonWrapper } from './info.css';
 
-export function MeetingDetailInfo() {
+export function MeetingDetailInfo({ data }: { data: MeetingType }) {
   return (
     <section
       className={sprinkles({
@@ -22,7 +26,7 @@ export function MeetingDetailInfo() {
           gap: 'medium',
         })}
       >
-        <div className={styles.profileImage} />
+        <Image className={styles.profileImage} src={data.thumbnail} alt="meeting-thumbnail" width={70} height={70} />
         <div
           className={sprinkles({
             display: 'flex',
@@ -33,7 +37,7 @@ export function MeetingDetailInfo() {
           })}
         >
           <div className={sprinkles({ display: 'flex', width: '100%', justifyContent: 'space-between' })}>
-            <Text title="large">달력만들기</Text>
+            <Text title="large">{data.name}</Text>
             <div className={buttonWrapper}>
               <button>
                 <HeartIcon />
@@ -50,7 +54,7 @@ export function MeetingDetailInfo() {
             <Tag variant="dark">공예만들기</Tag>
             <Tag variant="light">
               <UserIcon width={12} height={13} />
-              172
+              {data.members.length}
             </Tag>
             <Tag variant="light">
               <HeartIcon width={14} height={13} />
@@ -60,15 +64,7 @@ export function MeetingDetailInfo() {
         </div>
       </article>
       <Text body="medium" asChild>
-        <p>
-          모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임
-          설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임
-          설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임
-          설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임
-          설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임
-          설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임
-          설명모임 설명모임 설명모임 설명모임 설명모임 설명모임 설명모임
-        </p>
+        <p>{data.explanation}</p>
       </Text>
     </section>
   );

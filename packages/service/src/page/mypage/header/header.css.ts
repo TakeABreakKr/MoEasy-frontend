@@ -1,17 +1,7 @@
 import { rem } from '@moeasy/storybook/utils/css';
 import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
-import { sectionDefaultWidth } from '../mypage.css';
 import { style } from '@vanilla-extract/css';
-
-export const tabSection = style([
-  sectionDefaultWidth,
-  {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: rem(45),
-  },
-]);
 
 export const tabList = style({
   display: 'flex',
