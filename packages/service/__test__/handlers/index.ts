@@ -1,3 +1,4 @@
 import { homeHandlers } from './home';
+import { meetingHandlers } from './meeting';
 
-export const handlers = [...homeHandlers];
+export const handlers = [...homeHandlers, ...meetingHandlers];
