@@ -14,7 +14,7 @@ type FormDataType = {
   name: string;
   description: string;
   category: string;
-  keywords: string;
+  keywords: string[];
   limit: number | '';
   limitDisabled: boolean;
   thumbnail: File | null;
@@ -32,7 +32,7 @@ export function CreatingStepForm() {
     name: '',
     description: '',
     category: '',
-    keywords: '',
+    keywords: [],
     limit: 10,
     limitDisabled: false,
     thumbnail: null,
