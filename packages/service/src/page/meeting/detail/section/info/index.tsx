@@ -2,9 +2,12 @@
 
 import { useReducer } from 'react';
 import Image from 'next/image';
+import { toast } from 'sonner';
 
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
+import { copyText } from '@/shared/utils/copy-text';
 
+import { Checkbox } from '@moeasy/storybook/ui/checkbox';
 import { HeartToggle } from '@moeasy/storybook/ui/heart';
 import { HeartIcon, ShareIcon, TrashIcon, UserIcon } from '@moeasy/storybook/ui/icon';
 import { Tag } from '@moeasy/storybook/ui/tag';
@@ -45,7 +48,14 @@ export function MeetingDetailInfo({ data }: { data: MeetingType }) {
             <Text title="large">{data.name}</Text>
             <div className={buttonWrapper}>
               <HeartToggle active={heart} onClick={toggle} />
-              <button>
+              <button
+                onClick={async () => {
+                  await copyText({ text: window.location.href });
+                  toast('URL이 복사되었습니다', {
+                    icon: <Checkbox checked />,
+                  });
+                }}
+              >
                 <ShareIcon />
               </button>
               <button>

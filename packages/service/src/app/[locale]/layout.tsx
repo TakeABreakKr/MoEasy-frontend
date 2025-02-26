@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import clsx from 'clsx';
+import { Toaster } from 'sonner';
 
 import { LoginPopup } from '@/widget/popup/login';
 
@@ -36,6 +37,7 @@ export default async function RootLayout({
         <MSWWrapper />
         <RootProvider locale={locale}>
           <LoginPopup />
+          <Toaster />
           {children}
         </RootProvider>
       </body>
