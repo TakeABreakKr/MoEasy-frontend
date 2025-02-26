@@ -1,17 +1,22 @@
-import { ComponentPropsWithRef } from 'react';
+'use client';
+
+import { ComponentPropsWithRef, useReducer } from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
 
 import { HomeUpcomingActivityDto } from '@/entities/main/api';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
-import { CalendarHomeIcon, EllipsisIcon, LocationIcon, UserIcon } from '@moeasy/storybook/ui/icon';
+import { Button } from '@moeasy/storybook/ui/button';
+import { CalendarHomeIcon, DoorIcon, EllipsisIcon, LocationIcon, UserIcon } from '@moeasy/storybook/ui/icon';
 import { Text } from '@moeasy/storybook/ui/text';
 
 import * as styles from './schedule.css';
 
 export type MainScheduleCardProps = ComponentPropsWithRef<'div'> & {
   schedule: HomeUpcomingActivityDto;
+  showDeadline?: boolean;
+  participate?: boolean;
 };
 
 const dummyMemberThumbnails = [
@@ -23,12 +28,33 @@ const dummyMemberThumbnails = [
   { role: 'common', src: 'https://placehold.co/30/png' },
 ] as const;
 
-export function MainScheduleCard({ className, schedule, ...props }: MainScheduleCardProps) {
+export function MainScheduleCard({
+  className,
+  schedule,
+  showDeadline = false,
+  participate = false,
+  ...props
+}: MainScheduleCardProps) {
+  const [isParticipate, toggleParticipate] = useReducer((e) => !e, false);
   return (
     <div className={clsx(styles.scheduleCard, className)} {...props}>
+      {showDeadline && (
+        <div className={sprinkles({ display: 'flex', gap: 'small', alignItems: 'center' })}>
+          <Text headline="medium">5/1 (목)</Text>
+          <Text title="large" className={styles.scheduleDeadLine}>
+            D-4
+          </Text>
+        </div>
+      )}
       <div>
         <div className={sprinkles({ display: 'flex', gap: 'medium', alignItems: 'stretch' })}>
-          <div className={styles.scheduleCardThumbnail} />
+          <Image
+            src="https://placehold.co/55/png"
+            alt="thumbnail"
+            width={55}
+            height={55}
+            className={styles.scheduleCardThumbnail}
+          />
           <div className={styles.scheduleTitleWrapper}>
             <div className={sprinkles({ display: 'flex', gap: 'small', alignItems: 'center' })}>
               <span className={styles.scheduleOnlineOrOffline[schedule.isOnlineYn ? 'online' : 'offline']}>
@@ -40,9 +66,27 @@ export function MainScheduleCard({ className, schedule, ...props }: MainSchedule
             </div>
             <Text body="medium">안녕하세요..!</Text>
           </div>
+          {participate && (
+            <div className={sprinkles({ display: 'flex', alignItems: 'center' })}>
+              <Button
+                variant={isParticipate ? 'light' : 'dark'}
+                size="small"
+                rounded="small"
+                onClick={toggleParticipate}
+              >
+                {isParticipate ? '취소' : '참석'}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
       <div className={clsx(styles.content, sprinkles({ gap: 'small' }))}>
+        <Text label="large" semibold className={styles.contentText}>
+          <div className={styles.iconContainer}>
+            <DoorIcon />
+          </div>
+          {schedule.description}
+        </Text>
         <Text label="large" semibold className={styles.contentText}>
           <div className={styles.iconContainer}>
             <LocationIcon />

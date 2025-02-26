@@ -23,7 +23,7 @@ export async function MeetingDetailActivityFallback() {
       </div>
       <div className={styles.activityContainer}>
         {Array.from({ length: 4 }).map((_, index) => (
-          <MainScheduleCardFallback key={index} />
+          <MainScheduleCardFallback key={index} showDeadline />
         ))}
       </div>
     </section>

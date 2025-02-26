@@ -16,7 +16,7 @@ const fetchSampleActivity = async () =>
       id: index,
       name: '새해맞이 달력만들기',
       isOnlineYn: true,
-      description: '',
+      description: '랜덤한 랜덤한 아름다운',
       location: '성남시',
       time: '2025-02-10T09:00:00Z',
       memberCount: 20,
@@ -44,7 +44,7 @@ export async function MeetingDetailActivity() {
       </div>
       <div className={styles.activityContainer}>
         {activities.map((item) => (
-          <MainScheduleCard key={item.id} schedule={item} />
+          <MainScheduleCard key={item.id} schedule={item} showDeadline participate />
         ))}
       </div>
     </section>

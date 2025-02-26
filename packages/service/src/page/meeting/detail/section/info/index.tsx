@@ -1,8 +1,12 @@
+'use client';
+
+import { useReducer } from 'react';
 import Image from 'next/image';
 
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
-import { HeartIcon, OutIcon, ShareIcon, UserIcon } from '@moeasy/storybook/ui/icon';
+import { HeartToggle } from '@moeasy/storybook/ui/heart';
+import { HeartIcon, ShareIcon, TrashIcon, UserIcon } from '@moeasy/storybook/ui/icon';
 import { Tag } from '@moeasy/storybook/ui/tag';
 import { Text } from '@moeasy/storybook/ui/text';
 
@@ -12,6 +16,7 @@ import * as styles from '../../meeting-detail.css';
 import { buttonWrapper } from './info.css';
 
 export function MeetingDetailInfo({ data }: { data: MeetingType }) {
+  const [heart, toggle] = useReducer((e) => !e, false);
   return (
     <section
       className={sprinkles({
@@ -39,14 +44,12 @@ export function MeetingDetailInfo({ data }: { data: MeetingType }) {
           <div className={sprinkles({ display: 'flex', width: '100%', justifyContent: 'space-between' })}>
             <Text title="large">{data.name}</Text>
             <div className={buttonWrapper}>
-              <button>
-                <HeartIcon />
-              </button>
+              <HeartToggle active={heart} onClick={toggle} />
               <button>
                 <ShareIcon />
               </button>
               <button>
-                <OutIcon />
+                <TrashIcon />
               </button>
             </div>
           </div>
