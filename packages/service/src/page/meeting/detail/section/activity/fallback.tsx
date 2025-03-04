@@ -1,5 +1,5 @@
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
-import { MainScheduleCardFallback } from '@/widget/card/schedule/fallback';
+import { MainActivityCardFallback } from '@/widget/card/activity/fallback';
 
 import { Button } from '@moeasy/storybook/ui/button';
 
@@ -23,7 +23,7 @@ export async function MeetingDetailActivityFallback() {
       </div>
       <div className={styles.activityContainer}>
         {Array.from({ length: 4 }).map((_, index) => (
-          <MainScheduleCardFallback key={index} showDeadline />
+          <MainActivityCardFallback key={index} showDeadline />
         ))}
       </div>
     </section>

@@ -1,5 +1,5 @@
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
-import { MainScheduleCard } from '@/widget/card/schedule';
+import { MainActivityCard } from '@/widget/card/activity';
 
 import { Button } from '@moeasy/storybook/ui/button';
 import { Text } from '@moeasy/storybook/ui/text';
@@ -44,7 +44,7 @@ export async function MeetingDetailActivity() {
       </div>
       <div className={styles.activityContainer}>
         {activities.map((item) => (
-          <MainScheduleCard key={item.id} schedule={item} showDeadline participate />
+          <MainActivityCard key={item.id} schedule={item} showDeadline participate />
         ))}
       </div>
     </section>

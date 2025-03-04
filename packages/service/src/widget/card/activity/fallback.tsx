@@ -3,9 +3,9 @@ import clsx from 'clsx';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
 import { cardDescriptionFallback, cardTitleFallback } from '../card.css';
-import * as styles from './schedule.css';
+import * as styles from './activity.css';
 
-export function MainScheduleCardFallback({ className, showDeadline }: { className?: string; showDeadline?: boolean }) {
+export function MainActivityCardFallback({ className, showDeadline }: { className?: string; showDeadline?: boolean }) {
   return (
     <div className={clsx(styles.scheduleCard, className)}>
       {showDeadline && <div className={styles.contentFallbackVariants.date} />}

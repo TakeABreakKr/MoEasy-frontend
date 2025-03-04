@@ -2,7 +2,7 @@
 
 import { forwardRef } from 'react';
 
-import { MainScheduleCard } from '@/widget/card/schedule';
+import { MainScheduleCard } from '@/widget/card/activity';
 
 import { MainActivityDto } from '../../type';
 import { withMainCartHeader } from '..';
