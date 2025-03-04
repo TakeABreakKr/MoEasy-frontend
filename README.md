@@ -6,12 +6,22 @@ MoEasy Front-End
 
 # tech stack
 
-- 서비스: next 14
+- 서비스: next 15
   - 스타일: [vanilla extract](https://vanilla-extract.style/)
-  - 테스트: 미정 (rtl vs playwright) with vitest
+  - 테스트: playwright with vitest
   - 배포: aws ec2
-- 컴포넌트: react 18.3.1
+- 컴포넌트: react 19
+
   - 테스트: storybook
   - 빌드 및 배포: github pages
+
+# execute
+
+- [pnpm](https://pnpm.io/ko/installation#npm-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)이 설치되어야함
+
+```bash
+pnpm service dev // 서비스 실행
+pnpm service storybook // 스토리북 실행
+```
 
 포트: 4000
