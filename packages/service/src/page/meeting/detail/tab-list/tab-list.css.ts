@@ -12,7 +12,12 @@ export const tabList = style({
 });
 
 export const tabItem = style({
+  display: 'block',
+  textDecoration: 'none',
   padding: rem(8, 0),
+  borderBottomWidth: 2,
+  borderBottomStyle: 'solid',
+  borderBottomColor: `transparent`,
   color: globalVars.color.neutral[30],
   ...globalVars.text.headline.small,
   fontWeight: '600',
@@ -23,5 +28,5 @@ export const tabItem = style({
 
 export const tabItemActive = style({
   color: globalVars.color.neutral[95],
-  borderBottom: `2px solid ${globalVars.color.neutral[95]}`,
+  borderBottomColor: globalVars.color.neutral[95],
 });

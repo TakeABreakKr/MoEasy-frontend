@@ -21,20 +21,10 @@ type CardWrapperProps = ComponentPropsWithRef<'div'> & {
   hoverEffect?: boolean;
 };
 
-const CardWrapper = forwardRef<HTMLDivElement, CardWrapperProps>(function (
-  { className, asChild, hoverEffect, ...props },
-  forwardedRef,
-) {
+function CardWrapper({ className, asChild, hoverEffect, ...props }: CardWrapperProps) {
   const Comp = asChild ? Slot : 'div';
-  return (
-    <Comp
-      ref={forwardedRef}
-      className={clsx(cardStyle.card, hoverEffect && cardStyle.cardHover, className)}
-      {...props}
-    />
-  );
-});
-CardWrapper.displayName = 'CardWrapper';
+  return <Comp className={clsx(cardStyle.card, hoverEffect && cardStyle.cardHover, className)} {...props} />;
+}
 
 function CardThumbnail({
   src,

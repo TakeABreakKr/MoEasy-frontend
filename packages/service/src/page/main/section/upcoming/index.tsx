@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { dateRange } from '@/shared/utils/date';
 import { pushSearchParams } from '@/shared/utils/search-param';
-import { MainScheduleCard } from '@/widget/card/schedule';
+import { MainActivityCard } from '@/widget/card/activity';
 
 import { DirectionButton } from '@moeasy/storybook/ui/button';
 
@@ -51,7 +51,7 @@ export function MainUpcommingSchedule({ title, data }: { title: string; data?: M
         ))}
       </div>
       <div className={upcomingStyles.scheduleContainer}>
-        {data?.map((schedule, index) => <MainScheduleCard schedule={schedule} key={index} />)}
+        {data?.map((schedule, index) => <MainActivityCard schedule={schedule} key={index} />)}
       </div>
       <MainUpcomingSectionPagination date={parsedCurrentDate.format('YYYY-MM-DD')} />
     </section>

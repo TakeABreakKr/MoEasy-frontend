@@ -15,6 +15,10 @@ export const scheduleCard = style({
   gap: rem(25),
 });
 
+export const scheduleDeadLine = style({
+  color: globalVars.color.red[50],
+});
+
 export const scheduleCardHeader = style({
   display: 'flex',
   alignItems: 'center',

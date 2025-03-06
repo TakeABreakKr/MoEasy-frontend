@@ -1,7 +1,7 @@
 import { MyPageFilter } from './filter';
 import { MyPageTabList } from './tab-list';
 
-import * as styles from './header.css';
+import * as styles from '../mypage.css';
 
 export function MyPageHeader() {
   return (

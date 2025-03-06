@@ -8,6 +8,7 @@ export const card = style({
   maxWidth: rem(450),
   position: 'relative',
   padding: rem(0, 15), // 2.1875rem
+  color: globalVars.color.neutral[70],
   backgroundColor: globalVars.color.neutral[3],
   borderRadius: rem(4), // 1rem
   display: 'flex',
@@ -39,7 +40,6 @@ export const thumbnailWrapper = style({
 export const thumbnail = style({
   width: rem(72),
   height: rem(72),
-  border: `${rem(3)} solid ${globalVars.color.neutral.white}`, // 3px
   borderRadius: '50%',
   overflow: 'hidden',
   backgroundColor: globalVars.color.neutral[10],

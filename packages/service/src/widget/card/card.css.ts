@@ -5,7 +5,12 @@ import { style } from '@vanilla-extract/css';
 
 export const commonCard = style({
   minWidth: rem(327),
-  height: rem(171),
+});
+
+export const titleEllipsis = style({
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
 });
 
 export const cardInfo = style({

@@ -95,7 +95,6 @@ export const buttonVariants = recipe({
         },
       },
       ghost: {
-        color: globalVars.color.blue[50],
         textDecoration: 'initial',
         backgroundColor: 'inherit',
         border: 'transparent',

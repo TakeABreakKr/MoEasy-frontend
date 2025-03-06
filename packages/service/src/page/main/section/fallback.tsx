@@ -1,6 +1,6 @@
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
+import { MainActivityCardFallback } from '@/widget/card/activity/fallback';
 import { MainCommonCardFallback } from '@/widget/card/fallback';
-import { MainScheduleCardFallback } from '@/widget/card/schedule/fallback';
 
 import { DirectionButton } from '@moeasy/storybook/ui/button';
 
@@ -19,7 +19,7 @@ export function MainCardSectionFallback({ type = 'meeting' }: { type?: keyof typ
               case 'meeting':
                 return <MainCommonCardFallback key={index} />;
               case 'activity':
-                return <MainScheduleCardFallback key={index} className={activityCard} />;
+                return <MainActivityCardFallback key={index} className={activityCard} />;
               default:
                 return null;
             }

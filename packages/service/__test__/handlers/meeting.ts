@@ -3,13 +3,16 @@ import { http, HttpResponse } from 'msw';
 import { MeetingType } from '@/entities/meeting/api';
 import { initializeMeeting } from '@/entities/meeting/api/mock';
 
-const MOCK_API_BASE = 'http://localhost:4000/mock';
-const MEETING_ENDPOINT = `${MOCK_API_BASE}/meeting/:meetingId`;
+const MOCK_API_BASE = 'http://localhost:5000';
+const MEETING_ENDPOINT = `${MOCK_API_BASE}/meeting/get`;
 
 export const meetingHandlers = [
-  http.get(MEETING_ENDPOINT, ({ params }) => {
-    if (params.meetingId) {
-      return HttpResponse.json<MeetingType>(initializeMeeting(Number(params.meetingId)));
+  http.get(MEETING_ENDPOINT, ({ request }) => {
+    const url = new URL(request.url);
+    const meetingId = url.searchParams.get('meetingId');
+    const data = initializeMeeting(Number(meetingId));
+    if (meetingId) {
+      return HttpResponse.json<MeetingType>(data);
     }
     return new HttpResponse(null, { status: 400, statusText: '잘못된 요청입니다.' });
   }),
