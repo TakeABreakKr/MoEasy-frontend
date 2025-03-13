@@ -31,6 +31,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/auth/login/url': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['AuthController_getLoginUrl'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/auth/callback': {
     parameters: {
       query?: never;
@@ -38,9 +54,9 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    get?: never;
+    get: operations['AuthController_callback'];
     put?: never;
-    post: operations['AuthController_callback'];
+    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -175,46 +191,14 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/schedule/create': {
+  '/member/search': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get?: never;
-    put?: never;
-    post: operations['ScheduleController_createSchedule'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/schedule/update': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post: operations['ScheduleController_updateSchedule'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/schedule/get': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations['ScheduleController_getSchedule'];
+    get: operations['MemberController_search'];
     put?: never;
     post?: never;
     delete?: never;
@@ -223,14 +207,14 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/schedule/get/list': {
+  '/member/get': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get: operations['ScheduleController_getScheduleList'];
+    get: operations['MemberController_getMember'];
     put?: never;
     post?: never;
     delete?: never;
@@ -239,23 +223,23 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/schedule/withdraw': {
+  '/member/withdraw': {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    get?: never;
+    get: operations['MemberController_withdraw'];
     put?: never;
-    post: operations['ScheduleController_withdraw'];
+    post?: never;
     delete?: never;
     options?: never;
     head?: never;
     patch?: never;
     trace?: never;
   };
-  '/schedule/delete': {
+  '/member/authority/update': {
     parameters: {
       query?: never;
       header?: never;
@@ -264,7 +248,167 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    post: operations['ScheduleController_delete'];
+    post: operations['MemberController_updateAuthority'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/member/delete': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MemberController_deleteMember'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/member/join': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MemberController_join'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/member/waiting/get': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['MemberController_getWaitingList'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/member/manage': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['MemberController_manageMemberJoin'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/activity/create': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ActivityController_createActivity'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/activity/update': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ActivityController_updateActivity'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/activity/get': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ActivityController_getActivity'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/activity/get/list': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['ActivityController_getActivityList'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/activity/withdraw': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ActivityController_withdraw'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/activity/delete': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['ActivityController_delete'];
     delete?: never;
     options?: never;
     head?: never;
@@ -319,26 +463,94 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/home/cache': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['HomeController_getCachedHome'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/home/header': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['HomeController_getHeader'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
-    Function: Record<string, never>;
     MeetingCreateRequest: {
       name: string;
+      /**
+       * @example 자기계발/공부
+       * @enum {string}
+       */
+      category:
+        | '반려동물'
+        | '식물/자연'
+        | '봉사활동'
+        | '환경'
+        | '게임/오락'
+        | '운동/스포츠'
+        | '아웃도어/여행'
+        | '건강'
+        | '자동차/오토바이'
+        | '스포츠 관람'
+        | '사교/친목'
+        | '음식/음료'
+        | '술'
+        | '연애/이성관계'
+        | '가족/육아'
+        | '심리/상담'
+        | '독서/인문학'
+        | '공예/만들기'
+        | '악기/음악'
+        | '인테리어/가구'
+        | '미용'
+        | '문화/공연/축제'
+        | '댄스/무용'
+        | '사진/영상'
+        | '요리'
+        | '재테크'
+        | '자기계발/공부'
+        | '커리어/직장'
+        | '외국/언어'
+        | '창업/사업';
       explanation: string;
       /** Format: binary */
       thumbnail: File;
       keywords: string[];
       limit: number;
+      publicYn: boolean;
       members: string[];
       canJoin: boolean;
     };
     MeetingUpdateRequest: {
-      meeting_id: string;
+      meetingId: string;
       name: string;
       explanation: string;
       limit: number;
+      publicYn: boolean;
       canJoin: boolean;
     };
     MeetingThumbnailUpdateRequest: {
@@ -369,6 +581,47 @@ export interface components {
     };
     MeetingListResponse: {
       meetingList: components['schemas']['MeetingListMeetingDto'][];
+    };
+    MemberSearchDto: {
+      userId: number;
+      nickname: string;
+    };
+    MemberSearchResponse: {
+      memberList: components['schemas']['MemberSearchDto'][];
+    };
+    MemberResponse: {
+      username: string;
+      explanation: string;
+      authority: string;
+    };
+    MemberAuthorityUpdateRequest: {
+      userId: number;
+      meetingId: string;
+      isManager: boolean;
+    };
+    MemberDeleteRequest: {
+      meetingId: string;
+      memberId: number;
+    };
+    MemberJoinRequest: {
+      meetingId: string;
+      joinMessage: string;
+    };
+    MemberWaitingListDto: {
+      name: string;
+      applicationMessage: string;
+    };
+    MemberWaitingListMeetingDto: {
+      name: string;
+      members: components['schemas']['MemberWaitingListDto'][];
+    };
+    MemberWaitingListResponse: {
+      meetings: components['schemas']['MemberWaitingListMeetingDto'][];
+    };
+    MemberJoinManageRequest: {
+      meetingId: string;
+      memberId: number;
+      isAccepted: boolean;
     };
     AddressDto: {
       zonecode: string;
@@ -407,8 +660,8 @@ export interface components {
       hname: string;
       query: string;
     };
-    ScheduleCreateRequest: {
-      meeting_id: string;
+    ActivityCreateRequest: {
+      meetingId: string;
       name: string;
       explanation: string;
       /** Format: date-time */
@@ -420,10 +673,11 @@ export interface components {
       onlineYn: boolean;
       address: components['schemas']['AddressDto'];
       detailAddress: string;
+      participantLimit: number;
       participants: string[];
     };
-    ScheduleUpdateRequest: {
-      meeting_id: string;
+    ActivityUpdateRequest: {
+      meetingId: string;
       name: string;
       explanation: string;
       /** Format: date-time */
@@ -435,10 +689,11 @@ export interface components {
       onlineYn: boolean;
       address: components['schemas']['AddressDto'];
       detailAddress: string;
+      participantLimit: number;
       participants: string[];
-      schedule_id: number;
+      activityId: number;
     };
-    ScheduleResponse: {
+    ActivityResponse: {
       name: string;
       explanation: string;
       /** Format: date-time */
@@ -449,7 +704,7 @@ export interface components {
       onlineYn: boolean;
       address: components['schemas']['AddressDto'];
     };
-    ScheduleListDto: {
+    ActivityListDto: {
       meetingId: string;
       name: string;
       explanation: string;
@@ -462,21 +717,21 @@ export interface components {
       announcement: string;
       detailAddress: string;
     };
-    ScheduleListMeetingListDto: {
+    ActivityListMeetingListDto: {
       name: string;
       thumbnail: string;
     };
-    ScheduleListResponse: {
-      scheduleList: components['schemas']['ScheduleListDto'][];
-      meetings: components['schemas']['ScheduleListMeetingListDto'][];
+    ActivityListResponse: {
+      activityList: components['schemas']['ActivityListDto'][];
+      meetings: components['schemas']['ActivityListMeetingListDto'][];
     };
-    ScheduleWithdrawRequest: {
-      meeting_id: string;
-      schedule_id: number;
+    ActivityWithdrawRequest: {
+      meetingId: string;
+      activityId: number;
     };
-    ScheduleDeleteRequest: {
-      meeting_id: string;
-      schedule_id: number;
+    ActivityDeleteRequest: {
+      meetingId: string;
+      activityId: number;
     };
     NotificationResponse: {
       notificationList: string[];
@@ -484,58 +739,342 @@ export interface components {
     NotificationCheckRequest: {
       notificationIdList: string[];
     };
-    HomeCategoryDto: {
-      name: string;
-      order: number;
-    };
-    HomeCategoryGroupDto: {
-      name: string;
-      homeCategoryList: components['schemas']['HomeCategoryDto'][];
-    };
-    HomePopularMeetingDto: {
-      name: string;
-      description: string;
-      memberCount: number;
-      isLikedYn: boolean;
-    };
     HomeNewMeetingDto: {
+      id: string;
       name: string;
-      description: string;
+      explanation: string;
       memberCount: number;
+      thumbnail: string;
       isLikedYn: boolean;
+    };
+    ActivityParticipantDto: {
+      thumbnail: string;
+      /**
+       * @example OWNER
+       * @enum {string}
+       */
+      authority: 'WAITING' | 'MEMBER' | 'MANAGER' | 'OWNER';
     };
     HomeClosingTimeActivityDto: {
-      name: string;
+      id: number;
+      activityName: string;
       isOnlineYn: boolean;
-      description: string;
-      location: string;
+      meetingName: string;
+      thumbnail: string;
+      /**
+       * @example 서초구
+       * @enum {string}
+       */
+      region:
+        | '강서구'
+        | '양천구'
+        | '영등포구'
+        | '용산구'
+        | '은평구'
+        | '종로구'
+        | '중구'
+        | '중랑구'
+        | '동대문구'
+        | '동작구'
+        | '마포구'
+        | '서초구'
+        | '서대문구'
+        | '성동구'
+        | '성북구'
+        | '송파구'
+        | '강남구'
+        | '강동구'
+        | '강북구'
+        | '관악구'
+        | '광진구'
+        | '구로구'
+        | '금천구'
+        | '노원구'
+        | '도봉구'
+        | '수원시'
+        | '성남시'
+        | '고양시'
+        | '용인시'
+        | '부천시'
+        | '안산시'
+        | '안양시'
+        | '남양주시'
+        | '화성시'
+        | '평택시'
+        | '의정부시'
+        | '시흥시'
+        | '파주시'
+        | '김포시'
+        | '광명시'
+        | '광주시'
+        | '구리시'
+        | '오산시'
+        | '군포시'
+        | '의왕시'
+        | '하남시'
+        | '양주시'
+        | '동두천시'
+        | '안성시'
+        | '여주시'
+        | '이천시'
+        | '포천시'
+        | '가평군'
+        | '양평군'
+        | '연천군'
+        | '부산'
+        | '경남'
+        | '인천'
+        | '경북'
+        | '대구'
+        | '충남'
+        | '전남'
+        | '전북'
+        | '충북'
+        | '강원'
+        | '대전'
+        | '광주'
+        | '울산'
+        | '제주'
+        | '세종';
       /** Format: date-time */
       time: string;
-      memberCount: number;
-      isLiked: boolean;
+      participantCount: number;
+      participantLimit: number;
+      participants: components['schemas']['ActivityParticipantDto'][];
     };
     HomeUpcomingActivityDto: {
-      name: string;
+      id: number;
+      activityName: string;
+      thumbnail: string;
       isOnlineYn: boolean;
-      description: string;
-      location: string;
+      meetingName: string;
+      /**
+       * @example 서초구
+       * @enum {string}
+       */
+      region:
+        | '강서구'
+        | '양천구'
+        | '영등포구'
+        | '용산구'
+        | '은평구'
+        | '종로구'
+        | '중구'
+        | '중랑구'
+        | '동대문구'
+        | '동작구'
+        | '마포구'
+        | '서초구'
+        | '서대문구'
+        | '성동구'
+        | '성북구'
+        | '송파구'
+        | '강남구'
+        | '강동구'
+        | '강북구'
+        | '관악구'
+        | '광진구'
+        | '구로구'
+        | '금천구'
+        | '노원구'
+        | '도봉구'
+        | '수원시'
+        | '성남시'
+        | '고양시'
+        | '용인시'
+        | '부천시'
+        | '안산시'
+        | '안양시'
+        | '남양주시'
+        | '화성시'
+        | '평택시'
+        | '의정부시'
+        | '시흥시'
+        | '파주시'
+        | '김포시'
+        | '광명시'
+        | '광주시'
+        | '구리시'
+        | '오산시'
+        | '군포시'
+        | '의왕시'
+        | '하남시'
+        | '양주시'
+        | '동두천시'
+        | '안성시'
+        | '여주시'
+        | '이천시'
+        | '포천시'
+        | '가평군'
+        | '양평군'
+        | '연천군'
+        | '부산'
+        | '경남'
+        | '인천'
+        | '경북'
+        | '대구'
+        | '충남'
+        | '전남'
+        | '전북'
+        | '충북'
+        | '강원'
+        | '대전'
+        | '광주'
+        | '울산'
+        | '제주'
+        | '세종';
       /** Format: date-time */
       time: string;
-      memberCount: number;
-      isLiked: boolean;
+      participantCount: number;
+      participantLimit: number;
+      participants: components['schemas']['ActivityParticipantDto'][];
     };
-    HomeMostActivatedRegionDto: {
+    HomePopularMeetingDto: {
+      id: string;
       name: string;
-      activityCount: number;
-      order: number;
+      thumbnail: string;
+      explanation: string;
+      memberCount: number;
+      isLikedYn: boolean;
     };
     HomeResponse: {
-      categories: components['schemas']['HomeCategoryGroupDto'][];
-      popularMeetings: components['schemas']['HomePopularMeetingDto'][];
       newMeetings: components['schemas']['HomeNewMeetingDto'][];
       closingTimeActivities: components['schemas']['HomeClosingTimeActivityDto'][];
       upcomingActivities: components['schemas']['HomeUpcomingActivityDto'][];
+      popularMeetings: components['schemas']['HomePopularMeetingDto'][];
+    };
+    HomeCategoryDto: {
+      /**
+       * @example 커리어/직장
+       * @enum {string}
+       */
+      name:
+        | '반려동물'
+        | '식물/자연'
+        | '봉사활동'
+        | '환경'
+        | '게임/오락'
+        | '운동/스포츠'
+        | '아웃도어/여행'
+        | '건강'
+        | '자동차/오토바이'
+        | '스포츠 관람'
+        | '사교/친목'
+        | '음식/음료'
+        | '술'
+        | '연애/이성관계'
+        | '가족/육아'
+        | '심리/상담'
+        | '독서/인문학'
+        | '공예/만들기'
+        | '악기/음악'
+        | '인테리어/가구'
+        | '미용'
+        | '문화/공연/축제'
+        | '댄스/무용'
+        | '사진/영상'
+        | '요리'
+        | '재테크'
+        | '자기계발/공부'
+        | '커리어/직장'
+        | '외국/언어'
+        | '창업/사업';
+      order: number;
+    };
+    HomeCategoryGroupDto: {
+      /**
+       * @example 액티비티
+       * @enum {string}
+       */
+      name: '동물/자연' | '액티비티' | '소셜/커뮤니티' | '문화/취미' | '커리어/학습';
+      homeCategoryList: components['schemas']['HomeCategoryDto'][];
+    };
+    HomeMostActivatedRegionDto: {
+      /**
+       * @example 서초구
+       * @enum {string}
+       */
+      name:
+        | '강서구'
+        | '양천구'
+        | '영등포구'
+        | '용산구'
+        | '은평구'
+        | '종로구'
+        | '중구'
+        | '중랑구'
+        | '동대문구'
+        | '동작구'
+        | '마포구'
+        | '서초구'
+        | '서대문구'
+        | '성동구'
+        | '성북구'
+        | '송파구'
+        | '강남구'
+        | '강동구'
+        | '강북구'
+        | '관악구'
+        | '광진구'
+        | '구로구'
+        | '금천구'
+        | '노원구'
+        | '도봉구'
+        | '수원시'
+        | '성남시'
+        | '고양시'
+        | '용인시'
+        | '부천시'
+        | '안산시'
+        | '안양시'
+        | '남양주시'
+        | '화성시'
+        | '평택시'
+        | '의정부시'
+        | '시흥시'
+        | '파주시'
+        | '김포시'
+        | '광명시'
+        | '광주시'
+        | '구리시'
+        | '오산시'
+        | '군포시'
+        | '의왕시'
+        | '하남시'
+        | '양주시'
+        | '동두천시'
+        | '안성시'
+        | '여주시'
+        | '이천시'
+        | '포천시'
+        | '가평군'
+        | '양평군'
+        | '연천군'
+        | '부산'
+        | '경남'
+        | '인천'
+        | '경북'
+        | '대구'
+        | '충남'
+        | '전남'
+        | '전북'
+        | '충북'
+        | '강원'
+        | '대전'
+        | '광주'
+        | '울산'
+        | '제주'
+        | '세종';
+      activityCount: number;
+      order: number;
+    };
+    HomeCachedResponse: {
+      categories: components['schemas']['HomeCategoryGroupDto'][];
       mostActivatedRegions: components['schemas']['HomeMostActivatedRegionDto'][];
+    };
+    HeaderResponse: {
+      id: number;
+      thumbnail: string;
     };
   };
   responses: never;
@@ -580,20 +1119,35 @@ export interface operations {
       };
     };
   };
-  AuthController_callback: {
+  AuthController_getLoginUrl: {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['Function'];
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
       };
     };
+  };
+  AuthController_callback: {
+    parameters: {
+      query: {
+        code: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
     responses: {
-      201: {
+      200: {
         headers: {
           [name: string]: unknown;
         };
@@ -842,77 +1396,10 @@ export interface operations {
       };
     };
   };
-  ScheduleController_createSchedule: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** @description info for creating a new schedule. */
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ScheduleCreateRequest'];
-      };
-    };
-    responses: {
-      /** @description Schedule Entity has been created. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description 존재하지 않는 요청자입니다. */
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  ScheduleController_updateSchedule: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** @description data to modify schedule. */
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ScheduleUpdateRequest'];
-      };
-    };
-    responses: {
-      /** @description Schedule has been updated. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description 해당 일정을 찾을 수 없습니다. */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description 존재하지 않는 요청자입니다. */
-      401: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  ScheduleController_getSchedule: {
+  MemberController_search: {
     parameters: {
       query: {
-        scheduleId: number;
+        keyword: string;
       };
       header?: never;
       path?: never;
@@ -920,13 +1407,322 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description schedule entity retrieved successfully */
+      /** @description withdraw succeed */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['ScheduleResponse'];
+          'application/json': components['schemas']['MemberSearchResponse'];
+        };
+      };
+    };
+  };
+  MemberController_getMember: {
+    parameters: {
+      query: {
+        meetingId: string;
+        userId: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Member retrieved successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['MemberResponse'];
+        };
+      };
+      /** @description 해당 멤버를 찾을 수 없습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MemberController_withdraw: {
+    parameters: {
+      query: {
+        meetingId: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description withdraw succeed */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 해당 모임을 찾을 수 없습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MemberController_updateAuthority: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description data to update member authority */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MemberAuthorityUpdateRequest'];
+      };
+    };
+    responses: {
+      /** @description authority updated succeed */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MemberController_deleteMember: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description info for deleting a member */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MemberDeleteRequest'];
+      };
+    };
+    responses: {
+      /** @description member deleted successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MemberController_join: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description data required to become a meeting member. */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MemberJoinRequest'];
+      };
+    };
+    responses: {
+      /** @description The join request has been successfully submitted and is awaiting approval. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 해당 모임을 찾을 수 없습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MemberController_getWaitingList: {
+    parameters: {
+      query: {
+        meetingId: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description waiting list retrieved successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['MemberWaitingListResponse'];
+        };
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  MemberController_manageMemberJoin: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description data required for member approval */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['MemberJoinManageRequest'];
+      };
+    };
+    responses: {
+      /** @description member join approved successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  ActivityController_createActivity: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description info for creating a new activity. */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ActivityCreateRequest'];
+      };
+    };
+    responses: {
+      /** @description Activity Entity has been created. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  ActivityController_updateActivity: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** @description data to modify activity. */
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ActivityUpdateRequest'];
+      };
+    };
+    responses: {
+      /** @description Activity has been updated. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 해당 일정을 찾을 수 없습니다. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description 존재하지 않는 요청자입니다. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  ActivityController_getActivity: {
+    parameters: {
+      query: {
+        activityId: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description activity entity retrieved successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ActivityResponse'];
         };
       };
       /** @description 해당 일정을 찾을 수 없습니다. */
@@ -945,12 +1741,12 @@ export interface operations {
       };
     };
   };
-  ScheduleController_getScheduleList: {
+  ActivityController_getActivityList: {
     parameters: {
       query: {
-        /** @description schedule status: in_progress, upcoming, completed. */
+        /** @description activity status: in_progress, upcoming, completed. */
         status: string[];
-        /** @description Option to sort scheduleList (LATEST for latest registered, NAME for alphabetical). */
+        /** @description Option to sort activityList (LATEST for latest registered, NAME for alphabetical). */
         options: 'LATEST' | 'NAME' | 'OLDEST';
         meetingId?: string;
       };
@@ -960,13 +1756,13 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description Schedule list retrieved */
+      /** @description Activity list retrieved */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['ScheduleListResponse'];
+          'application/json': components['schemas']['ActivityListResponse'];
         };
       };
       /** @description 해당 일정을 찾을 수 없습니다. */
@@ -985,17 +1781,17 @@ export interface operations {
       };
     };
   };
-  ScheduleController_withdraw: {
+  ActivityController_withdraw: {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    /** @description data to withdraw schedule. */
+    /** @description data to withdraw activity. */
     requestBody: {
       content: {
-        'application/json': components['schemas']['ScheduleWithdrawRequest'];
+        'application/json': components['schemas']['ActivityWithdrawRequest'];
       };
     };
     responses: {
@@ -1022,21 +1818,21 @@ export interface operations {
       };
     };
   };
-  ScheduleController_delete: {
+  ActivityController_delete: {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    /** @description data to delete schedule */
+    /** @description data to delete activity */
     requestBody: {
       content: {
-        'application/json': components['schemas']['ScheduleDeleteRequest'];
+        'application/json': components['schemas']['ActivityDeleteRequest'];
       };
     };
     responses: {
-      /** @description schedule deleted successfully */
+      /** @description activity deleted successfully */
       200: {
         headers: {
           [name: string]: unknown;
@@ -1138,6 +1934,46 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['HomeResponse'];
+        };
+      };
+    };
+  };
+  HomeController_getCachedHome: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description get home data successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['HomeCachedResponse'];
+        };
+      };
+    };
+  };
+  HomeController_getHeader: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description get header data successfully */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['HeaderResponse'];
         };
       };
     };
