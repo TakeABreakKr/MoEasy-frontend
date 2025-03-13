@@ -99,6 +99,13 @@ export const rightButton = style({
   },
 });
 
+export const UserThumbnail = style({
+  borderRadius: '50%',
+  width: rem(34), // 34px
+  height: rem(34), // 34px
+  overflow: 'hidden',
+});
+
 export const rightIcon = style([
   rightButton,
   {
