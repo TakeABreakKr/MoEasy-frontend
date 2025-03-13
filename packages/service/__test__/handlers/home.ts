@@ -133,4 +133,14 @@ export const homeHandlers = [
       ],
     });
   }),
+  http.get(`http://localhost:5000/home/header`, ({ request }) => {
+    const accessToken = request.headers.get('access-token');
+    if (!accessToken) {
+      return new HttpResponse(null, { status: 401, statusText: 'Unauthorized' });
+    }
+    return HttpResponse.json<components['schemas']['HeaderResponse']>({
+      id: 12345,
+      thumbnail: 'https://placehold.co/30/png',
+    });
+  }),
 ];
