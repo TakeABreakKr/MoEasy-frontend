@@ -1,8 +1,10 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
+import { components } from '@/shared/api/my-schema';
 import { CategoryItemType, categoryList } from '@/shared/consts/category';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { pushSearchParams } from '@/shared/utils/search-param';
@@ -15,7 +17,13 @@ import { isValidGroupName } from './utils';
 import * as styles from '../section.css';
 import * as categoryStyles from './category.css';
 
-export function MainCategorySection({ title }: { title: string }) {
+export function MainCategorySection({
+  title,
+  categories,
+}: {
+  title: string;
+  categories?: components['schemas']['HomeCategoryGroupDto'][];
+}) {
   return (
     <section className={styles.section}>
       <Text asChild title="large">
@@ -23,7 +31,7 @@ export function MainCategorySection({ title }: { title: string }) {
       </Text>
       <div className={sprinkles({ display: 'flex', flexDirection: 'column', gap: 'large', width: '100%' })}>
         <MainCategorySectionTab />
-        <MainCategorySectionContent />
+        <MainCategorySectionContent categories={categories} />
       </div>
     </section>
   );
@@ -32,9 +40,16 @@ export function MainCategorySection({ title }: { title: string }) {
 function MainCategorySectionTab() {
   const searchParams = useSearchParams();
   const group = searchParams.get('group');
-  const validatedGroup = isValidGroupName(group) ? group : '전체';
+  const validatedGroup = isValidGroupName(group) ? group : '';
   return (
     <div className={sprinkles({ display: 'flex', gap: 'medium' })}>
+      <button
+        className={clsx(categoryStyles.categoryButton, !validatedGroup && categoryStyles.activeCategory)}
+        key="ALL"
+        onClick={() => pushSearchParams({ group: null, page: null })}
+      >
+        <Text semibold={!validatedGroup}>전체</Text>
+      </button>
       {categoryList.map(({ title }) => (
         <button
           className={clsx(categoryStyles.categoryButton, validatedGroup === title && categoryStyles.activeCategory)}
@@ -48,22 +63,39 @@ function MainCategorySectionTab() {
   );
 }
 
-function MainCategorySectionContent() {
+function MainCategorySectionContent({ categories }: { categories?: components['schemas']['HomeCategoryGroupDto'][] }) {
   const searchParams = useSearchParams();
   const group = searchParams.get('group');
   const validatedGroup = isValidGroupName(group) ? group : '전체';
   const currentPage = searchParams.get('page') || '1';
   const validCurrentPage = isNaN(Number(currentPage)) ? 1 : Number(currentPage);
-  const selectedCategory =
-    validatedGroup === '전체'
-      ? categoryList.reduce<CategoryItemType[]>((acc, { category }) => [...acc, ...category], [])
-      : categoryList.find((item) => item.title === validatedGroup)?.category || [];
-  const showingCategories = selectedCategory.slice((validCurrentPage - 1) * 10, validCurrentPage * 10);
+  const [selectedCategoryGroup, sortedCategories] = useMemo(() => {
+    const selectedCategoryGroup =
+      validatedGroup === '전체'
+        ? categoryList.reduce<CategoryItemType[]>((acc, { category }) => [...acc, ...category], [])
+        : categoryList.find((item) => item.title === validatedGroup)?.category || [];
+
+    const showingCategories = selectedCategoryGroup.slice((validCurrentPage - 1) * 10, validCurrentPage * 10);
+
+    const orderOfCategoriesOfSelectedGroup = categories?.find(
+      (category) => category.name === validatedGroup,
+    )?.homeCategoryList;
+
+    const sortedCategories = orderOfCategoriesOfSelectedGroup
+      ? showingCategories.sort((prev, next) => {
+          const prevOrder = orderOfCategoriesOfSelectedGroup.find((category) => category.name === prev.key)?.order || 0;
+          const nextOrder = orderOfCategoriesOfSelectedGroup.find((category) => category.name === next.key)?.order || 0;
+          return prevOrder - nextOrder;
+        })
+      : showingCategories;
+
+    return [selectedCategoryGroup, sortedCategories] as const;
+  }, [validatedGroup, categories, validCurrentPage]);
 
   return (
     <>
       <div className={categoryStyles.content}>
-        {showingCategories?.map(({ key, Icon }) => (
+        {sortedCategories.map(({ key, Icon }) => (
           <button
             key={key}
             className={sprinkles({ display: 'flex', flexDirection: 'column', gap: 'small', alignItems: 'center' })}
@@ -78,7 +110,7 @@ function MainCategorySectionContent() {
       </div>
       <MainCategorySectionContentPage
         currentPage={validCurrentPage}
-        categoryLength={selectedCategory.length}
+        categoryLength={selectedCategoryGroup.length}
         group={validatedGroup}
       />
     </>

@@ -21,7 +21,7 @@ export const MainCardActivitySectionContentBase = forwardRef<
   return (
     <div className={styles.cardContainer}>
       <div className={styles.cardWrapper.activity} ref={ref}>
-        {data?.map((activity, index) => <MainActivityCard key={index} className={activityCard} schedule={activity} />)}
+        {data?.map((activity, index) => <MainActivityCard key={index} className={activityCard} activity={activity} />)}
       </div>
       <div className={styles.overlayNoPointer} />
     </div>

@@ -1,12 +1,27 @@
 import { MainCommonCard } from '@/widget/card/common';
 
 import * as styles from './list.css';
+import { useMemo } from 'react';
+import { initializeMeetingList } from '@/entities/meeting/api/mock';
+import { components } from '@/shared/api/my-schema';
 
 export function MyPageMeetingList() {
+  const meetingList = useMemo<components['schemas']['HomePopularMeetingDto'][]>(
+    () =>
+      initializeMeetingList().map((meeting) => ({
+        id: meeting.meetingId,
+        name: meeting.name,
+        thumbnail: meeting.thumbnail,
+        explanation: meeting.explanation,
+        isLikedYn: false,
+        memberCount: meeting.limit,
+      })),
+    [],
+  );
   return (
     <section className={styles.meetingList}>
-      {Array.from({ length: 10 }, (_, index) => (
-        <MainCommonCard key={index} idx={index + 1} title="의미역 1" description="의미역 1 description" count={10} />
+      {meetingList.map((meeting) => (
+        <MainCommonCard key={meeting.id} meeting={meeting} />
       ))}
     </section>
   );

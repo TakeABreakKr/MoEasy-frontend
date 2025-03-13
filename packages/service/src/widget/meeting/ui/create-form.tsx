@@ -93,12 +93,14 @@ function CreateForm() {
               limit={({ history, context }) => (
                 <C인원제한입력
                   payload={{
-                    name: '',
-                    explanation: '',
-                    keywords: [],
-                    members: [],
+                    name: context.name,
+                    explanation: context.explanation || '',
+                    keywords: context.keywords || [],
+                    members: context.members || [],
                     thumbnail: file!,
-                    limit: 10,
+                    limit: context.limit,
+                    category: context.category || '게임/오락',
+                    publicYn: context.publicYn || false,
                   }}
                   onPrevStep={() => history.back()}
                 />

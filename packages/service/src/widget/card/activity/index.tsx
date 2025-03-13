@@ -6,6 +6,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { overlay } from 'overlay-kit';
 
+import { isAdminAutority } from '@/entities';
 import { HomeUpcomingActivityDto } from '@/entities/main/api';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
@@ -20,28 +21,20 @@ import { ActivityWithdrawPopup } from './popup/withdraw';
 import * as styles from './activity.css';
 
 export type MainActivityCardProps = ComponentPropsWithRef<'div'> & {
-  schedule: HomeUpcomingActivityDto;
+  activity: HomeUpcomingActivityDto;
   showDeadline?: boolean;
   participate?: boolean;
 };
 
-const dummyMemberThumbnails = [
-  { role: 'owner', src: 'https://placehold.co/30/png' },
-  { role: 'manager', src: 'https://placehold.co/30/png' },
-  { role: 'common', src: 'https://placehold.co/30/png' },
-  { role: 'common', src: 'https://placehold.co/30/png' },
-  { role: 'common', src: 'https://placehold.co/30/png' },
-  { role: 'common', src: 'https://placehold.co/30/png' },
-] as const;
-
 export function MainActivityCard({
   className,
-  schedule,
+  activity,
   showDeadline = false,
   participate = false,
   ...props
 }: MainActivityCardProps) {
   const [isParticipate, toggleParticipate] = useReducer((e) => !e, false);
+  const showingParticipants = activity.participants.slice(0, 6);
   return (
     <div className={clsx(styles.scheduleCard, className)} {...props}>
       {showDeadline && (
@@ -79,11 +72,11 @@ export function MainActivityCard({
           />
           <div className={styles.scheduleTitleWrapper}>
             <div className={sprinkles({ display: 'flex', gap: 'small', alignItems: 'center' })}>
-              <span className={styles.scheduleOnlineOrOffline[schedule.isOnlineYn ? 'online' : 'offline']}>
-                {schedule.isOnlineYn ? '온라인' : '오프라인'}
+              <span className={styles.scheduleOnlineOrOffline[activity.isOnlineYn ? 'online' : 'offline']}>
+                {activity.isOnlineYn ? '온라인' : '오프라인'}
               </span>
               <Text asChild ellipsis title="large">
-                <h2>{schedule.name}</h2>
+                <h2>{activity.meetingName}</h2>
               </Text>
             </div>
             <Text body="medium">안녕하세요..!</Text>
@@ -107,40 +100,40 @@ export function MainActivityCard({
           <div className={styles.iconContainer}>
             <DoorIcon />
           </div>
-          {schedule.description}
+          {activity.meetingName}
         </Text>
         <Text label="large" semibold className={styles.contentText}>
           <div className={styles.iconContainer}>
             <LocationIcon />
           </div>
-          {schedule.location}
+          {activity.region}
         </Text>
         <Text label="large" semibold className={styles.contentText}>
           <div className={styles.iconContainer}>
             <CalendarHomeIcon />
           </div>
-          {schedule.time}
+          {activity.time}
         </Text>
         <Text label="large" semibold className={styles.contentText}>
           <div className={styles.iconContainer}>
             <UserIcon />
           </div>
           <span className={sprinkles({ display: 'flex', alignItems: 'center', gap: 'small' })}>
-            <div className={styles.memberIconContainer}>
-              {dummyMemberThumbnails.map((thumbnail, idx) => (
+            <div className={styles.memberIconContainer} style={{ width: showingParticipants.length * 16 }}>
+              {showingParticipants.map((participant, idx) => (
                 <div
                   key={idx}
                   className={clsx(
-                    styles.memberIconByRole[thumbnail.role],
+                    styles.memberIconByRole[isAdminAutority(participant.authority) ? participant.authority : 'MEMBER'],
                     styles.memberIconDepth[(idx + 1) as 1 | 2 | 3 | 4 | 5 | 6],
                   )}
                 >
-                  <Image src={thumbnail.src} width={30} height={30} alt={thumbnail.role} />
+                  <Image src={participant.thumbnail} width={30} height={30} alt={participant.authority} />
                 </div>
               ))}
             </div>
             <EllipsisIcon width={12} />
-            {schedule.memberCount}/20명
+            {activity.participantCount}/{activity.participantLimit}명
           </span>
         </Text>
       </div>

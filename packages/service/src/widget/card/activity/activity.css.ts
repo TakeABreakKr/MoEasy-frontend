@@ -108,7 +108,7 @@ export const iconContainer = style({
 
 export const memberIconContainer = style({
   position: 'relative',
-  width: rem(100),
+  // width: rem(100),
   height: rem(20),
   display: 'flex',
   alignItems: 'center',
@@ -130,9 +130,9 @@ const memberIcon = style({
 });
 
 export const memberIconByRole = styleVariants({
-  owner: [memberIcon, { borderColor: globalVars.color.yellow[60] }],
-  manager: [memberIcon, { borderColor: globalVars.color.blue[20] }],
-  common: [memberIcon, { borderColor: globalVars.color.neutral[5] }],
+  OWNER: [memberIcon, { borderColor: globalVars.color.yellow[60] }],
+  MANAGER: [memberIcon, { borderColor: globalVars.color.blue[20] }],
+  MEMBER: [memberIcon, { borderColor: globalVars.color.neutral[5] }],
 });
 
 export const memberIconDepth = styleVariants({
