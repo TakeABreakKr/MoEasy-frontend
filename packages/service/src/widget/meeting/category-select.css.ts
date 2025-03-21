@@ -47,9 +47,6 @@ export const categoryItem = style({
   borderRadius: rem(12),
   cursor: 'pointer',
   transition: 'background-color 0.2s ease-in-out, color 0.2s ease-in-out',
-  ':hover': {
-    backgroundColor: globalVars.color.neutral[10],
-  },
 });
 
 export const categoryIcon = style({
@@ -66,7 +63,6 @@ export const categoryGroupContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: rem(16),
-
   ...globalVars.text.body.small,
 });
 
@@ -87,10 +83,30 @@ export const categoryTabs = style({
   gap: rem(6),
   padding: rem(5, 10),
   color: globalVars.color.neutral[30],
+  ...globalVars.text.label.medium.semibold,
   cursor: 'pointer',
+  ':hover': {
+    color: globalVars.color.neutral[60],
+  },
 });
 export const activeCategoryTab = style({
   color: globalVars.color.neutral[95],
   backgroundColor: globalVars.color.blue[10],
   borderRadius: '30px',
+});
+
+export const selectedCategoryIcon = style({
+  marginRight: rem(0.5),
+  display: 'inline-flex',
+  alignItems: 'center',
+  color: globalVars.color.neutral[95],
+  ...globalVars.text.body.small,
+});
+
+export const selectedIcon = style({
+  width: rem(20),
+  height: rem(20),
+  backgroundColor: '#212535',
+  borderRadius: '50%',
+  padding: rem(1.5),
 });

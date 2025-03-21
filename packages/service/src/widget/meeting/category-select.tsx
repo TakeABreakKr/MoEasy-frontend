@@ -15,7 +15,6 @@ type CategorySelectProps = {
   onValueChange: (category: string) => void;
 };
 
-//TODO: 선택한 카테고리가 아이콘 + 텍스트 형태로 필드에 반영되도록 수정
 export function CategorySelect({ selectedCategory, onValueChange }: CategorySelectProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,9 +23,24 @@ export function CategorySelect({ selectedCategory, onValueChange }: CategorySele
     setIsOpen(false);
   };
 
+  const selectedCategoryIcon = (key: string) => {
+    for (const category of categoryList) {
+      const categoryIcon = category.category.find((item) => item.key === key);
+      if (categoryIcon) return categoryIcon.Icon;
+    }
+    return null;
+  };
+
+  const CategoryIcon = selectedCategoryIcon(selectedCategory);
+
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger className={clsx(styles.triggerButton)}>
+        {CategoryIcon && (
+          <span className={clsx(styles.selectedCategoryIcon)}>
+            <CategoryIcon className={clsx(styles.selectedIcon)} />
+          </span>
+        )}
         {selectedCategory || '모임의 성격을 가장 잘 나타내는 카테고리를 선택해주세요'}
         <ChevronDown height={6} aria-hidden />
       </PopoverTrigger>

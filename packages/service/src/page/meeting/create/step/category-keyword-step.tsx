@@ -15,8 +15,8 @@ export function CategoryKeywordStep({ formData, dispatch }: StepProps) {
     setInputValue(inputValue);
   };
 
-  //TODO: 키워드 입력 오류시 처리 (중복, 10개 초과 등) 확인 필요
-  // TODO: 키워드 몇 개까지 입력 가능한지 확인 필요
+  //TODO: 키워드 입력 오류시 처리 필요
+  // 키워드 10자 이상 등록 시 오류, 텍스트 10자 이상 입력 시 오류
   const handleAddKeyword = () => {
     if (!inputValue.trim()) return;
     if (formData.keywords.includes(inputValue.trim())) return;
