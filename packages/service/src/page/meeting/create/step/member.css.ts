@@ -23,23 +23,26 @@ export const memberList = style({
 });
 
 export const memberItem = style({
-  display: 'inline-flex',
+  display: 'flex',
   alignItems: 'center',
-  backgroundColor: globalVars.color.neutral[10],
-  padding: rem(6, 12),
-  borderRadius: rem(8),
   gap: rem(4),
+  padding: rem(2, 4, 2, 7),
+  border: `1px solid ${globalVars.color.neutral[20]}`,
+  color: globalVars.color.neutral[70],
+  borderRadius: rem(20),
+  ...globalVars.text.label.small.regular,
 });
 
 export const removeButton = style({
-  background: 'none',
-  border: 'none',
-  color: globalVars.color.neutral[60],
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: rem(12),
+  height: rem(12),
+  borderRadius: rem(50),
+  backgroundColor: globalVars.color.neutral[70],
+  color: globalVars.color.neutral.white,
   cursor: 'pointer',
-  fontSize: rem(12),
-  ':hover': {
-    color: globalVars.color.red[60],
-  },
 });
 
 export const modalBackdrop = style({

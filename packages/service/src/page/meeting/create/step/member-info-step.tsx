@@ -3,9 +3,10 @@ import { Input } from '@moeasy/storybook/ui/input';
 import { Button } from '@moeasy/storybook/ui/button';
 import { StepProps } from '../creating-step-form';
 import { SearchIcon } from '@moeasy/storybook/ui/icon';
-import { List, ListContent, ListFooter } from '@moeasy/storybook/ui/list';
-import * as styles from './member.css';
+import { Modal, ModalContent, ModalOverlay } from '@moeasy/storybook/ui/dialog';
+import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
+import * as styles from './member.css';
 
 type MemberStepProps = StepProps & {
   toggleLimitDisabled: () => void;
@@ -14,17 +15,21 @@ type MemberStepProps = StepProps & {
 export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: MemberStepProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+  const [selectedList, setSelectedList] = useState<string[]>([]);
 
-  const handleSelectMember = (selectedList: any[]) => {
-    const newMembers = selectedList.map((member) => member.name);
-    setSelectedMembers((prev) => [...new Set([...prev, ...newMembers])]);
-    setIsModalOpen(false);
+  const handleSelectMember = (member: string) => {
+    setSelectedList((prev) => [...new Set([...prev, member])]);
   };
 
   const handleRemoveMember = (member: string) => {
     setSelectedMembers((prev) => prev.filter((m) => m !== member));
   };
 
+  const handleConfirmSelection = () => {
+    setSelectedMembers((prev) => [...new Set([...prev, ...selectedList])]);
+    setIsModalOpen(false);
+  };
+  // TODO: 선택된 멤버 처리 어떻게 할지... 현재는 setSelectedList를 초기화 하지 않음으로써 모달을 다시 열어도 이미 선택된 멤버가 보임 하지만 삭제 시에 반영이 안 됨
   return (
     <div className={formStyles.formGroup}>
       <label className={formStyles.label}>
@@ -53,7 +58,7 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
         <span>모임원 추가</span>
         <div className={formStyles.input}>
           <button type="button" onClick={() => setIsModalOpen(true)} className={styles.searchButton}>
-            {selectedMembers.length > 0 ? selectedMembers.join(', ') : '모임원을 선택해주세요'}
+            {'모임원을 선택해주세요'}
             <SearchIcon />
           </button>
         </div>
@@ -69,25 +74,34 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
         ))}
       </div>
       {isModalOpen && (
-        <div className={styles.modalBackdrop} onClick={() => setIsModalOpen(false)}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <h3 className={styles.modalTitle}>모임원 선택</h3>
-            <List
-              list={[
-                { avatar: 'https://placehold.co/30', id: '0', name: 'Alex' },
-                { avatar: 'https://placehold.co/30', id: '1', name: 'Bob' },
-                { avatar: 'https://placehold.co/30', id: '2', name: 'Charlie' },
-                { avatar: 'https://placehold.co/30', id: '3', name: 'David' },
-                { avatar: 'https://placehold.co/30', id: '4', name: 'Eve' },
-              ]}
-              close={handleSelectMember}
-            >
-              <ListContent />
-              <ListFooter>선택 완료</ListFooter>
-            </List>
-            {/* FIXME: 선택 완료 클릭 시 submit 기본 동작 방지 수정 < ListFooter ui 컴포넌트를 수정? */}
-          </div>
-        </div>
+        <Modal open={isModalOpen} onOpenChange={setIsModalOpen}>
+          <ModalOverlay className={modalStyles.overlay} onClick={() => setIsModalOpen(false)} />
+          <ModalContent
+            className={modalStyles.container({ size: 'medium', padding: 'small' })}
+            style={{ zIndex: 100, position: 'fixed' }}
+          >
+            <h3 className={modalStyles.popupTitle}>모임원 선택</h3>
+            <ul className={modalStyles.popupContent}>
+              {['김도연', '김만중', '진명서', '윤한결', '전수진', '최성용', '조하린'].map((member) => (
+                <li
+                  key={member}
+                  className={modalStyles.popupDesc}
+                  onClick={() => handleSelectMember(member)}
+                  style={{
+                    backgroundColor: selectedList.includes(member) ? '#ddd' : 'transparent',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {member}
+                </li>
+              ))}
+            </ul>
+            <Button type="button" onClick={handleConfirmSelection} className={modalStyles.header}>
+              선택 완료
+            </Button>
+          </ModalContent>
+        </Modal>
+        // TODO: 모달 디자인 수정, 리스트 출력 기능 수정
       )}
     </div>
   );
