@@ -3,10 +3,11 @@ import { Input } from '@moeasy/storybook/ui/input';
 import { Button } from '@moeasy/storybook/ui/button';
 import { StepProps } from '../creating-step-form';
 import { SearchIcon } from '@moeasy/storybook/ui/icon';
-import { Modal, ModalContent, ModalOverlay } from '@moeasy/storybook/ui/dialog';
+import { Modal, ModalContent, ModalOverlay, ModalClose } from '@moeasy/storybook/ui/dialog';
 import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 import * as styles from './member.css';
+import { mockmembers } from '@/entities/member/api/mock';
 
 type MemberStepProps = StepProps & {
   toggleLimitDisabled: () => void;
@@ -16,9 +17,10 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
   const [selectedList, setSelectedList] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSelectMember = (member: string) => {
-    setSelectedList((prev) => [...new Set([...prev, member])]);
+    setSelectedList((prev) => (prev.includes(member) ? prev.filter((m) => m !== member) : [...prev, member]));
   };
 
   const handleRemoveMember = (member: string) => {
@@ -26,10 +28,14 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
   };
 
   const handleConfirmSelection = () => {
-    setSelectedMembers((prev) => [...new Set([...prev, ...selectedList])]);
+    setSelectedMembers(selectedList);
     setIsModalOpen(false);
   };
-  // TODO: 선택된 멤버 처리 어떻게 할지... 현재는 setSelectedList를 초기화 하지 않음으로써 모달을 다시 열어도 이미 선택된 멤버가 보임 하지만 삭제 시에 반영이 안 됨
+
+  const filteredMembers = mockmembers.filter((member) =>
+    member.username.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
   return (
     <div className={formStyles.formGroup}>
       <label className={formStyles.label}>
@@ -53,7 +59,9 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
           </Button>
         </div>
       </label>
-
+      {/* TODO: 선택된 멤버 보여주는 ui 추가(모달창 내에서) */}
+      {/* TODO: 모임원 많이 선택되었을 시 | 스크롤 추가 | 제한 추가 */}
+      {/* TODO: css 파일 수정 */}
       <label className={formStyles.label}>
         <span>모임원 추가</span>
         <div className={formStyles.input}>
@@ -80,28 +88,44 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
             className={modalStyles.container({ size: 'medium', padding: 'small' })}
             style={{ zIndex: 100, position: 'fixed' }}
           >
-            <h3 className={modalStyles.popupTitle}>모임원 선택</h3>
-            <ul className={modalStyles.popupContent}>
-              {['김도연', '김만중', '진명서', '윤한결', '전수진', '최성용', '조하린'].map((member) => (
+            <div className={styles.modalHeader}>
+              <ModalClose asChild>
+                <button className={styles.closeButton}>✕</button>
+              </ModalClose>
+              <h1 className={styles.modalTitle}>모임원 추가</h1>
+              <Button type="button" onClick={handleConfirmSelection} className={styles.confirmButton}>
+                확인
+              </Button>
+            </div>
+            <div className={styles.searchInputWrapper}>
+              <Input
+                placeholder="닉네임, 유저코드 검색"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={formStyles.input}
+              />
+            </div>
+            <p> 내친구</p>
+            <ul className={styles.memberListVertical}>
+              {filteredMembers.map((member) => (
                 <li
-                  key={member}
-                  className={modalStyles.popupDesc}
-                  onClick={() => handleSelectMember(member)}
-                  style={{
-                    backgroundColor: selectedList.includes(member) ? '#ddd' : 'transparent',
-                    cursor: 'pointer',
-                  }}
+                  key={member.memberId}
+                  className={styles.memberItemVertical}
+                  onClick={() => handleSelectMember(member.username)}
                 >
-                  {member}
+                  <img src={member.thumbnail} alt={member.username} className={styles.memberThumbnail} />
+                  <span className={styles.memberName}>{member.username}</span>
+                  <input
+                    type="checkbox"
+                    checked={selectedList.includes(member.username)}
+                    className={styles.checkbox}
+                    readOnly
+                  />
                 </li>
               ))}
             </ul>
-            <Button type="button" onClick={handleConfirmSelection} className={modalStyles.header}>
-              선택 완료
-            </Button>
           </ModalContent>
         </Modal>
-        // TODO: 모달 디자인 수정, 리스트 출력 기능 수정
       )}
     </div>
   );
