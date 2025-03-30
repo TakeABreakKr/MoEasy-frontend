@@ -1,9 +1,10 @@
+import { useMemo } from 'react';
+
+import { initializeMeetingList } from '@/entities/meeting/api/mock';
+import { components } from '@/shared/api/my-schema';
 import { MainCommonCard } from '@/widget/card/common';
 
 import * as styles from './list.css';
-import { useMemo } from 'react';
-import { initializeMeetingList } from '@/entities/meeting/api/mock';
-import { components } from '@/shared/api/my-schema';
 
 export function MyPageMeetingList() {
   const meetingList = useMemo<components['schemas']['HomePopularMeetingDto'][]>(
@@ -13,7 +14,7 @@ export function MyPageMeetingList() {
         name: meeting.name,
         thumbnail: meeting.thumbnail,
         explanation: meeting.explanation,
-        isLikedYn: false,
+        likedYn: false,
         memberCount: meeting.limit,
       })),
     [],

@@ -1,3 +1,4 @@
+import { suite } from '@moeasy/storybook/font';
 import { MainFooter } from '@moeasy/storybook/ui/footer';
 import { Separator } from '@moeasy/storybook/ui/separator';
 
@@ -8,7 +9,7 @@ export async function MainPage() {
     <>
       <MainBody />
       <Separator direction="horizontal" />
-      <MainFooter />
+      <MainFooter className={suite.className} />
     </>
   );
 }

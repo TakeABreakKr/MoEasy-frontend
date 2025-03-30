@@ -86,7 +86,7 @@ export function MainActivityCard({
               <Button
                 variant={isParticipate ? 'light' : 'dark'}
                 size="small"
-                rounded="small"
+                rounded="medium"
                 onClick={toggleParticipate}
               >
                 {isParticipate ? '취소' : '참석'}

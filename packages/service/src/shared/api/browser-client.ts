@@ -35,7 +35,7 @@ const browserMiddleware: Middleware = {
       if (refreshTokenCookie) {
         // TODO: fix setting AccessToken logic after API Developed!!
         await browserClient.POST('/auth/refresh', {
-          body: refreshTokenCookie,
+          body: { refreshToken: refreshTokenCookie },
         });
       } else {
         window.location.href = discordLoginUrl;

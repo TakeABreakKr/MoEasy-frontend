@@ -32,7 +32,7 @@ const serverActionMiddleware: Middleware = {
       if (refreshTokenCookie) {
         // TODO: fix setting AccessToken logic after API Developed!!
         await serverClient.POST('/auth/refresh', {
-          body: refreshTokenCookie.value,
+          body: { refreshToken: refreshTokenCookie.value },
         });
       } else {
         redirect(discordLoginUrl);

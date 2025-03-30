@@ -17,7 +17,7 @@ type User = {
 };
 
 interface HeaderProps {
-  user?: User;
+  user?: User | null;
 }
 /**
  * 공통 헤더 컴포넌트
@@ -63,9 +63,9 @@ export const Header = ({ user }: HeaderProps) => {
           )}
           {user ? (
             user.thumbnail ? (
-              <button type="button" className={headerStyles.UserThumbnail}>
+              <Link href="/mypage" className={headerStyles.UserThumbnail}>
                 <Image src={user.thumbnail} width={34} height={34} alt="user-thumbnail" />
-              </button>
+              </Link>
             ) : (
               <button className={headerStyles.rightIcon}>
                 <UserIcon width={16} height={16} />
