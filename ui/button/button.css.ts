@@ -23,9 +23,11 @@ export const buttonVariants = recipe({
         backgroundColor: globalVars.color.neutral[80],
         ':hover': {
           backgroundColor: globalVars.color.neutral[95],
+          color: globalVars.color.neutral[10],
         },
         ':active': {
           backgroundColor: globalVars.color.neutral.black,
+          color: globalVars.color.neutral[30],
         },
         ':disabled': {
           color: globalVars.color.neutral[30],
