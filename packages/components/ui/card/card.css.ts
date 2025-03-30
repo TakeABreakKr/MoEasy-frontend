@@ -9,7 +9,7 @@ export const card = style({
   position: 'relative',
   padding: rem(0, 15), // 2.1875rem
   color: globalVars.color.neutral[70],
-  backgroundColor: globalVars.color.neutral[3],
+  backgroundColor: globalVars.color.blue[99],
   borderRadius: rem(4), // 1rem
   display: 'flex',
   flexDirection: 'column',
@@ -20,7 +20,10 @@ export const card = style({
 
 export const cardHover = style({
   ':hover': {
-    backgroundColor: globalVars.color.yellow[40],
+    backgroundColor: globalVars.color.blue[5],
+  },
+  ':active': {
+    backgroundColor: globalVars.color.blue[10],
   },
 });
 

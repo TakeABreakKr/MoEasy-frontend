@@ -36,12 +36,12 @@ export function MainActivityCard({
   const [isParticipate, toggleParticipate] = useReducer((e) => !e, false);
   const showingParticipants = activity.participants.slice(0, 6);
   return (
-    <div className={clsx(styles.scheduleCard, className)} {...props}>
+    <div className={clsx(styles.activityCard, className)} {...props}>
       {showDeadline && (
         <div className={sprinkles({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
           <div className={sprinkles({ display: 'flex', gap: 'small', alignItems: 'center' })}>
             <Text headline="medium">5/1 (목)</Text>
-            <Text title="large" className={styles.scheduleDeadLine}>
+            <Text title="large" className={styles.activityDeadLine}>
               D-4
             </Text>
           </div>
@@ -68,11 +68,11 @@ export function MainActivityCard({
             alt="thumbnail"
             width={55}
             height={55}
-            className={styles.scheduleCardThumbnail}
+            className={styles.activityCardThumbnail}
           />
-          <div className={styles.scheduleTitleWrapper}>
+          <div className={styles.activityTitleWrapper}>
             <div className={sprinkles({ display: 'flex', gap: 'small', alignItems: 'center' })}>
-              <span className={styles.scheduleOnlineOrOffline[activity.isOnlineYn ? 'online' : 'offline']}>
+              <span className={styles.activityOnlineOrOffline[activity.isOnlineYn ? 'online' : 'offline']}>
                 {activity.isOnlineYn ? '온라인' : '오프라인'}
               </span>
               <Text asChild ellipsis title="large">

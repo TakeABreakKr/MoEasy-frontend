@@ -24,7 +24,7 @@ export type MeetingCardProps = {
 export function MainCommonCard({ meeting, ...props }: MeetingCardProps) {
   const [heart, toggle] = useReducer((e) => !e, false);
   return (
-    <CardWrapper data-meeting-index={meeting.id} {...props}>
+    <CardWrapper data-meeting-index={meeting.id} hoverEffect {...props}>
       <CardThumbnail src={meeting.thumbnail ?? `https://placehold.co/72/png`} alt={meeting.name} />
       <CardHeader />
       <div>

@@ -7,12 +7,12 @@ import * as styles from './activity.css';
 
 export function MainActivityCardFallback({ className, showDeadline }: { className?: string; showDeadline?: boolean }) {
   return (
-    <div className={clsx(styles.scheduleCard, className)}>
+    <div className={clsx(styles.activityCard, className)}>
       {showDeadline && <div className={styles.contentFallbackVariants.date} />}
       <div>
         <div className={sprinkles({ display: 'flex', gap: 'medium', alignItems: 'stretch' })}>
-          <div className={styles.scheduleCardThumbnail} />
-          <div className={styles.scheduleTitleFallback}>
+          <div className={styles.activityCardThumbnail} />
+          <div className={styles.activityTitleFallback}>
             <div className={cardTitleFallback} />
             <div className={cardDescriptionFallback} />
           </div>
