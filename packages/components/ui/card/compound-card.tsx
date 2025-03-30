@@ -21,7 +21,7 @@ type CardWrapperProps = ComponentPropsWithRef<'div'> & {
   hoverEffect?: boolean;
 };
 
-function CardWrapper({ className, asChild, hoverEffect, ...props }: CardWrapperProps) {
+function CardWrapper({ className, asChild, hoverEffect = true, ...props }: CardWrapperProps) {
   const Comp = asChild ? Slot : 'div';
   return <Comp className={clsx(cardStyle.card, hoverEffect && cardStyle.cardHover, className)} {...props} />;
 }

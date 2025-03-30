@@ -21,15 +21,7 @@ export const MainCardMeetingSectionContentBase = forwardRef<
   return (
     <div className={styles.cardContainer}>
       <div className={styles.cardWrapper.meeting} ref={ref}>
-        {data?.map((meeting, idx) => (
-          <MainCommonCard
-            key={idx}
-            idx={idx + 1}
-            className={commonCard}
-            title={meeting.name}
-            description={meeting.description}
-          />
-        ))}
+        {data?.map((meeting, idx) => <MainCommonCard key={idx} className={commonCard} meeting={meeting} />)}
       </div>
       <div className={styles.overlayNoPointer} />
     </div>

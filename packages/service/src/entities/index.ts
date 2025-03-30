@@ -13,3 +13,6 @@ export type CommonFormActionState =
 export type CommonFormAction = (_: CommonFormActionState, formData: FormData) => Promise<CommonFormActionState>;
 
 export type MeetingAuthority = components['schemas']['MeetingMemberDto']['authority'];
+
+export const isAdminAutority = (autority: MeetingAuthority): autority is 'OWNER' | 'MANAGER' =>
+  ['OWNER', 'MANAGER'].includes(autority);

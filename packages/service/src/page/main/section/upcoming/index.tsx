@@ -51,7 +51,7 @@ export function MainUpcommingSchedule({ title, data }: { title: string; data?: M
         ))}
       </div>
       <div className={upcomingStyles.scheduleContainer}>
-        {data?.map((schedule, index) => <MainActivityCard schedule={schedule} key={index} />)}
+        {data?.map((activity, index) => <MainActivityCard activity={activity} key={index} />)}
       </div>
       <MainUpcomingSectionPagination date={parsedCurrentDate.format('YYYY-MM-DD')} />
     </section>

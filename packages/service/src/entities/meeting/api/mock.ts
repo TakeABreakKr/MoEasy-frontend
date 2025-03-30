@@ -15,6 +15,8 @@ export const initializeMeeting = (index: number): MeetingType => {
     limit: 10,
     members: mockmembers,
     canJoin: false,
+    category: '식물/자연',
+    publicYn: true,
   };
 };
 

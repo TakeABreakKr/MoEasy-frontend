@@ -1,34 +1,29 @@
+import * as cardStyles from '@moeasy/storybook/ui/card/card.css';
 import { rem } from '@moeasy/storybook/utils/css';
 import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 import { cardComponentBase } from '../card.css';
 import { style, styleVariants } from '@vanilla-extract/css';
 
-export const scheduleCard = style({
-  position: 'relative',
-  background: globalVars.color.neutral[3],
-  borderRadius: rem(4),
-  padding: rem(30, 22),
-  color: globalVars.color.neutral[80],
-  display: 'flex',
-  flexDirection: 'column',
-  gap: rem(25),
-});
+export const activityCard = style([
+  {
+    position: 'relative',
+    background: globalVars.color.blue[99],
+    borderRadius: rem(4),
+    padding: rem(30, 22),
+    color: globalVars.color.neutral[80],
+    display: 'flex',
+    flexDirection: 'column',
+    gap: rem(25),
+  },
+  cardStyles.cardHover,
+]);
 
-export const scheduleDeadLine = style({
+export const activityDeadLine = style({
   color: globalVars.color.red[50],
 });
 
-export const scheduleCardHeader = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  position: 'relative',
-  paddingBottom: rem(20),
-  gap: rem(15),
-});
-
-export const scheduleTitleWrapper = style({
+export const activityTitleWrapper = style({
   flex: 1,
   overflow: 'hidden',
   display: 'flex',
@@ -36,7 +31,7 @@ export const scheduleTitleWrapper = style({
   gap: rem(3),
 });
 
-export const scheduleCardThumbnail = style({
+export const activityCardThumbnail = style({
   background: globalVars.color.neutral[5],
   borderRadius: '50%',
   width: rem(55),
@@ -44,18 +39,7 @@ export const scheduleCardThumbnail = style({
   position: 'relative',
 });
 
-export const scheduleCardTitle = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  justifyContent: 'flex-start',
-  position: 'relative',
-  textAlign: 'left',
-  fontSize: rem(20),
-  fontWeight: '600',
-});
-
-export const scheduleIsOnline = style({
+export const activityIsOnline = style({
   borderRadius: rem(16),
   padding: rem(2, 4),
   display: 'flex',
@@ -67,9 +51,9 @@ export const scheduleIsOnline = style({
   ...globalVars.text.label.small.regular,
 });
 
-export const scheduleOnlineOrOffline = styleVariants({
-  online: [scheduleIsOnline, { background: globalVars.color.blue[50] }],
-  offline: [scheduleIsOnline, { background: globalVars.color.purple }],
+export const activityOnlineOrOffline = styleVariants({
+  online: [activityIsOnline, { background: globalVars.color.blue[50] }],
+  offline: [activityIsOnline, { background: globalVars.color.purple }],
 });
 
 export const heart = style({
@@ -108,7 +92,7 @@ export const iconContainer = style({
 
 export const memberIconContainer = style({
   position: 'relative',
-  width: rem(100),
+  // width: rem(100),
   height: rem(20),
   display: 'flex',
   alignItems: 'center',
@@ -130,9 +114,9 @@ const memberIcon = style({
 });
 
 export const memberIconByRole = styleVariants({
-  owner: [memberIcon, { borderColor: globalVars.color.yellow[60] }],
-  manager: [memberIcon, { borderColor: globalVars.color.blue[20] }],
-  common: [memberIcon, { borderColor: globalVars.color.neutral[5] }],
+  OWNER: [memberIcon, { borderColor: globalVars.color.yellow[60] }],
+  MANAGER: [memberIcon, { borderColor: globalVars.color.blue[20] }],
+  MEMBER: [memberIcon, { borderColor: globalVars.color.neutral[5] }],
 });
 
 export const memberIconDepth = styleVariants({
@@ -145,7 +129,7 @@ export const memberIconDepth = styleVariants({
 });
 
 // fallback
-export const scheduleTitleFallback = style({
+export const activityTitleFallback = style({
   display: 'flex',
   flex: 1,
   flexDirection: 'column',

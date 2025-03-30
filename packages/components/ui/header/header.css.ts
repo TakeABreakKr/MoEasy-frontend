@@ -89,14 +89,22 @@ export const rightButton = style({
   padding: rem(8),
   transition: 'background-color 200ms ease-in-out, color 200ms ease-in-out',
   color: globalVars.color.neutral[95],
-  backgroundColor: globalVars.color.neutral[5],
+  backgroundColor: globalVars.color.neutral.white,
+  border: `${globalVars.color.neutral[10]} 1px solid`,
   ':hover': {
-    backgroundColor: globalVars.color.neutral[20],
+    backgroundColor: globalVars.color.neutral[3],
   },
   ':active': {
-    color: globalVars.color.neutral.white,
-    backgroundColor: globalVars.color.blue[60],
+    backgroundColor: globalVars.color.neutral.white,
+    color: globalVars.color.blue[50],
   },
+});
+
+export const UserThumbnail = style({
+  borderRadius: '50%',
+  width: rem(34), // 34px
+  height: rem(34), // 34px
+  overflow: 'hidden',
 });
 
 export const rightIcon = style([

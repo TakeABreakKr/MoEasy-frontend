@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import { cookies } from 'next/headers';
 import clsx from 'clsx';
 import { Toaster } from 'sonner';
 
+import { serverClient } from '@/shared/api/server-client';
 import { LoginPopup } from '@/widget/popup/login';
 
 import { pretendard } from '@moeasy/storybook/font';
@@ -27,13 +27,12 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('AccessToken')?.value;
+  const { data: userData } = await serverClient.GET('/home/header');
 
   return (
     <html lang={locale}>
       <body className={clsx(pretendard.className, pretendard.variable)}>
-        <Header isLogin={!!accessToken} />
+        <Header user={userData} />
         <MSWWrapper />
         <RootProvider locale={locale}>
           <LoginPopup />

@@ -1,0 +1,1 @@
+export const discordLoginUrl = `https://discord.com/oauth2/authorize?client_id=1248807669335330847&response_type=code&redirect_uri=http://localhost:5000/auth/callback&scope=identify%20email%20connections`;
