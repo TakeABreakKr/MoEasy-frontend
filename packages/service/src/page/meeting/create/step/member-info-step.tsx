@@ -89,6 +89,33 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
                     확인
                   </Button>
                 </div>
+                <div className={styles.selectedMemberSection} data-visible={selectedList.length > 0}>
+                  {selectedList.length > 0 && (
+                    <>
+                      <div className={styles.selectedCount}>
+                        {selectedList.length}/{formData.limit}명
+                      </div>
+                      <div className={styles.selectedMemberList}>
+                        {selectedList.map((name) => {
+                          const member = mockmembers.find((m) => m.username === name);
+                          return (
+                            <div key={name} className={styles.selectedMember}>
+                              <img src={member?.thumbnail} alt={name} className={styles.selectedThumbnail} />
+                              <button
+                                type="button"
+                                className={styles.removeSelectedButton}
+                                onClick={() => handleSelectMember(name)}
+                              >
+                                ×
+                              </button>
+                              {member?.username}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </>
+                  )}
+                </div>
                 <div className={styles.searchInputWrapper}>
                   <Input
                     placeholder="닉네임, 유저코드 검색"

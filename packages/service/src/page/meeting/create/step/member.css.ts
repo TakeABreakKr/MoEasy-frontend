@@ -183,3 +183,65 @@ export const centeredModal = style({
 export const memberListWrapper = style({
   width: '100%',
 });
+export const selectedMemberSection = style({
+  minHeight: rem(85),
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  gap: rem(8),
+  visibility: 'hidden',
+  opacity: 0,
+  transition: 'opacity 0.2s ease',
+  selectors: {
+    '&[data-visible="true"]': {
+      visibility: 'visible',
+      opacity: 1,
+    },
+  },
+});
+
+export const selectedCount = style({
+  display: 'flex',
+  color: globalVars.color.neutral[70],
+  ...globalVars.text.body.small,
+});
+
+export const selectedMemberList = style({
+  display: 'flex',
+  flexDirection: 'row',
+  flex: 1,
+  gap: rem(10),
+  color: globalVars.color.neutral[95],
+  ...globalVars.text.body.small,
+});
+
+export const selectedMember = style({
+  position: 'relative',
+  width: rem(40),
+  height: rem(40),
+});
+
+export const selectedThumbnail = style({
+  width: '100%',
+  height: '100%',
+  borderRadius: '50%',
+  objectFit: 'cover',
+});
+
+export const removeSelectedButton = style({
+  position: 'absolute',
+  top: rem(-4),
+  right: rem(-4),
+  width: rem(16),
+  height: rem(16),
+  borderRadius: '50%',
+  backgroundColor: globalVars.color.neutral[60],
+  color: globalVars.color.neutral.white,
+  border: 'none',
+  fontSize: rem(12),
+  fontWeight: 'bold',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
