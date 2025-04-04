@@ -1,13 +1,18 @@
 import { useState } from 'react';
-import { Input } from '@moeasy/storybook/ui/input';
-import { Button } from '@moeasy/storybook/ui/button';
-import { StepProps } from '../creating-step-form';
-import { SearchIcon } from '@moeasy/storybook/ui/icon';
-import { Modal, ModalContent, ModalOverlay, ModalClose } from '@moeasy/storybook/ui/dialog';
-import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
-import * as formStyles from '@moeasy/storybook/ui/create/style.css';
-import * as styles from './member.css';
+import clsx from 'clsx';
+
 import { mockmembers } from '@/entities/member/api/mock';
+
+import { Button } from '@moeasy/storybook/ui/button';
+import * as formStyles from '@moeasy/storybook/ui/create/style.css';
+import { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal, ModalTrigger } from '@moeasy/storybook/ui/dialog';
+import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
+import { SearchIcon } from '@moeasy/storybook/ui/icon';
+import { Input } from '@moeasy/storybook/ui/input';
+
+import { StepProps } from '../creating-step-form';
+
+import * as styles from './member.css';
 
 type MemberStepProps = StepProps & {
   toggleLimitDisabled: () => void;
@@ -65,10 +70,59 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
       <label className={formStyles.label}>
         <span>모임원 추가</span>
         <div className={formStyles.input}>
-          <button type="button" onClick={() => setIsModalOpen(true)} className={styles.searchButton}>
-            {'모임원을 선택해주세요'}
-            <SearchIcon />
-          </button>
+          <Modal open={isModalOpen} onOpenChange={setIsModalOpen}>
+            <ModalTrigger type="button" onClick={() => setIsModalOpen(true)} className={styles.searchButton}>
+              {'모임원을 선택해주세요'}
+              <SearchIcon />
+            </ModalTrigger>
+            <ModalPortal>
+              <ModalOverlay className={modalStyles.overlay} onClick={() => setIsModalOpen(false)} />
+              <ModalContent
+                className={clsx(modalStyles.container({ size: 'medium', padding: 'small' }), styles.centeredModal)}
+              >
+                <div className={styles.modalHeader}>
+                  <ModalClose asChild>
+                    <button className={styles.closeButton}>✕</button>
+                  </ModalClose>
+                  <h1 className={styles.modalTitle}>모임원 추가</h1>
+                  <Button type="button" onClick={handleConfirmSelection} className={styles.confirmButton}>
+                    확인
+                  </Button>
+                </div>
+                <div className={styles.searchInputWrapper}>
+                  <Input
+                    placeholder="닉네임, 유저코드 검색"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className={formStyles.input}
+                  />
+                </div>
+                <div className={styles.memberListWrapper}>
+                  <p> 내친구</p>
+                  <ul className={styles.memberListVertical}>
+                    {filteredMembers.map((member) => {
+                      const isSelected = selectedList.includes(member.username);
+                      return (
+                        <li
+                          key={member.memberId}
+                          className={styles.memberItemVertical}
+                          onClick={() => handleSelectMember(member.username)}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+                            <img src={member.thumbnail} alt={member.username} className={styles.memberThumbnail} />
+                            <span className={styles.memberName}>{member.username}</span>
+                          </div>
+                          <div className={clsx(styles.circleCheck, isSelected ? styles.selected : styles.unselected)}>
+                            ✓
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </ModalContent>
+            </ModalPortal>
+          </Modal>
         </div>
       </label>
       <div className={styles.memberList}>
@@ -81,52 +135,6 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
           </div>
         ))}
       </div>
-      {isModalOpen && (
-        <Modal open={isModalOpen} onOpenChange={setIsModalOpen}>
-          <ModalOverlay className={modalStyles.overlay} onClick={() => setIsModalOpen(false)} />
-          <ModalContent
-            className={modalStyles.container({ size: 'medium', padding: 'small' })}
-            style={{ zIndex: 100, position: 'fixed' }}
-          >
-            <div className={styles.modalHeader}>
-              <ModalClose asChild>
-                <button className={styles.closeButton}>✕</button>
-              </ModalClose>
-              <h1 className={styles.modalTitle}>모임원 추가</h1>
-              <Button type="button" onClick={handleConfirmSelection} className={styles.confirmButton}>
-                확인
-              </Button>
-            </div>
-            <div className={styles.searchInputWrapper}>
-              <Input
-                placeholder="닉네임, 유저코드 검색"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className={formStyles.input}
-              />
-            </div>
-            <p> 내친구</p>
-            <ul className={styles.memberListVertical}>
-              {filteredMembers.map((member) => (
-                <li
-                  key={member.memberId}
-                  className={styles.memberItemVertical}
-                  onClick={() => handleSelectMember(member.username)}
-                >
-                  <img src={member.thumbnail} alt={member.username} className={styles.memberThumbnail} />
-                  <span className={styles.memberName}>{member.username}</span>
-                  <input
-                    type="checkbox"
-                    checked={selectedList.includes(member.username)}
-                    className={styles.checkbox}
-                    readOnly
-                  />
-                </li>
-              ))}
-            </ul>
-          </ModalContent>
-        </Modal>
-      )}
     </div>
   );
 }

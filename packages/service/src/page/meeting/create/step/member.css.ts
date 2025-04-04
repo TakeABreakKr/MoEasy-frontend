@@ -1,6 +1,7 @@
-import { style } from '@vanilla-extract/css';
 import { rem } from '@moeasy/storybook/utils/css';
 import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
+
+import { style } from '@vanilla-extract/css';
 
 export const searchButton = style({
   display: 'flex',
@@ -77,8 +78,7 @@ export const modalHeader = style({
 
 export const modalTitle = style({
   margin: '0 auto',
-  fontSize: rem(18),
-  fontWeight: 'bold',
+  ...globalVars.text.label.large.semibold,
   color: globalVars.color.neutral[95],
   textAlign: 'center',
   flex: 1,
@@ -94,13 +94,14 @@ export const closeButton = style({
 });
 
 export const confirmButton = style({
-  backgroundColor: globalVars.color.blue[60],
-  color: globalVars.color.neutral.white,
+  backgroundColor: 'transparent',
+  color: globalVars.color.neutral[95],
   padding: rem(6, 12),
   borderRadius: rem(8),
+  ...globalVars.text.button.small,
   cursor: 'pointer',
   ':hover': {
-    backgroundColor: globalVars.color.blue[50],
+    backgroundColor: 'transparent',
   },
 });
 
@@ -136,6 +137,7 @@ export const memberListVertical = style({
   gap: rem(8),
   maxHeight: rem(200),
   overflowY: 'auto',
+  padding: rem(10),
 });
 
 export const memberItemVertical = style({
@@ -143,17 +145,41 @@ export const memberItemVertical = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: rem(8),
-  borderRadius: rem(8),
   cursor: 'pointer',
-  borderBottom: `1px solid ${globalVars.color.neutral[30]}`,
-  transition: 'background-color 0.2s ease-in-out',
-  ':hover': {
-    backgroundColor: globalVars.color.neutral[20],
-  },
+  borderBottom: `1px solid ${globalVars.color.neutral[5]}`,
 });
 
-export const checkbox = style({
-  width: rem(20),
-  height: rem(20),
-  cursor: 'pointer',
+export const circleCheck = style({
+  width: rem(24),
+  height: rem(24),
+  borderRadius: '50%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: rem(16),
+  fontWeight: 'bold',
+  color: globalVars.color.neutral[10],
+  flexShrink: 0,
+});
+
+export const selected = style({
+  backgroundColor: globalVars.color.blue[50],
+});
+
+export const unselected = style({
+  backgroundColor: globalVars.color.neutral[30],
+  color: globalVars.color.neutral.white,
+});
+
+export const centeredModal = style({
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  zIndex: 100,
+  padding: rem(30, 20, 0, 20),
+});
+
+export const memberListWrapper = style({
+  width: '100%',
 });
