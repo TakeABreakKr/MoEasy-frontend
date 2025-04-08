@@ -1,27 +1,78 @@
-MoEasy Front-End
+# MoEasy Front-End
 
-- 구조 변경중
+## Project Overview
 
-  - 외부로 공유해도 되는 component만을 관리하기 위한 public repository인 [MoEasy-storybook](https://github.com/TakeABreakKr/MoEasy-storybook)을 서브모듈로서 관리하고 실제 서비스 코드는 private repository에서만 저장하여 관리한다.
+MoEasy Front-End is the client-side application for MoEasy, a meeting and scheduling service. This project is built as a monorepo, consisting of two main packages:
 
-# tech stack
+- **`packages/service`**: Contains the Next.js application, which is the main service. It handles routing, page rendering, data fetching, and business logic.
+- **`packages/components`**: Houses reusable React components, hooks, and utilities used across the service. This package is designed to be shareable and is managed as a separate public repository [MoEasy-storybook](https://github.com/TakeABreakKr/MoEasy-storybook) as a submodule for component documentation and showcasing.
 
-- 서비스: next 15
-  - 스타일: [vanilla extract](https://vanilla-extract.style/)
-  - 테스트: playwright with vitest
-  - 배포: aws ec2
-- 컴포넌트: react 19
+## Tech Stack
 
-  - 테스트: storybook
-  - 빌드 및 배포: github pages
+- **Service (`packages/service`)**:
+  - Framework: [Next.js](https://nextjs.org) 15+
+  - Styling: [Vanilla Extract](https://vanilla-extract.style/) for type-safe CSS-in-JS
+  - Testing: [Playwright](https://playwright.dev/) for end-to-end testing and [Vitest](https://vitest.dev/) for unit testing
+  - Deployment: AWS EC2 (details to be configured)
+- **Components (`packages/components`)**:
+  - Library: [React](https://reactjs.org) 19+
+  - Storybook: [Storybook](https://storybook.js.org/) for component development and documentation
+  - Build & Deployment: GitHub Pages (for Storybook)
 
-# execute
+## Getting Started
 
-- [pnpm](https://pnpm.io/ko/installation#npm-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)이 설치되어야함
+### Prerequisites
 
-```bash
-pnpm service dev // 서비스 실행
-pnpm service storybook // 스토리북 실행
-```
+- [pnpm](https://pnpm.io/ko/installation#npm-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0) package manager is required. Install it globally if you haven't already.
 
-포트: 4000
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository_url>
+   cd moeasy-frontend
+   ```
+2. Install dependencies for both service and components:
+   ```bash
+   pnpm install
+   ```
+
+### Development
+
+- **Service**:
+  ```bash
+  pnpm service dev
+  ```
+  - Access the service at `http://localhost:4000`.
+- **Components (Storybook)**:
+  ```bash
+  pnpm components storybook
+  ```
+  - Access Storybook at `http://localhost:6006`.
+
+### Testing
+
+- **Service**:
+  - End-to-end tests (Playwright):
+    ```bash
+    pnpm service test:e2e
+    ```
+  - Unit tests (Vitest):
+    ```bash
+    pnpm service test:unit
+    ```
+- **Components**:
+  - Storybook interactions and visual tests (if configured).
+
+## Deployment
+
+- **Service**: Deployment to AWS EC2 is configured but details are pending. (To be updated)
+- **Components (Storybook)**: Deployed to GitHub Pages automatically on push to the `main` branch (details to be updated).
+
+## Contributing
+
+(Contribution guidelines to be added)
+
+---
+
+This README provides a technical overview of the MoEasy Front-End project. For more details, refer to the documentation within each package (`packages/service` and `packages/components`).
