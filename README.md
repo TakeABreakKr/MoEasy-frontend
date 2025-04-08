@@ -50,12 +50,25 @@ MoEasy Front-End is the client-side application for MoEasy, a meeting and schedu
   ```
   - Access Storybook at `http://localhost:6006`.
 
+### Type generate
+
+- **Service**:
+
+  - First, add `swagger-spec.json`[not managed by git] on `packages/service/src/shared/api` directory.
+  - Then, run the following command:
+
+  ```bash
+  pnpm service gen-type
+  ```
+
+  - After type generated, you can find type-generated file name `my-schema.ts` in `packages/service/src/shared/api` directory.
+
 ### Testing
 
 - **Service**:
   - End-to-end tests (Playwright):
     ```bash
-    pnpm service test:e2e
+    pnpm service e2e-test
     ```
   - Unit tests (Vitest):
     ```bash
@@ -68,6 +81,10 @@ MoEasy Front-End is the client-side application for MoEasy, a meeting and schedu
 
 - **Service**: Deployment to AWS EC2 is configured but details are pending. (To be updated)
 - **Components (Storybook)**: Deployed to GitHub Pages automatically on push to the `main` branch (details to be updated).
+  - To trigger deploy, you only need to push new files to origin repository.
+  ```bash
+  git subtree push --prefix=packages/components https://github.com/TakeABreakKr/MoEasy-storybook.git main
+  ```
 
 ## Contributing
 
