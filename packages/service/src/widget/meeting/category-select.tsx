@@ -4,9 +4,11 @@ import { useState } from 'react';
 import clsx from 'clsx';
 
 import { categoryList } from '@/shared/consts/category';
-import { Popover, PopoverContent, PopoverTrigger } from '@moeasy/storybook/ui/select';
+
 import { ChevronDown } from '@moeasy/storybook/ui/icon';
+import { Popover, PopoverContent, PopoverTrigger } from '@moeasy/storybook/ui/select';
 import { Text } from '@moeasy/storybook/ui/text';
+
 // TODO: 스타일 수정
 import * as styles from './category-select.css';
 
@@ -58,21 +60,19 @@ function CategoryContent({
   selectedCategory: string;
   onCategorySelect: (category: string) => void;
 }) {
-  const [selectedGroup, setSelectedGroup] = useState(categoryList.find(({ title }) => title !== '전체')?.title || '');
+  const [selectedGroup, setSelectedGroup] = useState<(typeof categoryList)[number]['title']>(categoryList[0].title);
   return (
     <div className={styles.categoryGroupContainer}>
       <div className={styles.categoryTabs}>
-        {categoryList
-          .filter(({ title }) => title !== '전체')
-          .map(({ title }) => (
-            <button
-              key={title}
-              className={clsx(styles.categoryTabs, selectedGroup === title && styles.activeCategoryTab)}
-              onClick={() => setSelectedGroup(title)}
-            >
-              {title}
-            </button>
-          ))}
+        {categoryList.map(({ title }) => (
+          <button
+            key={title}
+            className={clsx(styles.categoryTabs, selectedGroup === title && styles.activeCategoryTab)}
+            onClick={() => setSelectedGroup(title)}
+          >
+            {title}
+          </button>
+        ))}
       </div>
       <div className={styles.categoryList}>
         {categoryList

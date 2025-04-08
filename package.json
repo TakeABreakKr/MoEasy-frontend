@@ -11,19 +11,20 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "husky": "^9.0.11",
-    "typescript": "^5"
+    "husky": "^9.1.7",
+    "typescript": "^5.7.3"
   },
   "resolutions": {
-    "@typescript-eslint/typescript-estree": "^8.3.0"
+    "@typescript-eslint/typescript-estree": "^8.29.1",
+    "@typescript-eslint/parser": "^8.29.1"
   },
   "volta": {
     "node": "20.18.0"
   },
   "pnpm": {
     "overrides": {
-      "@types/react": "19.0.8",
-      "@types/react-dom": "19.0.3"
+      "@types/react": "19.1.0",
+      "@types/react-dom": "19.1.1"
     }
   }
 }
