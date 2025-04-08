@@ -8,6 +8,7 @@ import CrossIcon from './cross';
 import CrownIcon from './crown';
 import DiscordIcon from './discord';
 import DoorIcon from './door';
+import { EditIcon } from './edit';
 import EllipsisIcon from './ellipsis';
 import HeartIcon from './heart';
 import InfoIcon from './info';
@@ -34,6 +35,7 @@ export {
   CrownIcon,
   DiscordIcon,
   DoorIcon,
+  EditIcon,
   EllipsisIcon,
   HeartIcon,
   InfoIcon,

@@ -8,8 +8,6 @@ import { LoginPopup } from '@/widget/popup/login';
 import { pretendard } from '@moeasy/storybook/font';
 import { Header } from '@moeasy/storybook/ui/header';
 
-import './mock';
-
 import RootProvider from './_provider';
 import { MSWWrapper } from './msw-wrapper';
 

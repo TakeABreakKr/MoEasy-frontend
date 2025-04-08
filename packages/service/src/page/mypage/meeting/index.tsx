@@ -6,7 +6,7 @@ import { MainCommonCard } from '@/widget/card/common';
 
 import * as styles from './list.css';
 
-export function MyPageMeetingList() {
+export function MyPageMeetingPage() {
   const meetingList = useMemo<components['schemas']['HomePopularMeetingDto'][]>(
     () =>
       initializeMeetingList().map((meeting) => ({
