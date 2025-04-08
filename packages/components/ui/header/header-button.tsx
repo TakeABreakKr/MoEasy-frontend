@@ -1,4 +1,4 @@
-import { ComponentPropsWithRef } from 'react';
+import { ComponentProps } from 'react';
 
 import Link, { LinkProps } from 'next/link';
 
@@ -8,8 +8,8 @@ import * as styles from './header-button.css';
 
 type HeaderButtonProps = {
   children: React.ReactNode;
-  icon?: (props: ComponentPropsWithRef<'svg'>) => React.ReactNode;
-} & (({ href: string } & Omit<LinkProps, 'href'>) | ({ href?: never } & ComponentPropsWithRef<'button'>));
+  icon?: (props: ComponentProps<'svg'>) => React.ReactNode;
+} & (({ href: string } & Omit<LinkProps, 'href'>) | ({ href?: never } & ComponentProps<'button'>));
 
 export const HeaderButton = ({ children, icon, ...props }: HeaderButtonProps) => {
   if (typeof props.href === 'string')

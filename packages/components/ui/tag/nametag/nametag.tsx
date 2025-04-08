@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentProps } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import clsx from 'clsx';
 
@@ -8,7 +8,7 @@ import { Button } from '../../button';
 
 import * as nameTagStyle from './nametag.css';
 
-export type NameTagProps = ComponentPropsWithoutRef<typeof Button> & {
+export type NameTagProps = ComponentProps<typeof Button> & {
   src?: string;
   userRole?: 'admin' | 'manager' | 'limit';
 };
@@ -23,10 +23,7 @@ export const NameTag = ({ asChild, userRole, className, src, children, ...props 
   );
 };
 
-const NameTagIcon = ({
-  alt = 'userThumbnail',
-  ...props
-}: Omit<ComponentPropsWithoutRef<typeof Image>, 'width' | 'height'>) => (
+const NameTagIcon = ({ alt = 'userThumbnail', ...props }: Omit<ComponentProps<typeof Image>, 'width' | 'height'>) => (
   <span className={nameTagStyle.icon}>
     <Image width={15} height={15} alt={alt} {...props} />
   </span>

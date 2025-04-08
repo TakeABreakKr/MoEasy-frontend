@@ -17,7 +17,7 @@ const PopoverContent = ({
   align = 'center',
   sideOffset = 4,
   ...props
-}: React.ComponentPropsWithRef<typeof PopoverPrimitive.Content>) => (
+}: React.ComponentProps<typeof PopoverPrimitive.Content>) => (
   <PopoverPrimitive.Portal>
     <PopoverPrimitive.Content
       align={align}
