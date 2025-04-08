@@ -9,7 +9,7 @@ export const mockmembers: MemberType[] = [
     explanation: '안녕하세요',
   },
   {
-    username: 'James',
+    username: 'James2',
     memberId: 'G-2341234123412342',
     authority: 'MEMBER',
     thumbnail: `https://placehold.co/70/png`,

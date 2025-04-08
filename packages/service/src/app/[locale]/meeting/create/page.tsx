@@ -1,11 +1,9 @@
-import CreateForm from '@/widget/meeting/ui/create-form';
+import CreateMeetingPage from '@/page/meeting/create';
 
-import * as mainStyle from '../../main.css';
-
-export default async function TeamCreatePage() {
+export default function TeamCreatePage() {
   return (
-    <main className={mainStyle.main}>
-      <CreateForm />
-    </main>
+    <div>
+      <CreateMeetingPage />
+    </div>
   );
 }
