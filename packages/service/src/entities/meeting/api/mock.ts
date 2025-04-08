@@ -11,10 +11,12 @@ export const initializeMeeting = (index: number): MeetingType => {
     meetingId: `G-${String(index).padStart(16, '0')}`,
     authority: 'MANAGER',
     keywords: ['치킨', '햄버거', '탕수육'],
-    thumbnail: `https://via.placeholder.com/72/${index}`,
+    thumbnail: `https://placehold.co/70/png`,
     limit: 10,
     members: mockmembers,
     canJoin: false,
+    category: '식물/자연',
+    publicYn: true,
   };
 };
 

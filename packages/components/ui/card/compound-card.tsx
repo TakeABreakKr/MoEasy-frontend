@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, forwardRef } from 'react';
+import React, { ComponentProps } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import clsx from 'clsx';
 
@@ -15,26 +15,16 @@ import { EllipsisIcon } from '../icon';
 import { magic } from '../../utils/styles/index.css';
 import * as cardStyle from './card.css';
 
-type CardWrapperProps = ComponentPropsWithoutRef<'div'> & {
+type CardWrapperProps = ComponentProps<'div'> & {
   asChild?: boolean;
   /** 마우스 호버시 배경색 변경 여부 */
   hoverEffect?: boolean;
 };
 
-const CardWrapper = forwardRef<HTMLDivElement, CardWrapperProps>(function (
-  { className, asChild, hoverEffect, ...props },
-  forwardedRef,
-) {
+function CardWrapper({ className, asChild, hoverEffect = true, ...props }: CardWrapperProps) {
   const Comp = asChild ? Slot : 'div';
-  return (
-    <Comp
-      ref={forwardedRef}
-      className={clsx(cardStyle.card, hoverEffect && cardStyle.cardHover, className)}
-      {...props}
-    />
-  );
-});
-CardWrapper.displayName = 'CardWrapper';
+  return <Comp className={clsx(cardStyle.card, hoverEffect && cardStyle.cardHover, className)} {...props} />;
+}
 
 function CardThumbnail({
   src,
@@ -55,14 +45,10 @@ function CardThumbnail({
   );
 }
 
-const CardHeader = forwardRef<HTMLDivElement, CardWrapperProps>(function (
-  { className, asChild, ...props },
-  forwardedRef,
-) {
+function CardHeader({ className, asChild, ...props }: CardWrapperProps) {
   const Comp = asChild ? Slot : 'div';
-  return <Comp ref={forwardedRef} className={cardStyle.interact} {...props} />;
-});
-CardHeader.displayName = 'CardHeader';
+  return <Comp className={cardStyle.interact} {...props} />;
+}
 
 /**
  * dropdown menu를 포함할 수 있는 Card의 Trigger
@@ -82,22 +68,22 @@ function CardTrigger({ children }: { children?: React.ReactNode }) {
   );
 }
 
-function CardTitle({ children }: { children?: React.ReactNode }) {
-  return <h2 className={cardStyle.title}>{children ?? 'Card Title'}</h2>;
+function CardTitle({ children, className, ...props }: ComponentProps<'h2'>) {
+  return (
+    <h2 className={clsx(cardStyle.title, className)} {...props}>
+      {children ?? 'Card Title'}
+    </h2>
+  );
 }
 
 function CardDescription({ children }: { children?: React.ReactNode }) {
   return <pre className={cardStyle.description}>{children ?? 'Card Description'}</pre>;
 }
 
-const CardTagsWrapper = forwardRef<HTMLDivElement, CardWrapperProps>(function (
-  { className, asChild, ...props },
-  forwardedRef,
-) {
+function CardTagsWrapper({ className, asChild, ...props }: CardWrapperProps) {
   const Comp = asChild ? Slot : 'div';
-  return <Comp ref={forwardedRef} className={clsx(cardStyle.tagWrapper, className)} {...props} />;
-});
-CardTagsWrapper.displayName = 'CardTagsWrapper';
+  return <Comp className={clsx(cardStyle.tagWrapper, className)} {...props} />;
+}
 
 export {
   CardDescription,

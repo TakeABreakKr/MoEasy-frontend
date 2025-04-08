@@ -1,0 +1,32 @@
+import { rem } from '@moeasy/storybook/utils/css';
+import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
+
+import { style } from '@vanilla-extract/css';
+
+export const tabList = style({
+  display: 'flex',
+  gap: rem(35),
+  listStyle: 'none',
+  paddingInlineStart: 0,
+  borderBottom: `1px solid ${globalVars.color.neutral[10]}`,
+});
+
+export const tabItem = style({
+  display: 'block',
+  textDecoration: 'none',
+  padding: rem(8, 0),
+  borderBottomWidth: 2,
+  borderBottomStyle: 'solid',
+  borderBottomColor: `transparent`,
+  color: globalVars.color.neutral[30],
+  ...globalVars.text.headline.small,
+  fontWeight: '600',
+  ':hover': {
+    fontWeight: '700',
+  },
+});
+
+export const tabItemActive = style({
+  color: globalVars.color.neutral[95],
+  borderBottomColor: globalVars.color.neutral[95],
+});

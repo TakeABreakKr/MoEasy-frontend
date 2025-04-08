@@ -5,14 +5,14 @@ import { stringParser } from '@/shared/utils/utils';
 
 import { CommonFormAction } from '../..';
 
-export type CreateScheduleType = components['schemas']['ScheduleCreateRequest'];
+export type CreateScheduleType = components['schemas']['ActivityCreateRequest'];
 
 export type ScheduleCreateKeyMap = keyof CreateScheduleType;
 
 export const scheduleModifyAction: CommonFormAction = async (_, formData) => {
   'use server';
   const parsedForm: Partial<CreateScheduleType> = {
-    meeting_id: 'G_NOT_IMPLEMENTED',
+    meetingId: 'G_NOT_IMPLEMENTED',
     name: stringParser(formData.get('name'), { required: true }),
     explanation: stringParser(formData.get('explanation')),
     startDate: stringParser(formData.get('startDate')),

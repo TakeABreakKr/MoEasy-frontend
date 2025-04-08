@@ -51,3 +51,9 @@ export const CustomButton: Story = {
     confirmButton: <button style={customStyle}>커스텀 확인</button>,
   },
 };
+
+export const Movable: Story = {
+  args: {
+    contentDraggable: true,
+  },
+};

@@ -1,10 +1,10 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentProps } from 'react';
 
 import { useControlledState } from '../../hooks/use-controlled-state';
 
 import * as styles from './toggle.css';
 
-type ToggleProps = ComponentPropsWithoutRef<'input'> & {
+type ToggleProps = ComponentProps<'input'> & {
   onToggleChange?: (value?: boolean) => void;
   /** true인 경우 toggle 상태에 따른 외관이 반대로 변한다. */
   inverse?: boolean;

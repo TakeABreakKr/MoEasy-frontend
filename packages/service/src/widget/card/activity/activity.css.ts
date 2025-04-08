@@ -1,0 +1,144 @@
+import * as cardStyles from '@moeasy/storybook/ui/card/card.css';
+import { rem } from '@moeasy/storybook/utils/css';
+import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
+
+import { cardComponentBase } from '../card.css';
+import { style, styleVariants } from '@vanilla-extract/css';
+
+export const activityCard = style([
+  {
+    position: 'relative',
+    background: globalVars.color.blue[99],
+    borderRadius: rem(4),
+    padding: rem(30, 22),
+    color: globalVars.color.neutral[80],
+    display: 'flex',
+    flexDirection: 'column',
+    gap: rem(25),
+  },
+  cardStyles.cardHover,
+]);
+
+export const activityDeadLine = style({
+  color: globalVars.color.red[50],
+});
+
+export const activityTitleWrapper = style({
+  flex: 1,
+  overflow: 'hidden',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: rem(3),
+});
+
+export const activityCardThumbnail = style({
+  background: globalVars.color.neutral[5],
+  borderRadius: '50%',
+  width: rem(55),
+  height: rem(55),
+  position: 'relative',
+});
+
+export const activityIsOnline = style({
+  borderRadius: rem(16),
+  padding: rem(2, 4),
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  position: 'relative',
+  flexShrink: 0,
+  color: globalVars.color.neutral.white,
+  ...globalVars.text.label.small.regular,
+});
+
+export const activityOnlineOrOffline = styleVariants({
+  online: [activityIsOnline, { background: globalVars.color.blue[50] }],
+  offline: [activityIsOnline, { background: globalVars.color.purple }],
+});
+
+export const heart = style({
+  height: '100%',
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'flex-end',
+  paddingTop: rem(6),
+});
+
+export const content = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  justifyContent: 'flex-start',
+  position: 'relative',
+});
+
+export const contentText = style({
+  display: 'flex',
+  alignItems: 'center',
+  textAlign: 'left',
+  fontSize: rem(14),
+  gap: rem(8),
+  flex: 1,
+  width: '100%',
+});
+
+export const iconContainer = style({
+  width: rem(20),
+  height: rem(20),
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+export const memberIconContainer = style({
+  position: 'relative',
+  // width: rem(100),
+  height: rem(20),
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+const memberIcon = style({
+  width: rem(20),
+  height: rem(20),
+  borderRadius: '50%',
+  position: 'absolute',
+  overflow: 'hidden',
+  backgroundColor: globalVars.color.neutral.white,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderWidth: 2,
+  borderStyle: 'solid',
+});
+
+export const memberIconByRole = styleVariants({
+  OWNER: [memberIcon, { borderColor: globalVars.color.yellow[60] }],
+  MANAGER: [memberIcon, { borderColor: globalVars.color.blue[20] }],
+  MEMBER: [memberIcon, { borderColor: globalVars.color.neutral[5] }],
+});
+
+export const memberIconDepth = styleVariants({
+  1: { zIndex: 6, top: rem(0), left: rem(0) },
+  2: { zIndex: 5, top: rem(0), left: rem(16) },
+  3: { zIndex: 4, top: rem(0), left: rem(32) },
+  4: { zIndex: 3, top: rem(0), left: rem(48) },
+  5: { zIndex: 2, top: rem(0), left: rem(64) },
+  6: { zIndex: 1, top: rem(0), left: rem(80) },
+});
+
+// fallback
+export const activityTitleFallback = style({
+  display: 'flex',
+  flex: 1,
+  flexDirection: 'column',
+  gap: rem(4),
+  justifyContent: 'center',
+});
+
+export const contentFallbackVariants = styleVariants({
+  region: [cardComponentBase, { width: '25%', height: rem(24) }],
+  date: [cardComponentBase, { width: '40%', height: rem(24) }],
+  limit: [cardComponentBase, { width: '100%', height: rem(37) }],
+});

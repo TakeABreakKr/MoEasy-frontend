@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { NameTag } from './nametag';
 
 const SampleBadge = ({
-  thumbnail = 'https://via.placeholder.com/30',
+  thumbnail = 'https://placehold.co/30',
   userRole,
   text = '매니저',
 }: {
@@ -32,7 +32,7 @@ const meta = {
     },
   },
   args: {
-    thumbnail: 'https://via.placeholder.com/30',
+    thumbnail: 'https://placehold.co/30',
     userRole: 'admin',
     text: '매니저',
   },

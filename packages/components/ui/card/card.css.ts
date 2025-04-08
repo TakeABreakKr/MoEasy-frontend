@@ -8,7 +8,8 @@ export const card = style({
   maxWidth: rem(450),
   position: 'relative',
   padding: rem(0, 15), // 2.1875rem
-  backgroundColor: '#f0f0f0',
+  color: globalVars.color.neutral[70],
+  backgroundColor: globalVars.color.blue[99],
   borderRadius: rem(4), // 1rem
   display: 'flex',
   flexDirection: 'column',
@@ -19,7 +20,10 @@ export const card = style({
 
 export const cardHover = style({
   ':hover': {
-    backgroundColor: globalVars.color.yellow[40],
+    backgroundColor: globalVars.color.blue[5],
+  },
+  ':active': {
+    backgroundColor: globalVars.color.blue[10],
   },
 });
 
@@ -29,7 +33,8 @@ export const thumbnailWrapper = style({
   borderRadius: '50%',
   position: 'absolute',
   top: rem(-30),
-  background: 'linear-gradient(to bottom, #ffd953, #7fb2ff)',
+  // background: 'linear-gradient(to bottom, #ffd953, #7fb2ff)',
+  backgroundColor: globalVars.color.neutral[10],
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -38,7 +43,6 @@ export const thumbnailWrapper = style({
 export const thumbnail = style({
   width: rem(72),
   height: rem(72),
-  border: `${rem(3)} solid ${globalVars.color.neutral.white}`, // 3px
   borderRadius: '50%',
   overflow: 'hidden',
   backgroundColor: globalVars.color.neutral[10],

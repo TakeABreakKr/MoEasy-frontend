@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import clsx from 'clsx';
+import { Toaster } from 'sonner';
+
+import { serverClient } from '@/shared/api/server-client';
+import { LoginPopup } from '@/widget/popup/login';
 
 import { pretendard } from '@moeasy/storybook/font';
 import { Header } from '@moeasy/storybook/ui/header';
-
-import './mock';
 
 import RootProvider from './_provider';
 import { MSWWrapper } from './msw-wrapper';
@@ -23,13 +25,18 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
+  const { data: userData } = await serverClient.GET('/home/header');
 
   return (
     <html lang={locale}>
       <body className={clsx(pretendard.className, pretendard.variable)}>
-        <Header />
+        <Header user={userData} />
         <MSWWrapper />
-        <RootProvider locale={locale}>{children}</RootProvider>
+        <RootProvider locale={locale}>
+          <LoginPopup />
+          <Toaster />
+          {children}
+        </RootProvider>
       </body>
     </html>
   );
