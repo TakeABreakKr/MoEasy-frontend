@@ -1,8 +1,8 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentProps } from 'react';
 
 export { Textarea } from './textarea';
 
-export type AutoResizeTextareaProps = ComponentPropsWithoutRef<'textarea'> & {
+export type AutoResizeTextareaProps = ComponentProps<'textarea'> & {
   value?: string;
   isError?: boolean;
   dispatchError?: (isError: boolean) => void;

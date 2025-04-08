@@ -1,9 +1,9 @@
 'use client';
 
 import { assignInlineVars } from '@vanilla-extract/dynamic';
+import clsx from 'clsx';
 
 import { separatorColor, separatorVariants } from './separator.css';
-import clsx from 'clsx';
 
 export default function Separator({
   direction = 'vertical',

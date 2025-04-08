@@ -17,6 +17,7 @@ export type AlertProps = ModalProps & {
   cancelButton?: React.ReactNode;
   href?: string;
   children?: React.ReactNode;
+  contentDraggable?: boolean;
 } & RecipeVariants<typeof styles.container>;
 
 export function SimpleAlert({
@@ -29,6 +30,7 @@ export function SimpleAlert({
   confirmButton = '확인',
   children,
   href,
+  contentDraggable,
   ...props
 }: AlertProps) {
   return (
@@ -36,7 +38,7 @@ export function SimpleAlert({
       {isValidElement(children) && <ModalTrigger asChild>{children}</ModalTrigger>}
       <ModalPortal>
         <ModalOverlay className={styles.overlay}>
-          <ModalContent className={styles.container({ size, padding })}>
+          <ModalContent className={styles.container({ size, padding })} contentDraggable={contentDraggable}>
             <div className={styles.header}>
               <Button asChild variant="dark" rounded="full" size="icon" type="button">
                 <ModalClose onClick={close}>

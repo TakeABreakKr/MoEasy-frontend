@@ -1,14 +1,12 @@
-import Link from 'next/link';
+import { MyPageHeader } from '@/page/mypage/header';
 
-export default function MyLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+import * as mainStyle from '../main.css';
+
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      <Link href="/mypage">마이페이지로</Link>
+    <main className={mainStyle.main}>
+      <MyPageHeader />
       {children}
-    </div>
+    </main>
   );
 }

@@ -134,7 +134,7 @@ export const Input = <T extends string | number>({
         <div className={inputCtlWrapper}>
           <Delay ms={0}>
             {currentLength ? (
-              <button className={resetXIconStyles} onClick={handleClear}>
+              <button type="button" className={resetXIconStyles} onClick={handleClear}>
                 <XIcon color="#fff" />
               </button>
             ) : null}

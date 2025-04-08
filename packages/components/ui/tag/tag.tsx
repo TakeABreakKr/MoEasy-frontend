@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentProps } from 'react';
 import clsx from 'clsx';
 
 import { Button } from '../button';
@@ -6,7 +6,7 @@ import { XIcon } from '../icon';
 
 import * as tagStyle from './tag.css';
 
-export type TagProps = Omit<ComponentPropsWithoutRef<typeof Button>, 'size' | 'rounded' | 'asChild'> & {
+export type TagProps = Omit<ComponentProps<typeof Button>, 'size' | 'rounded' | 'asChild'> & {
   variant?: 'dark' | 'light';
   isDelete?: boolean;
   onDeleteClick?: () => void;

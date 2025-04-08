@@ -47,7 +47,7 @@ export const scheduleCreateInitializer = ({
   participants = [],
   ...value
 }: Partial<CreateScheduleType> = {}): CreateScheduleTypeDateMutated => ({
-  meeting_id: '',
+  meetingId: '',
   name: '',
   explanation: '',
   startDate: startDate ? new Date(startDate) : new Date(),
@@ -57,6 +57,7 @@ export const scheduleCreateInitializer = ({
   detailAddress: '',
   onlineYn: true,
   participants,
+  participantLimit: 0,
   ...value,
 });
 

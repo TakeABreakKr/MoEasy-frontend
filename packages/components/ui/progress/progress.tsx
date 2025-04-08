@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentProps } from 'react';
 import clsx from 'clsx';
 
 import { LogoIcon } from '../icon';
@@ -9,7 +9,7 @@ export type ProgressProps = {
   max?: number;
   min?: number;
   value?: number;
-} & Omit<ComponentPropsWithoutRef<'progress'>, 'max' | 'value'>;
+} & Omit<ComponentProps<'progress'>, 'max' | 'value'>;
 
 const Progress = ({ className, ...props }: ProgressProps) => {
   const { max = Number.MAX_SAFE_INTEGER, value = 0 } = props;

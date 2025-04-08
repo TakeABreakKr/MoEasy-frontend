@@ -1,13 +1,13 @@
 'use client';
 
 import React, {
-  ComponentPropsWithoutRef,
+  ComponentProps,
   createContext,
-  forwardRef,
   PropsWithChildren,
   useContext,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
@@ -17,6 +17,7 @@ import { useBodyScrollLock } from '../../hooks/use-body-scroll-lock';
 import { useControlledState } from '../../hooks/use-controlled-state';
 import { useMovablePopup } from '../../hooks/use-movable';
 import { useOnEscape } from '../../hooks/use-on-escape';
+import { useOutsideClose } from '../../hooks/use-outside-close';
 
 type ModalProps = {
   open?: boolean;
@@ -25,6 +26,7 @@ type ModalProps = {
   closeDisabled?: boolean;
   onCloseDisabledChange?: (disableCloseState: boolean) => void;
   scrollLock?: boolean;
+  isOutsideClose?: boolean;
 };
 
 type ModalContextProps = {
@@ -35,6 +37,7 @@ type ModalContextProps = {
   depth: number;
   childModalOpen: boolean;
   setChildModalOpen: (openState: boolean) => void;
+  isOutsideClose: boolean;
 } | null;
 
 const ModalContext = createContext<ModalContextProps>(null);
@@ -54,6 +57,7 @@ function Modal({
   closeDisabled: closeDisabledProp = false,
   onCloseDisabledChange,
   scrollLock = true,
+  isOutsideClose = true,
   ...props
 }: PropsWithChildren<ModalProps>) {
   const parentModal = useContext(ModalContext);
@@ -92,30 +96,30 @@ function Modal({
     }
   }, [open, parentModal]);
 
-  const contextValue = {
-    open,
-    setOpen,
-    closeDisabled: closeDisabled || childModalOpen, // 자식 모달이 열려있으면 닫기 비활성화
-    setCloseDisabled,
-    depth: parentModal ? parentModal.depth + 1 : 0,
-    childModalOpen,
-    setChildModalOpen,
-  };
+  const contextValue = useMemo(
+    () => ({
+      open,
+      setOpen,
+      closeDisabled: closeDisabled || childModalOpen, // 자식 모달이 열려있으면 닫기 비활성화
+      setCloseDisabled,
+      depth: parentModal ? parentModal.depth + 1 : 0,
+      childModalOpen,
+      setChildModalOpen,
+      isOutsideClose,
+    }),
+    [open, closeDisabled, childModalOpen, isOutsideClose, parentModal, setCloseDisabled, setOpen],
+  );
 
   return <ModalContext.Provider value={contextValue}>{children}</ModalContext.Provider>;
 }
 
-type ModalTriggerProps = { asChild?: boolean } & ComponentPropsWithoutRef<'button'>;
-const ModalTrigger = forwardRef<HTMLButtonElement, ModalTriggerProps>(function (
-  { onClick, className, asChild, ...props },
-  forwaredRef,
-) {
+type ModalTriggerProps = { asChild?: boolean } & ComponentProps<'button'>;
+function ModalTrigger({ onClick, className, asChild, ...props }: ModalTriggerProps) {
   const { setOpen, open } = useModalContext();
 
   const Comp = asChild ? Slot : 'button';
   return (
     <Comp
-      ref={forwaredRef}
       className={className}
       aria-haspopup="dialog"
       aria-expanded={open}
@@ -123,32 +127,26 @@ const ModalTrigger = forwardRef<HTMLButtonElement, ModalTriggerProps>(function (
       {...props}
     />
   );
-});
-ModalTrigger.displayName = 'ModalTrigger';
+}
 
-function ModalPortal({ children }: ComponentPropsWithoutRef<'div'>) {
+function ModalPortal({ children }: ComponentProps<'div'>) {
   const { open } = useModalContext();
   return open ? createPortal(children, document.body) : null;
 }
 
-function ModalOverlay({ ...props }: ComponentPropsWithoutRef<'div'>) {
+function ModalOverlay({ ...props }: ComponentProps<'div'>) {
   return <div {...props} />;
 }
 
-type ModalContentProps = ComponentPropsWithoutRef<'div'> & {
+type ModalContentProps = ComponentProps<'div'> & {
   contentDraggable?: boolean;
 };
 
-const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(function (
-  { onMouseDown: onMouseDownProp, contentDraggable, ...props },
-  forwardedRef,
-) {
-  const { closeDisabled } = useModalContext();
-  const { ref, isDragging, onMouseDown } = useMovablePopup(!!contentDraggable && !closeDisabled);
-  useImperativeHandle(forwardedRef, () => ref.current ?? ({} as HTMLDivElement), [ref]);
-
-  // TODO: fix error on outside close hook
-  // useOutsideClose({ ref: [ref], activate: false, callback: () => setOpen(false) });
+function ModalContent({ onMouseDown: onMouseDownProp, contentDraggable, ref, ...props }: ModalContentProps) {
+  const { closeDisabled, setOpen, isOutsideClose } = useModalContext();
+  const { ref: _ref, isDragging, onMouseDown } = useMovablePopup(!!contentDraggable && !closeDisabled);
+  useImperativeHandle(ref, () => _ref.current ?? ({} as HTMLDivElement), [_ref]);
+  useOutsideClose({ ref: [_ref], activate: isOutsideClose, callback: () => setOpen(false) });
 
   return (
     <div
@@ -158,23 +156,18 @@ const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(function (
         onMouseDown(e);
       }}
       {...props}
-      ref={ref}
+      ref={_ref}
     />
   );
-});
-ModalContent.displayName = 'ModalContent';
+}
 
-type ModalCloseProps = { asChild?: boolean } & ComponentPropsWithoutRef<'button'>;
-const ModalClose = forwardRef<HTMLButtonElement, ModalCloseProps>(function (
-  { onClick, asChild, disabled, ...props },
-  forwaredRef,
-) {
+type ModalCloseProps = { asChild?: boolean } & ComponentProps<'button'>;
+function ModalClose({ onClick, asChild, disabled, ...props }: ModalCloseProps) {
   const { setOpen, closeDisabled } = useModalContext();
 
   const Comp = asChild ? Slot : 'button';
   return (
     <Comp
-      ref={forwaredRef}
       aria-label="modal-close"
       onClick={(e) => {
         onClick?.(e);
@@ -186,7 +179,6 @@ const ModalClose = forwardRef<HTMLButtonElement, ModalCloseProps>(function (
       {...props}
     />
   );
-});
-ModalClose.displayName = 'ModalClose';
+}
 
 export { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal, type ModalProps, ModalTrigger };

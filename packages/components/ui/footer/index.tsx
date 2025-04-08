@@ -1,11 +1,11 @@
-import { ComponentPropsWithoutRef } from 'react';
+import { ComponentProps } from 'react';
 import clsx from 'clsx';
 
 import { Text } from '../text';
 
 import * as styles from './footer.css';
 
-export function MainFooter({ className, ...props }: ComponentPropsWithoutRef<'footer'>) {
+export function MainFooter({ className, ...props }: ComponentProps<'footer'>) {
   return (
     <footer className={clsx(styles.footer, className)} {...props}>
       <div className={styles.footerContent}>
