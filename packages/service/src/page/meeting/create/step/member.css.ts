@@ -34,6 +34,17 @@ export const memberItem = style({
   ...globalVars.text.label.small.regular,
 });
 
+export const memberNumberItem = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: rem(4),
+  padding: rem(2, 7),
+  backgroundColor: globalVars.color.neutral[80],
+  color: globalVars.color.neutral.white,
+  borderRadius: rem(20),
+  ...globalVars.text.label.small.regular,
+});
+
 export const removeButton = style({
   display: 'flex',
   justifyContent: 'center',
@@ -137,14 +148,14 @@ export const memberListVertical = style({
   gap: rem(8),
   maxHeight: rem(200),
   overflowY: 'auto',
-  padding: rem(10),
+  padding: rem(0),
 });
 
 export const memberItemVertical = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: rem(8),
+  padding: rem(8, 0),
   cursor: 'pointer',
   borderBottom: `1px solid ${globalVars.color.neutral[5]}`,
 });
@@ -184,12 +195,11 @@ export const memberListWrapper = style({
   width: '100%',
 });
 export const selectedMemberSection = style({
-  minHeight: rem(85),
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   gap: rem(8),
-  visibility: 'hidden',
+  marginBottom: rem(20),
   opacity: 0,
   transition: 'opacity 0.2s ease',
   selectors: {
@@ -210,7 +220,7 @@ export const selectedMemberList = style({
   display: 'flex',
   flexDirection: 'row',
   flex: 1,
-  gap: rem(10),
+  gap: rem(20),
   color: globalVars.color.neutral[95],
   ...globalVars.text.body.small,
 });
