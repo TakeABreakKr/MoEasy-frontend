@@ -3,6 +3,12 @@ import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 import { style } from '@vanilla-extract/css';
 
+export const limitInput = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: rem(10),
+});
+
 export const searchButton = style({
   display: 'flex',
   alignItems: 'center',
@@ -158,6 +164,12 @@ export const memberItemVertical = style({
   padding: rem(8, 0),
   cursor: 'pointer',
   borderBottom: `1px solid ${globalVars.color.neutral[5]}`,
+});
+
+export const memberInfo = style({
+  display: 'flex',
+  alignItems: 'center',
+  flex: 1,
 });
 
 export const circleCheck = style({

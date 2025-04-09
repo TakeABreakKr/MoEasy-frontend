@@ -45,7 +45,7 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
     <div className={formStyles.formGroup}>
       <label className={formStyles.label}>
         <span>몇 명까지 참여할 수 있나요?</span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div className={styles.limitInput}>
           <Input
             name="limit"
             placeholder="모임 인원을 입력해주세요"
@@ -139,7 +139,7 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
                                 className={styles.memberItemVertical}
                                 onClick={() => handleSelectMember(member.username)}
                               >
-                                <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+                                <div className={styles.memberInfo}>
                                   <img
                                     src={member.thumbnail}
                                     alt={member.username}
