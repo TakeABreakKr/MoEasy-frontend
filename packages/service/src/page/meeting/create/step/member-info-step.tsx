@@ -45,7 +45,7 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
     <div className={formStyles.formGroup}>
       <label className={formStyles.label}>
         <span>몇 명까지 참여할 수 있나요?</span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div className={styles.limitInput}>
           <Input
             name="limit"
             placeholder="모임 인원을 입력해주세요"
@@ -70,97 +70,115 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
       <label className={formStyles.label}>
         <span>모임원 추가</span>
         <div className={formStyles.input}>
-          <Modal open={isModalOpen} onOpenChange={setIsModalOpen}>
+          <Modal open={isModalOpen} onOpenChange={setIsModalOpen} isOutsideClose>
             <ModalTrigger type="button" onClick={() => setIsModalOpen(true)} className={styles.searchButton}>
               {'모임원을 선택해주세요'}
               <SearchIcon />
             </ModalTrigger>
             <ModalPortal>
-              <ModalOverlay className={modalStyles.overlay} onClick={() => setIsModalOpen(false)} />
-              <ModalContent
-                className={clsx(modalStyles.container({ size: 'medium', padding: 'small' }), styles.centeredModal)}
-              >
-                <div className={styles.modalHeader}>
-                  <ModalClose asChild>
-                    <button className={styles.closeButton}>✕</button>
-                  </ModalClose>
-                  <h1 className={styles.modalTitle}>모임원 추가</h1>
-                  <Button type="button" onClick={handleConfirmSelection} className={styles.confirmButton}>
-                    확인
-                  </Button>
-                </div>
-                <div className={styles.selectedMemberSection} data-visible={selectedList.length > 0}>
-                  {selectedList.length > 0 && (
-                    <>
-                      <div className={styles.selectedCount}>
-                        {selectedList.length}/{formData.limit}명
-                      </div>
-                      <div className={styles.selectedMemberList}>
-                        {selectedList.map((name) => {
-                          const member = mockmembers.find((m) => m.username === name);
-                          return (
-                            <div key={name} className={styles.selectedMember}>
-                              <img src={member?.thumbnail} alt={name} className={styles.selectedThumbnail} />
-                              <button
-                                type="button"
-                                className={styles.removeSelectedButton}
-                                onClick={() => handleSelectMember(name)}
+              <ModalOverlay className={modalStyles.overlay}>
+                <ModalContent
+                  className={clsx(modalStyles.container({ size: 'medium', padding: 'small' }), styles.centeredModal)}
+                >
+                  <div className={styles.modalHeader}>
+                    <ModalClose asChild>
+                      <button className={styles.closeButton}>✕</button>
+                    </ModalClose>
+                    <h1 className={styles.modalTitle}>모임원 추가</h1>
+                    <button type="button" onClick={handleConfirmSelection} className={styles.confirmButton}>
+                      확인
+                    </button>
+                  </div>
+                  <div className={styles.selectedMemberSection} data-visible={selectedList.length > 0}>
+                    {selectedList.length > 0 && (
+                      <>
+                        <div className={styles.selectedCount}>
+                          {selectedList.length}/{formData.limit}명
+                        </div>
+                        <div className={styles.selectedMemberList}>
+                          {selectedList.map((name) => {
+                            const member = mockmembers.find((m) => m.username === name);
+                            return (
+                              <div key={name} className={styles.selectedMember}>
+                                <img src={member?.thumbnail} alt={name} className={styles.selectedThumbnail} />
+                                <button
+                                  type="button"
+                                  className={styles.removeSelectedButton}
+                                  onClick={() => handleSelectMember(name)}
+                                >
+                                  ×
+                                </button>
+                                {member?.username}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className={styles.searchInputWrapper}>
+                    <Input
+                      placeholder="닉네임, 유저코드 검색"
+                      value={searchQuery}
+                      onValueChange={(value) => setSearchQuery(value)}
+                      className={formStyles.input}
+                    />
+                  </div>
+                  <div className={styles.memberListWrapper}>
+                    {filteredMembers.length === 0 && searchQuery ? (
+                      <div className={styles.noResult}>검색된 결과가 없습니다</div>
+                    ) : (
+                      <>
+                        <p>내친구</p>
+                        <ul className={styles.memberListVertical}>
+                          {filteredMembers.map((member) => {
+                            const isSelected = selectedList.includes(member.username);
+                            return (
+                              <li
+                                key={member.memberId}
+                                className={styles.memberItemVertical}
+                                onClick={() => handleSelectMember(member.username)}
                               >
-                                ×
-                              </button>
-                              {member?.username}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </>
-                  )}
-                </div>
-                <div className={styles.searchInputWrapper}>
-                  <Input
-                    placeholder="닉네임, 유저코드 검색"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className={formStyles.input}
-                  />
-                </div>
-                <div className={styles.memberListWrapper}>
-                  <p> 내친구</p>
-                  <ul className={styles.memberListVertical}>
-                    {filteredMembers.map((member) => {
-                      const isSelected = selectedList.includes(member.username);
-                      return (
-                        <li
-                          key={member.memberId}
-                          className={styles.memberItemVertical}
-                          onClick={() => handleSelectMember(member.username)}
-                        >
-                          <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-                            <img src={member.thumbnail} alt={member.username} className={styles.memberThumbnail} />
-                            <span className={styles.memberName}>{member.username}</span>
-                          </div>
-                          <div className={clsx(styles.circleCheck, isSelected ? styles.selected : styles.unselected)}>
-                            ✓
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </ModalContent>
+                                <div className={styles.memberInfo}>
+                                  <img
+                                    src={member.thumbnail}
+                                    alt={member.username}
+                                    className={styles.memberThumbnail}
+                                  />
+                                  <span className={styles.memberName}>{member.username}</span>
+                                </div>
+                                <div
+                                  className={clsx(styles.circleCheck, isSelected ? styles.selected : styles.unselected)}
+                                >
+                                  ✓
+                                </div>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </>
+                    )}
+                  </div>
+                </ModalContent>
+              </ModalOverlay>
             </ModalPortal>
           </Modal>
         </div>
       </label>
       <div className={styles.memberList}>
-        {selectedMembers.map((member) => (
-          <div key={member} className={styles.memberItem}>
-            <span>{member}</span>
-            <button type="button" className={styles.removeButton} onClick={() => handleRemoveMember(member)}>
-              x
-            </button>
-          </div>
-        ))}
+        {selectedMembers.length > 0 && (
+          <>
+            <div className={styles.memberNumberItem}>{selectedMembers.length}명</div>
+            {selectedMembers.map((member) => (
+              <div key={member} className={styles.memberItem}>
+                <span>{member}</span>
+                <button type="button" className={styles.removeButton} onClick={() => handleRemoveMember(member)}>
+                  x
+                </button>
+              </div>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

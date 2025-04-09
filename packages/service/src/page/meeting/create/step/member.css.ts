@@ -3,6 +3,12 @@ import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 import { style } from '@vanilla-extract/css';
 
+export const limitInput = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: rem(10),
+});
+
 export const searchButton = style({
   display: 'flex',
   alignItems: 'center',
@@ -30,6 +36,17 @@ export const memberItem = style({
   padding: rem(2, 4, 2, 7),
   border: `1px solid ${globalVars.color.neutral[20]}`,
   color: globalVars.color.neutral[70],
+  borderRadius: rem(20),
+  ...globalVars.text.label.small.regular,
+});
+
+export const memberNumberItem = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: rem(4),
+  padding: rem(2, 7),
+  backgroundColor: globalVars.color.neutral[80],
+  color: globalVars.color.neutral.white,
   borderRadius: rem(20),
   ...globalVars.text.label.small.regular,
 });
@@ -137,16 +154,22 @@ export const memberListVertical = style({
   gap: rem(8),
   maxHeight: rem(200),
   overflowY: 'auto',
-  padding: rem(10),
+  padding: rem(0),
 });
 
 export const memberItemVertical = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: rem(8),
+  padding: rem(8, 0),
   cursor: 'pointer',
   borderBottom: `1px solid ${globalVars.color.neutral[5]}`,
+});
+
+export const memberInfo = style({
+  display: 'flex',
+  alignItems: 'center',
+  flex: 1,
 });
 
 export const circleCheck = style({
@@ -184,12 +207,11 @@ export const memberListWrapper = style({
   width: '100%',
 });
 export const selectedMemberSection = style({
-  minHeight: rem(85),
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   gap: rem(8),
-  visibility: 'hidden',
+  marginBottom: rem(20),
   opacity: 0,
   transition: 'opacity 0.2s ease',
   selectors: {
@@ -210,7 +232,7 @@ export const selectedMemberList = style({
   display: 'flex',
   flexDirection: 'row',
   flex: 1,
-  gap: rem(10),
+  gap: rem(20),
   color: globalVars.color.neutral[95],
   ...globalVars.text.body.small,
 });
@@ -244,4 +266,10 @@ export const removeSelectedButton = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+});
+export const noResult = style({
+  padding: rem(24),
+  textAlign: 'center',
+  borderRadius: rem(6),
+  ...globalVars.text.body.medium,
 });
