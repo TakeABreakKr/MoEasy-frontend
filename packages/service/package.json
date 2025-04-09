@@ -38,6 +38,8 @@
     "sonner": "^2.0.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.24.0",
     "@playwright/test": "^1.46.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
