@@ -85,9 +85,9 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
                       <button className={styles.closeButton}>✕</button>
                     </ModalClose>
                     <h1 className={styles.modalTitle}>모임원 추가</h1>
-                    <Button type="button" onClick={handleConfirmSelection} className={styles.confirmButton}>
+                    <button type="button" onClick={handleConfirmSelection} className={styles.confirmButton}>
                       확인
-                    </Button>
+                    </button>
                   </div>
                   <div className={styles.selectedMemberSection} data-visible={selectedList.length > 0}>
                     {selectedList.length > 0 && (
@@ -120,32 +120,44 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
                     <Input
                       placeholder="닉네임, 유저코드 검색"
                       value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onValueChange={(value) => setSearchQuery(value)}
                       className={formStyles.input}
                     />
                   </div>
                   <div className={styles.memberListWrapper}>
-                    <p> 내친구</p>
-                    <ul className={styles.memberListVertical}>
-                      {filteredMembers.map((member) => {
-                        const isSelected = selectedList.includes(member.username);
-                        return (
-                          <li
-                            key={member.memberId}
-                            className={styles.memberItemVertical}
-                            onClick={() => handleSelectMember(member.username)}
-                          >
-                            <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-                              <img src={member.thumbnail} alt={member.username} className={styles.memberThumbnail} />
-                              <span className={styles.memberName}>{member.username}</span>
-                            </div>
-                            <div className={clsx(styles.circleCheck, isSelected ? styles.selected : styles.unselected)}>
-                              ✓
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
+                    {filteredMembers.length === 0 && searchQuery ? (
+                      <div className={styles.noResult}>검색된 결과가 없습니다</div>
+                    ) : (
+                      <>
+                        <p>내친구</p>
+                        <ul className={styles.memberListVertical}>
+                          {filteredMembers.map((member) => {
+                            const isSelected = selectedList.includes(member.username);
+                            return (
+                              <li
+                                key={member.memberId}
+                                className={styles.memberItemVertical}
+                                onClick={() => handleSelectMember(member.username)}
+                              >
+                                <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+                                  <img
+                                    src={member.thumbnail}
+                                    alt={member.username}
+                                    className={styles.memberThumbnail}
+                                  />
+                                  <span className={styles.memberName}>{member.username}</span>
+                                </div>
+                                <div
+                                  className={clsx(styles.circleCheck, isSelected ? styles.selected : styles.unselected)}
+                                >
+                                  ✓
+                                </div>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </>
+                    )}
                   </div>
                 </ModalContent>
               </ModalOverlay>

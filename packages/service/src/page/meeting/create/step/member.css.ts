@@ -255,3 +255,9 @@ export const removeSelectedButton = style({
   alignItems: 'center',
   justifyContent: 'center',
 });
+export const noResult = style({
+  padding: rem(24),
+  textAlign: 'center',
+  borderRadius: rem(6),
+  ...globalVars.text.body.medium,
+});
