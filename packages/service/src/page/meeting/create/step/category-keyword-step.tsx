@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { Input } from '@moeasy/storybook/ui/input';
 import { Button } from '@moeasy/storybook/ui/button';
+import { Label } from '@moeasy/storybook/ui/label/label';
 import { StepProps } from '../creating-step-form';
 import { CategorySelect } from '@/widget/meeting/category-select';
 
@@ -11,12 +12,12 @@ import * as keywordStyles from './keywords.css';
 export function CategoryKeywordStep({ formData, dispatch }: StepProps) {
   const [inputValue, setInputValue] = useState('');
 
+  const isKeywordsTooLong = inputValue.length > 10;
+
   const handleInputChange = (inputValue: string) => {
     setInputValue(inputValue);
   };
 
-  //TODO: 키워드 입력 오류시 처리 필요
-  // 키워드 10자 이상 등록 시 오류, 텍스트 10자 이상 입력 시 오류
   const handleAddKeyword = () => {
     if (!inputValue.trim()) return;
     if (formData.keywords.includes(inputValue.trim())) return;
@@ -34,14 +35,15 @@ export function CategoryKeywordStep({ formData, dispatch }: StepProps) {
 
   return (
     <div className={formStyles.formGroup}>
-      <label className={formStyles.label}>
-        <span>카테고리</span>
+      <label className={formStyles.labelWrapper}>
+        <div className={formStyles.label}>카테고리</div>
         <CategorySelect selectedCategory={formData.category} onValueChange={(category) => dispatch({ category })} />
       </label>
-      <label className={formStyles.label}>
-        <span>
+      <label className={formStyles.labelWrapper}>
+        <div className={formStyles.label}>
           키워드 <small>({formData.keywords.length}/10)</small>
-        </span>
+          {isKeywordsTooLong && <Label variant="error">최대 10글자까지 입력 가능합니다.</Label>}
+        </div>
         <div style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px' }}>
           <Input
             name="keywords"
@@ -55,6 +57,10 @@ export function CategoryKeywordStep({ formData, dispatch }: StepProps) {
                 handleAddKeyword();
               }
             }}
+            maxLength={10}
+            minLength={0}
+            isError={isKeywordsTooLong}
+            disabled={formData.keywords.length >= 10}
           />
           <Button
             type="button"
