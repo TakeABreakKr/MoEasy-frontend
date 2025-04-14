@@ -48,10 +48,9 @@ export const labelWrapper = style({
 
 export const label = style({
   display: 'flex',
-  flexDirection: 'column',
   gap: rem(8),
   alignItems: 'flex-start',
-  marginBottom: rem(8),
+  marginBottom: rem(10),
   ...globalVars.text.title.small,
 });
 
