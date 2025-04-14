@@ -3,7 +3,8 @@ import { http, HttpResponse } from 'msw';
 import { MeetingType } from '@/entities/meeting/api';
 import { initializeMeeting } from '@/entities/meeting/api/mock';
 
-const MOCK_API_BASE = 'http://localhost:5000';
+import { MOCK_API_BASE } from './const';
+
 const MEETING_ENDPOINT = `${MOCK_API_BASE}/meeting/get`;
 
 export const meetingHandlers = [

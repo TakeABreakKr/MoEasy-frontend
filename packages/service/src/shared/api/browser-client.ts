@@ -2,23 +2,18 @@ import createClient, { Middleware } from 'openapi-fetch';
 
 import { paths } from './my-schema';
 import { discordLoginUrl } from '../consts/login';
+import Cookies from 'js-cookie';
 
-export const browserClient = createClient<paths>({ baseUrl: 'http://localhost:5000' });
+export const browserClient = createClient<paths>({ baseUrl: process.env.NEXT_PUBLIC_API_BASE });
 
-const tokenCookieParser = (cookie: string = window.document.cookie, tokenName = 'AccessToken') => {
-  return cookie
-    .split(';')
-    .map((char) => char.trim())
-    .find((cookie) => cookie.startsWith(`${tokenName}=`))
-    ?.split('=')[1];
-};
+const notRequireTokenPaths = new Set<keyof paths>(['/home', '/auth/refresh']);
 
 const browserMiddleware: Middleware = {
   async onRequest({ request, schemaPath }) {
     try {
       // 로그인/리프레시는 토큰 없이 호출
-      if (schemaPath === '/auth/refresh') return request;
-      const accessTokenCookie = tokenCookieParser(window.document.cookie, 'AccessToken');
+      if (notRequireTokenPaths.has(schemaPath as keyof paths)) return request;
+      const accessTokenCookie = Cookies.get('AccessToken');
       if (accessTokenCookie) {
         request.headers.set('access-token', accessTokenCookie);
       }
@@ -28,17 +23,34 @@ const browserMiddleware: Middleware = {
     }
     return request;
   },
-  async onResponse({ response, schemaPath }) {
-    if (schemaPath === '/home/header') return response;
-    if (!response.ok && response.status === 401) {
-      const refreshTokenCookie = await tokenCookieParser(window.document.cookie, 'RefreshToken');
-      if (refreshTokenCookie) {
-        // TODO: fix setting AccessToken logic after API Developed!!
-        await browserClient.POST('/auth/refresh', {
+  async onResponse({ request, response }) {
+    if (response.ok) return response;
+    switch (response.status) {
+      case 401: {
+        window.location.href = discordLoginUrl;
+      }
+      case 410: {
+        const refreshTokenCookie = Cookies.get('RefreshToken');
+        if (!refreshTokenCookie) {
+          window.location.href = discordLoginUrl;
+          return response;
+        }
+        const { data } = await browserClient.POST('/auth/refresh', {
           body: { refreshToken: refreshTokenCookie },
         });
-      } else {
-        window.location.href = discordLoginUrl;
+        if (!data || !data.data) {
+          window.location.href = discordLoginUrl;
+          return response;
+        }
+        Cookies.set('AccessToken', data.data.accessToken);
+        Cookies.set('RefreshToken', data.data.refreshToken);
+        const { url, ...requestOptions } = request;
+        requestOptions.headers.set('access-token', data.data.accessToken);
+        const newResponse = await fetch(url, requestOptions);
+        return newResponse;
+      }
+      default: {
+        return response;
       }
     }
   },

@@ -15,14 +15,16 @@ export async function MainContent() {
       revalidate: 60 * 60 * 24,
     },
   });
+  const { popularMeetings, newMeetings, closingTimeActivities, upcomingActivities } = data?.data || {};
+  const { categories, mostActivatedRegions } = cachedData?.data || {};
   return (
     <>
-      <MainCategorySection title={t('카테고리.어떤 모임을 찾으세요?')} categories={cachedData?.categories} />
-      <MainCardMeetingSection title={t('this-week-pop-team')} href="#" data={data?.popularMeetings} />
-      <MainCardMeetingSection title={t('새로 생겼어요')} href="#" data={data?.newMeetings} />
-      <MainCardActivitySection title={t('마감임박 활동')} href="#" data={data?.closingTimeActivities} />
-      <MainUpcommingSchedule title={t('다가오는 활동')} data={data?.upcomingActivities} />
-      <MainLastSection mostActivatedRegions={cachedData?.mostActivatedRegions} />
+      <MainCategorySection title={t('카테고리.어떤 모임을 찾으세요?')} categories={categories} />
+      <MainCardMeetingSection title={t('this-week-pop-team')} href="#" data={popularMeetings} />
+      <MainCardMeetingSection title={t('새로 생겼어요')} href="#" data={newMeetings} />
+      <MainCardActivitySection title={t('마감임박 활동')} href="#" data={closingTimeActivities} />
+      <MainUpcommingSchedule title={t('다가오는 활동')} data={upcomingActivities} />
+      <MainLastSection mostActivatedRegions={mostActivatedRegions} />
     </>
   );
 }

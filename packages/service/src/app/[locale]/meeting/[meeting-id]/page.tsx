@@ -15,11 +15,11 @@ export default async function Page({ params }: { params: Promise<{ ['meeting-id'
       },
     },
   });
-  if (!data) redirect('/meeting');
+  if (!data?.data) redirect('/meeting');
 
   return (
     <main className={mainStyle.main}>
-      <MeetingDetailPage data={data} />
+      <MeetingDetailPage data={data.data} />
     </main>
   );
 }

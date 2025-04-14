@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import clsx from 'clsx';
 import { Toaster } from 'sonner';
 
-import { serverClient } from '@/shared/api/server-client';
+import { getUserInfo } from '@/entities/home/api';
 import { LoginPopup } from '@/widget/popup/login';
 
 import { pretendard } from '@moeasy/storybook/font';
@@ -25,7 +25,7 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  const { data: userData } = await serverClient.GET('/home/header');
+  const userData = await getUserInfo();
 
   return (
     <html lang={locale}>

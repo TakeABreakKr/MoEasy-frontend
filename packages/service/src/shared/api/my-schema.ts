@@ -515,11 +515,11 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
-    RefreshTokenRequest: {
-      refreshToken: string;
-    };
     RefreshTokenResponse: {
       accessToken: string;
+      refreshToken: string;
+    };
+    RefreshTokenRequest: {
       refreshToken: string;
     };
     MeetingCreateRequest: {
@@ -592,6 +592,8 @@ export interface components {
       limit: number;
       members: components['schemas']['MeetingMemberDto'][];
       thumbnail: string;
+      category: string;
+      memberCount: number;
       canJoin: boolean;
       likedYn: boolean;
       likeCount: number;
@@ -689,7 +691,7 @@ export interface components {
     ActivityCreateRequest: {
       meetingId: string;
       name: string;
-      explanation: string;
+      thumbnail: string;
       /** Format: date-time */
       startDate: string;
       /** Format: date-time */
@@ -697,18 +699,16 @@ export interface components {
       reminder: string[];
       announcement: string;
       onlineYn: boolean;
+      onlineLink: string;
       address: components['schemas']['AddressDto'];
       detailAddress: string;
       participantLimit: number;
       participants: string[];
     };
-    ErrorDto: {
-      message: string;
-    };
     ActivityUpdateRequest: {
       meetingId: string;
       name: string;
-      explanation: string;
+      thumbnail: string;
       /** Format: date-time */
       startDate: string;
       /** Format: date-time */
@@ -716,35 +716,190 @@ export interface components {
       reminder: string[];
       announcement: string;
       onlineYn: boolean;
+      onlineLink: string;
       address: components['schemas']['AddressDto'];
       detailAddress: string;
       participantLimit: number;
       participants: string[];
       activityId: number;
     };
+    ActivityMemberDto: {
+      username: string;
+      /** @enum {string} */
+      authority: 'WAITING' | 'MEMBER' | 'MANAGER' | 'OWNER';
+    };
     ActivityResponse: {
       name: string;
-      explanation: string;
       /** Format: date-time */
       startDate: string;
-      /** Format: date-time */
-      endDate: string;
       announcement: string;
       onlineYn: boolean;
-      address: components['schemas']['AddressDto'];
+      /**
+       * @example 서초구
+       * @enum {string}
+       */
+      region:
+        | '강서구'
+        | '양천구'
+        | '영등포구'
+        | '용산구'
+        | '은평구'
+        | '종로구'
+        | '중구'
+        | '중랑구'
+        | '동대문구'
+        | '동작구'
+        | '마포구'
+        | '서초구'
+        | '서대문구'
+        | '성동구'
+        | '성북구'
+        | '송파구'
+        | '강남구'
+        | '강동구'
+        | '강북구'
+        | '관악구'
+        | '광진구'
+        | '구로구'
+        | '금천구'
+        | '노원구'
+        | '도봉구'
+        | '수원시'
+        | '성남시'
+        | '고양시'
+        | '용인시'
+        | '부천시'
+        | '안산시'
+        | '안양시'
+        | '남양주시'
+        | '화성시'
+        | '평택시'
+        | '의정부시'
+        | '시흥시'
+        | '파주시'
+        | '김포시'
+        | '광명시'
+        | '광주시'
+        | '구리시'
+        | '오산시'
+        | '군포시'
+        | '의왕시'
+        | '하남시'
+        | '양주시'
+        | '동두천시'
+        | '안성시'
+        | '여주시'
+        | '이천시'
+        | '포천시'
+        | '가평군'
+        | '양평군'
+        | '연천군'
+        | '부산'
+        | '경남'
+        | '인천'
+        | '경북'
+        | '대구'
+        | '충남'
+        | '전남'
+        | '전북'
+        | '충북'
+        | '강원'
+        | '대전'
+        | '광주'
+        | '울산'
+        | '제주'
+        | '세종';
+      thumbnail: string;
+      participantLimit: number;
+      participantCount: number;
+      onlineLink: string;
+      members: components['schemas']['ActivityMemberDto'][];
     };
     ActivityListDto: {
       meetingId: string;
       name: string;
-      explanation: string;
+      thumbnail: string;
       onlineYn: boolean;
       /** Format: date-time */
       startDate: string;
-      /** Format: date-time */
-      endDate: string;
-      address: components['schemas']['AddressDto'];
-      announcement: string;
-      detailAddress: string;
+      participantCount: number;
+      participantLimit: number;
+      onlineLink: string;
+      /**
+       * @example 서초구
+       * @enum {string}
+       */
+      region:
+        | '강서구'
+        | '양천구'
+        | '영등포구'
+        | '용산구'
+        | '은평구'
+        | '종로구'
+        | '중구'
+        | '중랑구'
+        | '동대문구'
+        | '동작구'
+        | '마포구'
+        | '서초구'
+        | '서대문구'
+        | '성동구'
+        | '성북구'
+        | '송파구'
+        | '강남구'
+        | '강동구'
+        | '강북구'
+        | '관악구'
+        | '광진구'
+        | '구로구'
+        | '금천구'
+        | '노원구'
+        | '도봉구'
+        | '수원시'
+        | '성남시'
+        | '고양시'
+        | '용인시'
+        | '부천시'
+        | '안산시'
+        | '안양시'
+        | '남양주시'
+        | '화성시'
+        | '평택시'
+        | '의정부시'
+        | '시흥시'
+        | '파주시'
+        | '김포시'
+        | '광명시'
+        | '광주시'
+        | '구리시'
+        | '오산시'
+        | '군포시'
+        | '의왕시'
+        | '하남시'
+        | '양주시'
+        | '동두천시'
+        | '안성시'
+        | '여주시'
+        | '이천시'
+        | '포천시'
+        | '가평군'
+        | '양평군'
+        | '연천군'
+        | '부산'
+        | '경남'
+        | '인천'
+        | '경북'
+        | '대구'
+        | '충남'
+        | '전남'
+        | '전북'
+        | '충북'
+        | '강원'
+        | '대전'
+        | '광주'
+        | '울산'
+        | '제주'
+        | '세종';
     };
     ActivityListMeetingListDto: {
       name: string;
@@ -1199,13 +1354,18 @@ export interface operations {
       };
     };
     responses: {
-      /** @description refresh token succeed */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['RefreshTokenResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['RefreshTokenResponse'];
+          };
         };
       };
       /** @description invalid refresh token */
@@ -1231,12 +1391,18 @@ export interface operations {
       };
     };
     responses: {
-      /** @description Meeting Entity has been successfully created. */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 존재하지 않는 요청자입니다. */
       401: {
@@ -1261,12 +1427,18 @@ export interface operations {
       };
     };
     responses: {
-      /** @description Meeting Entity has been successfully modified. */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 해당 모임을 찾을 수 없습니다. */
       400: {
@@ -1298,12 +1470,18 @@ export interface operations {
       };
     };
     responses: {
-      /** @description Meeting Entity has been successfully modified. */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 해당 모임을 찾을 수 없습니다. */
       400: {
@@ -1332,12 +1510,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description Meeting Entity has been successfully deleted. */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 해당 모임을 찾을 수 없습니다. */
       400: {
@@ -1366,13 +1550,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description Meeting retrieved successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['MeetingResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['MeetingResponse'];
+          };
         };
       };
       /** @description 해당 모임을 찾을 수 없습니다. */
@@ -1408,13 +1597,18 @@ export interface operations {
       };
     };
     responses: {
-      /** @description Meeting list retrieved successfully. */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['MeetingListResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['MeetingListResponse'];
+          };
         };
       };
     };
@@ -1428,13 +1622,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description Meeting list retrieved successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['MeetingListResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['MeetingListResponse'];
+          };
         };
       };
     };
@@ -1450,12 +1649,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description Meeting like count has been successfully updated. */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 해당 모임을 찾을 수 없습니다. */
       400: {
@@ -1477,13 +1682,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description withdraw succeed */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['MemberSearchResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['MemberSearchResponse'];
+          };
         };
       };
     };
@@ -1500,13 +1710,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description Member retrieved successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['MemberResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['MemberResponse'];
+          };
         };
       };
       /** @description 해당 멤버를 찾을 수 없습니다. */
@@ -1529,12 +1744,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description withdraw succeed */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 해당 모임을 찾을 수 없습니다. */
       400: {
@@ -1566,12 +1787,18 @@ export interface operations {
       };
     };
     responses: {
-      /** @description authority updated succeed */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 존재하지 않는 요청자입니다. */
       401: {
@@ -1596,12 +1823,18 @@ export interface operations {
       };
     };
     responses: {
-      /** @description member deleted successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 존재하지 않는 요청자입니다. */
       401: {
@@ -1626,12 +1859,18 @@ export interface operations {
       };
     };
     responses: {
-      /** @description The join request has been successfully submitted and is awaiting approval. */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 해당 모임을 찾을 수 없습니다. */
       400: {
@@ -1660,13 +1899,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description waiting list retrieved successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['MemberWaitingListResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['MemberWaitingListResponse'];
+          };
         };
       };
       /** @description 존재하지 않는 요청자입니다. */
@@ -1692,12 +1936,18 @@ export interface operations {
       };
     };
     responses: {
-      /** @description member join approved successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 존재하지 않는 요청자입니다. */
       401: {
@@ -1722,21 +1972,25 @@ export interface operations {
       };
     };
     responses: {
-      /** @description Activity Entity has been created. */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 존재하지 않는 요청자입니다. */
       401: {
         headers: {
           [name: string]: unknown;
         };
-        content: {
-          'application/json': components['schemas']['ErrorDto'];
-        };
+        content?: never;
       };
     };
   };
@@ -1754,12 +2008,18 @@ export interface operations {
       };
     };
     responses: {
-      /** @description Activity has been updated. */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 해당 일정을 찾을 수 없습니다. */
       400: {
@@ -1788,13 +2048,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description activity entity retrieved successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['ActivityResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['ActivityResponse'];
+          };
         };
       };
       /** @description 해당 일정을 찾을 수 없습니다. */
@@ -1828,13 +2093,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description Activity list retrieved */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['ActivityListResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['ActivityListResponse'];
+          };
         };
       };
       /** @description 해당 일정을 찾을 수 없습니다. */
@@ -1867,12 +2137,18 @@ export interface operations {
       };
     };
     responses: {
-      /** @description withdraw successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 해당 일정을 찾을 수 없습니다. */
       400: {
@@ -1904,12 +2180,18 @@ export interface operations {
       };
     };
     responses: {
-      /** @description activity deleted successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+          };
+        };
       };
       /** @description 해당 일정을 찾을 수 없습니다. */
       400: {
@@ -1936,13 +2218,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description notification list */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['NotificationResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['NotificationResponse'];
+          };
         };
       };
       /** @description 존재하지 않는 요청자입니다. */
@@ -1999,13 +2286,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description get home data successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['HomeResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['HomeResponse'];
+          };
         };
       };
     };
@@ -2019,13 +2311,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description get home data successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['HomeCachedResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['HomeCachedResponse'];
+          };
         };
       };
     };
@@ -2039,13 +2336,18 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description get header data successfully */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          'application/json': components['schemas']['HeaderResponse'];
+          'application/json': {
+            /** @example 200 */
+            statusCode?: number;
+            /** @example Success */
+            message?: string;
+            data?: components['schemas']['HeaderResponse'];
+          };
         };
       };
     };
