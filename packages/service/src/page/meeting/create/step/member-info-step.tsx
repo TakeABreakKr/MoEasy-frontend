@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import clsx from 'clsx';
 
 import { mockmembers } from '@/entities/member/api/mock';
@@ -9,6 +9,7 @@ import { Modal, ModalClose, ModalContent, ModalOverlay, ModalPortal, ModalTrigge
 import * as modalStyles from '@moeasy/storybook/ui/dialog/dialog.css';
 import { SearchIcon } from '@moeasy/storybook/ui/icon';
 import { Input } from '@moeasy/storybook/ui/input';
+import { Label } from '@moeasy/storybook/ui/label/label';
 
 import { StepProps } from '../creating-step-form';
 
@@ -20,20 +21,35 @@ type MemberStepProps = StepProps & {
 
 export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: MemberStepProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
   const [selectedList, setSelectedList] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const isTooManySelected = selectedList.length >= Number(formData.limit) && Number(formData.limit) !== 0;
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setSelectedList(formData.member || []);
+    }
+  }, [isModalOpen]);
+
   const handleSelectMember = (member: string) => {
-    setSelectedList((prev) => (prev.includes(member) ? prev.filter((m) => m !== member) : [...prev, member]));
+    const isSelected = selectedList.includes(member);
+    const limit = formData.limit === '' ? Infinity : Number(formData.limit);
+    if (isSelected) {
+      setSelectedList((prev) => prev.filter((m) => m !== member));
+    } else if (selectedList.length < limit) {
+      setSelectedList((prev) => [...prev, member]);
+    }
   };
 
   const handleRemoveMember = (member: string) => {
-    setSelectedMembers((prev) => prev.filter((m) => m !== member));
+    dispatch({
+      member: formData.member.filter((m) => m !== member),
+    });
   };
 
   const handleConfirmSelection = () => {
-    setSelectedMembers(selectedList);
+    dispatch({ member: selectedList });
     setIsModalOpen(false);
   };
 
@@ -43,15 +59,18 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
 
   return (
     <div className={formStyles.formGroup}>
-      <label className={formStyles.label}>
-        <span>몇 명까지 참여할 수 있나요?</span>
+      <label className={formStyles.labelWrapper}>
+        <div className={formStyles.label}>몇 명까지 참여할 수 있나요?</div>
         <div className={styles.limitInput}>
           <Input
             name="limit"
             placeholder="모임 인원을 입력해주세요"
+            className={formStyles.input}
+            type="number"
             value={formData.limit}
             onValueChange={(limit) => dispatch({ limit })}
             disabled={formData.limitDisabled}
+            min={1}
           />
           <Button
             type="button"
@@ -64,11 +83,9 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
           </Button>
         </div>
       </label>
-      {/* TODO: 선택된 멤버 보여주는 ui 추가(모달창 내에서) */}
       {/* TODO: 모임원 많이 선택되었을 시 | 스크롤 추가 | 제한 추가 */}
-      {/* TODO: css 파일 수정 */}
-      <label className={formStyles.label}>
-        <span>모임원 추가</span>
+      <label className={formStyles.labelWrapper}>
+        <div className={formStyles.label}>모임원 추가</div>
         <div className={formStyles.input}>
           <Modal open={isModalOpen} onOpenChange={setIsModalOpen} isOutsideClose>
             <ModalTrigger type="button" onClick={() => setIsModalOpen(true)} className={styles.searchButton}>
@@ -94,6 +111,9 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
                       <>
                         <div className={styles.selectedCount}>
                           {selectedList.length}/{formData.limit}명
+                          {isTooManySelected && (
+                            <Label variant="error">최대 {formData.limit}명까지만 선택할 수 있어요</Label>
+                          )}
                         </div>
                         <div className={styles.selectedMemberList}>
                           {selectedList.map((name) => {
@@ -166,10 +186,10 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
         </div>
       </label>
       <div className={styles.memberList}>
-        {selectedMembers.length > 0 && (
+        {formData.member.length > 0 && (
           <>
-            <div className={styles.memberNumberItem}>{selectedMembers.length}명</div>
-            {selectedMembers.map((member) => (
+            <div className={styles.memberNumberItem}>{formData.member.length}명</div>
+            {formData.member.map((member) => (
               <div key={member} className={styles.memberItem}>
                 <span>{member}</span>
                 <button type="button" className={styles.removeButton} onClick={() => handleRemoveMember(member)}>
