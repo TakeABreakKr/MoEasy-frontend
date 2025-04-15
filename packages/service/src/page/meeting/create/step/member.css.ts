@@ -273,3 +273,35 @@ export const noResult = style({
   borderRadius: rem(6),
   ...globalVars.text.body.medium,
 });
+
+export const publicYnSection = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: rem(8),
+});
+
+export const publicYnQuestion = style({
+  ...globalVars.text.title.small,
+});
+
+export const publicYnButtons = style({
+  display: 'flex',
+  gap: rem(8),
+});
+
+export const publicYnButton = style({
+  padding: rem(8, 16),
+  display: 'flex',
+  borderRadius: rem(8),
+  alignItems: 'center',
+  backgroundColor: globalVars.color.neutral.white,
+  color: globalVars.color.neutral[50],
+  border: `1px solid ${globalVars.color.neutral[50]}`,
+  cursor: 'pointer',
+  ...globalVars.text.body.small,
+});
+
+export const publicSelected = style({
+  backgroundColor: globalVars.color.neutral[80],
+  color: globalVars.color.neutral.white,
+});

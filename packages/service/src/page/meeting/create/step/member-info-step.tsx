@@ -200,6 +200,29 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
           </>
         )}
       </div>
+      <div className={formStyles.labelWrapper}>
+        {formData.member.length > 0 && (
+          <div className={styles.publicYnSection}>
+            <p className={styles.publicYnQuestion}>모임을 비공개 할까요?</p>
+            <div className={styles.publicYnButtons}>
+              <Button
+                type="button"
+                onClick={() => dispatch({ publicYn: false })}
+                className={clsx(styles.publicYnButton, !formData.publicYn && styles.publicSelected)}
+              >
+                아니오
+              </Button>
+              <Button
+                type="button"
+                onClick={() => dispatch({ publicYn: true })}
+                className={clsx(styles.publicYnButton, formData.publicYn && styles.publicSelected)}
+              >
+                네
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

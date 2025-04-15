@@ -19,6 +19,7 @@ type FormDataType = {
   limitDisabled: boolean;
   thumbnail: File | null;
   member: string[];
+  publicYn: boolean;
 };
 
 export type StepProps = {
@@ -37,6 +38,7 @@ export function CreatingStepForm() {
     limitDisabled: false,
     thumbnail: null,
     member: [],
+    publicYn: false,
   });
 
   const dispatch = (payload: Partial<FormDataType>) => {
