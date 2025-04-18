@@ -56,7 +56,11 @@ export function CreatingStepForm() {
   };
 
   const goToNextStep = () => {
-    if (step < 4) setStep(step + 1);
+    if (step === 4) {
+      console.log('최종 formData:', formData); // 테스트용) formData 출력
+    } else if (step < 4) {
+      setStep(step + 1);
+    }
   };
 
   const goToPrevStep = () => {
