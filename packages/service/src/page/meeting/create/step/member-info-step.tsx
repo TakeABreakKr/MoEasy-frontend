@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 
 import { mockmembers } from '@/entities/member/api/mock';
@@ -25,6 +25,35 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
   const [searchQuery, setSearchQuery] = useState('');
 
   const isTooManySelected = selectedList.length >= Number(formData.limit) && Number(formData.limit) !== 0;
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slideRef = useRef<HTMLDivElement>(null);
+  const viewingSkill = 7;
+  const TOTAL_SLIDES = Math.ceil(selectedList.length / viewingSkill) - 1;
+  const firstSlide = 0;
+
+  const handleClickNextSlide = () => {
+    if (currentSlide >= TOTAL_SLIDES) {
+      setCurrentSlide(firstSlide);
+    } else {
+      setCurrentSlide(currentSlide + 1);
+    }
+  };
+
+  const handleClickPrevSlide = () => {
+    if (currentSlide === firstSlide) {
+      setCurrentSlide(TOTAL_SLIDES);
+    } else {
+      setCurrentSlide(currentSlide - 1);
+    }
+  };
+
+  useEffect(() => {
+    if (slideRef.current) {
+      slideRef.current.style.transition = 'all 0.5s ease-in-out';
+      slideRef.current.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+  }, [currentSlide]);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -83,7 +112,6 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
           </Button>
         </div>
       </label>
-      {/* TODO: 모임원 많이 선택되었을 시 | 스크롤 추가 | 제한 추가 */}
       <label className={formStyles.labelWrapper}>
         <div className={formStyles.label}>모임원 추가</div>
         <div className={formStyles.input}>
@@ -109,33 +137,48 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
                   <div className={styles.selectedMemberSection} data-visible={selectedList.length > 0}>
                     {selectedList.length > 0 && (
                       <>
-                        <div className={styles.selectedCount}>
-                          {selectedList.length}/{formData.limit}명
-                          {isTooManySelected && (
-                            <Label variant="error">최대 {formData.limit}명까지만 선택할 수 있어요</Label>
-                          )}
-                        </div>
-                        <div className={styles.selectedMemberList}>
-                          {selectedList.map((name) => {
-                            const member = mockmembers.find((m) => m.username === name);
-                            return (
-                              <div key={name} className={styles.selectedMember}>
-                                <img src={member?.thumbnail} alt={name} className={styles.selectedThumbnail} />
-                                <button
-                                  type="button"
-                                  className={styles.removeSelectedButton}
-                                  onClick={() => handleSelectMember(name)}
-                                >
-                                  ×
+                        <div className={styles.selectedCountWrapper}>
+                          <div className={styles.selectedCount}>
+                            {selectedList.length}/{formData.limit}명
+                            {isTooManySelected && <Label variant="error">최대 인원까지 선택하셨습니다.</Label>}
+                          </div>
+                          <div className={styles.angleButtons}>
+                            {selectedList.length > viewingSkill && (
+                              <>
+                                <button type="button" onClick={handleClickPrevSlide} className={styles.angleButton}>
+                                  {'<'}
                                 </button>
-                                {member?.username}
-                              </div>
-                            );
-                          })}
+                                <button type="button" onClick={handleClickNextSlide} className={styles.angleButton}>
+                                  {'>'}
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        <div className={styles.selectedMemberWrapper}>
+                          <div ref={slideRef} className={styles.selectedMemberList}>
+                            {selectedList.map((name) => {
+                              const member = mockmembers.find((m) => m.username === name);
+                              return (
+                                <div key={name} className={styles.selectedMember}>
+                                  <img src={member?.thumbnail} alt={name} className={styles.selectedThumbnail} />
+                                  <button
+                                    type="button"
+                                    className={styles.removeSelectedButton}
+                                    onClick={() => handleSelectMember(name)}
+                                  >
+                                    ×
+                                  </button>
+                                  {member?.username}
+                                </div>
+                              );
+                            })}
+                          </div>
                         </div>
                       </>
                     )}
                   </div>
+
                   <div className={styles.searchInputWrapper}>
                     <Input
                       placeholder="닉네임, 유저코드 검색"
