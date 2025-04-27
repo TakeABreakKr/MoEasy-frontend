@@ -3,11 +3,8 @@ import { http, HttpResponse } from 'msw';
 import { MeetingType } from '@/entities/meeting/api';
 import { initializeMeeting } from '@/entities/meeting/api/mock';
 
-const MOCK_API_BASE = 'http://localhost:5000';
-const MEETING_ENDPOINT = `${MOCK_API_BASE}/meeting/get`;
-
-export const meetingHandlers = [
-  http.get(MEETING_ENDPOINT, ({ request }) => {
+export const createMeetingHandlers = (baseUrl: string) => [
+  http.get(`${baseUrl}/meeting/get`, ({ request }) => {
     const url = new URL(request.url);
     const meetingId = url.searchParams.get('meetingId');
     const data = initializeMeeting(Number(meetingId));

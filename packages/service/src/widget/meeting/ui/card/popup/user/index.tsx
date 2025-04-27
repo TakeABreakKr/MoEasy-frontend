@@ -3,7 +3,7 @@ import { createFunnelSteps, useFunnel } from '@use-funnel/browser';
 
 import { MeetingAuthority } from '@/entities';
 import { MemberType } from '@/entities/member/api';
-import { useQuery } from '@/shared/hooks/use-query';
+import { useMemberQuery } from '@/entities/member/api/browser/mock';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { copyText } from '@/shared/utils/copy-text';
 import { escapePopup, isManagerAutorized, toPopupCard } from '@/widget/meeting/utils';
@@ -54,10 +54,10 @@ export function MemberCard({
       context: {},
     },
   });
-  const { data, loading, error, refetch } = useQuery<MemberType>({ queryURL: `/mock/member/${memberId}` });
+  const { data, isLoading, error, refetch } = useMemberQuery(memberId);
 
   let renderComponent: React.ReactNode;
-  if (loading) renderComponent = <div>loading...</div>;
+  if (isLoading) renderComponent = <div>loading...</div>;
   if (error) renderComponent = <UserCardErrorFallback refetch={refetch} meetingId={meetingId} toMeeting={toMeeting} />;
   if (data) {
     renderComponent = (

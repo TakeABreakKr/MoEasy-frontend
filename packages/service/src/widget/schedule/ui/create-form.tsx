@@ -78,7 +78,7 @@ export function ScheduleCreateForm() {
               name={({ history, context }) => (
                 <C스케쥴이름및소개
                   name={context.name}
-                  explanation={context.explanation}
+                  // explanation={context.explanation}
                   onNextStep={(param) => history.push('date', param)}
                 />
               )}
@@ -134,19 +134,17 @@ export function ScheduleCreateForm() {
   );
 }
 
-type C스케쥴이름및소개값 = Pick<CreateScheduleType, 'name' | 'explanation'>;
+type C스케쥴이름및소개값 = Pick<CreateScheduleType, 'name'>;
 type C스케쥴이름및소개값Props = Partial<C스케쥴이름및소개값>;
 
 function C스케쥴이름및소개({
   name = '',
-  explanation = '',
   onNextStep,
 }: C스케쥴이름및소개값Props & {
   onNextStep: (param: C스케쥴이름및소개값) => void;
 }) {
   const [state, dispatch] = useReducer(objectReducer<C스케쥴이름및소개값>, {
     name,
-    explanation,
   });
   return (
     <>
@@ -163,7 +161,7 @@ function C스케쥴이름및소개({
             onValueChange={(name) => dispatch({ name })}
           />
         </label>
-        <label className={formStyles.label}>
+        {/* <label className={formStyles.label}>
           <span>일정 소개</span>
           <Textarea
             className={formStyles.input}
@@ -174,7 +172,7 @@ function C스케쥴이름및소개({
             value={state.explanation}
             onValueChange={(explanation) => dispatch({ explanation })}
           />
-        </label>
+        </label> */}
       </div>
       <CreateButtonFirst prevHref="/mypage" onNextStep={() => onNextStep(state)} />
     </>

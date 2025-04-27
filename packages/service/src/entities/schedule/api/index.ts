@@ -14,7 +14,7 @@ export const scheduleModifyAction: CommonFormAction = async (_, formData) => {
   const parsedForm: Partial<CreateScheduleType> = {
     meetingId: 'G_NOT_IMPLEMENTED',
     name: stringParser(formData.get('name'), { required: true }),
-    explanation: stringParser(formData.get('explanation')),
+    // explanation: stringParser(formData.get('explanation')),
     startDate: stringParser(formData.get('startDate')),
     endDate: stringParser(formData.get('endDate')),
     announcement: stringParser(formData.get('announcement')),

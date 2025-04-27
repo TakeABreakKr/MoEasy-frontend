@@ -2,11 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
 
-import AboutAdmin from '@/../public/about-admin.png';
-import AboutFirst from '@/../public/about-first.png';
-import AboutLast from '@/../public/about-last.png';
-import AboutManager from '@/../public/about-manager.png';
-import AboutMember from '@/../public/about-member.png';
+import AboutAdmin from '@/../public/images/about-admin.png';
+import AboutFirst from '@/../public/images/about-first.png';
+import AboutLast from '@/../public/images/about-last.png';
+import AboutManager from '@/../public/images/about-manager.png';
+import AboutMember from '@/../public/images/about-member.png';
 
 import { Cursor } from '@moeasy/storybook/ui/cursor';
 import { Text } from '@moeasy/storybook/ui/text';

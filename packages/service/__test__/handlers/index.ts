@@ -1,6 +1,8 @@
-import { homeHandlers } from './home';
-import { meetingHandlers } from './meeting';
+import { getMockBaseUrl, type URL_ORIGIN_TYPE } from './const';
+import { createHomeHandlers } from './home';
+import { createMeetingHandlers } from './meeting';
 
-export const MOCK_API_BASE = 'http://localhost:5000';
-
-export const handlers = [...homeHandlers, ...meetingHandlers];
+export const createBasehandlers = (baseType: URL_ORIGIN_TYPE) => [
+  ...createHomeHandlers(getMockBaseUrl(baseType)),
+  ...createMeetingHandlers(getMockBaseUrl(baseType)),
+];

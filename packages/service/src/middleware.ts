@@ -7,10 +7,12 @@ const I18nMiddleware = createI18nMiddleware({
   urlMappingStrategy: 'rewriteDefault',
 });
 
-export function middleware(request: NextRequest) {
-  return I18nMiddleware(request);
+export async function middleware(request: NextRequest) {
+  const i18nResponse = I18nMiddleware(request);
+  i18nResponse.headers.set('x-moeasy-pathname', request.nextUrl.pathname);
+  return i18nResponse;
 }
 
 export const config = {
-  matcher: ['/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)'],
+  matcher: ['/((?!api|static|.*\\..*|_next|images|mockServiceWorker.js|favicon.ico|robots.txt).*)'],
 };
