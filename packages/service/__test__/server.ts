@@ -1,5 +1,5 @@
 import { setupServer } from 'msw/node';
 
-import { handlers } from './handlers';
+import { createBasehandlers } from './handlers';
 
-export const mockServer = setupServer(...handlers);
+export const mockServer = setupServer(...createBasehandlers('SERVER'));

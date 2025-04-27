@@ -5,8 +5,6 @@ import { categoryList } from '@/shared/consts/category';
 
 import { successResponse, SuccessResponseType } from '../utils';
 
-import { MOCK_API_BASE } from './const';
-
 const dummyMemberThumbnails = [
   { authority: 'OWNER', thumbnail: 'https://placehold.co/30/png' },
   { authority: 'MANAGER', thumbnail: 'https://placehold.co/30/png' },
@@ -16,8 +14,8 @@ const dummyMemberThumbnails = [
   { authority: 'MEMBER', thumbnail: 'https://placehold.co/30/png' },
 ] satisfies components['schemas']['ActivityParticipantDto'][];
 
-export const homeHandlers = [
-  http.get(`${MOCK_API_BASE}/home`, () => {
+export const createHomeHandlers = (baseUrl: string) => [
+  http.get(`${baseUrl}/home`, () => {
     return HttpResponse.json<SuccessResponseType<components['schemas']['HomeResponse']>>(
       successResponse({
         popularMeetings: [
@@ -63,7 +61,7 @@ export const homeHandlers = [
             thumbnail: 'https://placehold.co/30/png',
             meetingName: 'Meeting 1',
             isOnlineYn: true,
-            onlineLink: MOCK_API_BASE,
+            onlineLink: baseUrl,
             participantCount: 2,
             participantLimit: 10,
             region: '가평군',
@@ -76,7 +74,7 @@ export const homeHandlers = [
             thumbnail: 'https://placehold.co/30/png',
             meetingName: 'Meeting 1',
             isOnlineYn: false,
-            onlineLink: MOCK_API_BASE,
+            onlineLink: baseUrl,
             region: '강북구',
             time: '2025-02-03T14:00:00Z',
             participantCount: 20,
@@ -91,7 +89,7 @@ export const homeHandlers = [
             thumbnail: 'https://placehold.co/30/png',
             meetingName: 'Meeting 1',
             isOnlineYn: false,
-            onlineLink: MOCK_API_BASE,
+            onlineLink: baseUrl,
             region: '강서구',
             time: '2025-02-10T09:00:00Z',
             participants: dummyMemberThumbnails,
@@ -104,7 +102,7 @@ export const homeHandlers = [
             thumbnail: 'https://placehold.co/30/png',
             meetingName: 'Meeting 1',
             isOnlineYn: true,
-            onlineLink: MOCK_API_BASE,
+            onlineLink: baseUrl,
             region: '강동구',
             time: '2025-02-15T19:00:00Z',
             participants: dummyMemberThumbnails,
@@ -115,7 +113,7 @@ export const homeHandlers = [
       }),
     );
   }),
-  http.get(`${MOCK_API_BASE}/home/cache`, () => {
+  http.get(`${baseUrl}/home/cache`, () => {
     return HttpResponse.json<SuccessResponseType<components['schemas']['HomeCachedResponse']>>(
       successResponse({
         categories: categoryList.map((category) => ({
@@ -145,7 +143,7 @@ export const homeHandlers = [
       }),
     );
   }),
-  http.get(`${MOCK_API_BASE}/home/header`, ({ request }) => {
+  http.get(`${baseUrl}/home/header`, ({ request }) => {
     const accessToken = request.headers.get('access-token');
     if (!accessToken) {
       return new HttpResponse(null, { status: 401, statusText: 'Unauthorized' });
