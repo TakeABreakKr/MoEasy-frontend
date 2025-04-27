@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
 
 import { MeetingType } from '@/entities/meeting/api';
+import { useMeetingQuery } from '@/entities/meeting/api/browser/mock';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { copyText } from '@/shared/utils/copy-text';
 import { escapePopup, getUserRoleForTags } from '@/widget/meeting/utils';
@@ -33,15 +33,7 @@ export function MeetingPopupCard({
   meetingId: string;
   toMemberCard: toMemberCardCallback;
 }) {
-  const { data, isLoading, error, refetch } = useQuery<MeetingType>({
-    queryKey: ['meeting', meetingId],
-    queryFn: async () => {
-      const response = await fetch(`mock/meeting/${meetingId}`);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const newData = await response.json();
-      return newData;
-    },
-  });
+  const { data, isLoading, error, refetch } = useMeetingQuery(meetingId);
 
   let renderComponent: React.ReactNode;
   if (isLoading) renderComponent = <div>loading...</div>;

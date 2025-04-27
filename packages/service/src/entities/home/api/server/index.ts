@@ -13,3 +13,17 @@ export const getUserInfo = async () => {
   const { data } = await serverClient.GET('/home/header');
   return data?.data || null;
 };
+
+export const getHomeData = async () => {
+  const { data } = await serverClient.GET('/home');
+  return data?.data;
+};
+
+export const getHomeCache = async () => {
+  const { data } = await serverClient.GET('/home/cache', {
+    next: {
+      revalidate: 60 * 60 * 24,
+    },
+  });
+  return data?.data;
+};

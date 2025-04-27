@@ -1,11 +1,10 @@
 import { PropsWithChildren } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 
-import { MeetingType } from '@/entities/meeting/api';
-import { MemberType } from '@/entities/member/api';
+import { useMeetingListQuery } from '@/entities/meeting/api/browser/mock';
+import { useMemberListQuery } from '@/entities/member/api/browser/mock';
 import { plainLink } from '@/shared/style/link/index.css';
 import { cardGrid } from '@/shared/style/list/list.css';
 
@@ -94,16 +93,7 @@ export function SearchResultMeetingKeywordContainer({
   expostKeywords?: boolean;
   exposeCode?: boolean;
 }) {
-  const queryString = new URLSearchParams({ keyword, name, code }).toString();
-  const { data, isLoading, error, refetch } = useQuery<MeetingType[]>({
-    queryKey: ['meeting', queryString],
-    queryFn: async () => {
-      const response = await fetch(`mock/meeting/list?${queryString}`);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const newData = await response.json();
-      return newData;
-    },
-  });
+  const { data, isLoading, error, refetch } = useMeetingListQuery({ keyword, name, code });
 
   if (isLoading) return <Text label="medium">모임 데이터를 불러오는 중입니다.</Text>;
   if (error)
@@ -140,16 +130,7 @@ export function SearchResultMemberKeywordContainer({
   code?: string;
   exposeCode?: boolean;
 }) {
-  const queryString = new URLSearchParams({ name, code }).toString();
-  const { data, isLoading, error, refetch } = useQuery<MemberType[]>({
-    queryKey: ['member', queryString],
-    queryFn: async () => {
-      const response = await fetch(`mock/member/list?${queryString}`);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const newData = await response.json();
-      return newData;
-    },
-  });
+  const { data, isLoading, error, refetch } = useMemberListQuery({ name, code });
 
   if (isLoading) return <Text label="medium">유저 데이터를 불러오는 중입니다.</Text>;
   if (error)

@@ -1,7 +1,6 @@
 import { useSearchParams } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
 
-import { MeetingType } from '@/entities/meeting/api';
+import { useMeetingQuery } from '@/entities/meeting/api/browser/mock';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { alertCall } from '@/shared/utils/alert-call';
 import { searchKeywordAction } from '@/widget/search/lib';
@@ -23,15 +22,7 @@ import { MeetingJoinTextarea } from './textarea';
 export function SearchMeetingPopupCard({ meetingId }: { meetingId: string }) {
   const searchParams = useSearchParams();
   const exitPopup = () => searchKeywordAction({ meetingId: null }, searchParams);
-  const { data, isLoading, error, refetch } = useQuery<MeetingType>({
-    queryKey: ['meeting', meetingId],
-    queryFn: async () => {
-      const response = await fetch(`mock/meeting/${meetingId}`);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const newData = await response.json();
-      return newData;
-    },
-  });
+  const { data, isLoading, error, refetch } = useMeetingQuery(meetingId);
 
   const showTitle = isLoading ? '불러오는 중...' : error ? '이름을 불러올 수 없습니다.' : data?.name;
   const showExplanation = isLoading ? '불러오는 중...' : error ? '설명을 불러올 수 없습니다.' : data?.explanation;

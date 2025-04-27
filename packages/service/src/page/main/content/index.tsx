@@ -1,5 +1,5 @@
+import { getHomeCache, getHomeData } from '@/entities/home/api/server';
 import { getScopedI18n } from '@/locales/server';
-import { serverClient } from '@/shared/api/server-client';
 
 import { MainCardActivitySection } from '../section/activity';
 import { MainCategorySection } from '../section/category';
@@ -9,14 +9,10 @@ import { MainUpcommingSchedule } from '../section/upcoming';
 
 export async function MainContent() {
   const t = await getScopedI18n('main');
-  const { data } = await serverClient.GET('/home');
-  const { data: cachedData } = await serverClient.GET('/home/cache', {
-    next: {
-      revalidate: 60 * 60 * 24,
-    },
-  });
-  const { popularMeetings, newMeetings, closingTimeActivities, upcomingActivities } = data?.data || {};
-  const { categories, mostActivatedRegions } = cachedData?.data || {};
+  const homeData = await getHomeData();
+  const cachedData = await getHomeCache();
+  const { popularMeetings, newMeetings, closingTimeActivities, upcomingActivities } = homeData || {};
+  const { categories, mostActivatedRegions } = cachedData || {};
   return (
     <>
       <MainCategorySection title={t('카테고리.어떤 모임을 찾으세요?')} categories={categories} />

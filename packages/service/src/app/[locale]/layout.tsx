@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import clsx from 'clsx';
 import { Toaster } from 'sonner';
 
-import { getUserInfo } from '@/entities/home/api';
+import { getUserInfo } from '@/entities/home/api/server';
 import { LoginPopup } from '@/widget/popup/login';
 
 import { pretendard } from '@moeasy/storybook/font';
