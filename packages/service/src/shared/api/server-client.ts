@@ -5,9 +5,9 @@ import createClient, { Middleware } from 'openapi-fetch';
 import { paths } from './my-schema';
 import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { discordLoginUrl } from '../consts/login';
+import { ProviderUrl } from '../consts/login';
 
-const serverClient = createClient<paths>({ baseUrl: process.env.NEXT_PUBLIC_API_BASE });
+const serverClient = createClient<paths>({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_SERVER });
 
 const serverActionMiddleware: Middleware = {
   async onRequest({ request, schemaPath }) {
@@ -34,7 +34,7 @@ const serverActionMiddleware: Middleware = {
     if (response.ok) return response;
     switch (response.status) {
       case 401: {
-        redirect(discordLoginUrl);
+        redirect(ProviderUrl.DISCORD);
       }
       case 410: {
         const origin = request.headers.get('x-moeasy-pathname') || '/';

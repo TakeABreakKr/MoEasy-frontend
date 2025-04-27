@@ -1,10 +1,10 @@
 import createClient, { Middleware } from 'openapi-fetch';
 
 import { paths } from './my-schema';
-import { discordLoginUrl } from '../consts/login';
+import { ProviderUrl } from '../consts/login';
 import Cookies from 'js-cookie';
 
-export const browserClient = createClient<paths>({ baseUrl: process.env.NEXT_PUBLIC_API_BASE });
+export const browserClient = createClient<paths>({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_BROWSER });
 
 const notRequireTokenPaths = new Set<keyof paths>(['/home', '/auth/refresh']);
 
@@ -27,19 +27,19 @@ const browserMiddleware: Middleware = {
     if (response.ok) return response;
     switch (response.status) {
       case 401: {
-        window.location.href = discordLoginUrl;
+        window.location.href = ProviderUrl.DISCORD;
       }
       case 410: {
         const refreshTokenCookie = Cookies.get('RefreshToken');
         if (!refreshTokenCookie) {
-          window.location.href = discordLoginUrl;
+          window.location.href = ProviderUrl.DISCORD;
           return response;
         }
         const { data } = await browserClient.POST('/auth/refresh', {
           body: { refreshToken: refreshTokenCookie },
         });
         if (!data || !data.data) {
-          window.location.href = discordLoginUrl;
+          window.location.href = ProviderUrl.DISCORD;
           return response;
         }
         Cookies.set('AccessToken', data.data.accessToken);

@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import Script from 'next/script';
 
-import PostInput from '@/app/[locale]/schedule/create/post-input';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { Address } from '@/shared/type/daum-post';
+import PostInput from '@/shared/ui/post-input';
 
 import { Input } from '@moeasy/storybook/ui/input';
 import { Text } from '@moeasy/storybook/ui/text';
