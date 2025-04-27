@@ -1,11 +1,11 @@
 import { PropsWithChildren } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 
 import { MeetingType } from '@/entities/meeting/api';
 import { MemberType } from '@/entities/member/api';
-import { useQuery } from '@/shared/hooks/use-query';
 import { plainLink } from '@/shared/style/link/index.css';
 import { cardGrid } from '@/shared/style/list/list.css';
 
@@ -95,18 +95,24 @@ export function SearchResultMeetingKeywordContainer({
   exposeCode?: boolean;
 }) {
   const queryString = new URLSearchParams({ keyword, name, code }).toString();
-  const { data, loading, error, refetch } = useQuery<MeetingType[]>({
-    queryURL: `mock/meeting/list?${queryString}`,
+  const { data, isLoading, error, refetch } = useQuery<MeetingType[]>({
+    queryKey: ['meeting', queryString],
+    queryFn: async () => {
+      const response = await fetch(`mock/meeting/list?${queryString}`);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const newData = await response.json();
+      return newData;
+    },
   });
 
-  if (loading) return <Text label="medium">모임 데이터를 불러오는 중입니다.</Text>;
+  if (isLoading) return <Text label="medium">모임 데이터를 불러오는 중입니다.</Text>;
   if (error)
     return (
       <Text label="medium">
-        모임 데이터를 불러오는데 실패했습니다. <button onClick={refetch}>재요청</button>
+        모임 데이터를 불러오는데 실패했습니다. <button onClick={() => refetch()}>재요청</button>
       </Text>
     );
-  if (!loading && !error) {
+  if (!isLoading && !error) {
     if (!data || !data.length) return <Text label="medium">검색된 모임이 없습니다.</Text>;
     return (
       <div className={clsx(cardGrid, styles.gridMargin)}>
@@ -135,18 +141,24 @@ export function SearchResultMemberKeywordContainer({
   exposeCode?: boolean;
 }) {
   const queryString = new URLSearchParams({ name, code }).toString();
-  const { data, loading, error, refetch } = useQuery<MemberType[]>({
-    queryURL: `mock/member/list?${queryString}`,
+  const { data, isLoading, error, refetch } = useQuery<MemberType[]>({
+    queryKey: ['member', queryString],
+    queryFn: async () => {
+      const response = await fetch(`mock/member/list?${queryString}`);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const newData = await response.json();
+      return newData;
+    },
   });
 
-  if (loading) return <Text label="medium">유저 데이터를 불러오는 중입니다.</Text>;
+  if (isLoading) return <Text label="medium">유저 데이터를 불러오는 중입니다.</Text>;
   if (error)
     return (
       <Text label="medium">
-        유저 데이터를 불러오는데 실패했습니다. <button onClick={refetch}>재요청</button>
+        유저 데이터를 불러오는데 실패했습니다. <button onClick={() => refetch()}>재요청</button>
       </Text>
     );
-  if (!loading && !error) {
+  if (!isLoading && !error) {
     if (!data || !data.length) return <Text label="medium">검색된 유저가 없습니다.</Text>;
     return (
       <div className={clsx(cardGrid, styles.gridMargin)}>
