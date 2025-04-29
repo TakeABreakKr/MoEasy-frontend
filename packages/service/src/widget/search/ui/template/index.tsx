@@ -3,9 +3,8 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
-import { MeetingType } from '@/entities/meeting/api';
-import { MemberType } from '@/entities/member/api';
-import { useQuery } from '@/shared/hooks/use-query';
+import { useMeetingListQuery } from '@/entities/meeting/api/browser/mock';
+import { useMemberListQuery } from '@/entities/member/api/browser/mock';
 import { plainLink } from '@/shared/style/link/index.css';
 import { cardGrid } from '@/shared/style/list/list.css';
 
@@ -94,19 +93,16 @@ export function SearchResultMeetingKeywordContainer({
   expostKeywords?: boolean;
   exposeCode?: boolean;
 }) {
-  const queryString = new URLSearchParams({ keyword, name, code }).toString();
-  const { data, loading, error, refetch } = useQuery<MeetingType[]>({
-    queryURL: `mock/meeting/list?${queryString}`,
-  });
+  const { data, isLoading, error, refetch } = useMeetingListQuery({ keyword, name, code });
 
-  if (loading) return <Text label="medium">모임 데이터를 불러오는 중입니다.</Text>;
+  if (isLoading) return <Text label="medium">모임 데이터를 불러오는 중입니다.</Text>;
   if (error)
     return (
       <Text label="medium">
-        모임 데이터를 불러오는데 실패했습니다. <button onClick={refetch}>재요청</button>
+        모임 데이터를 불러오는데 실패했습니다. <button onClick={() => refetch()}>재요청</button>
       </Text>
     );
-  if (!loading && !error) {
+  if (!isLoading && !error) {
     if (!data || !data.length) return <Text label="medium">검색된 모임이 없습니다.</Text>;
     return (
       <div className={clsx(cardGrid, styles.gridMargin)}>
@@ -134,19 +130,16 @@ export function SearchResultMemberKeywordContainer({
   code?: string;
   exposeCode?: boolean;
 }) {
-  const queryString = new URLSearchParams({ name, code }).toString();
-  const { data, loading, error, refetch } = useQuery<MemberType[]>({
-    queryURL: `mock/member/list?${queryString}`,
-  });
+  const { data, isLoading, error, refetch } = useMemberListQuery({ name, code });
 
-  if (loading) return <Text label="medium">유저 데이터를 불러오는 중입니다.</Text>;
+  if (isLoading) return <Text label="medium">유저 데이터를 불러오는 중입니다.</Text>;
   if (error)
     return (
       <Text label="medium">
-        유저 데이터를 불러오는데 실패했습니다. <button onClick={refetch}>재요청</button>
+        유저 데이터를 불러오는데 실패했습니다. <button onClick={() => refetch()}>재요청</button>
       </Text>
     );
-  if (!loading && !error) {
+  if (!isLoading && !error) {
     if (!data || !data.length) return <Text label="medium">검색된 유저가 없습니다.</Text>;
     return (
       <div className={clsx(cardGrid, styles.gridMargin)}>

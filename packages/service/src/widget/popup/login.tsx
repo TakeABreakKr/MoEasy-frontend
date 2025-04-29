@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
-import { discordLoginUrl } from '@/shared/consts/login';
+import { ProviderUrl } from '@/shared/consts/login';
 import { pushSearchParams } from '@/shared/utils/search-param';
 
 import { useDebounceCallback } from '@moeasy/storybook/hooks/use-debounce-callback';
@@ -48,7 +48,7 @@ export function LoginPopup() {
             </span>
           </div>
           <div className={modalStyles.footer}>
-            <Link href={discordLoginUrl} className={discordLogin}>
+            <Link href={ProviderUrl.DISCORD} className={discordLogin}>
               <DiscordIcon width={32} height={32} />
               Discord 로그인
             </Link>

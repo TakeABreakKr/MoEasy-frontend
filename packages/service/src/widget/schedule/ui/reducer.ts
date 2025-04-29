@@ -41,26 +41,6 @@ export const scheduleCreateReducer = (state: CreateScheduleTypeDateMutated, acti
   }
 };
 
-export const scheduleCreateInitializer = ({
-  startDate,
-  endDate,
-  participants = [],
-  ...value
-}: Partial<CreateScheduleType> = {}): CreateScheduleTypeDateMutated => ({
-  meetingId: '',
-  name: '',
-  explanation: '',
-  startDate: startDate ? new Date(startDate) : new Date(),
-  endDate: endDate ? new Date(endDate) : new Date(),
-  reminder: [],
-  announcement: '',
-  detailAddress: '',
-  onlineYn: true,
-  participants,
-  participantLimit: 0,
-  ...value,
-});
-
 //#endregion
 
 //#region client state

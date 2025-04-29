@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import Link from 'next/link';
 
 import { MeetingType } from '@/entities/meeting/api';
-import { useQuery } from '@/shared/hooks/use-query';
+import { useMeetingQuery } from '@/entities/meeting/api/browser/mock';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { copyText } from '@/shared/utils/copy-text';
 import { escapePopup, getUserRoleForTags } from '@/widget/meeting/utils';
@@ -33,10 +33,10 @@ export function MeetingPopupCard({
   meetingId: string;
   toMemberCard: toMemberCardCallback;
 }) {
-  const { data, loading, error, refetch } = useQuery<MeetingType>({ queryURL: `mock/meeting/${meetingId}` });
+  const { data, isLoading, error, refetch } = useMeetingQuery(meetingId);
 
   let renderComponent: React.ReactNode;
-  if (loading) renderComponent = <div>loading...</div>;
+  if (isLoading) renderComponent = <div>loading...</div>;
   if (error) renderComponent = <MeetingPopupCardContentErrorFallback refetch={refetch} />;
   if (data) renderComponent = <MeetingPopupCardContent meeting={data} toMemberCard={toMemberCard} />;
   return <div className={modalStyles.overlay}>{renderComponent}</div>;

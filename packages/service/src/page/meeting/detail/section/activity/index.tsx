@@ -31,7 +31,7 @@ const fetchSampleActivity = async (): Promise<MainActivityCardProps['activity'][
           thumbnail: `https://placehold.co/30/png`,
         })),
       ],
-      onlineLink: 'http://localhost:5000',
+      onlineLink: process.env.NEXT_PUBLIC_API_BASE || '',
       isLiked: false,
       category: '식물/자연',
       publicYn: true,

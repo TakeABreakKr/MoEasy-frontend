@@ -1,39 +1,42 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-
-import { pushSearchParams } from '@/shared/utils/search-param';
 
 import { Text } from '@moeasy/storybook/ui/text';
 
 import * as styles from '../header.css';
+import Link from 'next/link';
 
 const tabMenus = [
   { key: 'meeting', value: '내모임' },
   { key: 'activity', value: '내활동' },
-  { key: 'friend', value: '내친구' },
+  // { key: 'friend', value: '내친구' },
   { key: 'interests', value: '관심' },
 ];
 
 export function MyPageTabList() {
-  const searchParams = useSearchParams();
-  const tab = searchParams.get('tab') || 'meeting';
+  const pathname = usePathname();
+  const tab = pathname.split('/').pop() || 'meeting';
 
   return (
     <ul className={styles.tabList}>
       {tabMenus.map(({ key, value }) => (
         <li key={key}>
           <Text asChild headline="small">
-            <button
-              className={clsx(styles.tabItem, key === tab && styles.tabItemActive)}
-              onClick={() => pushSearchParams({ tab: key })}
-            >
+            <Link href={`/mypage/${key}`} className={clsx(styles.tabItem, key === tab && styles.tabItemActive)}>
               {value}
-            </button>
+            </Link>
           </Text>
         </li>
       ))}
+      <li key="profile">
+        <Text asChild headline="small">
+          <Link href={`/mypage/profile`} className={clsx(styles.tabItem, 'profile' === tab && styles.tabItemActive)}>
+            프로필
+          </Link>
+        </Text>
+      </li>
     </ul>
   );
 }

@@ -9,11 +9,13 @@ export const tabList = style({
   listStyle: 'none',
   paddingInlineStart: 0,
   borderBottom: `1px solid ${globalVars.color.neutral[10]}`,
+  paddingBottom: rem(8),
 });
 
 export const tabItem = style({
   padding: rem(8, 0),
   color: globalVars.color.neutral[30],
+  textDecoration: 'none',
   ...globalVars.text.headline.small,
   fontWeight: '600',
   ':hover': {

@@ -5,6 +5,7 @@ import { components } from '@/shared/api/my-schema';
 import { MainCommonCard } from '@/widget/card/common';
 
 import * as styles from './list.css';
+import { MyPageMeetingFilter } from './filter';
 
 export function MyPageMeetingPage() {
   const meetingList = useMemo<components['schemas']['HomePopularMeetingDto'][]>(
@@ -20,10 +21,13 @@ export function MyPageMeetingPage() {
     [],
   );
   return (
-    <section className={styles.meetingList}>
-      {meetingList.map((meeting) => (
-        <MainCommonCard key={meeting.id} meeting={meeting} />
-      ))}
-    </section>
+    <>
+      <MyPageMeetingFilter />
+      <section className={styles.meetingList}>
+        {meetingList.map((meeting) => (
+          <MainCommonCard key={meeting.id} meeting={meeting} />
+        ))}
+      </section>
+    </>
   );
 }
