@@ -1,39 +1,45 @@
 import { useMutation } from '@tanstack/react-query';
-import { browserClient } from '@/shared/api/browser-client';
 
-import { FormDataType } from '@/page/meeting/create/creating-step-form';
+import { FormDataType } from '@/entities/meeting/api/type';
+import { browserClient } from '@/shared/api/browser-client';
 // 타입을 이렇게 가져와도 될까요?
+// entities 에서 정의한뒤에 pages로 가져가주세요
 
 export const useCreateMeetingMutation = () => {
   return useMutation({
-    mutationFn: async (formData: FormDataType) => {
+    mutationFn: async (formData: Required<FormDataType>) => {
       return browserClient.POST('/meeting/create', {
-        body: {} as any, // 이렇게 작성하는게 맞을까요.. as any를 안 붙이면 자꾸 에러나요
+        body: {
+          name: formData.name,
+          category: formData.category,
+          explanation: formData.explanation,
+          limit: formData.limitDisabled ? 9999 : Number(formData.limit),
+          publicYn: formData.publicYn,
+          canJoin: formData.canJoin,
+          keywords: formData.keywords,
+          members: formData.members,
+          thumbnail: formData.thumbnail as File,
+        },
         bodySerializer: (body) => {
           const formDataToSend = new FormData();
 
-          formDataToSend.append('name', formData.name);
-          formDataToSend.append('category', formData.category);
-          formDataToSend.append('explanation', formData.explanation);
-          formDataToSend.append('limit', formData.limitDisabled ? '9999' : String(formData.limit));
-          //제한없음 - 상태 때문에 서버로 보내는 과정에서 오류가 나길래 9999로 설정해뒀어요 우선 ㅜ ㅜ
-          formDataToSend.append('publicYn', String(formData.publicYn));
-          formDataToSend.append('canJoin', String(formData.canJoin));
+          formDataToSend.append('name', body.name);
+          body.category && formDataToSend.append('category', body.category);
+          formDataToSend.append('explanation', body.explanation);
+          formDataToSend.append('limit', String(body.limit));
+          formDataToSend.append('publicYn', String(body.publicYn));
+          formDataToSend.append('canJoin', String(body.canJoin));
 
-          (formData.keywords ?? []).forEach((keyword) => {
+          body.keywords.forEach((keyword) => {
             formDataToSend.append('keywords', keyword);
           });
 
-          (formData.members ?? []).forEach((member) => {
+          body.members.forEach((member) => {
             formDataToSend.append('members', member);
           });
 
-          if (formData.thumbnail) {
-            formDataToSend.append('thumbnail', formData.thumbnail as File);
-          }
-          // 디버깅: 어떤 데이터가 들어가는지 확인... ㅜㅜ
-          for (const [key, value] of formDataToSend.entries()) {
-            console.log(`${key}:`, value);
+          if (body.thumbnail) {
+            formDataToSend.append('thumbnail', body.thumbnail);
           }
 
           return formDataToSend;
