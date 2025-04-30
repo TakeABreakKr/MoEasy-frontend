@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { browserClient } from '@/shared/api/browser-client';
 
-import { CategoryType, FormDataType } from '@/page/meeting/create/creating-step-form';
+import { FormDataType } from '@/page/meeting/create/creating-step-form';
 // 타입을 이렇게 가져와도 될까요?
 
 export const useCreateMeetingMutation = () => {
@@ -13,7 +13,7 @@ export const useCreateMeetingMutation = () => {
           const formDataToSend = new FormData();
 
           formDataToSend.append('name', formData.name);
-          formDataToSend.append('category', formData.category as CategoryType);
+          formDataToSend.append('category', formData.category);
           formDataToSend.append('explanation', formData.explanation);
           formDataToSend.append('limit', formData.limitDisabled ? '9999' : String(formData.limit));
           //제한없음 - 상태 때문에 서버로 보내는 과정에서 오류가 나길래 9999로 설정해뒀어요 우선 ㅜ ㅜ
