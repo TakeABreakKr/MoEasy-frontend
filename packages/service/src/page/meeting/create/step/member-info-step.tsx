@@ -57,7 +57,7 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
 
   useEffect(() => {
     if (isModalOpen) {
-      setSelectedList(formData.member || []);
+      setSelectedList(formData.members || []);
     }
   }, [isModalOpen]);
 
@@ -71,14 +71,14 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
     }
   };
 
-  const handleRemoveMember = (member: string) => {
+  const handleRemoveMember = (members: string) => {
     dispatch({
-      member: formData.member.filter((m) => m !== member),
+      members: formData.members.filter((m) => m !== members),
     });
   };
 
   const handleConfirmSelection = () => {
-    dispatch({ member: selectedList });
+    dispatch({ members: selectedList });
     setIsModalOpen(false);
   };
 
@@ -229,10 +229,10 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
         </div>
       </label>
       <div className={styles.memberList}>
-        {formData.member.length > 0 && (
+        {formData.members.length > 0 && (
           <>
-            <div className={styles.memberNumberItem}>{formData.member.length}명</div>
-            {formData.member.map((member) => (
+            <div className={styles.memberNumberItem}>{formData.members.length}명</div>
+            {formData.members.map((member) => (
               <div key={member} className={styles.memberItem}>
                 <span>{member}</span>
                 <button type="button" className={styles.removeButton} onClick={() => handleRemoveMember(member)}>
@@ -244,7 +244,7 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
         )}
       </div>
       <div className={formStyles.labelWrapper}>
-        {formData.member.length > 0 && (
+        {formData.members.length > 0 && (
           <div className={styles.publicYnSection}>
             <p className={styles.publicYnQuestion}>모임을 비공개 할까요?</p>
             <div className={styles.publicYnButtons}>
