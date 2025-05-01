@@ -15,9 +15,11 @@ type LabelProps = {
 function Label({ variant = 'none', className, children, ...props }: LabelProps) {
   return (
     <label className={clsx(labelStyles.label({ variant }), className)} {...props}>
-      <span className={clsx(labelStyles.labelIcon({ variant }))}>
-        <InfoIcon color="white" />
-      </span>
+      {variant !== 'none' && (
+        <span className={clsx(labelStyles.labelIcon({ variant }))}>
+          <InfoIcon color="white" />
+        </span>
+      )}
       {children}
     </label>
   );

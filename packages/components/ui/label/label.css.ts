@@ -10,7 +10,7 @@ export const label = recipe({
     padding: rem(4),
     borderRadius: rem(8),
     gap: rem(3),
-    ...globalVars.text.label.small.regular,
+    ...globalVars.text.body.small,
   },
   variants: {
     variant: {
