@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { MainActivityCard, MainActivityCardProps } from '@/widget/card/activity';
 
@@ -52,8 +54,8 @@ export async function MeetingDetailActivity() {
         <Text title="medium" id={MEETING_DETAIL_TAB_LIST['1'].key}>
           활동 (3)
         </Text>
-        <Button rounded="medium" size="small">
-          활동 만들기
+        <Button asChild rounded="medium" size="small">
+          <Link href="/activity/create">활동 만들기</Link>
         </Button>
       </div>
       <div className={styles.activityContainer}>
