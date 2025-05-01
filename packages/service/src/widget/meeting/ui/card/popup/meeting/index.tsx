@@ -100,7 +100,7 @@ export function MeetingPopupCardContent({
             <BookMarkIcon color={bookmark ? 'yellow' : globalVars.color.neutral[20]} />
           </button>
           <Button size="small" rounded="small" asChild>
-            <Link href="/schedule/create">일정 생성</Link>
+            <Link href={`/activity/create/${meetingId}`}>활동 생성</Link>
           </Button>
         </div>
       </div>

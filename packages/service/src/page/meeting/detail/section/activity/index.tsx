@@ -40,7 +40,7 @@ const fetchSampleActivity = async (): Promise<MainActivityCardProps['activity'][
     })),
   );
 
-export async function MeetingDetailActivity() {
+export async function MeetingDetailActivity({ meetingId }: { meetingId: string }) {
   const activities = await fetchSampleActivity();
   return (
     <section className={sprinkles({ width: '100%', display: 'flex', flexDirection: 'column', gap: 'medium' })}>
@@ -55,7 +55,7 @@ export async function MeetingDetailActivity() {
           활동 (3)
         </Text>
         <Button asChild rounded="medium" size="small">
-          <Link href="/activity/create">활동 만들기</Link>
+          <Link href={`/activity/create/${meetingId}`}>활동 만들기</Link>
         </Button>
       </div>
       <div className={styles.activityContainer}>

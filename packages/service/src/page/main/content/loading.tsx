@@ -3,7 +3,7 @@ import { getScopedI18n } from '@/locales/server';
 import { MainCategorySectionFallback } from '../section/category/fallback';
 import { MainCardSectionFallback } from '../section/fallback';
 import { MainLastSection } from '../section/neighborhood';
-import { MainUpcommingScheduleFallback } from '../section/upcoming/fallback';
+import { MainUpcommingActivityFallback } from '../section/upcoming/fallback';
 
 export async function MainContentLoadingFallback() {
   const t = await getScopedI18n('main');
@@ -13,7 +13,7 @@ export async function MainContentLoadingFallback() {
       <MainCardSectionFallback />
       <MainCardSectionFallback />
       <MainCardSectionFallback type="activity" />
-      <MainUpcommingScheduleFallback />
+      <MainUpcommingActivityFallback />
       <MainLastSection />
     </>
   );

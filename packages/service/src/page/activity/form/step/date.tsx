@@ -1,4 +1,5 @@
 import { useReducer } from 'react';
+import clsx from 'clsx';
 
 import { ActivityStepData_TEMP } from '@/entities/activity/api/type';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
@@ -13,16 +14,16 @@ import { ActivityStepNavigation } from '../navigation';
 type ActivityTimeValue = Pick<ActivityStepData_TEMP, 'startDate' | 'endDate'>;
 type ActivityTimeValueProps = Partial<ActivityTimeValue>;
 
-type ScheduleTimeState = { controlTime: boolean; controlEndDate: boolean };
+type ActivityTimeState = { controlTime: boolean; controlEndDate: boolean };
 
-export const scheduleTimeReducer = (state: ScheduleTimeState, action: keyof ScheduleTimeState) => {
+export const activityTimeReducer = (state: ActivityTimeState, action: keyof ActivityTimeState) => {
   return {
     ...state,
     [action]: !state[action],
   };
 };
 
-export const scheduleTimeInitializer = (value: Partial<ScheduleTimeState> = {}): ScheduleTimeState => {
+export const controlInitializer = (value: Partial<ActivityTimeState> = {}): ActivityTimeState => {
   return {
     controlTime: false,
     controlEndDate: false,
@@ -49,33 +50,35 @@ export function ActivityTimeStep({
   onNextStep: (param: { startDate: string; endDate?: string }) => void;
 }) {
   const [state, dispatch] = useReducer(objectReducer, { startDate, endDate }, activityTimeInitializer);
-  const [timeState, dispatchTime] = useReducer(scheduleTimeReducer, {}, scheduleTimeInitializer);
+  const [timeState, dispatchTime] = useReducer(activityTimeReducer, {}, controlInitializer);
 
   return (
     <>
       <div className={formStyles.formGroup}>
         <div className={formStyles.label}>
-          <fieldset style={{ border: 'none', display: 'flex', gap: 12 }}>
+          <fieldset className={clsx(formStyles.labelWrapper, sprinkles({ gap: 'medium' }))}>
             <span>날짜 / 시간</span>
-            <div className={sprinkles({ display: 'flex', gap: 'xsmall' })}>
-              <Checkbox
-                rounded={false}
-                checked={timeState.controlTime}
-                onCheckedChange={() => {
-                  dispatchTime('controlTime');
-                }}
-              />
-              시간 설정
-            </div>
-            <div className={sprinkles({ display: 'flex', gap: 'xsmall' })}>
-              <Checkbox
-                rounded={false}
-                checked={timeState.controlEndDate}
-                onCheckedChange={() => {
-                  dispatchTime('controlEndDate');
-                }}
-              />
-              일정 종료
+            <div className={sprinkles({ display: 'flex', gap: 'small' })}>
+              <div className={sprinkles({ display: 'flex', gap: 'xsmall' })}>
+                <Checkbox
+                  rounded={false}
+                  checked={timeState.controlTime}
+                  onCheckedChange={() => {
+                    dispatchTime('controlTime');
+                  }}
+                />
+                시간 설정
+              </div>
+              <div className={sprinkles({ display: 'flex', gap: 'xsmall' })}>
+                <Checkbox
+                  rounded={false}
+                  checked={timeState.controlEndDate}
+                  onCheckedChange={() => {
+                    dispatchTime('controlEndDate');
+                  }}
+                />
+                일정 종료
+              </div>
             </div>
           </fieldset>
           <div className={sprinkles({ display: 'flex', gap: 'xsmall' })}>

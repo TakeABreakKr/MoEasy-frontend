@@ -3,12 +3,19 @@ import { useState } from 'react';
 import { ActivityStepData_TEMP } from '@/entities/activity/api/type';
 import { useScopedI18n } from '@/locales/clients';
 import * as styles from '@/shared/style/create-form/index.css';
-import { ReminderEnumList } from '@/widget/schedule/ui/create-form';
+import { sprinkles } from '@/shared/style/sprinkles/index.css';
 
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 import { Tag } from '@moeasy/storybook/ui/tag';
 
 import { ActivityStepNavigation } from '../navigation';
+
+export const ReminderEnumList = [
+  ['ON_TIME'],
+  ['TEN_M', 'THIRTY_M'],
+  ['ONE_H', 'TWO_H', 'THREE_H', 'FOUR_H', 'SIX_H', 'TWELVE_H'],
+  ['ONE_D', 'TWO_D', 'THREE_D', 'SEVEN_D'],
+] as const;
 
 type ActivityReminderValue = Pick<ActivityStepData_TEMP, 'reminder'>;
 type ActivityReminderValueProps = Partial<ActivityReminderValue>;
@@ -35,9 +42,9 @@ export function ActivityReminderStep({
         <label>
           <span className={formStyles.label}>리마인드 알림</span>
         </label>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div className={sprinkles({ display: 'flex', flexDirection: 'column', gap: 'small' })}>
           {ReminderEnumList.map((line, index) => (
-            <div key={index} style={{ display: 'flex', gap: 4 }}>
+            <div key={index} className={sprinkles({ display: 'flex', gap: 'small' })}>
               {line.map((time) => (
                 <Tag
                   key={time}

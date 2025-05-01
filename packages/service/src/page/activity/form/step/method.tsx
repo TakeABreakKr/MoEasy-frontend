@@ -3,10 +3,10 @@ import clsx from 'clsx';
 
 import { ActivityStepData_TEMP } from '@/entities/activity/api/type';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
+import PostInput from '@/shared/ui/post-input';
 import { alertCall } from '@/shared/utils/alert-call';
 import { objectReducer } from '@/shared/utils/object-reducer';
 
-import { SearchButton } from '@moeasy/storybook/ui/button';
 import { CreateButtonCommon } from '@moeasy/storybook/ui/create/step-button';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
 import { Input } from '@moeasy/storybook/ui/input';
@@ -66,21 +66,11 @@ export function ActivityMethodStep({
           {!state.onlineYn && (
             <div className={sprinkles({ display: 'flex', flexDirection: 'column', gap: 'small' })}>
               <span className={formStyles.label}>활동 장소</span>
-              <SearchButton
+              <PostInput
                 placeholder="주소 검색"
-                onClick={() => {
-                  if (window.daum)
-                    new window.daum.Postcode({
-                      oncomplete: (address) => {
-                        dispatch({ address });
-                      },
-                    }).open({
-                      q: state.address?.query || '',
-                    });
-                }}
-              >
-                {state.address?.address}
-              </SearchButton>
+                address={state.address}
+                setAddress={(address) => dispatch({ address })}
+              />
               <Input
                 name="detailAddress"
                 value={state.detailAddress}

@@ -5,7 +5,7 @@ import { MainCardActivitySection } from '../section/activity';
 import { MainCategorySection } from '../section/category';
 import { MainCardMeetingSection } from '../section/meeting';
 import { MainLastSection } from '../section/neighborhood';
-import { MainUpcommingSchedule } from '../section/upcoming';
+import { MainUpcommingActivity } from '../section/upcoming';
 
 export async function MainContent() {
   const t = await getScopedI18n('main');
@@ -19,7 +19,7 @@ export async function MainContent() {
       <MainCardMeetingSection title={t('this-week-pop-team')} href="#" data={popularMeetings} />
       <MainCardMeetingSection title={t('새로 생겼어요')} href="#" data={newMeetings} />
       <MainCardActivitySection title={t('마감임박 활동')} href="#" data={closingTimeActivities} />
-      <MainUpcommingSchedule title={t('다가오는 활동')} data={upcomingActivities} />
+      <MainUpcommingActivity title={t('다가오는 활동')} data={upcomingActivities} />
       <MainLastSection mostActivatedRegions={mostActivatedRegions} />
     </>
   );
