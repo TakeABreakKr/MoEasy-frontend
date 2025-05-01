@@ -60,6 +60,7 @@ export function ActivityAnnouncementStep({
             {state.textLength} 자
           </Text>
           <SimpleEditor
+            initialContent={announcement}
             dispatch={({ content, textLength }) => dispatch({ announcement: content, textLength })}
             adapter={localImageUploader}
           />

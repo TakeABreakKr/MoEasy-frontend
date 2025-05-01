@@ -1,6 +1,7 @@
 'use client';
 
-import { type ComponentProps, useRef } from 'react';
+import { type ComponentProps, useEffect, useRef } from 'react';
+import DOMPurify from 'dompurify';
 
 import { useControlledRef } from '@moeasy/storybook/hooks/use-controlled-ref';
 import { ImageIcon } from '@moeasy/storybook/ui/icon';
@@ -12,6 +13,7 @@ type SimpleEditorProps = ComponentProps<'div'> & {
   dispatch?: (param: { content: string; textLength: number }) => void;
   disabled?: boolean;
   adapter: (file: DataTransferItem | File) => Promise<string>;
+  initialContent: string;
 };
 
 const dispatchCallback = (dispatch: SimpleEditorProps['dispatch'], target?: HTMLDivElement | null) => {
@@ -24,9 +26,14 @@ const dispatchCallback = (dispatch: SimpleEditorProps['dispatch'], target?: HTML
   });
 };
 
-export function SimpleEditor({ dispatch, ref, disabled, adapter, ...props }: SimpleEditorProps) {
+export function SimpleEditor({ dispatch, ref, disabled, adapter, initialContent, ...props }: SimpleEditorProps) {
   const editorRef = useControlledRef<HTMLDivElement>(ref);
   const fileRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.innerHTML = DOMPurify.sanitize(initialContent);
+    }
+  }, [initialContent, editorRef]);
 
   return (
     <div className={styles.editorContainer} {...props}>

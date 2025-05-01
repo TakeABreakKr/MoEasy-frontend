@@ -29,6 +29,7 @@
     "@vanilla-extract/sprinkles": "^1.6.3",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
+    "dompurify": "^3.2.5",
     "js-cookie": "^3.0.5",
     "msw": "^2.7.3",
     "next": "15.2.4",
