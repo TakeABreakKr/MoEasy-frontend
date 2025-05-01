@@ -44,6 +44,7 @@ export function CreatingActivityStepForm({ meetingId }: { meetingId: string }) {
               address={state.data.address}
               onlineYn={state.data.onlineYn}
               detailAddress={state.data.detailAddress}
+              onlineLink={state.data.onlineLink}
               onPrevStep={() => dispatch({ type: 'step-back' })}
               onNextStep={(payload) => dispatch({ type: 'method', payload })}
             />
@@ -53,7 +54,7 @@ export function CreatingActivityStepForm({ meetingId }: { meetingId: string }) {
               step={stepIndex}
               reminder={state.data.reminder}
               onPrevStep={() => dispatch({ type: 'step-back' })}
-              onNextStep={(payload) => dispatch({ type: 'reminder', payload: payload.reminder })}
+              onNextStep={({ reminder }) => dispatch({ type: 'reminder', payload: reminder })}
             />
           )}
           {state.step === 'announcement' && (

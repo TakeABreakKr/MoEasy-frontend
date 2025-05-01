@@ -20,9 +20,11 @@ import { desc, discordLogin, loginPopupSize, textContainer } from './login.css';
 export function LoginPopup() {
   const searchParams = useSearchParams();
   const escapePopup = useDebounceCallback(() => window.history.back());
-  useOnEscape(true, escapePopup);
+  const isPopupOpen = searchParams.get('login') !== null;
 
-  if (!searchParams.get('login')) return null;
+  useOnEscape(isPopupOpen, escapePopup);
+
+  if (!isPopupOpen) return null;
   return (
     <Modal>
       <ModalOverlay className={modalStyles.overlay}>

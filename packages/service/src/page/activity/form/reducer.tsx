@@ -88,7 +88,7 @@ export const activityStepReducer = (state: ActivityStepMachine, action: Activity
       return activityStepGuard('reminder', { ...state.data, ...action.payload });
     }
     case 'reminder': {
-      return activityStepGuard('announcement', { ...state.data, ...action.payload });
+      return activityStepGuard('announcement', { ...state.data, reminder: action.payload });
     }
     case 'announcement': {
       return activityStepGuard('participants', { ...state.data, announcement: action.payload });

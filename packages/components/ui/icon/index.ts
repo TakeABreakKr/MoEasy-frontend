@@ -11,6 +11,7 @@ import DoorIcon from './door';
 import { EditIcon } from './edit';
 import EllipsisIcon from './ellipsis';
 import HeartIcon from './heart';
+import { ImageIcon } from './image';
 import InfoIcon from './info';
 import LocationIcon from './location';
 import LogoIconWithText from './logo';
@@ -25,6 +26,7 @@ import UserIcon from './user';
 import XIcon from './x';
 
 export {
+  ImageIcon,
   AlarmIcon,
   BookMarkIcon,
   CalendarHomeIcon,

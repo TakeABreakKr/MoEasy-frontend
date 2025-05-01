@@ -5,10 +5,6 @@ import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 import { style } from '@vanilla-extract/css';
 
-export const methodStepGap = style({
-  gap: rem(30),
-});
-
 export const editorContainer = style([
   inputVariants.classNames.base,
   { width: '100%', height: rem(220), overflow: 'auto', padding: 'unset', position: 'relative' },
