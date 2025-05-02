@@ -13,7 +13,8 @@ import { ActivityStepNavigation } from '../navigation';
 type ActivityAnnouncementValue = Pick<ActivityStepData_TEMP, 'announcement'>;
 type ActivityAnnouncementValueProps = Partial<ActivityAnnouncementValue>;
 
-const localImageUploader = (file: DataTransferItem | File) => {
+// TODO: backend image upload 개발 완료 후 외부 저장소의 url로 대체
+const localImageUploader = (file: DataTransferItem | File): Promise<string> => {
   return new Promise<string>((resolve, reject) => {
     const uploadFile = file instanceof File ? file : file.getAsFile();
     if (!uploadFile) {
@@ -33,6 +34,17 @@ const localImageUploader = (file: DataTransferItem | File) => {
   });
 };
 
+const ANNOUNCEMENT_MAX_LENGTH = 1000;
+
+const announcementInitializer = (content: string) => {
+  const div = document.createElement('div');
+  div.innerHTML = content;
+  return {
+    announcement: content,
+    textLength: div.textContent?.length || 0,
+  };
+};
+
 export function ActivityAnnouncementStep({
   step,
   announcement = '',
@@ -43,26 +55,24 @@ export function ActivityAnnouncementStep({
   onPrevStep: () => void;
   onNextStep: (param: ActivityAnnouncementValue) => void;
 }) {
-  const [state, dispatch] = useReducer(objectReducer<ActivityAnnouncementValue & { textLength: number }>, null, () => {
-    const div = document.createElement('div');
-    div.innerHTML = announcement;
-    return {
-      announcement,
-      textLength: div.textContent?.length || 0,
-    };
-  });
+  const [state, dispatch] = useReducer(
+    objectReducer<ActivityAnnouncementValue & { textLength: number }>,
+    announcement,
+    announcementInitializer,
+  );
   return (
     <>
       <div className={formStyles.formGroup}>
         <div className={formStyles.label}>
           <span>활동 안내</span>
           <Text body="tiny" className={sprinkles({ display: 'flex', justifyContent: 'flex-end', width: '100%' })}>
-            {state.textLength} 자
+            {state.textLength} / {ANNOUNCEMENT_MAX_LENGTH}
           </Text>
           <SimpleEditor
             initialContent={announcement}
             dispatch={({ content, textLength }) => dispatch({ announcement: content, textLength })}
             adapter={localImageUploader}
+            maxLength={ANNOUNCEMENT_MAX_LENGTH}
           />
         </div>
       </div>

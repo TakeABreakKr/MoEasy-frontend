@@ -14,24 +14,50 @@ type SimpleEditorProps = ComponentProps<'div'> & {
   disabled?: boolean;
   adapter: (file: DataTransferItem | File) => Promise<string>;
   initialContent: string;
+  maxLength?: number;
 };
 
-const dispatchCallback = (dispatch: SimpleEditorProps['dispatch'], target?: HTMLDivElement | null) => {
+const dispatchCallback = ({
+  dispatch,
+  target,
+  recover,
+  maxLength,
+}: {
+  dispatch?: SimpleEditorProps['dispatch'];
+  target?: HTMLDivElement | null;
+  recover: React.RefObject<string>;
+  maxLength?: number;
+}) => {
   if (!target) return;
   const content = target.innerHTML;
   const textLength = target.textContent?.length || 0;
+  if (typeof maxLength === 'number' && textLength > maxLength) {
+    target.innerHTML = recover.current || '';
+    return;
+  }
   dispatch?.({
     content,
     textLength,
   });
+  recover.current = content;
 };
 
-export function SimpleEditor({ dispatch, ref, disabled, adapter, initialContent, ...props }: SimpleEditorProps) {
+export function SimpleEditor({
+  dispatch,
+  ref,
+  disabled,
+  adapter,
+  initialContent,
+  maxLength,
+  ...props
+}: SimpleEditorProps) {
   const editorRef = useControlledRef<HTMLDivElement>(ref);
+  const contentRef = useRef(initialContent);
   const fileRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.innerHTML = DOMPurify.sanitize(initialContent);
+      contentRef.current = initialContent;
     }
   }, [initialContent, editorRef]);
 
@@ -42,7 +68,7 @@ export function SimpleEditor({ dispatch, ref, disabled, adapter, initialContent,
         ref={editorRef}
         className={styles.editor}
         onInput={() => {
-          dispatchCallback(dispatch, editorRef.current);
+          dispatchCallback({ dispatch, target: editorRef.current, recover: contentRef, maxLength });
         }}
         onPaste={async (e) => {
           const clipboardItems = Array.from(e.clipboardData.items);
@@ -50,7 +76,6 @@ export function SimpleEditor({ dispatch, ref, disabled, adapter, initialContent,
 
           if (imageItem) {
             e.preventDefault();
-            // TODO: backend image upload 개발 완료 후 외부 저장소의 url로 대체
             const result = await adapter(imageItem);
             if (!editorRef || typeof editorRef === 'function' || !editorRef.current) {
               return;
@@ -63,7 +88,7 @@ export function SimpleEditor({ dispatch, ref, disabled, adapter, initialContent,
               insertTextOnSelect(text);
             }
           }
-          dispatchCallback(dispatch, editorRef.current);
+          dispatchCallback({ dispatch, target: editorRef.current, recover: contentRef, maxLength });
         }}
       />
       <button className={styles.editorImageUpload} type="button" onClick={() => fileRef.current?.click()}>
@@ -81,7 +106,7 @@ export function SimpleEditor({ dispatch, ref, disabled, adapter, initialContent,
           }
           const result = await adapter(imgFile);
           await insertImageOnSelect({ src: result, element: editorRef.current });
-          dispatchCallback(dispatch, editorRef.current);
+          dispatchCallback({ dispatch, target: editorRef.current, recover: contentRef, maxLength });
         }}
       />
     </div>
