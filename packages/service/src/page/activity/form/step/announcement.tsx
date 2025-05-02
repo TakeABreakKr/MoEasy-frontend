@@ -34,6 +34,13 @@ const localImageUploader = (file: DataTransferItem | File): Promise<string> => {
   });
 };
 
+const localImageMultipleUploader = (files: FileList | File[] | DataTransferItem[]): Promise<string[]> => {
+  if (files instanceof FileList) {
+    return Promise.all(Array.from(files).map((file) => localImageUploader(file)));
+  }
+  return Promise.all(files.map((file) => localImageUploader(file)));
+};
+
 const ANNOUNCEMENT_MAX_LENGTH = 1000;
 
 const announcementInitializer = (content: string) => {
@@ -71,7 +78,7 @@ export function ActivityAnnouncementStep({
           <SimpleEditor
             initialContent={announcement}
             dispatch={({ content, textLength }) => dispatch({ announcement: content, textLength })}
-            adapter={localImageUploader}
+            adapter={localImageMultipleUploader}
             maxLength={ANNOUNCEMENT_MAX_LENGTH}
           />
         </div>

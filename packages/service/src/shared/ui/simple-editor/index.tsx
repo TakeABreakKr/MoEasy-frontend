@@ -1,46 +1,17 @@
 'use client';
 
-import { type ComponentProps, useEffect, useRef } from 'react';
-import DOMPurify from 'dompurify';
+import { useRef, useState } from 'react';
 
-import { useControlledRef } from '@moeasy/storybook/hooks/use-controlled-ref';
 import { ImageIcon } from '@moeasy/storybook/ui/icon';
-import { insertImageOnSelect, insertTextOnSelect } from '@moeasy/storybook/utils/lib/insert-on-select';
+import {
+  insertImageOnSelect,
+  insertImagesOnSelect,
+  insertTextOnSelect,
+} from '@moeasy/storybook/utils/lib/insert-on-select';
+
+import { SimpleEditorProps, useSimpleEditorDispatch, useSimpleEditorInitializer } from './utils';
 
 import * as styles from './editor.css';
-
-type SimpleEditorProps = ComponentProps<'div'> & {
-  dispatch?: (param: { content: string; textLength: number }) => void;
-  disabled?: boolean;
-  adapter: (file: DataTransferItem | File) => Promise<string>;
-  initialContent: string;
-  maxLength?: number;
-};
-
-const dispatchCallback = ({
-  dispatch,
-  target,
-  recover,
-  maxLength,
-}: {
-  dispatch?: SimpleEditorProps['dispatch'];
-  target?: HTMLDivElement | null;
-  recover: React.RefObject<string>;
-  maxLength?: number;
-}) => {
-  if (!target) return;
-  const content = target.innerHTML;
-  const textLength = target.textContent?.length || 0;
-  if (typeof maxLength === 'number' && textLength > maxLength) {
-    target.innerHTML = recover.current || '';
-    return;
-  }
-  dispatch?.({
-    content,
-    textLength,
-  });
-  recover.current = content;
-};
 
 export function SimpleEditor({
   dispatch,
@@ -49,17 +20,21 @@ export function SimpleEditor({
   adapter,
   initialContent,
   maxLength,
+  fileUploadLimit = 3,
+  allowImageUpload = true,
+  LoadingComponent,
   ...props
 }: SimpleEditorProps) {
-  const editorRef = useControlledRef<HTMLDivElement>(ref);
-  const contentRef = useRef(initialContent);
   const fileRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.innerHTML = DOMPurify.sanitize(initialContent);
-      contentRef.current = initialContent;
-    }
-  }, [initialContent, editorRef]);
+  const editorRef = useSimpleEditorInitializer({ ref, initialContent });
+  const dispatchCallback = useSimpleEditorDispatch({
+    targetRef: editorRef,
+    dispatch,
+    maxLength,
+    initialContent,
+  });
+
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className={styles.editorContainer} {...props}>
@@ -68,7 +43,7 @@ export function SimpleEditor({
         ref={editorRef}
         className={styles.editor}
         onInput={() => {
-          dispatchCallback({ dispatch, target: editorRef.current, recover: contentRef, maxLength });
+          dispatchCallback();
         }}
         onPaste={async (e) => {
           const clipboardItems = Array.from(e.clipboardData.items);
@@ -76,11 +51,11 @@ export function SimpleEditor({
 
           if (imageItem) {
             e.preventDefault();
-            const result = await adapter(imageItem);
+            const [result] = await adapter([imageItem]);
             if (!editorRef || typeof editorRef === 'function' || !editorRef.current) {
               return;
             }
-            await insertImageOnSelect({ src: result, element: editorRef.current });
+            await insertImageOnSelect({ src: result, element: editorRef.current, strict: true });
           } else {
             const text = e.clipboardData.getData('text/plain');
             if (text) {
@@ -88,27 +63,37 @@ export function SimpleEditor({
               insertTextOnSelect(text);
             }
           }
-          dispatchCallback({ dispatch, target: editorRef.current, recover: contentRef, maxLength });
+          dispatchCallback();
         }}
       />
       <button className={styles.editorImageUpload} type="button" onClick={() => fileRef.current?.click()}>
         <ImageIcon />
       </button>
-      <input
-        type="file"
-        accept="image/*"
-        hidden
-        ref={fileRef}
-        onChange={async (e) => {
-          const imgFile = e.target.files?.[0];
-          if (!editorRef || typeof editorRef === 'function' || !editorRef.current || !imgFile) {
-            return;
-          }
-          const result = await adapter(imgFile);
-          await insertImageOnSelect({ src: result, element: editorRef.current });
-          dispatchCallback({ dispatch, target: editorRef.current, recover: contentRef, maxLength });
-        }}
-      />
+      {loading && LoadingComponent}
+      {allowImageUpload && (
+        <input
+          type="file"
+          accept="image/*"
+          hidden
+          ref={fileRef}
+          multiple
+          onChange={async (e) => {
+            const imgFiles = e.target.files;
+            if (!editorRef || typeof editorRef === 'function' || !editorRef.current || !imgFiles) {
+              return;
+            }
+            LoadingComponent && setLoading(true);
+            const result = await adapter(
+              Array.from(imgFiles)
+                .filter((file) => file.type.includes('image'))
+                .slice(0, fileUploadLimit),
+            );
+            await insertImagesOnSelect({ srcs: result, element: editorRef.current, strict: true });
+            dispatchCallback();
+            LoadingComponent && setLoading(false);
+          }}
+        />
+      )}
     </div>
   );
 }

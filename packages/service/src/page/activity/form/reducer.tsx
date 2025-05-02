@@ -20,7 +20,7 @@ export const activityStepInitializer = (meetingId: string): ActivityStepMachine 
       endDate: '',
       reminder: [],
       announcement: '',
-      onlineYn: false,
+      onlineYn: true,
       onlineLink: '',
       detailAddress: '',
       participantLimit: 10,
