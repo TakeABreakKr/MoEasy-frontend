@@ -76,7 +76,11 @@ type ActivityStepAction =
 export const activityStepReducer = (state: ActivityStepMachine, action: ActivityStepAction): ActivityStepMachine => {
   switch (action.type) {
     case 'step-back': {
-      return { ...state, step: activityStepEnum[activityStepEnum.indexOf(state.step) - 1] };
+      const currentStepIndex = activityStepEnum.indexOf(state.step);
+      if (currentStepIndex <= 0) {
+        return state;
+      }
+      return { ...state, step: activityStepEnum[currentStepIndex - 1] };
     }
     case 'name': {
       return activityStepGuard('date', { ...state.data, name: action.payload });

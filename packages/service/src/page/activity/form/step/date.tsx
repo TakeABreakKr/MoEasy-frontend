@@ -67,7 +67,7 @@ export function ActivityTimeStep({
                     dispatchTime('controlTime');
                   }}
                 />
-                시간 설정
+                <span>시간 설정</span>
               </div>
               <div className={sprinkles({ display: 'flex', gap: 'xsmall' })}>
                 <Checkbox
@@ -77,7 +77,7 @@ export function ActivityTimeStep({
                     dispatchTime('controlEndDate');
                   }}
                 />
-                일정 종료
+                <span>일정 종료</span>
               </div>
             </div>
           </fieldset>

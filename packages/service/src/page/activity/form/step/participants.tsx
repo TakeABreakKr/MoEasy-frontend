@@ -1,5 +1,4 @@
 import { useReducer, useTransition } from 'react';
-import { delay } from 'msw';
 
 // import { createActivityApi } from '@/entities/activity/api/server';
 import { ActivityStepData_TEMP } from '@/entities/activity/api/type';
@@ -9,6 +8,7 @@ import { objectReducer } from '@/shared/utils/object-reducer';
 
 import { SearchButton } from '@moeasy/storybook/ui/button';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
+import { delay } from '@moeasy/storybook/utils/lib/delay';
 
 import { ActivityStepNavigation } from '../navigation';
 

@@ -44,7 +44,7 @@ export function ActivityNameStep({
         step={step}
         onPrevStep={() => router.back()}
         onNextStep={() => {
-          if (state.name.length > 30) {
+          if (state.name.trim().length === 0) {
             return;
           }
           onNextStep(state);
