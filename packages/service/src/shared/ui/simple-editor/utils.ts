@@ -74,9 +74,18 @@ export const simpleEditorDispatchCallback = ({
     target.innerHTML = recover.current || '';
     return;
   }
-  dispatch?.({
-    content,
-    textLength,
-  });
+  // 먼저 현재 콘텐츠를 복구 참조에 저장
+  const previousContent = recover.current;
   recover.current = content;
+
+  try {
+    dispatch?.({
+      content,
+      textLength,
+    });
+  } catch (error) {
+    // dispatch 중 오류가 발생하면 이전 콘텐츠로 복구
+    recover.current = previousContent;
+    console.error('에디터 콘텐츠 변경 중 오류 발생:', error);
+  }
 };

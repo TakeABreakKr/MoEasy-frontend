@@ -37,7 +37,7 @@ const activityStepGuard = (step: ActivityStepUnion, data: ActivityStepMachine['d
   // second guard: 진행방법 다음단계에서 온라인일 때는 링크가 없거나 오프라인일때는 기본 주소가 없으면 3rd step으로 이동
   if (
     activityStepEnum.indexOf(step) > 2 &&
-    ((data.onlineYn && !data.onlineLink) || (!data.onlineYn && !data.address))
+    ((data.onlineYn && !data.onlineLink) || (!data.onlineYn && !data.address?.address))
   ) {
     return { step: 'method', data };
   }

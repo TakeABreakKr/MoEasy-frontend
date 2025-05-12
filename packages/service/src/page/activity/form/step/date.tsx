@@ -3,6 +3,7 @@ import clsx from 'clsx';
 
 import { ActivityStepData_TEMP } from '@/entities/activity/api/type';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
+import { alertCall } from '@/shared/utils/alert-call';
 import { objectReducer } from '@/shared/utils/object-reducer';
 
 import Calendar from '@moeasy/storybook/ui/calendar/calendar';
@@ -103,6 +104,10 @@ export function ActivityTimeStep({
         step={step}
         onPrevStep={onPrevStep}
         onNextStep={() => {
+          if (timeState.controlEndDate && state.endDate < state.startDate) {
+            alertCall({ message: '종료일이 시작일보다 이전일 수 없습니다.' });
+            return;
+          }
           onNextStep(
             timeState.controlEndDate
               ? {

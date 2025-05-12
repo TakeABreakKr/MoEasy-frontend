@@ -43,6 +43,7 @@ export function ActivityNameStep({
       <ActivityStepNavigation
         step={step}
         onPrevStep={() => router.back()}
+        disabled={state.name.trim().length === 0}
         onNextStep={() => {
           if (state.name.trim().length === 0) {
             return;
