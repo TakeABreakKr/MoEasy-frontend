@@ -20,7 +20,6 @@ export const body = style({
 export const formWrapper = style({
   width: rem(458),
   flexGrow: 1,
-  padding: '0 30px',
   minHeight: '50vh',
   display: 'flex',
   flexDirection: 'column',

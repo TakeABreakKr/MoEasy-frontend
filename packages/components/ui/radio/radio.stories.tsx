@@ -53,3 +53,11 @@ export const Uncontrolled: Story = {
     defaultChecked: false,
   },
 };
+
+export const Secondary: Story = {
+  args: {
+    value: 'one',
+    variant: 'secondary',
+    checked: true,
+  },
+};

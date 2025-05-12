@@ -9,7 +9,7 @@ import { sectionHeaderFallback } from '../../fallback.css';
 import * as styles from '../section.css';
 import * as upcomingStyles from './upcoming.css';
 
-export function MainUpcommingScheduleFallback() {
+export function MainUpcommingActivityFallback() {
   return (
     <section className={styles.section}>
       <div className={sectionHeaderFallback} />
@@ -18,7 +18,7 @@ export function MainUpcommingScheduleFallback() {
           <button key={index} className={upcomingStyles.dateButton} disabled />
         ))}
       </div>
-      <div className={upcomingStyles.scheduleContainer}>
+      <div className={upcomingStyles.activityContainer}>
         {Array.from({ length: 4 }).map((_, index) => (
           <MainActivityCardFallback key={index} />
         ))}

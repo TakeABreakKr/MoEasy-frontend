@@ -15,10 +15,10 @@ export interface Address {
   zonecode: string;
   address: string;
   addressEnglish: string;
-  addressType: 'R' | 'J';
-  userSelectedType: 'R' | 'J';
-  noSelected: 'Y' | 'N';
-  userLanguageType: 'K' | 'E';
+  addressType: string; // 'R' | 'J';
+  userSelectedType: string; // 'R' | 'J';
+  noSelected: string; // 'Y' | 'N';
+  userLanguageType: string; // 'K' | 'E';
   roadAddress: string;
   roadAddressEnglish: string;
   jibunAddress: string;
@@ -29,7 +29,7 @@ export interface Address {
   autoJibunAddressEnglish: string;
   buildingCode: string;
   buildingName: string;
-  apartment: 'Y' | 'N';
+  apartment: string; // 'Y' | 'N';
   sido: string;
   sidoEnglish: string;
   sigungu: string;

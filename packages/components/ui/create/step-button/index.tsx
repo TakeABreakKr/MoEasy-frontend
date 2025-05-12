@@ -7,6 +7,7 @@ export type CreateButtonCommonProps = {
   nextText?: string;
   onPrevStep: () => void;
   onNextStep: () => void;
+  disabled?: boolean;
 };
 
 export function CreateButtonFirst({
@@ -30,15 +31,16 @@ export function CreateButtonFirst({
 export function CreateButtonCommon({
   prevText = '이전',
   nextText = '다음',
+  disabled = false,
   onPrevStep,
   onNextStep,
 }: CreateButtonCommonProps) {
   return (
     <div className={styles.navigation}>
-      <button type="button" className={styles.navButton} onClick={onPrevStep}>
+      <button type="button" disabled={disabled} className={styles.navButton} onClick={onPrevStep}>
         {prevText}
       </button>
-      <button type="button" className={styles.navButton} onClick={onNextStep}>
+      <button type="button" disabled={disabled} className={styles.navButton} onClick={onNextStep}>
         {nextText}
       </button>
     </div>

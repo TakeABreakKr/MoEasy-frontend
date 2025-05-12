@@ -1,22 +1,44 @@
-import { style } from '@vanilla-extract/css';
+import { style, styleVariants } from '@vanilla-extract/css';
 import { rem } from '../../utils/css';
+import { globalVars } from '../../utils/styles/global.css';
 
 export const radioStyle = style({
-  backgroundColor: 'white',
-  width: rem(25),
-  height: rem(25),
-  borderRadius: '100%',
-  selectors: {
-    [`&[data-state='checked']:hover`]: {
-      backgroundColor: '#d5d5d5',
+  backgroundColor: globalVars.color.neutral.white,
+  width: rem(20),
+  height: rem(20),
+  borderRadius: '50%',
+  borderWidth: 1,
+  borderStyle: 'solid',
+  borderColor: globalVars.color.neutral[20],
+});
+
+export const radioVariants = styleVariants({
+  primary: [
+    radioStyle,
+    {
+      selectors: {
+        [`&[data-state='checked']`]: {
+          backgroundColor: globalVars.color.blue[50],
+        },
+        [`&[data-state='unchecked']:hover`]: {
+          backgroundColor: `rgb(from ${globalVars.color.blue[50]} r g b / 0.2)`,
+        },
+      },
     },
-    [`&[data-state='unchecked']`]: {
-      backgroundColor: '#cfcfcf',
+  ],
+  secondary: [
+    radioStyle,
+    {
+      selectors: {
+        [`&[data-state='checked']`]: {
+          backgroundColor: globalVars.color.purple,
+        },
+        [`&[data-state='unchecked']:hover`]: {
+          backgroundColor: `rgb(from ${globalVars.color.purple} r g b / 0.2)`,
+        },
+      },
     },
-    [`&[data-state='unchecked']:hover`]: {
-      backgroundColor: '#9d9d9d',
-    },
-  },
+  ],
 });
 
 export const indicatorStyle = style({
@@ -29,9 +51,9 @@ export const indicatorStyle = style({
   '::after': {
     content: '',
     display: 'block',
-    width: 11,
-    height: 11,
+    width: rem(6),
+    height: rem(6),
     borderRadius: '50%',
-    backgroundColor: '#5f88f3',
+    backgroundColor: globalVars.color.neutral.white,
   },
 });

@@ -39,8 +39,8 @@ export const Header = ({ user }: HeaderProps) => {
             <li className={clsx(headerStyles.linkText, pathname === '/meeting' && headerStyles.active)}>
               <Link href="/meeting">모임 둘러보기</Link>
             </li>
-            <li className={clsx(headerStyles.linkText, pathname === '/schedule' && headerStyles.active)}>
-              <Link href="/schedule">활동 일정</Link>
+            <li className={clsx(headerStyles.linkText, pathname === '/activity' && headerStyles.active)}>
+              <Link href="/activity">활동 일정</Link>
             </li>
             <li className={clsx(headerStyles.linkText, pathname === '/about' && headerStyles.active)}>
               <Link href="/about">모이지란?</Link>

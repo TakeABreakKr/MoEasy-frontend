@@ -4,24 +4,31 @@ import { Address } from '@/shared/type/daum-post';
 
 import { SearchButton } from '@moeasy/storybook/ui/button';
 
+import { sprinkles } from '../style/sprinkles/index.css';
+
 export default function PostInput({
   address,
   setAddress,
+  placeholder,
 }: {
   address?: Address;
   setAddress?: (address: Address) => void;
+  placeholder?: string;
 }) {
   return (
     <SearchButton
-      style={{ width: '100%' }}
+      className={sprinkles({ width: '100%' })}
+      placeholder={placeholder}
       onClick={() => {
         if (window.daum)
           new window.daum.Postcode({
-            oncomplete: (data) => setAddress?.(data),
-          }).open();
+            oncomplete: setAddress,
+          }).open({
+            q: address?.query,
+          });
       }}
     >
-      {address?.sigungu}
+      {address?.address}
     </SearchButton>
   );
 }
