@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import clsx from 'clsx';
 
+import { CategoryType } from '@/entities/meeting/api/type';
 import { categoryList } from '@/shared/consts/category';
 
 import { ChevronDown } from '@moeasy/storybook/ui/icon';
@@ -13,19 +14,19 @@ import { Text } from '@moeasy/storybook/ui/text';
 import * as styles from './category-select.css';
 
 type CategorySelectProps = {
-  selectedCategory: string;
-  onValueChange: (category: string) => void;
+  selectedCategory?: CategoryType;
+  onValueChange: (category: CategoryType) => void;
 };
 
 export function CategorySelect({ selectedCategory, onValueChange }: CategorySelectProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const onCategorySelect = (category: string) => {
+  const onCategorySelect = (category: CategoryType) => {
     onValueChange(category);
     setIsOpen(false);
   };
 
-  const selectedCategoryIcon = (key: string) => {
+  const selectedCategoryIcon = (key: CategoryType) => {
     for (const category of categoryList) {
       const categoryIcon = category.category.find((item) => item.key === key);
       if (categoryIcon) return categoryIcon.Icon;
@@ -33,7 +34,7 @@ export function CategorySelect({ selectedCategory, onValueChange }: CategorySele
     return null;
   };
 
-  const CategoryIcon = selectedCategoryIcon(selectedCategory);
+  const CategoryIcon = selectedCategory ? selectedCategoryIcon(selectedCategory) : null;
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -57,8 +58,8 @@ function CategoryContent({
   selectedCategory,
   onCategorySelect,
 }: {
-  selectedCategory: string;
-  onCategorySelect: (category: string) => void;
+  selectedCategory?: CategoryType;
+  onCategorySelect: (category: CategoryType) => void;
 }) {
   const [selectedGroup, setSelectedGroup] = useState<(typeof categoryList)[number]['title']>(categoryList[0].title);
   return (
