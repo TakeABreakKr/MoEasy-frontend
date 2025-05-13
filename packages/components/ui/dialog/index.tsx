@@ -82,7 +82,7 @@ function Modal({
   // 자식이 열려있을 때 close 제거
   useOnEscape(!childModalOpen && open, () => setOpen(false));
   // 팝업이 mount 될 때 body scroll 막기
-  useBodyScrollLock(scrollLock);
+  useBodyScrollLock(open && scrollLock);
 
   // 부모 모달에게 자식 모달이 열렸음을 알림
   useEffect(() => {

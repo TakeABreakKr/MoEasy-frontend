@@ -1,12 +1,18 @@
-import { RadioGroupIndicator, RadioGroupItem, RadioGroupItemProps } from '@radix-ui/react-radio-group';
+import { RadioGroupIndicator, RadioGroupItem, RadioGroupItemProps, RadioGroup } from '@radix-ui/react-radio-group';
 import clsx from 'clsx';
 
-import { indicatorStyle, radioStyle } from './radio.css';
+import { indicatorStyle, radioVariants } from './radio.css';
 
-export const Radio = ({ className, ...props }: RadioGroupItemProps) => {
+type RadioProps = RadioGroupItemProps & {
+  variant?: 'primary' | 'secondary';
+};
+
+export const Radio = ({ className, variant = 'primary', ...props }: RadioProps) => {
   return (
-    <RadioGroupItem className={clsx(radioStyle, className)} {...props}>
+    <RadioGroupItem className={clsx(radioVariants[variant], className)} {...props}>
       <RadioGroupIndicator className={indicatorStyle} />
     </RadioGroupItem>
   );
 };
+
+export { RadioGroup };

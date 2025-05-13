@@ -20,7 +20,6 @@ export const body = style({
 export const formWrapper = style({
   width: rem(458),
   flexGrow: 1,
-  padding: '0 30px',
   minHeight: '50vh',
   display: 'flex',
   flexDirection: 'column',
@@ -48,10 +47,9 @@ export const labelWrapper = style({
 
 export const label = style({
   display: 'flex',
-  flexDirection: 'column',
   gap: rem(8),
   alignItems: 'flex-start',
-  marginBottom: rem(8),
+  marginBottom: rem(10),
   ...globalVars.text.title.small,
 });
 

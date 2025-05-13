@@ -1,6 +1,7 @@
-import { style } from '@vanilla-extract/css';
 import { rem } from '@moeasy/storybook/utils/css';
 import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
+
+import { style } from '@vanilla-extract/css';
 
 export const keywordList = style({
   display: 'flex',

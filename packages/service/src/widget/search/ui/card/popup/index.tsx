@@ -1,7 +1,6 @@
 import { useSearchParams } from 'next/navigation';
 
-import { MeetingType } from '@/entities/meeting/api';
-import { useQuery } from '@/shared/hooks/use-query';
+import { useMeetingQuery } from '@/entities/meeting/api/browser/mock';
 import { sprinkles } from '@/shared/style/sprinkles/index.css';
 import { alertCall } from '@/shared/utils/alert-call';
 import { searchKeywordAction } from '@/widget/search/lib';
@@ -23,10 +22,10 @@ import { MeetingJoinTextarea } from './textarea';
 export function SearchMeetingPopupCard({ meetingId }: { meetingId: string }) {
   const searchParams = useSearchParams();
   const exitPopup = () => searchKeywordAction({ meetingId: null }, searchParams);
-  const { data, loading, error, refetch } = useQuery<MeetingType>({ queryURL: `mock/meeting/${meetingId}` });
+  const { data, isLoading, error, refetch } = useMeetingQuery(meetingId);
 
-  const showTitle = loading ? '불러오는 중...' : error ? '이름을 불러올 수 없습니다.' : data?.name;
-  const showExplanation = loading ? '불러오는 중...' : error ? '설명을 불러올 수 없습니다.' : data?.explanation;
+  const showTitle = isLoading ? '불러오는 중...' : error ? '이름을 불러올 수 없습니다.' : data?.name;
+  const showExplanation = isLoading ? '불러오는 중...' : error ? '설명을 불러올 수 없습니다.' : data?.explanation;
 
   return (
     <div className={modalStyles.overlay}>
@@ -42,7 +41,7 @@ export function SearchMeetingPopupCard({ meetingId }: { meetingId: string }) {
           <CardDescription>{showExplanation}</CardDescription>
           {error && (
             <CardTagsWrapper className={sprinkles({ justifyContent: 'flex-end' })}>
-              <Button size="small" rounded="small" onClick={refetch}>
+              <Button size="small" rounded="small" onClick={() => refetch()}>
                 재요청
               </Button>
             </CardTagsWrapper>

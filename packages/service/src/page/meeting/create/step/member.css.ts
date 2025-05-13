@@ -3,6 +3,12 @@ import { globalVars } from '@moeasy/storybook/utils/styles/global.css';
 
 import { style } from '@vanilla-extract/css';
 
+export const limitInput = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: rem(10),
+});
+
 export const searchButton = style({
   display: 'flex',
   alignItems: 'center',
@@ -30,6 +36,17 @@ export const memberItem = style({
   padding: rem(2, 4, 2, 7),
   border: `1px solid ${globalVars.color.neutral[20]}`,
   color: globalVars.color.neutral[70],
+  borderRadius: rem(20),
+  ...globalVars.text.label.small.regular,
+});
+
+export const memberNumberItem = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: rem(4),
+  padding: rem(2, 7),
+  backgroundColor: globalVars.color.neutral[80],
+  color: globalVars.color.neutral.white,
   borderRadius: rem(20),
   ...globalVars.text.label.small.regular,
 });
@@ -137,16 +154,35 @@ export const memberListVertical = style({
   gap: rem(8),
   maxHeight: rem(200),
   overflowY: 'auto',
-  padding: rem(10),
+  padding: rem(0, 16, 0, 0),
+  selectors: {
+    '&::-webkit-scrollbar': {
+      width: rem(6),
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: globalVars.color.neutral[30],
+      borderRadius: rem(4),
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: globalVars.color.neutral[5],
+      borderRadius: rem(4),
+    },
+  },
 });
 
 export const memberItemVertical = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: rem(8),
+  padding: rem(8, 0),
   cursor: 'pointer',
   borderBottom: `1px solid ${globalVars.color.neutral[5]}`,
+});
+
+export const memberInfo = style({
+  display: 'flex',
+  alignItems: 'center',
+  flex: 1,
 });
 
 export const circleCheck = style({
@@ -184,12 +220,12 @@ export const memberListWrapper = style({
   width: '100%',
 });
 export const selectedMemberSection = style({
-  minHeight: rem(85),
+  width: '100%',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   gap: rem(8),
-  visibility: 'hidden',
+  marginBottom: rem(20),
   opacity: 0,
   transition: 'opacity 0.2s ease',
   selectors: {
@@ -199,18 +235,30 @@ export const selectedMemberSection = style({
     },
   },
 });
-
-export const selectedCount = style({
+export const selectedCountWrapper = style({
   display: 'flex',
-  color: globalVars.color.neutral[70],
-  ...globalVars.text.body.small,
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
 });
 
+export const selectedCount = style({
+  maxWidth: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  color: globalVars.color.neutral[70],
+  flexShrink: 0,
+  ...globalVars.text.body.small,
+});
+export const selectedMemberWrapper = style({
+  width: '100%',
+});
 export const selectedMemberList = style({
   display: 'flex',
   flexDirection: 'row',
   flex: 1,
-  gap: rem(10),
+  gap: rem(20),
   color: globalVars.color.neutral[95],
   ...globalVars.text.body.small,
 });
@@ -244,4 +292,53 @@ export const removeSelectedButton = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+});
+export const noResult = style({
+  padding: rem(24),
+  textAlign: 'center',
+  borderRadius: rem(6),
+  ...globalVars.text.body.medium,
+});
+
+export const publicYnSection = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: rem(8),
+});
+
+export const publicYnQuestion = style({
+  ...globalVars.text.title.small,
+});
+
+export const publicYnButtons = style({
+  display: 'flex',
+  gap: rem(8),
+});
+
+export const publicYnButton = style({
+  padding: rem(8, 16),
+  display: 'flex',
+  borderRadius: rem(8),
+  alignItems: 'center',
+  backgroundColor: globalVars.color.neutral.white,
+  color: globalVars.color.neutral[50],
+  border: `1px solid ${globalVars.color.neutral[50]}`,
+  cursor: 'pointer',
+  ...globalVars.text.body.small,
+});
+
+export const publicSelected = style({
+  backgroundColor: globalVars.color.neutral[80],
+  color: globalVars.color.neutral.white,
+});
+
+export const angleButtons = style({
+  display: 'flex',
+});
+export const angleButton = style({
+  paddingLeft: rem(20),
+  margin: 'auto',
+  cursor: 'pointer',
+  color: globalVars.color.neutral[95],
+  ...globalVars.text.body.small,
 });

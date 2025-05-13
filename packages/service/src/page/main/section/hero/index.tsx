@@ -5,7 +5,7 @@ import { getScopedI18n } from '@/locales/server';
 
 import { ChevronDown } from '@moeasy/storybook/ui/icon';
 
-import mainImage from '../../../../../public/about-first.png';
+import mainImage from '../../../../../public/images/about-first.png';
 
 import * as styles from './first.css';
 

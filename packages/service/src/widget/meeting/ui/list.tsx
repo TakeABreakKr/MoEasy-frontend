@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { MeetingType } from '@/entities/meeting/api';
 import { initializeMeetingList } from '@/entities/meeting/api/mock';
@@ -18,10 +19,22 @@ import { MeetingCard } from './card/v2';
 import * as styles from './list.css';
 
 export default function MeetingList() {
-  const [meetingList, setTeamlist] = useState<MeetingType[]>(initializeMeetingList);
-  const [loading, setLoading] = useState(false);
-  const [ref, inView] = useIntersectionObserver();
   const searchParams = useSearchParams();
+  const {
+    isPending,
+    data: meetingList,
+    fetchNextPage,
+  } = useInfiniteQuery<MeetingType[]>({
+    queryKey: ['meetingList'],
+    queryFn: async ({ pageParam }) => {
+      await delay(100);
+      return initializeMeetingList(pageParam as number);
+    },
+    initialData: () => ({ pages: [], pageParams: [] }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.length,
+  });
+  const [ref, inView] = useIntersectionObserver();
   const meetingId = searchParams.get('meetingId');
   const memberId = searchParams.get('memberId');
   const isMeetingIdValid = isIdValid(meetingId);
@@ -30,25 +43,18 @@ export default function MeetingList() {
 
   useEffect(() => {
     if (inView) {
-      setLoading(true);
-
-      setTeamlist((prevState) => {
-        const lastIndex = prevState.length;
-        return [...prevState, ...initializeMeetingList(lastIndex)];
-      });
-
-      delay(100).then(() => setLoading(false));
+      fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, fetchNextPage]);
 
   return (
     <>
       <section className={sprinkles({ justifyContent: 'center' })}>
         <div className={styles.teamgrid}>
-          {meetingList.map((meeting) => (
-            <MeetingCard key={meeting.name} meeting={meeting} />
-          ))}
-          {!loading && <span ref={ref} />}
+          {meetingList?.pages?.map((page) =>
+            page.map((meeting) => <MeetingCard key={meeting.name} meeting={meeting} />),
+          )}
+          {!isPending && <span ref={ref} />}
         </div>
       </section>
       {(isMeetingIdValid || isMemberIdValid) && (

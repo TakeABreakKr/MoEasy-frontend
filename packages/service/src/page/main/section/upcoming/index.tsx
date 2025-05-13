@@ -21,7 +21,7 @@ import * as upcomingStyles from './upcoming.css';
 
 dayjs.locale('ko');
 
-export function MainUpcommingSchedule({ title, data }: { title: string; data?: MainActivityDto[] }) {
+export function MainUpcommingActivity({ title, data }: { title: string; data?: MainActivityDto[] }) {
   const dateArray = useMemo(() => {
     const currentDate = dayjs();
     return Array.from(dateRange(currentDate, currentDate.add(1, 'week'), 'd'));
@@ -50,7 +50,7 @@ export function MainUpcommingSchedule({ title, data }: { title: string; data?: M
           </button>
         ))}
       </div>
-      <div className={upcomingStyles.scheduleContainer}>
+      <div className={upcomingStyles.activityContainer}>
         {data?.map((activity, index) => <MainActivityCard activity={activity} key={index} />)}
       </div>
       <MainUpcomingSectionPagination date={parsedCurrentDate.format('YYYY-MM-DD')} />

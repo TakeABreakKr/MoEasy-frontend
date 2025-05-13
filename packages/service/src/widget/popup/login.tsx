@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
-import { discordLoginUrl } from '@/shared/consts/login';
+import { ProviderUrl } from '@/shared/consts/login';
 import { pushSearchParams } from '@/shared/utils/search-param';
 
 import { useDebounceCallback } from '@moeasy/storybook/hooks/use-debounce-callback';
@@ -20,9 +20,11 @@ import { desc, discordLogin, loginPopupSize, textContainer } from './login.css';
 export function LoginPopup() {
   const searchParams = useSearchParams();
   const escapePopup = useDebounceCallback(() => window.history.back());
-  useOnEscape(true, escapePopup);
+  const isPopupOpen = searchParams.get('login') !== null;
 
-  if (!searchParams.get('login')) return null;
+  useOnEscape(isPopupOpen, escapePopup);
+
+  if (!isPopupOpen) return null;
   return (
     <Modal>
       <ModalOverlay className={modalStyles.overlay}>
@@ -48,7 +50,7 @@ export function LoginPopup() {
             </span>
           </div>
           <div className={modalStyles.footer}>
-            <Link href={discordLoginUrl} className={discordLogin}>
+            <Link href={ProviderUrl.DISCORD} className={discordLogin}>
               <DiscordIcon width={32} height={32} />
               Discord 로그인
             </Link>

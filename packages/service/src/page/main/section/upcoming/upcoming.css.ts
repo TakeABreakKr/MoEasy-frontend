@@ -26,7 +26,7 @@ export const dateButtonActive = style({
   color: globalVars.color.neutral.white,
 });
 
-export const scheduleContainer = style({
+export const activityContainer = style({
   display: 'grid',
   gridTemplateColumns: `repeat(auto-fit, minmax(${rem(400)}, 1fr))`,
   gap: rem(12),

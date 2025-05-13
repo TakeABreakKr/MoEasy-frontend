@@ -10,14 +10,14 @@ import { MeetingType } from './type';
 
 import * as styles from './meeting-detail.css';
 
-export function MeetingDetailPage({ data }: { data: MeetingType }) {
+export function MeetingDetailPage({ data, meetingId }: { data: MeetingType; meetingId: string }) {
   return (
     <div className={styles.detailWrapper}>
       <MeetingTabList />
       <MeetingDetailBanner />
       <MeetingDetailInfo data={data} />
       <Suspense fallback={<MeetingDetailActivityFallback />}>
-        <MeetingDetailActivity />
+        <MeetingDetailActivity meetingId={meetingId} />
       </Suspense>
       <MeetingDetailMember />
     </div>

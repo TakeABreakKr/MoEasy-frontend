@@ -3,39 +3,47 @@ import 'server-only';
 import createClient, { Middleware } from 'openapi-fetch';
 
 import { paths } from './my-schema';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { discordLoginUrl } from '../consts/login';
+import { ProviderUrl } from '../consts/login';
 
-const serverClient = createClient<paths>({ baseUrl: 'http:localhost:5000' });
+const serverClient = createClient<paths>({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_SERVER });
 
 const serverActionMiddleware: Middleware = {
   async onRequest({ request, schemaPath }) {
+    // 로그인/리프레시는 토큰 없이 호출
+    if (schemaPath === '/auth/refresh') return request;
+    let accessToken: string | null = null;
     try {
-      // 로그인/리프레시는 토큰 없이 호출
-      if (schemaPath === '/auth/refresh') return request;
-      const cookie = (await cookies()).get('AccessToken');
+      const [headerStore, cookieStore] = await Promise.all([headers(), cookies()]);
+      const origin = headerStore.get('x-moeasy-pathname') || '/';
+      request.headers.set('x-moeasy-pathname', origin);
+      const cookie = cookieStore.get('AccessToken');
       if (cookie) {
-        request.headers.set('access-token', cookie.value);
+        accessToken = cookie.value;
       }
-      return request;
     } catch (error) {
       console.error('토큰 쿠키 조회 실패:', error);
     }
+    if (accessToken) {
+      request.headers.set('access-token', accessToken);
+    }
     return request;
   },
-  async onResponse({ response, schemaPath }) {
-    if (schemaPath === '/home/header') return response;
-    if (!response.ok && response.status === 401) {
-      const cookieStore = await cookies();
-      const refreshTokenCookie = cookieStore.get('RefreshToken');
-      if (refreshTokenCookie) {
-        // TODO: fix setting AccessToken logic after API Developed!!
-        await serverClient.POST('/auth/refresh', {
-          body: { refreshToken: refreshTokenCookie.value },
-        });
-      } else {
-        redirect(discordLoginUrl);
+  async onResponse({ request, response }) {
+    if (response.ok) return response;
+    switch (response.status) {
+      case 401: {
+        redirect(ProviderUrl.DISCORD);
+      }
+      case 410: {
+        const origin = request.headers.get('x-moeasy-pathname') || '/';
+        redirect(`/api/refresh?moeasy-origin=${origin}`);
+        // Setting cookies cannot be done directly in a Server Component, even when using a Route Handler or Server Action. This is because cookies are actually stored by the browser, not the server.
+        // https://nextjs.org/docs/app/api-reference/functions/cookies#understanding-cookie-behavior-in-server-components
+      }
+      default: {
+        return response;
       }
     }
   },

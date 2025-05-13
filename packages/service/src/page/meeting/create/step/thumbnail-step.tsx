@@ -1,17 +1,26 @@
-import { ImageUpload } from '@moeasy/storybook/ui/file-upload';
-import { StepProps } from '../creating-step-form';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
+
+import { StepProps } from '../creating-step-form';
+
+import defaultThumbnail from './default-thumbnail.png';
+import { ImageUpload } from './uploadThumbnail';
+
+import * as styles from './thumbnail.css';
 
 export function ThumbnailStep({ formData, dispatch }: StepProps) {
   return (
     <div className={formStyles.formGroup}>
-      <ImageUpload selectedFile={formData.thumbnail} onImageUpload={(thumbnail) => dispatch({ thumbnail })} />
-      <div>
-        <p>
-          📌 <strong>1:1 비율 (500×500px) 권장</strong>
-        </p>
-        <p>1:1 비율이 아닌 이미지는 잘려 보일 수 있습니다.</p>
-        <p>폭력적이거나 선정적인 이미지, 부적절한 단어 및 욕설이 들어간 이미지는 삭제될 수 있습니다.</p>
+      <div className={formStyles.labelWrapper}>
+        <div className={formStyles.label}>썸네일 설정</div>
+        <div className={styles.thumbnailWrapper}>
+          <div className={styles.thumbnail}>
+            <ImageUpload
+              selectedFile={formData.thumbnail}
+              onImageUpload={(thumbnail) => dispatch({ thumbnail })}
+              initialPreview={defaultThumbnail.src}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
