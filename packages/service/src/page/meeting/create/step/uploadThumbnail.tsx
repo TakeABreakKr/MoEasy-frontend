@@ -1,4 +1,5 @@
 import React, { useId } from 'react';
+
 import { useControlledState } from '@moeasy/storybook/hooks/use-controlled-state';
 import { Delay } from '@moeasy/storybook/ui/delay';
 import { PlusIcon } from '@moeasy/storybook/ui/icon';
@@ -35,6 +36,21 @@ export const ImageUpload = ({ name = 'thumbnail', selectedFile, initialPreview, 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length !== 0) {
       const file = event.target.files[0];
+
+      // 파일 크기 제한 (예: 5MB)
+      const maxSizeInBytes = 5 * 1024 * 1024;
+      if (file.size > maxSizeInBytes) {
+        alert('파일 크기는 5MB 이하여야 합니다.');
+        event.target.value = '';
+        return;
+      }
+      // 이미지 파일 형식 검사
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('지원되는 이미지 형식은 JPEG, PNG, GIF, WEBP입니다.');
+        event.target.value = '';
+        return;
+      }
       setFile(file);
     }
   };

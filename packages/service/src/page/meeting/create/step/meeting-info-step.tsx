@@ -1,8 +1,9 @@
-import { Input } from '@moeasy/storybook/ui/input';
-import { Textarea } from '@moeasy/storybook/ui/textarea';
-import { Label } from '@moeasy/storybook/ui/label/label';
-import { StepProps } from '../creating-step-form';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
+import { Input } from '@moeasy/storybook/ui/input';
+import { Label } from '@moeasy/storybook/ui/label/label';
+import { Textarea } from '@moeasy/storybook/ui/textarea';
+
+import { StepProps } from '../creating-step-form';
 
 export function MeetingInfoStep({ formData, dispatch }: StepProps) {
   const isNameTooLong = formData.name.length > 30;
@@ -30,7 +31,7 @@ export function MeetingInfoStep({ formData, dispatch }: StepProps) {
           모임 소개{isExplanationTooLong && <Label variant="error">최대 100글자까지 입력 가능합니다.</Label>}
         </div>
         <Textarea
-          name="description"
+          name="explanation"
           placeholder="모임 목표와 주요 활동을 설명해주세요"
           className={formStyles.input}
           value={formData.explanation}

@@ -1,7 +1,10 @@
-import { ImageUpload } from './uploadThumbnail';
-import { StepProps } from '../creating-step-form';
-import defaultThumbnail from './default-thumbnail.png';
 import * as formStyles from '@moeasy/storybook/ui/create/style.css';
+
+import { StepProps } from '../creating-step-form';
+
+import defaultThumbnail from './default-thumbnail.png';
+import { ImageUpload } from './uploadThumbnail';
+
 import * as styles from './thumbnail.css';
 
 export function ThumbnailStep({ formData, dispatch }: StepProps) {
