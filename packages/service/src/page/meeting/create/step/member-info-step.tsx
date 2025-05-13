@@ -24,12 +24,13 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
   const [selectedList, setSelectedList] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const isTooManySelected = selectedList.length >= Number(formData.limit) && Number(formData.limit) !== 0;
+  const isTooManySelected =
+    typeof formData.limit === 'number' && selectedList.length >= formData.limit && formData.limit !== 0;
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef<HTMLDivElement>(null);
   const viewingSkill = 7;
-  const TOTAL_SLIDES = Math.ceil(selectedList.length / viewingSkill) - 1;
+  const TOTAL_SLIDES = Math.max(0, Math.ceil(selectedList.length / viewingSkill) - 1);
   const firstSlide = 0;
 
   const handleClickNextSlide = () => {
@@ -63,7 +64,7 @@ export function MemberInfoStep({ formData, dispatch, toggleLimitDisabled }: Memb
 
   const handleSelectMember = (member: string) => {
     const isSelected = selectedList.includes(member);
-    const limit = formData.limit === '' ? Infinity : Number(formData.limit);
+    const limit = formData.limit === '' ? 9999 : Number(formData.limit);
     if (isSelected) {
       setSelectedList((prev) => prev.filter((m) => m !== member));
     } else if (selectedList.length < limit) {

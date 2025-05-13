@@ -17,7 +17,7 @@ export function ThumbnailStep({ formData, dispatch }: StepProps) {
             <ImageUpload
               selectedFile={formData.thumbnail}
               onImageUpload={(thumbnail) => dispatch({ thumbnail })}
-              initialPreview={formData.thumbnail ? URL.createObjectURL(formData.thumbnail) : defaultThumbnail.src}
+              initialPreview={defaultThumbnail.src}
             />
           </div>
         </div>
